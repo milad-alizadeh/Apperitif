@@ -15,7 +15,7 @@ export default function TabLayout() {
     <Tabs
       initialRouteName="Browse"
       screenOptions={{
-        headerTintColor: colors?.neutral[800],
+        headerTintColor: colors.neutral[800],
         headerShown: false,
         headerStyle: {
           backgroundColor: colors.white,
@@ -38,15 +38,15 @@ export default function TabLayout() {
         },
       }}
     >
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="Browse"
         options={{
           headerTitle: 'Browse',
           tabBarIcon: ({ color }) => <Icon icon="cocktail" color={color} />,
         }}
-      />
+      /> */}
 
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="MyBar"
         listeners={protectedRoute}
         options={{
@@ -69,7 +69,7 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ color }) => <Icon icon="user" color={color} />,
         }}
-      />
+      /> */}
     </Tabs>
   )
 }

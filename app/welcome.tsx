@@ -28,7 +28,7 @@ export default function WelcomeScreen() {
           Find amazing cocktail recipes for any occassion.
         </Text>
         <View className="flex flex-row">
-          <Link href={'/'} asChild>
+          <Link href={'/browse/home'} asChild>
             <Button label={'Get started'} />
           </Link>
         </View>

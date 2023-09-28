@@ -1,5 +1,5 @@
 import { useHaptic } from '../hooks/useHaptics'
-import * as React from 'react'
+import React, { forwardRef } from 'react'
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native'
 
 export interface ButtonProps {
@@ -15,19 +15,15 @@ export interface ButtonProps {
 /**
  * Describe your component here
  */
-export default function Button({
-  label,
-  onPress,
-  outline,
-  styleClassName,
-  large,
-  enableHaptics,
-  loading,
-}: ButtonProps) {
+export default forwardRef(function Button(
+  { label, onPress, outline, styleClassName, large, enableHaptics, loading }: ButtonProps,
+  ref: any,
+) {
   const hapticSuccess = useHaptic('success')
   const hapticWarning = useHaptic('warning')
   return (
     <TouchableOpacity
+      ref={ref}
       onPress={() => {
         if (enableHaptics) {
           outline ? hapticWarning() : hapticSuccess()
@@ -47,4 +43,4 @@ export default function Button({
       </Text>
     </TouchableOpacity>
   )
-}
+})
