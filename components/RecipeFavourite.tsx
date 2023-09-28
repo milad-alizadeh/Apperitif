@@ -1,4 +1,4 @@
-import { colors } from 'app/theme'
+import { colors } from '~/theme'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import Animated, {

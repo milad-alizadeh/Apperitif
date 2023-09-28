@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react-lite'
-import { Text } from 'app/components/Text'
+import { Text } from '~/components/Text'
 
 export interface RecipeStepsProps {
   steps: {

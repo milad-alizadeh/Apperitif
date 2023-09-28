@@ -1,4 +1,4 @@
-import { Text } from 'app/components'
+import { Text } from '~/components'
 import React, { forwardRef } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 

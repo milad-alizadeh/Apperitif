@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
-import { Text } from 'app/components'
-import { GET_INGREDIENT_DETAILS } from 'app/graphql/queries/getIngredientDetails'
+import { Text } from '~/components'
+import { GET_INGREDIENT_DETAILS } from '~/graphql/queries/getIngredientDetails'
 import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { ScrollView, View } from 'react-native'

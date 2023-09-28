@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import { shadowCard } from 'app/theme/shadows'
+import { shadowCard } from '~/theme/shadows'
 import flattenDeep from 'lodash/flattenDeep'
 import React, { useMemo, useState } from 'react'
 import { View } from 'react-native'

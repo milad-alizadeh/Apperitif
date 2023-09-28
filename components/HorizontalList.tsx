@@ -1,4 +1,4 @@
-import { colors } from 'app/theme'
+import { colors } from '~/theme'
 import { observer } from 'mobx-react-lite'
 import * as React from 'react'
 import { FlatList, View } from 'react-native'

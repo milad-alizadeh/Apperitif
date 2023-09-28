@@ -1,7 +1,7 @@
 import { ApolloError, useQuery } from '@apollo/client'
 import { GetFiltersQuery } from '~/__generated__/graphql'
-import { GET_CONTENT } from 'app/graphql/queries'
-import { GET_FILTERS } from 'app/graphql/queries/getFilters'
+import { GET_CONTENT } from '~/graphql/queries'
+import { GET_FILTERS } from '~/graphql/queries/getFilters'
 import values from 'lodash/values'
 
 export const useFetchFilters = (): {

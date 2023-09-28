@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
-import { Icon, Text } from 'app/components'
-import { colors } from 'app/theme'
+import { Icon, Text } from '~/components'
+import { colors } from '~/theme'
 import { observer } from 'mobx-react-lite'
 import * as React from 'react'
 import { View } from 'react-native'

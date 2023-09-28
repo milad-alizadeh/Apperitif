@@ -1,16 +1,17 @@
+import mapRecipes from '~/utils/mapRecipes'
+import { colors } from '~/theme/colors'
+import { GetCategoriesQuery } from '~/__generated__/graphql'
+import { CardProps, Header, HorizontalList, Icon, Screen, Text, VerticalList } from '~/components'
+import { GET_CATEGORIES, GET_CONTENT } from '~/graphql/queries'
+
 import { useQuery } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
-import colors from '~/theme/colors'
 import groupBy from 'lodash/groupBy'
 import values from 'lodash/values'
 import React, { FC } from 'react'
 import { View } from 'react-native'
 
-import { GetCategoriesQuery } from '~/__generated__/graphql'
-import { CardProps, Header, HorizontalList, Icon, Screen, Text, VerticalList } from '~/components'
-import { GET_CATEGORIES, GET_CONTENT } from '~/graphql/queries'
-import mapRecipes from '~/utils/mapRecipes'
-
+console.log('colors')
 interface ListType {
   listItems: CardProps[]
   title: string
@@ -50,7 +51,7 @@ export default function BrowseHomeScreen() {
       ({ node: { name, id, imageUrl } }) => ({
         name,
         id,
-        onPress: () => navigation.navigate('FilteredRecipes', { categoryId: id }),
+        // onPress: () => navigation.navigate('FilteredRecipes', { categoryId: id }),
         imageUrl,
       }),
     )
@@ -65,7 +66,7 @@ export default function BrowseHomeScreen() {
     categoryIds: string[],
   ): ListType[] => {
     if (!queryData) return []
-    const categories = queryData.categoriesCollection.edges
+    const categories = queryData.categoriesCollection?.edges
     const categoriesById = groupBy(categories, 'node.id')
     return categoryIds.map((id) => getListProps(categoriesById[id][0]))
   }
@@ -79,7 +80,7 @@ export default function BrowseHomeScreen() {
 
         <Icon
           icon="search"
-          onPress={() => navigation.navigate('FilteredRecipes', { categoryId: '' })}
+          // onPress={() => navigation.navigate('FilteredRecipes', { categoryId: '' })}
           size="large"
           containerClassName="absolute right-5 top-0"
           color={colors.neutral[800]}

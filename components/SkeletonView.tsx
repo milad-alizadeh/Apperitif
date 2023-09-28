@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ViewStyle } from 'react-native'
-import { colors } from 'app/theme'
+import { colors } from '~/theme'
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
 

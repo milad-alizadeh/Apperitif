@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { observer } from 'mobx-react-lite'
-import { Text } from 'app/components/Text'
-import { SkeletonView } from 'app/components/SkeletonView'
+import { Text } from '~/components/Text'
+import { SkeletonView } from '~/components/SkeletonView'
 
 export interface HeadingProps {
   h1?: boolean

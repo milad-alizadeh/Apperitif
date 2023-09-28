@@ -10,7 +10,7 @@ module.exports = function (api) {
         'babel-plugin-root-import',
         {
           rootPathSuffix: './',
-          rootPathPrefix: '@/',
+          rootPathPrefix: '~/',
         },
       ],
     ],

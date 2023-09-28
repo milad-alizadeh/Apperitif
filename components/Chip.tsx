@@ -1,5 +1,5 @@
-import { useHaptic } from 'app/hooks/useHaptics'
-import { colors } from 'app/theme'
+import { useHaptic } from '~/hooks/useHaptics'
+import { colors } from '~/theme'
 import { observer } from 'mobx-react-lite'
 import * as React from 'react'
 import { Text, View } from 'react-native'

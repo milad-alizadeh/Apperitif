@@ -7,8 +7,8 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated'
 import { Modal, TouchableOpacity, View } from 'react-native'
-import { useSafeAreaInsetsStyle } from 'app/utils/useSafeAreaInsetsStyle'
-import { shadowLarge } from 'app/theme/shadows'
+import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
+import { shadowLarge } from '~/theme/shadows'
 
 export interface BottomSheetRef {
   show: () => void

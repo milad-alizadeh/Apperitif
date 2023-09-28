@@ -1,5 +1,5 @@
-import { RecipeIngredientList, RecipeMeasurements, RecipeSteps, Text } from 'app/components'
-import { colors } from 'app/theme'
+import { RecipeIngredientList, RecipeMeasurements, RecipeSteps, Text } from '~/components'
+import { colors } from '~/theme'
 import * as React from 'react'
 import { TextStyle, View, ViewStyle, useWindowDimensions } from 'react-native'
 import TabController from 'react-native-ui-lib/tabController'

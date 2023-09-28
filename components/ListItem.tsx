@@ -1,7 +1,7 @@
-import { Badge, Checkbox, Icon, IconTypes, Text } from 'app/components'
-import { useHaptic } from 'app/hooks/useHaptics'
-import { colors } from 'app/theme'
-import { shadowCard } from 'app/theme/shadows'
+import { Badge, Checkbox, Icon, IconTypes, Text } from '~/components'
+import { useHaptic } from '~/hooks/useHaptics'
+import { colors } from '~/theme'
+import { shadowCard } from '~/theme/shadows'
 import React, { memo } from 'react'
 import { Image, TouchableOpacity } from 'react-native'
 

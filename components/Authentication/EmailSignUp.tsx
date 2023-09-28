@@ -1,4 +1,4 @@
-import { api } from 'app/services/api'
+import { api } from '~/services/api'
 import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import { Alert, View } from 'react-native'

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react-lite'
-import { Text } from 'app/components/Text'
+import { Text } from '~/components/Text'
 import SegmentedControl from 'react-native-ui-lib/segmentedControl'
 import Switch from 'react-native-ui-lib/switch'
-import { useStores } from 'app/models'
+import { useStores } from '~/models'
 
 /**
  * A component that displays the recipe measurements and conversions.

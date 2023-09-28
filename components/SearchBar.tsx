@@ -1,5 +1,5 @@
-import { Icon } from 'app/components'
-import { colors } from 'app/theme'
+import { Icon } from '~/components'
+import { colors } from '~/theme'
 import React, { useEffect, useRef, useState } from 'react'
 import { TextInput, View } from 'react-native'
 

@@ -1,4 +1,4 @@
-import { api } from 'app/services/api'
+import { api } from '~/services/api'
 import {
   AppleAuthenticationButton,
   AppleAuthenticationButtonStyle,

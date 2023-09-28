@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ScrollView } from 'react-native'
 import { observer } from 'mobx-react-lite'
-import { Chip } from 'app/components'
+import { Chip } from '~/components'
 
 export interface FilterChipsProps {
   styleClassName?: string
