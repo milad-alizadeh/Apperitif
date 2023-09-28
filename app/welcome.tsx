@@ -1,22 +1,17 @@
-import React, { FC } from "react";
-import {
-  Image,
-  ImageBackground,
-  ImageStyle,
-  View,
-  ViewStyle,
-} from "react-native";
+import React, { FC } from 'react'
+import { Image, ImageBackground, ImageStyle, View, ViewStyle } from 'react-native'
 
-import { Button, Text } from "../components";
-import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle";
-import { Link } from "expo-router";
+import Button from '../components/Button'
+import Text from '../components/Text'
+import { useSafeAreaInsetsStyle } from '../utils/useSafeAreaInsetsStyle'
+import { Link } from 'expo-router'
 
-const welcomeBackground = require("../../assets/images/welcome-background.png");
-const textDrink = require("../../assets/images/text-drink.png");
+const welcomeBackground = require('../assets/images/welcome-background.png')
+const textDrink = require('../assets/images/text-drink.png')
 
 export default function WelcomeScreen() {
-  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"]);
-  const $topContainerInsets = useSafeAreaInsetsStyle(["top"]);
+  const $bottomContainerInsets = useSafeAreaInsetsStyle(['bottom'])
+  const $topContainerInsets = useSafeAreaInsetsStyle(['top'])
 
   return (
     <ImageBackground
@@ -33,20 +28,20 @@ export default function WelcomeScreen() {
           Find amazing cocktail recipes for any occassion.
         </Text>
         <View className="flex flex-row">
-          <Link href={"/"} asChild>
-            <Button label={"Get started"} />
+          <Link href={'/'} asChild>
+            <Button label={'Get started'} />
           </Link>
         </View>
       </View>
     </ImageBackground>
-  );
+  )
 }
 
 const $container: ViewStyle = {
   flex: 1,
-};
+}
 
 const $image: ImageStyle = {
   width: 110,
   height: 48,
-};
+}

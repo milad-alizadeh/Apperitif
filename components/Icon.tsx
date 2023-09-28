@@ -1,4 +1,4 @@
-import { useHaptic } from 'app/hooks/useHaptics'
+import { useHaptic } from '../hooks/useHaptics'
 import * as React from 'react'
 import { ComponentType } from 'react'
 import {

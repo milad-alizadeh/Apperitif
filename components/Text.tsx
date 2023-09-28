@@ -1,4 +1,4 @@
-import { typography } from 'app/theme'
+import { typography } from '../theme'
 import React from 'react'
 import { Text as RNText, TextStyle } from 'react-native'
 
@@ -14,7 +14,7 @@ interface TextProps {
   weight?: 'bold' | 'normal' | 'light' | 'medium'
 }
 
-export function Text({
+export default function Text({
   h1,
   h2,
   h3,
@@ -26,12 +26,16 @@ export function Text({
   weight,
 }: TextProps) {
   const sizes = {
-    largeHeading: { fontSize: 34, fontFamily: typography.primary.bold },
-    h1: { fontSize: 28, fontFamily: typography.primary.bold },
-    h2: { fontSize: 24, fontFamily: typography.primary.bold },
-    h3: { fontSize: 20, fontFamily: typography.primary.bold },
-    h4: { fontSize: 14, fontFamily: typography.primary.bold },
-    body: { fontSize: 16, fontFamily: typography.primary.normal, lineHeight: 20 },
+    largeHeading: { fontSize: 34, fontFamily: typography?.primary?.bold },
+    h1: { fontSize: 28, fontFamily: typography?.primary?.bold },
+    h2: { fontSize: 24, fontFamily: typography?.primary?.bold },
+    h3: { fontSize: 20, fontFamily: typography?.primary?.bold },
+    h4: { fontSize: 14, fontFamily: typography?.primary?.bold },
+    body: {
+      fontSize: 16,
+      fontFamily: typography?.primary?.normal,
+      lineHeight: 20,
+    },
   }
 
   const combinedStyle: TextStyle[] = [

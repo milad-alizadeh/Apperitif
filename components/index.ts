@@ -31,5 +31,5 @@ export * from './SkeletonView'
 export * from './Text'
 export * from './TextField'
 export * from './VerticalList'
-export * from "./RecipeTabs"
-export * from "./RecipeFavourite"
+export * from './RecipeTabs'
+export * from './RecipeFavourite'

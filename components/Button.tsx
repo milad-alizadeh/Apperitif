@@ -1,11 +1,10 @@
-import { useHaptic } from 'app/hooks/useHaptics'
-import { observer } from 'mobx-react-lite'
+import { useHaptic } from '../hooks/useHaptics'
 import * as React from 'react'
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native'
 
 export interface ButtonProps {
   label: string
-  onPress: () => void
+  onPress?: () => void
   outline?: boolean
   styleClassName?: string
   large?: boolean
@@ -16,7 +15,7 @@ export interface ButtonProps {
 /**
  * Describe your component here
  */
-export const Button = observer(function Button({
+export default function Button({
   label,
   onPress,
   outline,
@@ -48,4 +47,4 @@ export const Button = observer(function Button({
       </Text>
     </TouchableOpacity>
   )
-})
+}
