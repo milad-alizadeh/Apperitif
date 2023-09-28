@@ -1,0 +1,71 @@
+import { observer } from 'mobx-react-lite'
+import * as React from 'react'
+import { useWindowDimensions } from 'react-native'
+import Animated, {
+  Extrapolation,
+  SharedValue,
+  interpolate,
+  useAnimatedStyle,
+} from 'react-native-reanimated'
+import AnimatedImage from 'react-native-ui-lib/animatedImage'
+
+import { SkeletonView } from './SkeletonView'
+
+export interface BouncyImageProps {
+  /** The height of the image */
+  height: number
+  /** The shared value of the scroll position */
+  scrollY?: SharedValue<number>
+  /** The URL of the image */
+  imageUrl: string
+}
+
+/**
+ * A component that renders an animated image that bounces as the user scrolls.
+ */
+export const BouncyImage = observer(function BouncyImage({
+  height,
+  scrollY,
+  imageUrl,
+}: BouncyImageProps) {
+  return (
+    <Animated.View
+      className="aspect-square bg-neutral-300 w-full"
+      style={[scrollY ? getBouncyTransform(scrollY, height) : {}, { height }]}
+    >
+      <AnimatedImage
+        height={height}
+        width={useWindowDimensions().width}
+        source={typeof imageUrl === 'string' ? { uri: imageUrl } : imageUrl}
+        resizeMode="cover"
+        loader={<SkeletonView height={height} width={useWindowDimensions().width} />}
+      />
+    </Animated.View>
+  )
+})
+
+/**
+ * Returns an animated style object that applies a bouncy transform to the image as the user scrolls.
+ * @param scrollY - The shared value of the scroll position
+ * @param headerHeight - The height of the header
+ * @returns An animated style object
+ */
+const getBouncyTransform = (scrollY: SharedValue<number>, headerHeight: number) =>
+  useAnimatedStyle(() => {
+    const scale = interpolate(scrollY.value, [-headerHeight, 0], [2.2, 1], {
+      extrapolateRight: Extrapolation.CLAMP,
+    })
+
+    const translateY = interpolate(
+      scrollY.value,
+      [-headerHeight, 0, headerHeight],
+      [-headerHeight / 2, 0, headerHeight / 2],
+      {
+        extrapolateRight: Extrapolation.CLAMP,
+      },
+    )
+
+    return {
+      transform: [{ scale }, { translateY }],
+    }
+  })
