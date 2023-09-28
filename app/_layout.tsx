@@ -43,7 +43,7 @@ function RootLayoutNav() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Welcome" />
+      <Stack.Screen name="welcome" />
       {/* 
       // <Stack.Screen name="MainTab"/>
 
