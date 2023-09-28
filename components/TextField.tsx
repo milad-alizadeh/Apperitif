@@ -1,5 +1,4 @@
-import { colors } from '~/theme'
-import { observer } from 'mobx-react-lite'
+import { colors } from '~/theme/colors'
 import React, { useEffect, useState } from 'react'
 import { TextInput, TextInputProps, View } from 'react-native'
 import { Text } from './Text'
@@ -22,7 +21,7 @@ export interface TextFieldProps {
 /**
  * Describe your component here
  */
-export const TextField = observer(function TextField({
+export const TextField = function TextField({
   onBlur,
   onChange,
   value,
@@ -55,4 +54,4 @@ export const TextField = observer(function TextField({
       />
     </View>
   )
-})
+}

@@ -78,5 +78,4 @@ const ExpoSecureStoreAdapter = {
   removeItem: (key: string) => SecureStore.deleteItemAsync(key),
 }
 
-const api = new Api()
-export default api
+export const api = new Api()

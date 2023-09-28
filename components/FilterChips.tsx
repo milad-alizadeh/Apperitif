@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { ScrollView } from 'react-native'
-import { observer } from 'mobx-react-lite'
 import { Chip } from '~/components'
 
 export interface FilterChipsProps {
@@ -12,7 +11,7 @@ export interface FilterChipsProps {
 /**
  * Describe your component here
  */
-export const FilterChips = observer(function FilterChips({
+export const FilterChips = function FilterChips({
   categories,
   onDismiss,
   styleClassName,
@@ -37,4 +36,4 @@ export const FilterChips = observer(function FilterChips({
       </ScrollView>
     )
   )
-})
+}

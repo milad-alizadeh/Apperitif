@@ -1,5 +1,4 @@
 import { GetRecipeDetailsQuery } from '~/__generated__/graphql'
-import { observer } from 'mobx-react-lite'
 import * as React from 'react'
 import { View } from 'react-native'
 
@@ -19,7 +18,7 @@ export interface RecipeIngredientListProps {
  * A component that renders a list of recipe ingredients
  *
  */
-export const RecipeIngredientList = observer(function RecipeIngredientList({
+export const RecipeIngredientList = function RecipeIngredientList({
   recipeIngredients,
   onPress,
 }: RecipeIngredientListProps) {
@@ -36,4 +35,4 @@ export const RecipeIngredientList = observer(function RecipeIngredientList({
       ))}
     </View>
   )
-})
+}

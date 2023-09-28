@@ -1,5 +1,4 @@
-import { colors } from '~/theme'
-import { observer } from 'mobx-react-lite'
+import { colors } from '~/theme/colors'
 import * as React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 
@@ -14,11 +13,7 @@ export interface CheckboxProps {
 /**
  * Describe your component here
  */
-export const Checkbox = observer(function Checkbox({
-  checked,
-  onPress,
-  styleClassName,
-}: CheckboxProps) {
+export const Checkbox = function Checkbox({ checked, onPress, styleClassName }: CheckboxProps) {
   return (
     <TouchableOpacity className={styleClassName} activeOpacity={1} onPress={() => onPress(checked)}>
       {checked ? (
@@ -33,4 +28,4 @@ export const Checkbox = observer(function Checkbox({
       )}
     </TouchableOpacity>
   )
-})
+}

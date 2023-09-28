@@ -1,7 +1,5 @@
-import { observer } from 'mobx-react-lite'
 import * as React from 'react'
-import { View } from 'react-native'
-import GridList from 'react-native-ui-lib/gridList'
+import { View, FlatList } from 'react-native'
 
 import { ListItem, ListItemProps, Text } from '.'
 
@@ -25,7 +23,7 @@ export interface VerticalListProps {
 /**
  * A component that displays a vertical list of items
  */
-export const VerticalList = observer(function VerticalList({
+export const VerticalList = function VerticalList({
   listItems,
   title,
   styleClassName,
@@ -39,12 +37,10 @@ export const VerticalList = observer(function VerticalList({
         {title} {showCount ? `(${listItems.length})` : ''}
       </Text>
       {flatlist ? (
-        <GridList
+        <FlatList
           data={listItems}
           nestedScrollEnabled
           numColumns={numColumns}
-          itemSpacing={12}
-          keepItemSize={false}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => {
             return <ListItem {...item} card small enableHaptics={false} />
@@ -61,4 +57,4 @@ export const VerticalList = observer(function VerticalList({
       )}
     </View>
   )
-})
+}

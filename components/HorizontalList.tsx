@@ -1,5 +1,4 @@
 import { colors } from '~/theme'
-import { observer } from 'mobx-react-lite'
 import * as React from 'react'
 import { FlatList, View } from 'react-native'
 
@@ -23,7 +22,7 @@ export interface HorizontalListProps {
 /**
  * A horizontal list component that displays a list of cards in a horizontal scroll view.
  */
-export const HorizontalList = observer(function HorizontalList({
+export const HorizontalList = function HorizontalList({
   listItems,
   title,
   styleClassName,
@@ -65,4 +64,4 @@ export const HorizontalList = observer(function HorizontalList({
       )}
     </View>
   )
-})
+}

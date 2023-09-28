@@ -1,5 +1,4 @@
 import { api } from '~/services/api'
-import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { Alert, TouchableOpacity, View } from 'react-native'
 
@@ -15,7 +14,7 @@ export interface OtpVerifyProps {
 /**
  * Describe your component here
  */
-export const OtpVerify = observer(function OtpVerify({ onSuccessfullAuth, email }: OtpVerifyProps) {
+export const OtpVerify = function OtpVerify({ onSuccessfullAuth, email }: OtpVerifyProps) {
   const [loading, setLoading] = useState(false)
   const [otp, setOtp] = useState('')
 
@@ -80,4 +79,4 @@ export const OtpVerify = observer(function OtpVerify({ onSuccessfullAuth, email 
       </View>
     </View>
   )
-})
+}

@@ -1,20 +1,17 @@
-import { useNavigation } from '@react-navigation/native'
 import { Button } from '~/components'
-import { useStores } from '~/models'
-import { BrowseNavigatorProps } from '~/navigators'
-import { observer } from 'mobx-react-lite'
+// import { useStores } from '~/models'
 import * as React from 'react'
 import { View } from 'react-native'
 
 /**
  * Actions for applying or clearing filters
  */
-export const FilterActions = observer(function FilterActions() {
-  const { recipeStore } = useStores()
-  const browseNavigation = useNavigation<BrowseNavigatorProps>()
+export const FilterActions = function FilterActions() {
+  // const { recipeStore } = useStores()
+
   return (
     <View className="fle flex-row justify-between items-center px-4 mt-auto py-6">
-      <View className="px-2 flex-1">
+      {/* <View className="px-2 flex-1">
         <Button
           label="Clear all"
           outline
@@ -34,7 +31,7 @@ export const FilterActions = observer(function FilterActions() {
             browseNavigation.navigate('FilteredRecipes', { categoryId: '' })
           }}
         />
-      </View>
+      </View> */}
     </View>
   )
-})
+}

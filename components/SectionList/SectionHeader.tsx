@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite'
 import React, { RefObject, createRef, useEffect, useMemo, useRef, useState } from 'react'
 import { FlatList, View, useWindowDimensions } from 'react-native'
 import Biglist from 'react-native-big-list'
@@ -18,7 +17,7 @@ export interface SectionHeaderProps {
 /**
  * A component that renders a list of section headers.
  */
-export const SectionHeader = observer(function SectionHeader({
+export const SectionHeader = function SectionHeader({
   sectionTitles,
   sectionListRef,
   activeIndex,
@@ -99,7 +98,6 @@ export const SectionHeader = observer(function SectionHeader({
                 }}
                 onPress={() => {
                   setIsNavScroll(true)
-                  console.log('onNavPress')
                   const sectionOffset =
                     sectionListRef?.current?.getItemOffset({
                       index: 0,
@@ -115,4 +113,4 @@ export const SectionHeader = observer(function SectionHeader({
       />
     </View>
   )
-})
+}

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { observer } from 'mobx-react-lite'
 import { Text } from '~/components/Text'
 import { SkeletonView } from '~/components/SkeletonView'
 
@@ -14,7 +13,7 @@ export interface HeadingProps {
 /**
  * Describe your component here
  */
-export const Heading = observer(function Heading({ h1, h2, h3, loading, children }: HeadingProps) {
+export const Heading = function Heading({ h1, h2, h3, loading, children }: HeadingProps) {
   return (
     <SkeletonView width={120} visible={!loading}>
       <Text h1={h1} h2={h2} h3={h3} styleClassName="mb-4">
@@ -22,4 +21,4 @@ export const Heading = observer(function Heading({ h1, h2, h3, loading, children
       </Text>
     </SkeletonView>
   )
-})
+}

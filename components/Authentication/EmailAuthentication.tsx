@@ -1,5 +1,4 @@
 import { api } from '~/services/api'
-import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { Alert, View } from 'react-native'
 
@@ -16,7 +15,7 @@ export interface EmailAuthenticationProps {
 /**
  * Describe your component here
  */
-export const EmailAuthentication = observer(function EmailAuthentication({
+export const EmailAuthentication = function EmailAuthentication({
   handleSuccessfulAuth,
 }: EmailAuthenticationProps) {
   const [email, setEmail] = useState('')
@@ -32,7 +31,7 @@ export const EmailAuthentication = observer(function EmailAuthentication({
 
     if (error) Alert.alert(error.message)
 
-    handleSuccessfulAuth()
+    handleSuccessfulAuth && handleSuccessfulAuth()
     setLoading(false)
   }
 
@@ -73,4 +72,4 @@ export const EmailAuthentication = observer(function EmailAuthentication({
       </View>
     </View>
   )
-})
+}

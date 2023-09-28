@@ -1,5 +1,4 @@
 import { colors } from '~/theme'
-import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import Animated, {
   Easing,
@@ -19,7 +18,7 @@ export interface RecipeFavouriteProps {
   isFavourite: boolean
 }
 
-export const RecipeFavourite = observer(function RecipeFavourite({
+export const RecipeFavourite = function RecipeFavourite({
   isFavourite,
   onDelete,
   onAdd,
@@ -71,4 +70,4 @@ export const RecipeFavourite = observer(function RecipeFavourite({
       />
     </Animated.View>
   )
-})
+}

@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client'
 import { Text } from '~/components'
 import { GET_INGREDIENT_DETAILS } from '~/graphql/queries/getIngredientDetails'
-import { observer } from 'mobx-react-lite'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
 
@@ -16,7 +15,7 @@ export interface IngredientDetailsProps {
 /**
  * A component that displays details for a specific ingredient
  */
-export const IngredientDetails = observer(function IngredientDetails({
+export const IngredientDetails = function IngredientDetails({
   ingredientId,
 }: IngredientDetailsProps) {
   const { data } = useQuery(GET_INGREDIENT_DETAILS, {
@@ -40,4 +39,4 @@ export const IngredientDetails = observer(function IngredientDetails({
       </View>
     </ScrollView>
   )
-})
+}

@@ -1,5 +1,4 @@
 import { shadowHeader } from '~/theme/shadows'
-import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 import { View, ViewStyle } from 'react-native'
 import Animated, {
@@ -69,10 +68,10 @@ export function FixedHeader({
   return (
     <View
       style={showTopInset ? topInset : {}}
-      className={
-        'absolute top-0 left-0 right-0 z-10 items-center flex-row px-5 justify-between',
-        styleClassName,
-      }
+      className={`
+        absolute top-0 left-0 right-0 z-10 items-center flex-row px-5 justify-between
+        ${styleClassName}
+      `}
     >
       <Animated.View
         className="top-0 left-0 right-0 bottom-0 absolute bg-white"

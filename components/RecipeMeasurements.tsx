@@ -1,25 +1,23 @@
 import * as React from 'react'
 import { View } from 'react-native'
-import { observer } from 'mobx-react-lite'
-import { Text } from '~/components/Text'
-import SegmentedControl from 'react-native-ui-lib/segmentedControl'
-import Switch from 'react-native-ui-lib/switch'
-import { useStores } from '~/models'
+// import SegmentedControl from 'react-native-ui-lib/segmentedControl'
+// import Switch from 'react-native-ui-lib/switch'
+// import { useStores } from '~/models'
 
 /**
  * A component that displays the recipe measurements and conversions.
  */
-export const RecipeMeasurements = observer(function RecipeMeasurements() {
-  const { recipeStore } = useStores()
+export const RecipeMeasurements = function RecipeMeasurements() {
+  // const { recipeStore } = useStores()
 
-  recipeStore.setDefaultMeasurements()
+  // recipeStore.setDefaultMeasurements()
 
-  const { units, availableJiggerSizes, setSelectedJiggerSize, doubleRecipe, setProp, setUnit } =
-    recipeStore?.measurements[0]
+  // const { units, availableJiggerSizes, setSelectedJiggerSize, doubleRecipe, setProp, setUnit } =
+  // recipeStore?.measurements[0]
 
   return (
     <View className="flex-row justify-between pb-6 mb-6 border-b-[1px] border-primary">
-      <View>
+      {/* <View>
         <Text h4 styleClassName="text-primary mb-2">
           Unit
         </Text>
@@ -50,7 +48,7 @@ export const RecipeMeasurements = observer(function RecipeMeasurements() {
           value={doubleRecipe}
           onValueChange={() => setProp('doubleRecipe', !doubleRecipe)}
         />
-      </View>
+      </View> */}
     </View>
   )
-})
+}

@@ -1,13 +1,11 @@
-import { observer } from 'mobx-react-lite'
 import * as React from 'react'
-import { useWindowDimensions } from 'react-native'
+import { useWindowDimensions, Image } from 'react-native'
 import Animated, {
   Extrapolation,
   SharedValue,
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated'
-import AnimatedImage from 'react-native-ui-lib/animatedImage'
 
 import { SkeletonView } from './SkeletonView'
 
@@ -23,7 +21,7 @@ export interface BouncyImageProps {
 /**
  * A component that renders an animated image that bounces as the user scrolls.
  */
-export const BouncyImage = observer(function BouncyImage({
+export const BouncyImage = function BouncyImage({
   height,
   scrollY,
   imageUrl,
@@ -33,12 +31,12 @@ export const BouncyImage = observer(function BouncyImage({
       className="aspect-square bg-neutral-300 w-full"
       style={[scrollY ? getBouncyTransform(scrollY, height) : {}, { height }]}
     >
-      <AnimatedImage
+      <Image
         height={height}
         width={useWindowDimensions().width}
         source={typeof imageUrl === 'string' ? { uri: imageUrl } : imageUrl}
         resizeMode="cover"
-        loader={<SkeletonView height={height} width={useWindowDimensions().width} />}
+        // loader={<SkeletonView height={height} width={useWindowDimensions().width} />}
       />
     </Animated.View>
   )
@@ -68,4 +66,4 @@ const getBouncyTransform = (scrollY: SharedValue<number>, headerHeight: number) 
     return {
       transform: [{ scale }, { translateY }],
     }
-  })
+  }

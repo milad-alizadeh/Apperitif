@@ -1,5 +1,4 @@
 import { api } from '~/services/api'
-import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import { Alert, View } from 'react-native'
 
@@ -14,10 +13,7 @@ export interface EmailSignUpProps {
 /**
  * Describe your component here
  */
-export const EmailSignUp = observer(function EmailSignUp({
-  email,
-  onSuccessfullAuth,
-}: EmailSignUpProps) {
+export const EmailSignUp = function EmailSignUp({ email, onSuccessfullAuth }: EmailSignUpProps) {
   const [localEmail, setLocalEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [name, setName] = useState('')
@@ -66,4 +62,4 @@ export const EmailSignUp = observer(function EmailSignUp({
       </View>
     </View>
   )
-})
+}

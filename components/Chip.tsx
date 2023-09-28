@@ -1,6 +1,5 @@
 import { useHaptic } from '~/hooks/useHaptics'
 import { colors } from '~/theme'
-import { observer } from 'mobx-react-lite'
 import * as React from 'react'
 import { Text, View } from 'react-native'
 
@@ -26,7 +25,7 @@ export interface ChipProps {
 /**
  * Describe your component here
  */
-export const Chip = observer(function Chip({ label, onDismiss, styleClassName }: ChipProps) {
+export const Chip = function Chip({ label, onDismiss, styleClassName }: ChipProps) {
   const haptic = useHaptic('light')
   return (
     <View className={`flex-row rounded-lg bg-primary items-center px-2 h-8 ${styleClassName}`}>
@@ -37,9 +36,9 @@ export const Chip = observer(function Chip({ label, onDismiss, styleClassName }:
         size="xsmall"
         onPress={() => {
           haptic()
-          onDismiss()
+          onDismiss && onDismiss()
         }}
       />
     </View>
   )
-})
+}

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { observer } from 'mobx-react-lite'
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ViewStyle } from 'react-native'
@@ -19,7 +18,7 @@ export interface SkeletonViewProps {
 /**
  * Describe your component here
  */
-export const SkeletonView = observer(function SkeletonView({
+export const SkeletonView = function SkeletonView({
   visible,
   children,
   style,
@@ -38,4 +37,4 @@ export const SkeletonView = observer(function SkeletonView({
       {children}
     </ShimmerPlaceholder>
   )
-})
+}

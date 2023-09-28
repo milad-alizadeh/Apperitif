@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import { Icon, Text } from '~/components'
 import { colors } from '~/theme'
-import { observer } from 'mobx-react-lite'
 import * as React from 'react'
 import { View } from 'react-native'
 
@@ -16,7 +15,7 @@ export interface HeaderProps {
 /**
  * Describe your component here
  */
-export const Header = observer(function Header({
+export const Header = function Header({
   title,
   backButton,
   onClose,
@@ -54,4 +53,4 @@ export const Header = observer(function Header({
       {rightElement}
     </View>
   )
-})
+}

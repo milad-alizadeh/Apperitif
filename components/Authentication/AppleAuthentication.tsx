@@ -7,16 +7,15 @@ import {
   isAvailableAsync,
   signInAsync,
 } from 'expo-apple-authentication'
-import { observer } from 'mobx-react-lite'
 import * as React from 'react'
 import { StyleProp, View, ViewStyle } from 'react-native'
 
 export interface AppleAuthenticationProps {}
 
-export const AppleAuthentication = observer(function AppleAuthentication() {
+export const AppleAuthentication = function AppleAuthentication() {
   return (
     <View>
-      {isAvailableAsync && (
+      {!!isAvailableAsync && (
         <AppleAuthenticationButton
           buttonType={AppleAuthenticationButtonType.CONTINUE}
           buttonStyle={AppleAuthenticationButtonStyle.BLACK}
@@ -51,7 +50,7 @@ export const AppleAuthentication = observer(function AppleAuthentication() {
       )}
     </View>
   )
-})
+}
 
 const $buttonStyle: StyleProp<Omit<ViewStyle, 'backgroundColor' | 'borderRadius'>> = {
   width: 240,

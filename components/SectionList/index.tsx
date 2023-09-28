@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite'
 import React, { useCallback, useRef, useState } from 'react'
 import { View, ViewToken, useWindowDimensions } from 'react-native'
 import BigList from 'react-native-big-list'
@@ -42,7 +41,7 @@ const ITEM_HEIGHT = 60
 /**
  *  A component used to show a list of items with sections.
  */
-export const SectionList = observer(function SectionList({
+export const SectionList = function SectionList({
   sectionsData,
   sectionsHeader,
   onSearch,
@@ -199,4 +198,4 @@ export const SectionList = observer(function SectionList({
       />
     </View>
   )
-})
+}

@@ -1,5 +1,4 @@
 import { api } from '~/services/api'
-import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import { Alert, View } from 'react-native'
 
@@ -13,7 +12,7 @@ export interface OtpEmailProps {
 /**
  * Describe your component here
  */
-export const OtpEmail = observer(function OtpEmail({ onEmailExists }: OtpEmailProps) {
+export const OtpEmail = function OtpEmail({ onEmailExists }: OtpEmailProps) {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [showName, setShowName] = useState(false)
@@ -110,4 +109,4 @@ export const OtpEmail = observer(function OtpEmail({ onEmailExists }: OtpEmailPr
       </View>
     </View>
   )
-})
+}
