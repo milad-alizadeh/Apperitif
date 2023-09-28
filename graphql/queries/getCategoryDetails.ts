@@ -1,4 +1,4 @@
-import { gql } from 'app/__generated__/gql'
+import { gql } from '~/__generated__/gql'
 
 export const GET_CATEGORY_DETAILS = gql(/* GraphQL */ `
   query getCategoryDetails($categoryId: UUID!) {

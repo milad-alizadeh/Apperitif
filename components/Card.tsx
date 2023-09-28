@@ -1,6 +1,5 @@
 import React, { memo } from 'react'
 import { Image, PixelRatio, TouchableOpacity, View } from 'react-native'
-
 import { Text } from './Text'
 
 export interface CardProps {

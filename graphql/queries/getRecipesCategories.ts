@@ -1,4 +1,4 @@
-import { gql } from 'app/__generated__'
+import { gql } from '~/__generated__'
 
 export const GET_RECIPES_CATEGORIES = gql(/* GraphQL */ `
   query getRecipesCategories(

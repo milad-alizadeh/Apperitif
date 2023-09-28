@@ -15,7 +15,7 @@ export interface ButtonProps {
 /**
  * Describe your component here
  */
-export default forwardRef(function Button(
+export const Button = forwardRef(function Button(
   { label, onPress, outline, styleClassName, large, enableHaptics, loading }: ButtonProps,
   ref: any,
 ) {

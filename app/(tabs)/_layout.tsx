@@ -38,13 +38,13 @@ export default function TabLayout() {
         },
       }}
     >
-      {/* <Tabs.Screen
-        name="Browse"
+      <Tabs.Screen
+        name="browse"
         options={{
           headerTitle: 'Browse',
           tabBarIcon: ({ color }) => <Icon icon="cocktail" color={color} />,
         }}
-      /> */}
+      />
 
       {/* <Tabs.Screen
         name="MyBar"

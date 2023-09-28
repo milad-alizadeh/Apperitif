@@ -14,7 +14,7 @@ interface TextProps {
   weight?: 'bold' | 'normal' | 'light' | 'medium'
 }
 
-export default function Text({
+export function Text({
   h1,
   h2,
   h3,

@@ -1,5 +1,5 @@
 import { ApolloError, useQuery } from '@apollo/client'
-import { GetFiltersQuery } from 'app/__generated__/graphql'
+import { GetFiltersQuery } from '~/__generated__/graphql'
 import { GET_CONTENT } from 'app/graphql/queries'
 import { GET_FILTERS } from 'app/graphql/queries/getFilters'
 import values from 'lodash/values'

@@ -1,7 +1,6 @@
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
-import { useColorScheme } from 'react-native'
 import { customFontsToLoad } from '../theme/typography'
 
 export {
@@ -11,7 +10,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: 'welcome',
+  initialRouteName: '(tabs)',
 }
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -39,12 +38,11 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme()
-
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack>
+      <Stack.Screen name="index" />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="welcome" />
-      <Stack.Screen name="(tabs)" />
       {/* 
       // <Stack.Screen name="MainTab"/>
 

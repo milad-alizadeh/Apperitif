@@ -1,8 +1,7 @@
 import React from 'react'
 import { Image, ImageBackground, ImageStyle, View, ViewStyle } from 'react-native'
-
-import Button from '../components/Button'
-import Text from '../components/Text'
+import { Button } from '../components/Button'
+import { Text } from '../components/Text'
 import { useSafeAreaInsetsStyle } from '../utils/useSafeAreaInsetsStyle'
 import { Link } from 'expo-router'
 
@@ -28,7 +27,7 @@ export default function WelcomeScreen() {
           Find amazing cocktail recipes for any occassion.
         </Text>
         <View className="flex flex-row">
-          <Link href={'/browse/home'} asChild>
+          <Link href={'/browse'} asChild>
             <Button label={'Get started'} />
           </Link>
         </View>

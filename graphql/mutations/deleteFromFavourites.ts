@@ -1,4 +1,4 @@
-import { gql } from 'app/__generated__/gql'
+import { gql } from '~/__generated__/gql'
 
 export const DELETE_FROM_FAVOURITES = gql(/* GraphQL */ `
   mutation deleteFromFavourites($recipeId: UUID!, $profileId: UUID!) {

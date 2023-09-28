@@ -1,4 +1,4 @@
-import { GetRecipeDetailsQuery } from 'app/__generated__/graphql'
+import { GetRecipeDetailsQuery } from '~/__generated__/graphql'
 import { observer } from 'mobx-react-lite'
 import * as React from 'react'
 import { View } from 'react-native'

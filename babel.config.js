@@ -3,9 +3,16 @@ module.exports = function (api) {
   return {
     presets: ['babel-preset-expo'],
     plugins: [
-      // Required for expo-router
       'expo-router/babel',
       'nativewind/babel',
+      // Required for expo-router
+      [
+        'babel-plugin-root-import',
+        {
+          rootPathSuffix: './',
+          rootPathPrefix: '@/',
+        },
+      ],
     ],
   }
 }
