@@ -86,9 +86,9 @@ export function Icon(props: IconProps) {
       accessibilityRole={isPressable ? 'imagebutton' : undefined}
       {...WrapperProps}
       className={`${styleClassNameBySize[size]} ${containerClassName}`}
-      onPress={() => {
+      onPress={(e) => {
         if (WrapperProps.enableHaptics) haptic()
-        WrapperProps.onPress && WrapperProps.onPress()
+        WrapperProps.onPress && WrapperProps.onPress(e)
       }}
     >
       <Image

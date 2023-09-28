@@ -2,7 +2,6 @@ import humps from 'lodash-humps'
 import debounce from 'lodash/debounce'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { useStores } from '../models'
 import { api } from '../services/api'
 
 /**
@@ -11,7 +10,7 @@ import { api } from '../services/api'
  * @returns {Object} - Contains recipes, pageInfo, loading state, error, refreshing state, and functions for manual refresh and loading more recipes.
  */
 export const useFetchRecipes = (initialCategoryId: string) => {
-  const { recipeStore } = useStores()
+  // const { recipeStore } = useStores()
 
   const [recipes, setRecipes] = useState([])
   const [pageInfo, setPageInfo] = useState(null)
@@ -20,6 +19,13 @@ export const useFetchRecipes = (initialCategoryId: string) => {
   const [error, setError] = useState(null)
   const [pageNumber, setPageNumber] = useState(1)
   const pageSize = 20
+
+  const recipeStore = {
+    searchQuery: '',
+    selectedFilters: [],
+    clearFilters: () => {},
+    addFilter: (categoryId: string) => {},
+  }
 
   // On mount, clear any existing filters and set the initial category filter
   useEffect(() => {

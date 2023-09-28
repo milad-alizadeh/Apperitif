@@ -4,8 +4,8 @@ import BigList from 'react-native-big-list'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { BouncyImage, Button, SearchBar, Text } from '../../components'
-import { shadowCard, shadowHeader } from '../../theme/shadows'
+import { BouncyImage, Button, SearchBar, Text } from '~/components'
+import { shadowCard, shadowHeader } from '~/theme/shadows'
 import { SectionHeader } from './SectionHeader'
 
 export interface SectionDataType {
@@ -108,7 +108,7 @@ export const SectionList = function SectionList({
         <View className="scale-125 -translate-y-8" style={{ top: FIXED_HEADER_HEIGHT }}>
           <BouncyImage
             height={defaultHeaderHeight}
-            imageUrl={require('../../../assets/images/whiskey-bottle.jpg')}
+            imageUrl={require('~/assets/images/whiskey-bottle.jpg')}
           />
         </View>
 

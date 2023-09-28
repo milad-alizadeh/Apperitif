@@ -9,7 +9,7 @@ export interface BadgeProps {
 /**
  * Describe your component here
  */
-export default function Badge({ label, styleClassName }: BadgeProps) {
+export function Badge({ label, styleClassName }: BadgeProps) {
   return (
     <View
       className={`w-6 h-6 bg-primary rounded-full items-center justify-center ${styleClassName}`}

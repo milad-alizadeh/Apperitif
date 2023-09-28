@@ -12,7 +12,7 @@
     "compile": "tsc --noEmit -p . --pretty",
     "expo:doctor": "npx expo-doctor@latest",
     "expo:fix": "npx expo install --fix",
-    "generate:types": "npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > app/types/supabase.ts"
+    "generate:types": "npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > types/supabase.ts"
   },
   "jest": {
     "preset": "jest-expo"
@@ -51,9 +51,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@babel/plugin-transform-export-namespace-from": "^7.22.11",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/client-preset": "^4.1.0",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
+    "@types/jest": "^29.5.5",
     "@types/lodash": "^4.14.199",
     "@types/react": "~18.2.14",
     "babel-plugin-root-import": "^6.6.0",

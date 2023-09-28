@@ -1,6 +1,4 @@
 import { Stack } from 'expo-router'
-import { View } from 'react-native'
-import Text from '../../../components/Text'
 
 export default function Browse() {
   return (

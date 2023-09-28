@@ -21,11 +21,7 @@ export interface BouncyImageProps {
 /**
  * A component that renders an animated image that bounces as the user scrolls.
  */
-export const BouncyImage = function BouncyImage({
-  height,
-  scrollY,
-  imageUrl,
-}: BouncyImageProps) {
+export const BouncyImage = function BouncyImage({ height, scrollY, imageUrl }: BouncyImageProps) {
   return (
     <Animated.View
       className="aspect-square bg-neutral-300 w-full"
@@ -40,7 +36,7 @@ export const BouncyImage = function BouncyImage({
       />
     </Animated.View>
   )
-})
+}
 
 /**
  * Returns an animated style object that applies a bouncy transform to the image as the user scrolls.
@@ -66,4 +62,4 @@ const getBouncyTransform = (scrollY: SharedValue<number>, headerHeight: number) 
     return {
       transform: [{ scale }, { translateY }],
     }
-  }
+  })

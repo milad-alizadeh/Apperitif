@@ -6,7 +6,7 @@ export interface CardProps {
   imageUrl: string
   name: string
   id: string
-  onPress: () => void
+  onPress?: () => void
   styleClassName?: string
   wide?: boolean
   half?: boolean
