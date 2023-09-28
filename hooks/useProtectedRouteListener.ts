@@ -1,5 +1,5 @@
 import { EventArg } from '@react-navigation/native'
-import { useSession } from 'app/hooks/useSession'
+import { useSession } from '../hooks/useSession'
 
 export const useProtectedListener = () => {
   const { isLoggedIn } = useSession()

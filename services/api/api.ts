@@ -16,7 +16,7 @@ const ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY
 const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL
 const URI = `${SUPABASE_URL}/graphql/v1`
 
-export class Api {
+class Api {
   supabase: SupabaseClient<Database>
   storage: SupabaseClient<Database>['storage']
   apolloClient: ApolloClient<NormalizedCacheObject>
@@ -78,4 +78,5 @@ const ExpoSecureStoreAdapter = {
   removeItem: (key: string) => SecureStore.deleteItemAsync(key),
 }
 
-export const api = new Api()
+const api = new Api()
+export default api

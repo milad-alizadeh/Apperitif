@@ -25,5 +25,5 @@ export const useHaptic = (feedbackType: FeedbackType = 'selection') => {
     [createHapticHandler, createNotificationFeedback],
   )
 
-  return hapticHandlers[feedbackType]
+  return hapticHandlers[feedbackType] || (() => {})
 }

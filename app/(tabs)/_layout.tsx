@@ -1,10 +1,10 @@
-import Icon from '../../components/Icon'
 import { useProtectedListener } from '../../hooks/useProtectedRouteListener'
-import colors from '../../theme/colors'
+import Icon from '../../components/Icon'
 import { shadowLarge } from '../../theme/shadows'
-import React from 'react'
+import colors from '../../theme/colors'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Tabs } from 'expo-router'
+import React from 'react'
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets()
@@ -17,7 +17,9 @@ export default function TabLayout() {
       screenOptions={{
         headerTintColor: colors?.neutral[800],
         headerShown: false,
-        headerStyle: { backgroundColor: colors.white },
+        headerStyle: {
+          backgroundColor: colors.white,
+        },
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.neutral[500],
         tabBarItemStyle: {
