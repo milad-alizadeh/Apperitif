@@ -56,7 +56,7 @@ interface IconProps extends TouchableOpacityProps {
  *
  * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Icon.md)
  */
-export function Icon(props: IconProps) {
+export default function Icon(props: IconProps) {
   const {
     icon,
     color,

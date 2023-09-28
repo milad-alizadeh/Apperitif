@@ -1,4 +1,4 @@
-import { typography } from '../theme'
+import typography from '../theme/typography'
 import React from 'react'
 import { Text as RNText, TextStyle } from 'react-native'
 

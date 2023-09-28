@@ -1,54 +1,71 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome'
-import { Link, Tabs } from 'expo-router'
-import { Pressable, useColorScheme } from 'react-native'
-
-import Colors from '../../constants/Colors'
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name']
-  color: string
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />
-}
+import Icon from '../../components/Icon'
+import { useProtectedListener } from '../../hooks/useProtectedRouteListener'
+import colors from '../../theme/colors'
+import { shadowLarge } from '../../theme/shadows'
+import React from 'react'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Tabs } from 'expo-router'
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme()
+  const insets = useSafeAreaInsets()
+
+  const { protectedRoute } = useProtectedListener()
 
   return (
     <Tabs
+      initialRouteName="Browse"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        headerTintColor: colors?.neutral[800],
+        headerShown: false,
+        headerStyle: { backgroundColor: colors.white },
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.neutral[500],
+        tabBarItemStyle: {
+          paddingVertical: 12,
+        },
+        tabBarStyle: {
+          borderTopWidth: 0,
+          backgroundColor: colors.white,
+          height: 72 + insets.bottom,
+          ...shadowLarge,
+        },
+        tabBarLabelStyle: {
+          marginTop: 8,
+          fontSize: 12,
+          fontWeight: 'bold',
+        },
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="Browse"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+          headerTitle: 'Browse',
+          tabBarIcon: ({ color }) => <Icon icon="cocktail" color={color} />,
         }}
       />
+
       <Tabs.Screen
-        name="two"
+        name="MyBar"
+        listeners={protectedRoute}
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerTitle: 'My Bar',
+          tabBarIcon: ({ color }) => <Icon icon="bar" color={color} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="Favourites"
+        listeners={protectedRoute}
+        options={{
+          tabBarIcon: ({ color }) => <Icon icon="bookmark" color={color} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="Profile"
+        listeners={protectedRoute}
+        options={{
+          tabBarIcon: ({ color }) => <Icon icon="user" color={color} />,
         }}
       />
     </Tabs>

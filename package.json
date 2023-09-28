@@ -91,6 +91,21 @@
         "pragma": "React",
         "version": "detect"
       }
+    },
+    "globals": {
+      "__DEV__": false,
+      "beforeAll": false,
+      "afterAll": false,
+      "beforeEach": false,
+      "afterEach": false,
+      "test": false,
+      "expect": false,
+      "describe": false,
+      "jest": false,
+      "it": false
+    },
+    "rules": {
+      "no-undef": 0
     }
   },
   "overrides": {

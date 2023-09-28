@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useEffect, useState } from 'react'
 import { TextInput, TextInputProps, View } from 'react-native'
 
-import { Text } from './Text'
+import Text from './Text'
 
 export interface TextFieldProps {
   /**

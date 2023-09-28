@@ -1,9 +1,8 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
 import { useColorScheme } from 'react-native'
-import { customFontsToLoad } from '../theme'
+import { customFontsToLoad } from '../theme/typography'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -43,11 +42,10 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme()
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="Welcome" />
-        {/* 
-      <Stack.Screen name="MainTab"/>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Welcome" />
+      {/* 
+      // <Stack.Screen name="MainTab"/>
 
       <Stack.Screen name="RecipeDetails" />
 
@@ -58,7 +56,6 @@ function RootLayoutNav() {
         component={AuthNavigator}
         options={{ presentation: 'modal' }}
       /> */}
-      </Stack>
-    </ThemeProvider>
+    </Stack>
   )
 }

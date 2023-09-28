@@ -4,10 +4,10 @@
 import { Platform } from 'react-native'
 
 export const customFontsToLoad = {
-  interLight: require('../../assets/fonts/Inter-Light.ttf'),
-  interRegular: require('../../assets/fonts/Inter-Regular.ttf'),
-  interMedium: require('../../assets/fonts/Inter-Medium.ttf'),
-  interBold: require('../../assets/fonts/Inter-Bold.ttf'),
+  interLight: require('../assets/fonts/Inter-Light.ttf'),
+  interRegular: require('../assets/fonts/Inter-Regular.ttf'),
+  interMedium: require('../assets/fonts/Inter-Medium.ttf'),
+  interBold: require('../assets/fonts/Inter-Bold.ttf'),
 }
 
 const fonts = {
@@ -35,7 +35,7 @@ const fonts = {
   },
 }
 
-export const typography = {
+export default {
   /**
    * The fonts are available to use, but prefer using the semantic name.
    */

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Image, ImageBackground, ImageStyle, View, ViewStyle } from 'react-native'
 
 import Button from '../components/Button'
