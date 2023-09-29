@@ -56,6 +56,14 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
+        name="favourites"
+        listeners={protectedRoute}
+        options={{
+          tabBarIcon: ({ color }) => <Icon icon="bookmark" color={color} />,
+        }}
+      />
+
+      <Tabs.Screen
         name="profile"
         listeners={protectedRoute}
         options={{
@@ -63,17 +71,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <Icon icon="user" color={color} />,
         }}
       />
-      {/* 
-
-      <Tabs.Screen
-        name="Favourites"
-        listeners={protectedRoute}
-        options={{
-          tabBarIcon: ({ color }) => <Icon icon="bookmark" color={color} />,
-        }}
-      />
-
-*/}
     </Tabs>
   )
 }

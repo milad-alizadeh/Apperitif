@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { SectionDataType, SectionHeaderType } from '~/components'
 import { GET_INGREDIENTS_CATEGORIES } from '~/graphql/queries/getIngtedientsCategories'
@@ -37,7 +37,6 @@ export function useIngredients() {
   }, [searchQuery])
 
   // Get ingredients categories
-
   const { data } = useQuery(GET_INGREDIENTS_CATEGORIES, {
     fetchPolicy: 'network-only',
   })
