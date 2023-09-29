@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { Alert, View } from 'react-native'
 import { Button, Header, Screen, TextField } from '~/components'
@@ -16,6 +16,7 @@ export default function AuthOtpEmailScreen({ route }) {
     setName('')
   }, [])
 
+  // Check if email exist and if not add an email
   const checkIfEmailExist = async () => {
     setLoading(true)
 
@@ -36,6 +37,7 @@ export default function AuthOtpEmailScreen({ route }) {
     setLoading(false)
   }
 
+  // Send OTP to user
   const sendOtp = async () => {
     setLoading(true)
     const { error } = await api.supabase.auth.signInWithOtp({
@@ -47,18 +49,19 @@ export default function AuthOtpEmailScreen({ route }) {
 
     if (error) {
       Alert.alert(error.message)
-    } else {
-      checkIfEmailExist()
     }
+
+    router.push({ pathname: '/auth/otp-verify', params: { attemptedRoute, email } })
 
     setLoading(false)
   }
 
+  // Sign up user
   const signup = async () => {
     setLoading(true)
     const { error } = await api.supabase.auth.signUp({
       email,
-      password: Math.random().toString(36).slice(-8),
+      password: Math.random().toString(36).slice(-16),
       options: {
         data: {
           email,

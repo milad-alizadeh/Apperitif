@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client'
-import { useNavigation } from '@react-navigation/native'
 import { router } from 'expo-router'
 import groupBy from 'lodash/groupBy'
 import values from 'lodash/values'
@@ -9,7 +8,6 @@ import { GetCategoriesQuery } from '~/__generated__/graphql'
 import { CardProps, Header, HorizontalList, Icon, Screen, Text, VerticalList } from '~/components'
 import { GET_CATEGORIES, GET_CONTENT } from '~/graphql/queries'
 import { colors } from '~/theme/colors'
-import mapRecipes from '~/utils/mapRecipes'
 
 interface ListType {
   listItems: CardProps[]
@@ -36,8 +34,6 @@ export default function BrowseHomeScreen() {
     variables: { ids: categoryIds },
     skip: !categoryIds.length,
   })
-
-  const navigation = useNavigation()
 
   const getListProps = (
     edge: GetCategoriesQuery['categoriesCollection']['edges'][number],
@@ -94,7 +90,7 @@ export default function BrowseHomeScreen() {
         <Icon
           icon="search"
           // onPress={() => navigation.navigate('FilteredRecipes', { categoryId: '' })}
-          onPress={() => router.push('/auth')}
+          onPress={() => router.push({ pathname: '/auth', params: { attemptedRoute: '/' } })}
           size="large"
           containerClassName="absolute right-5 top-0"
           color={colors.neutral[800]}

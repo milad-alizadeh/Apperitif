@@ -1,3 +1,4 @@
+import { useLocalSearchParams } from 'expo-router'
 import React, { useState } from 'react'
 import { Alert, TouchableOpacity, View } from 'react-native'
 import { Button, Header, Screen, Text, TextField } from '~/components'
@@ -5,7 +6,10 @@ import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
 
 export default function AuthOtpVerifyScreen({ route }) {
-  const { attemptedRoute, email } = route.params || {}
+  const { attemptedRoute, email } = useLocalSearchParams() as {
+    attemptedRoute: string
+    email: string
+  }
   const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
 
   const [loading, setLoading] = useState(false)
@@ -49,7 +53,6 @@ export default function AuthOtpVerifyScreen({ route }) {
     <Screen preset="scroll">
       <Header verticalPadding title="Enter code" backButton />
       <View className="p-6">
-        <OtpVerify email={email} onSuccessfullAuth={handleSuccessfulAuth} />
         <View>
           <View className="mb-4">
             <Text styleClassName="mb-4" body>

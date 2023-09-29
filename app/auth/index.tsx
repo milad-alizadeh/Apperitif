@@ -1,13 +1,14 @@
 import { router } from 'expo-router'
+import { useLocalSearchParams } from 'expo-router'
 import React, { FC } from 'react'
 import { Image, TouchableOpacity, View } from 'react-native'
 import { AppleAuthentication, Icon, Text } from '~/components'
 
-export default function AuthHomeScreen({ route }) {
-  const { attemptedRoute } = route.params || {}
+export default function AuthHomeScreen() {
+  const { attemptedRoute } = useLocalSearchParams()
 
   return (
-    <View className="flex-1 p-6">
+    <View className="flex-1 p-6 bg-white">
       <Icon
         icon="close"
         containerClassName="absolute top-6 right-6"
@@ -35,9 +36,7 @@ export default function AuthHomeScreen({ route }) {
         <View className="items-center">
           <TouchableOpacity
             className="p-1"
-            onPress={() =>
-              router.push({ pathname: '/auth/otp-verify', params: { attemptedRoute } })
-            }
+            onPress={() => router.push({ pathname: '/auth/otp-email', params: { attemptedRoute } })}
           >
             <Text body styleClassName="text-neutral-800 font-bold underline underline-offset-3">
               Continue with Email

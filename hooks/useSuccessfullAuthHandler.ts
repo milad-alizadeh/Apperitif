@@ -1,13 +1,14 @@
+import { router } from 'expo-router'
+
 export const useSuccessfullAuthHandler = (attemptedRoute) => {
-  // const navigation = useNavigation()
-  // const handleSuccessfulAuth = () => {
-  //   if (attemptedRoute) {
-  //     navigation.navigate(attemptedRoute)
-  //   } else {
-  //     navigation.navigate('BrowseHome')
-  //   }
-  // }
-  // return {
-  //   handleSuccessfulAuth,
-  // }
+  const handleSuccessfulAuth = () => {
+    if (attemptedRoute) {
+      router.push(attemptedRoute)
+    } else {
+      router.push('/browse')
+    }
+  }
+  return {
+    handleSuccessfulAuth,
+  }
 }
