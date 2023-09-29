@@ -16,7 +16,7 @@ export const FilterActions = function FilterActions() {
           outline
           enableHaptics
           onPress={() => {
-            clearFilters(true)
+            clearFilters(false)
             router.push({ pathname: '/(tabs)/browse/recipes', params: { categoryIds: [] } })
           }}
         />
