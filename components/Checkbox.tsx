@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { colors } from '~/theme/colors'
-
 import { Icon } from './Icon'
 
 export interface CheckboxProps {

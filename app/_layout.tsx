@@ -47,6 +47,7 @@ function RootLayoutNav() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="welcome" />
         <Stack.Screen name="recipe" />
+        <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
         {/* 
       // <Stack.Screen name="MainTab"/>
 

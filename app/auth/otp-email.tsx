@@ -1,10 +1,11 @@
+import { useLocalSearchParams } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { Alert, View } from 'react-native'
 import { Button, Header, Screen, TextField } from '~/components'
 import { api } from '~/services/api'
 
 export default function AuthOtpEmailScreen({ route }) {
-  const { attemptedRoute } = route.params || {}
+  const { attemptedRoute } = useLocalSearchParams()
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [showName, setShowName] = useState(false)

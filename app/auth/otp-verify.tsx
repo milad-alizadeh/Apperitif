@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Alert, TouchableOpacity, View } from 'react-native'
-import { Button, Header, OtpVerify, Screen, Text, TextField } from '~/components'
+import { Button, Header, Screen, Text, TextField } from '~/components'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
 
