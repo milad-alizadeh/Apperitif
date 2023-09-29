@@ -55,6 +55,14 @@ export default function TabLayout() {
         }}
       />
 
+      <Tabs.Screen
+        name="profile"
+        listeners={protectedRoute}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color }) => <Icon icon="user" color={color} />,
+        }}
+      />
       {/* 
 
       <Tabs.Screen
@@ -65,13 +73,7 @@ export default function TabLayout() {
         }}
       />
 
-      <Tabs.Screen
-        name="Profile"
-        listeners={protectedRoute}
-        options={{
-          tabBarIcon: ({ color }) => <Icon icon="user" color={color} />,
-        }}
-      /> */}
+*/}
     </Tabs>
   )
 }
