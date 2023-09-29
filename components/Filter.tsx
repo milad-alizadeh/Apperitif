@@ -21,6 +21,7 @@ export const Filter = function Filter({ styleClassName, autofocus }: FilterProps
 
   const { data, error } = useFetchFilters()
 
+  const selectedFilters = []
   // const selectedFilters = useMemo(
   //   () =>
   //     flattenDeep(
@@ -33,12 +34,12 @@ export const Filter = function Filter({ styleClassName, autofocus }: FilterProps
 
   return (
     <View className={styleClassName}>
-      {/* <View className="flex-row bg-white rounded-lg mx-6" style={{ ...shadowCard }}>
+      <View className="flex-row bg-white rounded-lg mx-6" style={{ ...shadowCard }}>
         <Text>{error?.message}</Text>
 
         <SearchBar
           onChange={(value) => {
-            recipeStore.setProp('searchQuery', value)
+            // recipeStore.setProp('searchQuery', value)
             setSearchQuery(value)
           }}
           autofocus={autofocus}
@@ -49,23 +50,23 @@ export const Filter = function Filter({ styleClassName, autofocus }: FilterProps
           containerClassName="bg-neutral-100 rounded-r-lg"
           color={colors.neutral[500]}
           onPress={() => {
-            recipeStore.setupDraftFilters()
-            navigation.navigate('Filters')
+            // recipeStore.setupDraftFilters()
+            // navigation.navigate('Filters')
           }}
         />
-        {!!recipeStore.selectedFilters.length && (
+        {/* {!!recipeStore.selectedFilters.length && (
           <Badge
             styleClassName="absolute -right-3 -top-3"
             label={`${recipeStore.selectedFilters.length}`}
           />
-        )}
+        )} */}
       </View>
 
       <FilterChips
         styleClassName="mt-3"
         categories={selectedFilters}
-        onDismiss={(id) => recipeStore.removeFilter(id)}
-      /> */}
+        // onDismiss={(id) => recipeStore.removeFilter(id)}
+      />
     </View>
   )
 }
