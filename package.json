@@ -12,7 +12,9 @@
     "compile": "tsc --noEmit -p . --pretty",
     "expo:doctor": "npx expo-doctor@latest",
     "expo:fix": "npx expo install --fix",
-    "generate:types": "npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > types/supabase.ts"
+    "generate:types": "npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > types/supabase.ts",
+    "generate:gql": "graphql-codegen",
+    "generate:gqlwatch": "graphql-codegen -w"
   },
   "jest": {
     "preset": "jest-expo"
