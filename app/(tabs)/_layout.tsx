@@ -46,14 +46,15 @@ export default function TabLayout() {
         }}
       />
 
-      {/* <Tabs.Screen
-        name="MyBar"
+      <Tabs.Screen
+        name="my-bar"
         listeners={protectedRoute}
         options={{
-          headerTitle: 'My Bar',
+          tabBarLabel: 'My Bar',
           tabBarIcon: ({ color }) => <Icon icon="bar" color={color} />,
         }}
       />
+      {/* 
 
       <Tabs.Screen
         name="Favourites"
