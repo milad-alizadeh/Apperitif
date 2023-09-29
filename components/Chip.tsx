@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Text, View } from 'react-native'
 import { useHaptic } from '~/hooks/useHaptics'
 import { colors } from '~/theme'
-import { Icon } from './Icon'
+import { Icon } from '.'
 
 export interface ChipProps {
   /**

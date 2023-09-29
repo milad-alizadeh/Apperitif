@@ -76,10 +76,11 @@
     "singleQuote": true,
     "trailingComma": "all",
     "importOrder": [
-      "^@core/(.*)$",
-      "^@server/(.*)$",
-      "^@ui/(.*)$",
+      "^~/(.*)$",
       "^[./]"
+    ],
+    "plugins": [
+      "@trivago/prettier-plugin-sort-imports"
     ],
     "importOrderSeparation": false,
     "importOrderSortSpecifiers": true
