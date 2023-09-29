@@ -41,7 +41,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="browse"
         options={{
-          headerTitle: 'Browse',
+          tabBarLabel: 'Browse',
           tabBarIcon: ({ color }) => <Icon icon="cocktail" color={color} />,
         }}
       />

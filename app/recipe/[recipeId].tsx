@@ -20,10 +20,11 @@ import { ADD_TO_FAVOURITES } from '~/graphql/mutations/addToFavourite'
 import { GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
+import { useLocalSearchParams, router } from 'expo-router'
 
 const RecipeTabsLazy = React.lazy(() => import('~/components/RecipeTabs'))
 
-export const RecipeDetailsScreen = ({ route, navigation }) => {
+export default function RecipeDetailsScreen() {
   const bottomOffset = useSafeAreaInsetsStyle(['bottom'])
   const [ingredientId, setIngredientId] = useState<string>('')
   const modalRef = useRef<BottomSheetRef>(null)
@@ -31,12 +32,13 @@ export const RecipeDetailsScreen = ({ route, navigation }) => {
   const scrollY = useScrollViewOffset(aref)
   const { user, isLoggedIn } = useSession()
   const client = useApolloClient()
+  const { recipeId } = useLocalSearchParams()
 
   const headerHeight = useWindowDimensions().width
   const fixedHeaderOffset = headerHeight - 110
 
   const { data, error, loading, refetch } = useQuery(GET_RECIPE_DETAILS, {
-    variables: { recipeId: route.params.recipeId },
+    variables: { recipeId },
     fetchPolicy: 'cache-and-network',
   })
 
@@ -84,7 +86,7 @@ export const RecipeDetailsScreen = ({ route, navigation }) => {
         scrollY={scrollY}
         offset={fixedHeaderOffset}
         title={recipe?.name}
-        onGoBack={() => navigation.goBack()}
+        onGoBack={() => router.back()}
         showTopInset
         rightElement={
           recipe &&

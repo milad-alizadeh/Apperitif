@@ -42,9 +42,9 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <ApolloProvider client={api.apolloClient}>
-      <Stack>
+      <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" />
         <Stack.Screen name="welcome" />
         <Stack.Screen name="recipe" />
         {/* 
