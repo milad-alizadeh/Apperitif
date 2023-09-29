@@ -1,7 +1,6 @@
-import { colors } from '~/theme'
 import * as React from 'react'
 import { FlatList, View } from 'react-native'
-
+import { colors } from '~/theme'
 import { Card, CardProps, Icon, Text } from '.'
 
 export interface HorizontalListProps {

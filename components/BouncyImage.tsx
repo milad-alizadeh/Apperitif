@@ -1,12 +1,11 @@
 import * as React from 'react'
-import { useWindowDimensions, Image } from 'react-native'
+import { Image, useWindowDimensions } from 'react-native'
 import Animated, {
   Extrapolation,
   SharedValue,
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated'
-
 import { SkeletonView } from './SkeletonView'
 
 export interface BouncyImageProps {

@@ -1,10 +1,10 @@
-import { useProtectedListener } from '~/hooks/useProtectedRouteListener'
-import { Icon } from '~/components/Icon'
-import { shadowLarge } from '~/theme/shadows'
-import { colors } from '~/theme/colors'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Tabs } from 'expo-router'
 import React from 'react'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Icon } from '~/components/Icon'
+import { useProtectedListener } from '~/hooks/useProtectedRouteListener'
+import { colors } from '~/theme/colors'
+import { shadowLarge } from '~/theme/shadows'
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets()

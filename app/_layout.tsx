@@ -1,9 +1,9 @@
+import { ApolloProvider } from '@apollo/client'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
-import { customFontsToLoad } from '../theme/typography'
-import { ApolloProvider } from '@apollo/client'
 import { api } from '~/services/api'
+import { customFontsToLoad } from '../theme/typography'
 
 export {
   // Catch any errors thrown by the Layout component.

@@ -1,4 +1,5 @@
 import { GetRecipesCategoriesQuery } from '~/__generated__/graphql'
+
 export default (
   {
     node: {

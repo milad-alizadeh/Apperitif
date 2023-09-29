@@ -9,7 +9,6 @@ import { setContext } from '@apollo/client/link/context'
 import { SupabaseClient, createClient } from '@supabase/supabase-js'
 import * as SecureStore from 'expo-secure-store'
 import 'react-native-url-polyfill/auto'
-
 import { Database } from '../../types/supabase'
 
 const ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY

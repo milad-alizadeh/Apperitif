@@ -1,6 +1,6 @@
 import { Session } from '@supabase/supabase-js'
-import { api } from '../services/api'
 import React, { ReactNode, createContext, useEffect, useState } from 'react'
+import { api } from '../services/api'
 
 export const SessionContext = createContext<Session | null>(null)
 

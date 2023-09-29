@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Text } from '~/components/Text'
 import { SkeletonView } from '~/components/SkeletonView'
+import { Text } from '~/components/Text'
 
 export interface HeadingProps {
   h1?: boolean

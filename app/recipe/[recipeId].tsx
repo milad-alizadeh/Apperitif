@@ -1,4 +1,8 @@
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
+import { router, useLocalSearchParams } from 'expo-router'
+import React, { FC, Suspense, useCallback, useRef, useState } from 'react'
+import { ActivityIndicator, View, useWindowDimensions } from 'react-native'
+import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated'
 import {
   BottomSheet,
   BottomSheetRef,
@@ -9,18 +13,13 @@ import {
   RecipeFavourite,
   Text,
 } from '~/components'
+import { ADD_TO_FAVOURITES } from '~/graphql/mutations/addToFavourite'
 import { DELETE_FROM_FAVOURITES } from '~/graphql/mutations/deleteFromFavourites'
+import { GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { GET_FAVOURITES } from '~/graphql/queries/getFavourites'
 import { useSession } from '~/hooks/useSession'
-import React, { FC, Suspense, useCallback, useRef, useState } from 'react'
-import { ActivityIndicator, View, useWindowDimensions } from 'react-native'
-import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated'
-
-import { ADD_TO_FAVOURITES } from '~/graphql/mutations/addToFavourite'
-import { GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
-import { useLocalSearchParams, router } from 'expo-router'
 
 const RecipeTabsLazy = React.lazy(() => import('~/components/RecipeTabs'))
 

@@ -1,13 +1,13 @@
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import { Modal, TouchableOpacity, View } from 'react-native'
 import Animated, {
+  Easing,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-  Easing,
 } from 'react-native-reanimated'
-import { Modal, TouchableOpacity, View } from 'react-native'
-import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
 import { shadowLarge } from '~/theme/shadows'
+import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
 
 export interface BottomSheetRef {
   show: () => void

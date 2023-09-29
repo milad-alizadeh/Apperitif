@@ -1,6 +1,6 @@
-import { useHaptic } from '../hooks/useHaptics'
 import React, { forwardRef } from 'react'
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native'
+import { useHaptic } from '../hooks/useHaptics'
 
 export interface ButtonProps {
   label: string

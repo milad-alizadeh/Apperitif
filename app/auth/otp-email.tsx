@@ -1,8 +1,6 @@
-import { Header, OtpEmail, Screen } from '~/components'
+import { Button, Header, Screen, TextField } from '~/components'
 import React, { useEffect, useState } from 'react'
-import { View, Alert } from 'react-native'
-import { Button } from '~/components/Button'
-import { TextField } from '~/components/TextField'
+import { Alert, View } from 'react-native'
 import { api } from '~/services/api'
 
 export default function AuthOtpEmailScreen({ route }) {

@@ -1,6 +1,6 @@
-import { colors } from '~/theme/colors'
 import React, { useEffect, useState } from 'react'
 import { TextInput, TextInputProps, View } from 'react-native'
+import { colors } from '~/theme/colors'
 import { Text } from './Text'
 
 export interface TextFieldProps {

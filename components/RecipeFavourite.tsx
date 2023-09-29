@@ -1,4 +1,3 @@
-import { colors } from '~/theme'
 import React, { useEffect, useState } from 'react'
 import Animated, {
   Easing,
@@ -6,7 +5,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
-
+import { colors } from '~/theme'
 import { Icon } from './Icon'
 
 export interface RecipeFavouriteProps {

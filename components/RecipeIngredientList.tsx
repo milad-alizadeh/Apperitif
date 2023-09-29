@@ -1,7 +1,6 @@
-import { GetRecipeDetailsQuery } from '~/__generated__/graphql'
 import * as React from 'react'
 import { View } from 'react-native'
-
+import { GetRecipeDetailsQuery } from '~/__generated__/graphql'
 import { ListItem } from './ListItem'
 
 /**

@@ -2,7 +2,6 @@ import React, { RefObject, createRef, useEffect, useMemo, useRef, useState } fro
 import { FlatList, View, useWindowDimensions } from 'react-native'
 import Biglist from 'react-native-big-list'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-
 import { SectionHeaderItem } from './SectionHeaderItem'
 
 export interface SectionHeaderProps {

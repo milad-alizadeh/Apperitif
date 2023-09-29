@@ -1,4 +1,3 @@
-import { useHaptic } from '../hooks/useHaptics'
 import * as React from 'react'
 import { ComponentType } from 'react'
 import {
@@ -9,6 +8,7 @@ import {
   TouchableOpacityProps,
   View,
 } from 'react-native'
+import { useHaptic } from '../hooks/useHaptics'
 
 export type IconTypes = keyof typeof iconRegistry
 

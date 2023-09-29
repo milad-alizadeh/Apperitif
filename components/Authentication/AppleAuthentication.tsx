@@ -1,4 +1,3 @@
-import { api } from '~/services/api'
 import {
   AppleAuthenticationButton,
   AppleAuthenticationButtonStyle,
@@ -9,6 +8,7 @@ import {
 } from 'expo-apple-authentication'
 import * as React from 'react'
 import { StyleProp, View, ViewStyle } from 'react-native'
+import { api } from '~/services/api'
 
 export interface AppleAuthenticationProps {}
 

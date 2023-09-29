@@ -3,7 +3,6 @@ import { View, ViewToken, useWindowDimensions } from 'react-native'
 import BigList from 'react-native-big-list'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-
 import { BouncyImage, Button, SearchBar, Text } from '~/components'
 import { shadowCard, shadowHeader } from '~/theme/shadows'
 import { SectionHeader } from './SectionHeader'

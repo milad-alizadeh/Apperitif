@@ -1,7 +1,5 @@
 export * from './Authentication/AppleAuthentication'
 export * from './Authentication/EmailAuthentication'
-export * from './Authentication/OtpEmail'
-export * from './Authentication/OtpVerify'
 export * from './Badge'
 export * from './BottomSheet'
 export * from './BouncyImage'

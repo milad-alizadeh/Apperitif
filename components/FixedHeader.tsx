@@ -1,4 +1,3 @@
-import { shadowHeader } from '~/theme/shadows'
 import React, { ReactNode } from 'react'
 import { View, ViewStyle } from 'react-native'
 import Animated, {
@@ -8,7 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
-
+import { shadowHeader } from '~/theme/shadows'
 import { Icon } from '.'
 import { useSafeAreaInsetsStyle } from '../utils/useSafeAreaInsetsStyle'
 import { Text } from './Text'

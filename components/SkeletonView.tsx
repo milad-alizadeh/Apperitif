@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { LinearGradient } from 'expo-linear-gradient'
+import * as React from 'react'
 import { ViewStyle } from 'react-native'
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import { colors } from '~/theme'
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)

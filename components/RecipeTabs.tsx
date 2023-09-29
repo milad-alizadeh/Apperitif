@@ -1,7 +1,8 @@
-import { RecipeIngredientList, RecipeMeasurements, RecipeSteps, Text } from '~/components'
-import { colors } from '~/theme'
 import * as React from 'react'
 import { TextStyle, View, ViewStyle, useWindowDimensions } from 'react-native'
+import { RecipeIngredientList, RecipeMeasurements, RecipeSteps, Text } from '~/components'
+import { colors } from '~/theme'
+
 // import TabController from 'react-native-ui-lib/tabController'
 
 export interface RecipeTabsProps {

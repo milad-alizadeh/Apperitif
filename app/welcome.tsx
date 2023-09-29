@@ -1,9 +1,9 @@
+import { Link } from 'expo-router'
 import React from 'react'
 import { Image, ImageBackground, ImageStyle, View, ViewStyle } from 'react-native'
 import { Button } from '../components/Button'
 import { Text } from '../components/Text'
 import { useSafeAreaInsetsStyle } from '../utils/useSafeAreaInsetsStyle'
-import { Link } from 'expo-router'
 
 const welcomeBackground = require('../assets/images/welcome-background.png')
 const textDrink = require('../assets/images/text-drink.png')

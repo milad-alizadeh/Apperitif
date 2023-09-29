@@ -1,16 +1,15 @@
-import mapRecipes from '~/utils/mapRecipes'
-import { colors } from '~/theme/colors'
-import { GetCategoriesQuery } from '~/__generated__/graphql'
-import { CardProps, Header, HorizontalList, Icon, Screen, Text, VerticalList } from '~/components'
-import { GET_CATEGORIES, GET_CONTENT } from '~/graphql/queries'
-import { router } from 'expo-router'
-
 import { useQuery } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
+import { router } from 'expo-router'
 import groupBy from 'lodash/groupBy'
 import values from 'lodash/values'
 import React, { FC } from 'react'
 import { View } from 'react-native'
+import { GetCategoriesQuery } from '~/__generated__/graphql'
+import { CardProps, Header, HorizontalList, Icon, Screen, Text, VerticalList } from '~/components'
+import { GET_CATEGORIES, GET_CONTENT } from '~/graphql/queries'
+import { colors } from '~/theme/colors'
+import mapRecipes from '~/utils/mapRecipes'
 
 interface ListType {
   listItems: CardProps[]

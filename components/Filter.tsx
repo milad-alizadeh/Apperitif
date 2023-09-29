@@ -1,9 +1,8 @@
 import { useNavigation } from '@react-navigation/native'
-import { shadowCard } from '~/theme/shadows'
 import flattenDeep from 'lodash/flattenDeep'
 import React, { useMemo, useState } from 'react'
 import { View } from 'react-native'
-
+import { shadowCard } from '~/theme/shadows'
 import { Badge, FilterChips, Icon, SearchBar, Text } from '../components'
 import { useFetchFilters } from '../hooks/useFetchFilters'
 // import { useStores } from '../models'

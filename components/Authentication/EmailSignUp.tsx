@@ -1,7 +1,6 @@
-import { api } from '~/services/api'
 import React, { useEffect, useState } from 'react'
 import { Alert, View } from 'react-native'
-
+import { api } from '~/services/api'
 import { Button } from '../Button'
 import { TextField } from '../TextField'
 

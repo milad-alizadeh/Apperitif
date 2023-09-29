@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { View, FlatList } from 'react-native'
-
+import { FlatList, View } from 'react-native'
 import { ListItem, ListItemProps, Text } from '.'
 
 export interface VerticalListProps {

@@ -1,7 +1,7 @@
-import { Button } from '~/components'
 // import { useStores } from '~/models'
 import * as React from 'react'
 import { View } from 'react-native'
+import { Button } from '~/components'
 
 /**
  * Actions for applying or clearing filters
