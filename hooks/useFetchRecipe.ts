@@ -1,6 +1,8 @@
+import { useReactiveVar } from '@apollo/client'
 import humps from 'lodash-humps'
 import debounce from 'lodash/debounce'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { addFilter, clearFilters, searchQueryVar, selectedFiltersVar } from '~/localState'
 import { api } from '../services/api'
 
 /**
@@ -9,8 +11,6 @@ import { api } from '../services/api'
  * @returns {Object} - Contains recipes, pageInfo, loading state, error, refreshing state, and functions for manual refresh and loading more recipes.
  */
 export const useFetchRecipes = (initialCategoryId: string | string[]) => {
-  // const { recipeStore } = useStores()
-
   const [recipes, setRecipes] = useState([])
   const [pageInfo, setPageInfo] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -19,18 +19,14 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
   const [pageNumber, setPageNumber] = useState(1)
   const pageSize = 20
 
-  const recipeStore = {
-    searchQuery: '',
-    selectedFilters: [],
-    clearFilters: () => {},
-    addFilter: (categoryId: string) => {},
-  }
+  const searchQuery = useReactiveVar(searchQueryVar)
+  const selectedFilters = useReactiveVar(selectedFiltersVar)
 
   // On mount, clear any existing filters and set the initial category filter
   useEffect(() => {
-    recipeStore.clearFilters()
+    clearFilters(false)
     if (initialCategoryId) {
-      recipeStore.addFilter(initialCategoryId[0])
+      addFilter(initialCategoryId[0], false)
     }
   }, [initialCategoryId])
 
@@ -41,8 +37,8 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
 
       // Make the API call
       const { data, error } = await api.supabase.rpc('get_recipes_by_category_ids', {
-        search_term: recipeStore.searchQuery,
-        category_ids: recipeStore.selectedFilters,
+        search_term: searchQuery,
+        category_ids: selectedFilters,
         page_size: pageSize,
         page_number: pageNum,
       })
@@ -61,25 +57,25 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
         setRecipes(fetchedRecipes)
       }
     },
-    [recipeStore, pageNumber],
+    [selectedFilters, pageNumber],
   )
 
   // Create a debounced version of fetchRecipes for the search query
   const debouncedFetchRecipes = useRef(debounce(fetchRecipes, 200)).current
 
   useEffect(() => {
-    if (recipeStore.searchQuery.length > 2 || recipeStore.searchQuery.length === 0) {
+    if (searchQuery.length > 2 || searchQuery.length === 0) {
       debouncedFetchRecipes()
     }
-  }, [recipeStore.searchQuery])
+  }, [searchQuery])
 
   // Fetch recipes whenever search query, selected filters, or page number changes
   useEffect(() => {
     // Only fetch recipes if it's the initial load or due to search/filter changes
-    if (pageNumber === 1 || recipeStore.selectedFilters.length) {
+    if (pageNumber === 1 || selectedFilters.length) {
       fetchRecipes() // Do not merge on initial load or search/filter changes
     }
-  }, [recipeStore.selectedFilters.join(',')])
+  }, [selectedFilters.join(',')])
 
   // Function to manually refresh the recipes list
   const manualRefresh = async () => {

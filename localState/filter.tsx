@@ -4,7 +4,7 @@ export const selectedFiltersVar = makeVar([])
 export const searchQueryVar = makeVar('')
 export const draftSelectedFiltersVar = makeVar([])
 
-export const clearFilters = (draft: boolean = false) => {
+export const clearFilters = (draft: boolean) => {
   searchQueryVar('')
   if (draft) {
     draftSelectedFiltersVar([])
@@ -13,15 +13,19 @@ export const clearFilters = (draft: boolean = false) => {
   }
 }
 
-export const toggleFilter = (filterId: string, draft: boolean = false) => {
-  if (filterIsChecked(filterId)) {
+export const setupDraftFilters = () => {
+  draftSelectedFiltersVar(selectedFiltersVar())
+}
+
+export const toggleFilter = (filterId: string, draft: boolean) => {
+  if (filterIsChecked(filterId, draft)) {
     removeFilter(filterId, draft)
   } else {
     addFilter(filterId, draft)
   }
 }
 
-export const addFilter = (id: string, draft: boolean = false) => {
+export const addFilter = (id: string, draft: boolean) => {
   if (draft) {
     draftSelectedFiltersVar([...draftSelectedFiltersVar(), id])
   } else {
@@ -29,7 +33,7 @@ export const addFilter = (id: string, draft: boolean = false) => {
   }
 }
 
-export const removeFilter = (id: string, draft: boolean = false) => {
+export const removeFilter = (id: string, draft: boolean) => {
   if (draft) {
     draftSelectedFiltersVar(draftSelectedFiltersVar().filter((filterId: string) => filterId !== id))
   } else {
@@ -41,7 +45,7 @@ export const applyFilters = () => {
   selectedFiltersVar(draftSelectedFiltersVar())
 }
 
-export const filterIsChecked = (filterId: string, draft: boolean = false) => {
+export const filterIsChecked = (filterId: string, draft: boolean) => {
   if (draft) {
     return draftSelectedFiltersVar().includes(filterId)
   } else {

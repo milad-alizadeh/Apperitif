@@ -3,10 +3,10 @@ import { router, useLocalSearchParams } from 'expo-router'
 import React, { FC, useCallback, useRef } from 'react'
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
-import { Card, Filter, FixedHeader, Screen, Text } from '~/components'
+import { Card, FilterBar, FixedHeader, Screen, Text } from '~/components'
 import { useFetchRecipes } from '~/hooks/useFetchRecipe'
 
-export default function FilteredRecipesScreen() {
+export default function RecipesScreen() {
   const { categoryIds } = useLocalSearchParams()
   const scrollY = useSharedValue(0)
   const listRef = useRef(null)
@@ -58,7 +58,7 @@ export default function FilteredRecipesScreen() {
         keyExtractor={(item) => item.id}
         refreshing={refreshing}
         onRefresh={manualRefresh}
-        ListHeaderComponent={<Filter autofocus={!categoryIds} styleClassName="py-3 -mx-3" />}
+        ListHeaderComponent={<FilterBar autofocus={!categoryIds} styleClassName="py-3 -mx-3" />}
         ListEmptyComponent={() => {
           if (loading) return <ActivityIndicator />
           return <Text>{error?.message}</Text>
