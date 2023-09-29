@@ -1,10 +1,10 @@
-import { useQuery } from '@apollo/client'
+import { useQuery, useReactiveVar } from '@apollo/client'
 import { useLocalSearchParams } from 'expo-router'
 import React, { useCallback, useMemo } from 'react'
-import { FlatList, View, ViewStyle } from 'react-native'
+import { FlatList, ViewStyle } from 'react-native'
 import { FilterActions, Header, ListItem, Screen } from '~/components'
 import { GET_FILTER_DETAILS } from '~/graphql/queries/getFilterDetails'
-import { filterIsChecked, toggleFilter } from '~/localState'
+import { draftSelectedFiltersVar, toggleFilter } from '~/localState'
 
 export default function FilterDetailsScreen() {
   const { filterId } = useLocalSearchParams()
@@ -16,17 +16,18 @@ export default function FilterDetailsScreen() {
 
   const filterCategory = data?.categoriesCollection.edges[0]?.node
   const items = filterCategory?.categoriesCollection.edges.map((edge) => edge.node)
+  const draftFilters = useReactiveVar(draftSelectedFiltersVar)
 
   const filtersList = useMemo(
     () =>
       items?.map((item) => ({
         ...item,
-        checked: filterIsChecked(item.id, true),
+        checked: draftFilters.includes(item.id),
         onPress() {
           toggleFilter(item.id, true)
         },
       })),
-    [items, filterIsChecked, toggleFilter],
+    [items, draftFilters],
   )
 
   const renderItem = useCallback(

@@ -36,6 +36,15 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
         page_size: pageSize,
         page_number: pageNum,
       })
+
+      console.log(
+        'fetchRecipes called',
+        selectedFilters,
+        currentSelectedFilters,
+        searchQueryVar(),
+        data.total_count,
+        error,
+      )
       if (error) {
         return
       }

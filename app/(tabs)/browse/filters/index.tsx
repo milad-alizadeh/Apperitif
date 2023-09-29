@@ -26,20 +26,22 @@ export default function AllFiltersScreen() {
   const renderItem = useCallback(
     ({ item }: { item; index: number }) => {
       return (
-        <ListItem
-          key={item.id}
-          name={item.name}
-          styleClassName="mb-4"
-          card
-          badgeNumber={badgeNumbers[item.id] || 0}
-          rightIcon="chevronRight"
-          onPress={() =>
-            router.push({
-              pathname: '/(tabs)/browse/filters/[filterId]',
-              params: { filterId: item.id },
-            })
-          }
-        />
+        <View className="px-6">
+          <ListItem
+            key={item.id}
+            name={item.name}
+            styleClassName="mb-4"
+            card
+            badgeNumber={badgeNumbers[item.id] || 0}
+            rightIcon="chevronRight"
+            onPress={() =>
+              router.push({
+                pathname: '/(tabs)/browse/filters/[filterId]',
+                params: { filterId: item.id },
+              })
+            }
+          />
+        </View>
       )
     },
     [filterCategories],
@@ -48,9 +50,7 @@ export default function AllFiltersScreen() {
   return (
     <Screen preset="fixed" safeAreaEdges={['bottom']} contentContainerStyle={$containerStyle}>
       <Header verticalPadding title="Filters" onClose={() => router.back()} />
-      <View className="px-6">
-        <FlatList data={filterCategories} renderItem={renderItem} />
-      </View>
+      <FlatList data={filterCategories} renderItem={renderItem} className="py-3" />
       <FilterActions />
     </Screen>
   )
