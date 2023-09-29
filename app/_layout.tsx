@@ -48,19 +48,8 @@ function RootLayoutNav() {
           <Stack.Screen name="index" />
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="welcome" />
-          <Stack.Screen name="recipe" />
+          <Stack.Screen name="recipe/[recipeId]" />
           <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
-          {/* 
-      // <Stack.Screen name="MainTab"/>
-
-
-      <Stack.Screen name="AddIngredients"/>
-
-      <Stack.Screen
-        name="AuthNavigator"
-        component={AuthNavigator}
-        options={{ presentation: 'modal' }}
-      /> */}
         </Stack>
       </ApolloProvider>
     </SessionProvider>
