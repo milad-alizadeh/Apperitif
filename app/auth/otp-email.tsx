@@ -1,18 +1,12 @@
-import { api } from '~/services/api'
+import { Header, OtpEmail, Screen } from '~/components'
 import React, { useEffect, useState } from 'react'
-import { Alert, View } from 'react-native'
+import { View, Alert } from 'react-native'
+import { Button } from '~/components/Button'
+import { TextField } from '~/components/TextField'
+import { api } from '~/services/api'
 
-import { Button } from '../Button'
-import { TextField } from '../TextField'
-
-export interface OtpEmailProps {
-  onEmailExists: (email: string) => void
-}
-
-/**
- * Describe your component here
- */
-export const OtpEmail = function OtpEmail({ onEmailExists }: OtpEmailProps) {
+export default function AuthOtpEmailScreen({ route }) {
+  const { attemptedRoute } = route.params || {}
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [showName, setShowName] = useState(false)
@@ -55,7 +49,7 @@ export const OtpEmail = function OtpEmail({ onEmailExists }: OtpEmailProps) {
     if (error) {
       Alert.alert(error.message)
     } else {
-      onEmailExists(email)
+      checkIfEmailExist()
     }
 
     setLoading(false)
@@ -82,31 +76,35 @@ export const OtpEmail = function OtpEmail({ onEmailExists }: OtpEmailProps) {
 
     setLoading(false)
   }
-
   return (
-    <View>
-      <View>
-        <TextField
-          label="Your Email"
-          onChange={setEmail}
-          value={email}
-          placeholder="email@example.com"
-          autoCapitalize="none"
-        />
-      </View>
-      {showName && (
-        <View className="mt-4">
-          <TextField label="Your Name" onChange={setName} value={name} />
+    <Screen preset="scroll">
+      <Header verticalPadding title="Sign up or login" backButton />
+      <View className="p-6">
+        <View>
+          <View>
+            <TextField
+              label="Your Email"
+              onChange={setEmail}
+              value={email}
+              placeholder="email@example.com"
+              autoCapitalize="none"
+            />
+          </View>
+          {showName && (
+            <View className="mt-4">
+              <TextField label="Your Name" onChange={setName} value={name} />
+            </View>
+          )}
+          <View className="mt-6">
+            <Button
+              large
+              loading={loading}
+              label="Continue"
+              onPress={() => (showName ? signup() : checkIfEmailExist())}
+            />
+          </View>
         </View>
-      )}
-      <View className="mt-6">
-        <Button
-          large
-          loading={loading}
-          label="Continue"
-          onPress={() => (showName ? signup() : checkIfEmailExist())}
-        />
       </View>
-    </View>
+    </Screen>
   )
 }
