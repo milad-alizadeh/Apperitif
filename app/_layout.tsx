@@ -2,6 +2,8 @@ import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
 import { customFontsToLoad } from '../theme/typography'
+import { ApolloProvider } from '@apollo/client'
+import { api } from '~/services/api'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -39,14 +41,15 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <Stack>
-      <Stack.Screen name="index" />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="welcome" />
-      {/* 
+    <ApolloProvider client={api.apolloClient}>
+      <Stack>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="welcome" />
+        <Stack.Screen name="recipe" />
+        {/* 
       // <Stack.Screen name="MainTab"/>
 
-      <Stack.Screen name="RecipeDetails" />
 
       <Stack.Screen name="AddIngredients"/>
 
@@ -55,6 +58,7 @@ function RootLayoutNav() {
         component={AuthNavigator}
         options={{ presentation: 'modal' }}
       /> */}
-    </Stack>
+      </Stack>
+    </ApolloProvider>
   )
 }

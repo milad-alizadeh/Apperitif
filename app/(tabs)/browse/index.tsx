@@ -3,6 +3,7 @@ import { colors } from '~/theme/colors'
 import { GetCategoriesQuery } from '~/__generated__/graphql'
 import { CardProps, Header, HorizontalList, Icon, Screen, Text, VerticalList } from '~/components'
 import { GET_CATEGORIES, GET_CONTENT } from '~/graphql/queries'
+import { router } from 'expo-router'
 
 import { useQuery } from '@apollo/client'
 import { useNavigation } from '@react-navigation/native'
@@ -11,7 +12,6 @@ import values from 'lodash/values'
 import React, { FC } from 'react'
 import { View } from 'react-native'
 
-console.log('colors')
 interface ListType {
   listItems: CardProps[]
   title: string
@@ -43,15 +43,29 @@ export default function BrowseHomeScreen() {
   const getListProps = (
     edge: GetCategoriesQuery['categoriesCollection']['edges'][number],
   ): ListType => {
-    const recipes = edge.node.recipesCategoriesCollection.edges.map((edge) =>
-      mapRecipes(edge, navigation),
+    const recipes = edge.node.recipesCategoriesCollection.edges.map(
+      ({
+        node: {
+          recipe: { name, id, imageUrl },
+        },
+      }) => ({
+        name,
+        id,
+        imageUrl,
+        onPress: () => {
+          router.push({
+            pathname: '/recipe',
+            params: { recipeId: id },
+          })
+        },
+      }),
     )
 
     const subCategories = edge.node.categoriesCollection.edges.map(
       ({ node: { name, id, imageUrl } }) => ({
         name,
         id,
-        // onPress: () => navigation.navigate('FilteredRecipes', { categoryId: id }),
+        // onPress: () => router.navigate('FilteredRecipes', { categoryId: id }),
         imageUrl,
       }),
     )
