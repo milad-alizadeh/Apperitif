@@ -94,6 +94,7 @@ export default function BrowseHomeScreen() {
         <Icon
           icon="search"
           // onPress={() => navigation.navigate('FilteredRecipes', { categoryId: '' })}
+          onPress={() => router.push('/auth')}
           size="large"
           containerClassName="absolute right-5 top-0"
           color={colors.neutral[800]}
