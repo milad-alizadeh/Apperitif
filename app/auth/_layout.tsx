@@ -1,7 +1,7 @@
-import React from 'react'
 import { Stack } from 'expo-router'
+import React from 'react'
 
-export default function AuthModal {
+export default function AuthModal() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
