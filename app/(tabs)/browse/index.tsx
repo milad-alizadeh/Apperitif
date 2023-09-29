@@ -60,7 +60,11 @@ export default function BrowseHomeScreen() {
       ({ node: { name, id, imageUrl } }) => ({
         name,
         id,
-        // onPress: () => router.navigate('FilteredRecipes', { categoryId: id }),
+        onPress: () =>
+          router.push({
+            pathname: '/browse/recipes',
+            params: { categoryIds: [id] },
+          }),
         imageUrl,
       }),
     )

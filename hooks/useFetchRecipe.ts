@@ -8,7 +8,7 @@ import { api } from '../services/api'
  * @param {string} initialCategoryId - The initial category ID to fetch recipes for.
  * @returns {Object} - Contains recipes, pageInfo, loading state, error, refreshing state, and functions for manual refresh and loading more recipes.
  */
-export const useFetchRecipes = (initialCategoryId: string) => {
+export const useFetchRecipes = (initialCategoryId: string | string[]) => {
   // const { recipeStore } = useStores()
 
   const [recipes, setRecipes] = useState([])
@@ -30,11 +30,11 @@ export const useFetchRecipes = (initialCategoryId: string) => {
   useEffect(() => {
     recipeStore.clearFilters()
     if (initialCategoryId) {
-      recipeStore.addFilter(initialCategoryId)
+      recipeStore.addFilter(initialCategoryId[0])
     }
-  }, [])
+  }, [initialCategoryId])
 
-  // Function to fetch recipes. Uses useCallback to memoize and prevent unnecessary re-renders.
+  // Function to fetch recipes
   const fetchRecipes = useCallback(
     async (pageNum = pageNumber, mergeResults = false) => {
       setLoading(true)
