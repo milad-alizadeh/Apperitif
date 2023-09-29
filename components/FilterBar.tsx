@@ -1,7 +1,7 @@
 import { useReactiveVar } from '@apollo/client'
 import { router } from 'expo-router'
 import flattenDeep from 'lodash/flattenDeep'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { View } from 'react-native'
 import { removeFilter, searchQueryVar, selectedFiltersVar, setupDraftFilters } from '~/localState'
 import { shadowCard } from '~/theme/shadows'
@@ -54,7 +54,11 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
         )}
       </View>
 
-      <FilterChips styleClassName="mt-3" categories={chips} onDismiss={(id) => removeFilter(id)} />
+      <FilterChips
+        styleClassName="mt-3"
+        categories={chips}
+        onDismiss={(id) => removeFilter(id, false)}
+      />
     </View>
   )
 }

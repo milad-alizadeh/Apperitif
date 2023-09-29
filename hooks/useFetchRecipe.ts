@@ -18,30 +18,27 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
   const [error, setError] = useState(null)
   const [pageNumber, setPageNumber] = useState(1)
   const pageSize = 20
-
+  const [isInitialSetupComplete, setIsInitialSetupComplete] = useState(false)
+  const initialLoadRef = useRef(true) // Ref to track the initial load
   const searchQuery = useReactiveVar(searchQueryVar)
   const selectedFilters = useReactiveVar(selectedFiltersVar)
-
-  // On mount, clear any existing filters and set the initial category filter
-  useEffect(() => {
-    clearFilters(false)
-    if (initialCategoryId) {
-      addFilter(initialCategoryId[0], false)
-    }
-  }, [initialCategoryId])
 
   // Function to fetch recipes
   const fetchRecipes = useCallback(
     async (pageNum = pageNumber, mergeResults = false) => {
       setLoading(true)
+      const currentSelectedFilters = selectedFiltersVar()
 
       // Make the API call
       const { data, error } = await api.supabase.rpc('get_recipes_by_category_ids', {
-        search_term: searchQuery,
-        category_ids: selectedFilters,
+        search_term: searchQueryVar(),
+        category_ids: currentSelectedFilters,
         page_size: pageSize,
         page_number: pageNum,
       })
+      if (error) {
+        return
+      }
 
       // Convert snake_case keys to camelCase
       const { hasNextPage, totalCount, recipes: fetchedRecipes } = humps(data)
@@ -57,25 +54,41 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
         setRecipes(fetchedRecipes)
       }
     },
-    [selectedFilters, pageNumber],
+    [searchQuery, selectedFiltersVar().join(','), pageNumber],
   )
 
   // Create a debounced version of fetchRecipes for the search query
   const debouncedFetchRecipes = useRef(debounce(fetchRecipes, 200)).current
 
+  // On mount, clear any existing filters and set the initial category filter
   useEffect(() => {
-    if (searchQuery.length > 2 || searchQuery.length === 0) {
-      debouncedFetchRecipes()
-    }
-  }, [searchQuery])
+    clearFilters(false)
+    const filter = Array.isArray(initialCategoryId) ? initialCategoryId[0] : initialCategoryId
+    addFilter(filter, false)
+    setIsInitialSetupComplete(true) // Set isInitialSetupComplete to true after setting the initial filter
+  }, []) // Empty dependency array ensures this runs only on mount
 
-  // Fetch recipes whenever search query, selected filters, or page number changes
+  // Call fetchRecipes once the initial setup is complete
   useEffect(() => {
-    // Only fetch recipes if it's the initial load or due to search/filter changes
-    if (pageNumber === 1 || selectedFilters.length) {
-      fetchRecipes() // Do not merge on initial load or search/filter changes
+    if (isInitialSetupComplete) {
+      fetchRecipes().then(() => {
+        initialLoadRef.current = false // Set initialLoadRef to false after the initial load
+      })
     }
-  }, [selectedFilters.join(',')])
+  }, [isInitialSetupComplete])
+
+  // Handle changes in search query and selected filters after the initial load
+  useEffect(() => {
+    if (!initialLoadRef.current && isInitialSetupComplete) {
+      // If it's not the initial load and initial setup is complete,
+      // call fetchRecipes on search query or filter changes
+      if (searchQuery.length > 0) {
+        debouncedFetchRecipes()
+      } else {
+        fetchRecipes()
+      }
+    }
+  }, [searchQuery, selectedFilters.join(','), isInitialSetupComplete])
 
   // Function to manually refresh the recipes list
   const manualRefresh = async () => {
