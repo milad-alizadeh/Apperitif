@@ -37,16 +37,8 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
         page_number: pageNum,
       })
 
-      console.log(
-        'fetchRecipes called',
-        selectedFilters,
-        currentSelectedFilters,
-        searchQueryVar(),
-        data.total_count,
-        error,
-      )
       if (error) {
-        return
+        console.error(error)
       }
 
       // Convert snake_case keys to camelCase
