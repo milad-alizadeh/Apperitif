@@ -1,4 +1,5 @@
 import { EventArg } from '@react-navigation/native'
+import { router } from 'expo-router'
 import { useSession } from '../hooks/useSession'
 
 export const useProtectedListener = () => {
@@ -8,12 +9,13 @@ export const useProtectedListener = () => {
     tabPress: (e: EventArg<'tabPress', true, undefined>) => {
       if (!isLoggedIn) {
         e.preventDefault()
-        console.log('User is not logged in', route.name)
         // If user is not logged in, navigate to Auth screen
-        navigation.navigate('AuthNavigator', {
-          screen: 'AuthHome',
+        router.push({
+          pathname: '/auth',
           params: { attemptedRoute: route.name },
         })
+      } else {
+        console.log('User is logged in', route.name)
       }
     },
   })

@@ -27,11 +27,8 @@ export const BouncyImage = function BouncyImage({ height, scrollY, imageUrl }: B
       style={[scrollY ? getBouncyTransform(scrollY, height) : {}, { height }]}
     >
       <Image
-        height={height}
-        width={useWindowDimensions().width}
+        className="w-full h-full"
         source={typeof imageUrl === 'string' ? { uri: imageUrl } : imageUrl}
-        resizeMode="cover"
-        // loader={<SkeletonView height={height} width={useWindowDimensions().width} />}
       />
     </Animated.View>
   )

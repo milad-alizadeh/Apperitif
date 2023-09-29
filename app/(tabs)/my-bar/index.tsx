@@ -107,7 +107,12 @@ export default function MyBarHomeScreen() {
     <Screen preset="fixed" contentContainerStyle={$container} safeAreaEdges={['top']}>
       <Header
         title="My Bar"
-        rightElement={<Button label="Add Ingredients" onPress={() => router.push('/')} />}
+        rightElement={
+          <Button
+            label="Add Ingredients"
+            onPress={() => router.push('/(tabs)/my-bar/add-ingredients')}
+          />
+        }
       />
 
       {/* Empty state if there are no recipes in the bar */}

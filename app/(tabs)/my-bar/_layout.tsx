@@ -5,7 +5,6 @@ export default function MyBarStack() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
-      <Stack.Screen name="add-ingredients" options={{ presentation: 'modal' }} />
     </Stack>
   )
 }
