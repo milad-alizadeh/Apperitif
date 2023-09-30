@@ -1,9 +1,10 @@
 import React, { memo } from 'react'
 import { TouchableOpacity, View } from 'react-native'
-import { Icon, Text } from '~/components'
 import { useHaptic } from '~/hooks/useHaptics'
 import { colors } from '~/theme'
 import { shadowCard } from '~/theme/shadows'
+import { Icon } from './Icon'
+import { Text } from './Text'
 
 /**
  * Props for the IngredientListItem component

@@ -1,9 +1,12 @@
 import React, { memo } from 'react'
 import { Image, TouchableOpacity } from 'react-native'
-import { Badge, Checkbox, Icon, IconTypes, Text } from '~/components'
 import { useHaptic } from '~/hooks/useHaptics'
 import { colors } from '~/theme'
 import { shadowCard } from '~/theme/shadows'
+import { Badge } from './Badge'
+import { Checkbox } from './Checkbox'
+import { Icon, IconTypes } from './Icon'
+import { Text } from './Text'
 
 /**
  * Props for the ListItem component

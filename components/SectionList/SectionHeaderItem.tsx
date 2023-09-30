@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 import { TouchableOpacity, View } from 'react-native'
-import { Text } from '~/components'
+import { Text } from '../Text'
 
 export interface SectionHeaderItemProps {
   label: string

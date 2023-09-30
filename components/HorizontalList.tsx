@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { FlatList, View } from 'react-native'
 import { colors } from '~/theme'
-import { Card, CardProps, Icon, Text } from '.'
+import { Card, CardProps } from './Card'
+import { Icon } from './Icon'
+import { Text } from './Text'
 
 export interface HorizontalListProps {
   /** An array of objects representing the list items to be displayed */

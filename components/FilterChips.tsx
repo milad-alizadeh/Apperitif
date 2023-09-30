@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ScrollView } from 'react-native'
-import { Chip } from '~/components'
+import { Chip } from './Chip'
 
 export interface FilterChipsProps {
   styleClassName?: string

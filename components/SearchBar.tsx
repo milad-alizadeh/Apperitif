@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { TextInput, View } from 'react-native'
-import { Icon } from '~/components'
 import { colors } from '~/theme'
+import { Icon } from './Icon'
 
 export interface SearchBarProps {
   value?: string

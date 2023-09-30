@@ -1,8 +1,8 @@
 import { router } from 'expo-router'
 import * as React from 'react'
 import { View } from 'react-native'
-import { Button } from '~/components'
 import { applyFilters, clearFilters } from '~/localState'
+import { Button } from './Button'
 
 /**
  * Actions for applying or clearing filters

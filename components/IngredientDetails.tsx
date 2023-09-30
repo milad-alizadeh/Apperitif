@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client'
 import React from 'react'
 import { ScrollView, View } from 'react-native'
-import { Text } from '~/components'
 import { GET_INGREDIENT_DETAILS } from '~/graphql/queries/getIngredientDetails'
+import { Text } from './Text'
 
 /**
  * Props for the IngredientDetails component

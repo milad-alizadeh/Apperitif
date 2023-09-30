@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/native'
 import * as React from 'react'
 import { View } from 'react-native'
-import { Icon, Text } from '~/components'
 import { colors } from '~/theme'
+import { Icon } from './Icon'
+import { Text } from './Text'
 
 export interface HeaderProps {
   title: string

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text as RNText, TextStyle } from 'react-native'
-import typography from '../theme/typography'
+import typography from '~/theme/typography'
 
 interface TextProps {
   styleClassName?: string

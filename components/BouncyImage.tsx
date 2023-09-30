@@ -6,7 +6,6 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated'
-import { SkeletonView } from './SkeletonView'
 
 export interface BouncyImageProps {
   /** The height of the image */

@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native'
 import { router, useLocalSearchParams } from 'expo-router'
 import React, { FC, useCallback, useRef } from 'react'
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'

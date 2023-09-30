@@ -8,8 +8,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated'
 import { shadowHeader } from '~/theme/shadows'
-import { Icon } from '.'
 import { useSafeAreaInsetsStyle } from '../utils/useSafeAreaInsetsStyle'
+import { Icon } from './Icon'
 import { Text } from './Text'
 
 interface FixedHeaderProps {

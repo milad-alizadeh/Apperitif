@@ -3,11 +3,14 @@ import { router } from 'expo-router'
 import flattenDeep from 'lodash/flattenDeep'
 import React, { useMemo } from 'react'
 import { View } from 'react-native'
+import { Badge } from '~/components/Badge'
+import { FilterChips } from '~/components/FilterChips'
+import { Icon } from '~/components/Icon'
+import { SearchBar } from '~/components/SearchBar'
+import { Text } from '~/components/Text'
 import { removeFilter, searchQueryVar, selectedFiltersVar, setupDraftFilters } from '~/localState'
-import { shadowCard } from '~/theme/shadows'
-import { Badge, FilterChips, Icon, SearchBar, Text } from '.'
+import { colors, shadowCard } from '~/theme'
 import { useFetchFilters } from '../hooks/useFetchFilters'
-import { colors } from '../theme'
 
 export interface FIlterBarProps {
   styleClassName: string
