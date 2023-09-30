@@ -16,9 +16,8 @@ export const Switch: FC<SwitchProps> = ({ value, onValueChange }) => {
 
   return (
     <RNSwitch
-      trackColor={{ false: colors.neutral[300], true: colors.primary }}
+      trackColor={{ false: colors.neutral[200], true: colors.primary }}
       thumbColor={colors.white}
-      style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
       onValueChange={onValueChange}
       value={localValue}
     />
