@@ -50,9 +50,10 @@ export const SectionHeader = function SectionHeader({
   useEffect(() => {
     const minItemsToCheck = Math.min(5, sectionTitles.length)
     if (measures.slice(0, minItemsToCheck).every((measure) => measure)) {
+      if (!containerX) return
       onLayoutCalculated && onLayoutCalculated()
     }
-  }, [measures])
+  }, [measures, containerX])
 
   const onHeaderItemLayout = (index) => {
     refs[index].current?.measure((fx, fy, width, height, px) => {
