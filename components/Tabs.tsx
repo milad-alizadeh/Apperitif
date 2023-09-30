@@ -1,99 +1,121 @@
-import { set } from 'lodash'
-import React, {
-  Children,
-  ReactElement,
-  ReactNode,
-  cloneElement,
-  isValidElement,
-  useState,
-} from 'react'
-import { View } from 'react-native'
+import React, { ReactNode, useEffect, useState } from 'react'
+import { FlatList, LayoutChangeEvent, View, ViewStyle } from 'react-native'
+import { Gesture, GestureDetector } from 'react-native-gesture-handler'
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated'
 import { SectionHeader } from './SectionList/SectionHeader'
 
+const ANIMATION_DAMPING = 18
+
 interface TabProps {
-  children: ReactNode
+  pages: TabPageProps[]
+  enableTabBar?: boolean
 }
 
 interface TabPageProps {
-  title: string
+  title?: string
   initialIndex?: boolean
-  children: ReactNode
+  style?: ViewStyle
+  TabContent?: () => ReactNode
+  children?: ReactNode
 }
 
-interface TabBarProps {
-  sectionTitles?: string[]
-  setActiveIndex?: (index: number) => void
-  activeIndex?: number
-  initialIndex?: number
-}
-
-const TabBar: React.FC<TabBarProps> = ({
-  sectionTitles,
-  setActiveIndex,
-  activeIndex,
-  initialIndex,
-}) => {
+const TabPage: React.FC<TabPageProps> = ({ children, style }) => {
   return (
-    <SectionHeader
-      styleClassName="border-b-[1px] border-neutral-100"
-      sectionTitles={sectionTitles}
-      activeIndex={activeIndex}
-      setActiveIndex={setActiveIndex}
-      onLayoutCalculated={() => setActiveIndex(initialIndex || 0)}
-      scrollEnabled={false}
-    />
-  )
-}
-
-const TabPage: React.FC<TabPageProps> = ({ children }) => {
-  return <View className="flex-1 min-h-[200px]">{children}</View>
-}
-
-export const Tabs: React.FC<TabProps> & { TabPage: typeof TabPage; TabBar: typeof TabBar } = ({
-  children,
-}) => {
-  // Set the initial active index to the first TabPage with the initialIndex prop or 0 if none is found
-  const initialIndex = Children.toArray(children).findIndex(
-    (child) => isValidElement(child) && child.type === TabPage && child.props.initialIndex,
-  )
-  const [activeIndex, setActiveIndex] = useState<number>(0)
-
-  const pages: TabPageProps[] = []
-  let tabBar: ReactNode = null
-
-  Children.forEach(children, (child) => {
-    if (isValidElement(child)) {
-      if (child.type === TabPage) {
-        pages.push(child.props)
-      } else if (child.type === TabBar) {
-        tabBar = child
-      } else {
-        throw new Error('Tabs component can only have TabPage and TabBar as children')
-      }
-    }
-  })
-
-  if (pages.length === 0) {
-    throw new Error('At least one TabPage is required')
-  }
-
-  const titles = pages.map((p) => p.title)
-  tabBar = tabBar
-    ? cloneElement(tabBar as React.ReactElement<TabBarProps>, {
-        sectionTitles: titles,
-        activeIndex,
-        setActiveIndex,
-        initialIndex,
-      })
-    : null
-
-  return (
-    <View>
-      {tabBar}
-      {pages[activeIndex] && <TabPage {...pages[activeIndex]} />}
+    <View className="flex-1 min-h-[200px]" style={style}>
+      {children}
     </View>
   )
 }
 
-Tabs.TabPage = TabPage
-Tabs.TabBar = TabBar
+export const Tabs: React.FC<TabProps> = ({ pages, enableTabBar = true }) => {
+  const [activeIndex, setActiveIndex] = useState<number>(0)
+  const [containerWidth, setContainerWidth] = useState<number>(0)
+  const [tabWidth, setTabWidth] = useState<number>(200)
+  const [initialIndex, setInitialIndex] = useState<number>(0)
+
+  useEffect(() => {
+    const initialIndex = pages.findIndex((page) => page.initialIndex)
+    setInitialIndex(initialIndex)
+  }, [])
+
+  // Calculate the width the container
+  const onContainerLayout = (event: LayoutChangeEvent) => {
+    setContainerWidth(event.nativeEvent.layout.width)
+  }
+
+  // Calculate the width of the tab containers
+  useEffect(() => {
+    if (containerWidth) setTabWidth(containerWidth * pages.length)
+  }, [containerWidth])
+
+  // Animate the tab container when the active index changes
+  useEffect(() => {
+    translateX.value = withSpring(-containerWidth * activeIndex, { damping: ANIMATION_DAMPING })
+  }, [activeIndex])
+
+  const translateX = useSharedValue(0)
+
+  const gesture = Gesture.Pan()
+    .onUpdate((event) => {
+      translateX.value = -containerWidth * activeIndex + event.translationX
+    })
+    .onEnd((event) => {
+      let newActiveIndex = activeIndex
+      const threshold = 50
+      if (event.velocityX < -threshold && activeIndex < pages.length - 1) {
+        newActiveIndex = activeIndex + 1
+      } else if (event.velocityX > threshold && activeIndex > 0) {
+        newActiveIndex = activeIndex - 1
+      }
+      runOnJS(setActiveIndex)(newActiveIndex)
+      translateX.value = withSpring(-containerWidth * newActiveIndex, {
+        velocity: event.velocityX,
+        damping: ANIMATION_DAMPING,
+      })
+    })
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: translateX.value }],
+    }
+  })
+
+  const renderTabPages = ({ item }) => {
+    return (
+      <TabPage style={{ width: containerWidth, maxWidth: containerWidth }}>
+        {<item.TabContent />}
+      </TabPage>
+    )
+  }
+
+  return (
+    <View onLayout={onContainerLayout} className="overflow-hidden">
+      {enableTabBar && (
+        <SectionHeader
+          styleClassName="border-b-[1px] border-neutral-100"
+          sectionTitles={pages.map((page) => page.title)}
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+          onLayoutCalculated={() => setActiveIndex(initialIndex || 0)}
+          scrollEnabled={false}
+        />
+      )}
+      <GestureDetector gesture={gesture}>
+        <Animated.View style={[animatedStyle, { width: tabWidth }]}>
+          <FlatList
+            horizontal
+            data={pages}
+            renderItem={renderTabPages}
+            scrollEnabled={false}
+            showsHorizontalScrollIndicator={false}
+          />
+        </Animated.View>
+      </GestureDetector>
+    </View>
+  )
+}
