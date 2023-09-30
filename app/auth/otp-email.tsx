@@ -1,4 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router'
+import { set } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { Alert, View } from 'react-native'
 import { Button, Header, Screen, TextField } from '~/components'
@@ -14,6 +15,7 @@ export default function AuthOtpEmailScreen({ route }) {
   useEffect(() => {
     setEmail('')
     setName('')
+    setEmailExist(true)
   }, [])
 
   // Check if email exist and if not add an email
@@ -53,7 +55,7 @@ export default function AuthOtpEmailScreen({ route }) {
 
     router.push({
       pathname: '/auth/otp-verify',
-      params: { attemptedRoute, email, verificationType: emailExist ? 'magiclink' : 'signup' },
+      params: { attemptedRoute, email, verificationType: 'magiclink' },
     })
 
     setLoading(false)
@@ -76,7 +78,10 @@ export default function AuthOtpEmailScreen({ route }) {
     if (error) {
       Alert.alert(error.message)
     } else {
-      sendOtp()
+      router.push({
+        pathname: '/auth/otp-verify',
+        params: { attemptedRoute, email, verificationType: 'signup' },
+      })
     }
 
     setLoading(false)

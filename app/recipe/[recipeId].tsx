@@ -116,7 +116,13 @@ export default function RecipeDetailsScreen() {
           </View>
 
           <View className="bg-white rounded-2xl" style={shadowLarge}>
-            <Suspense fallback={<ActivityIndicator />}>
+            <Suspense
+              fallback={
+                <View className="h-64 justify-center items-center w-full">
+                  <ActivityIndicator />
+                </View>
+              }
+            >
               <RecipeTabsLazy
                 recipeSteps={recipeSteps}
                 recipeIngredients={recipeIngredients}
