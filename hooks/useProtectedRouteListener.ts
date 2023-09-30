@@ -14,8 +14,6 @@ export const useProtectedListener = () => {
           pathname: '/auth',
           params: { attemptedRoute: route.name },
         })
-      } else {
-        console.log('User is logged in', route.name)
       }
     },
   })
