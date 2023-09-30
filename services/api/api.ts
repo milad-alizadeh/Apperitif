@@ -39,11 +39,13 @@ class Api {
     this.authLink = setContext(async (_, { headers }) => {
       const response = await this.supabase.auth.getSession()
       const accessToken = response?.data?.session?.access_token
-      const authorization = `Bearer ${accessToken ?? ANON_KEY}`
+      const authorization = accessToken ? `Bearer ${accessToken}` : ''
+
       return {
         headers: {
           ...headers,
           authorization,
+          apikey: ANON_KEY,
         },
       }
     })

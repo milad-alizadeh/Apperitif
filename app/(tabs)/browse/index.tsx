@@ -23,11 +23,21 @@ export default function BrowseHomeScreen() {
     variables: { name: 'home' },
   })
 
-  const categoryIds = browseData
-    ? values(
-        JSON.parse(browseData.contentApperitivoCollection?.edges[0]?.node.content).categories ?? {},
-      )
-    : []
+  let categoryIds: string[] = []
+
+  try {
+    if (browseData) {
+      const content = browseData.contentApperitivoCollection?.edges?.[0]?.node?.content
+      if (content) {
+        const parsedContent = JSON.parse(content)
+        if (parsedContent.categories) {
+          categoryIds = values(parsedContent.categories)
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error parsing categories:', error)
+  }
 
   // Fetch categories
   const { data: categoriesData, error } = useQuery(GET_CATEGORIES, {

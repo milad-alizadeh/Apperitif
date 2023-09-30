@@ -8,7 +8,7 @@ export default function AuthOtpEmailScreen({ route }) {
   const { attemptedRoute } = useLocalSearchParams()
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
-  const [showName, setShowName] = useState(false)
+  const [emailExist, setEmailExist] = useState(true)
   const [name, setName] = useState('')
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function AuthOtpEmailScreen({ route }) {
       if (data) {
         sendOtp()
       } else {
-        setShowName(true)
+        setEmailExist(false)
       }
     }
 
@@ -51,7 +51,10 @@ export default function AuthOtpEmailScreen({ route }) {
       Alert.alert(error.message)
     }
 
-    router.push({ pathname: '/auth/otp-verify', params: { attemptedRoute, email } })
+    router.push({
+      pathname: '/auth/otp-verify',
+      params: { attemptedRoute, email, verificationType: emailExist ? 'magiclink' : 'signup' },
+    })
 
     setLoading(false)
   }
@@ -92,7 +95,7 @@ export default function AuthOtpEmailScreen({ route }) {
               autoCapitalize="none"
             />
           </View>
-          {showName && (
+          {!emailExist && (
             <View className="mt-4">
               <TextField label="Your Name" onChange={setName} value={name} />
             </View>
@@ -102,7 +105,7 @@ export default function AuthOtpEmailScreen({ route }) {
               large
               loading={loading}
               label="Continue"
-              onPress={() => (showName ? signup() : checkIfEmailExist())}
+              onPress={() => (!emailExist ? signup() : checkIfEmailExist())}
             />
           </View>
         </View>

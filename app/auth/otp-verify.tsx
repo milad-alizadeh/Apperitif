@@ -1,3 +1,4 @@
+import { EmailOtpType, MobileOtpType } from '@supabase/supabase-js'
 import { useLocalSearchParams } from 'expo-router'
 import React, { useState } from 'react'
 import { Alert, TouchableOpacity, View } from 'react-native'
@@ -6,9 +7,10 @@ import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
 
 export default function AuthOtpVerifyScreen({ route }) {
-  const { attemptedRoute, email } = useLocalSearchParams() as {
+  const { attemptedRoute, email, verificationType } = useLocalSearchParams() as {
     attemptedRoute: string
     email: string
+    verificationType: EmailOtpType
   }
   const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
 
@@ -34,10 +36,12 @@ export default function AuthOtpVerifyScreen({ route }) {
   const verifyOtp = async () => {
     setLoading(true)
 
+    console.log({ email, otp, verificationType })
+
     const { error } = await api.supabase.auth.verifyOtp({
       email,
       token: otp,
-      type: 'magiclink',
+      type: verificationType,
     })
 
     if (error) {
