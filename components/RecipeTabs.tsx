@@ -1,8 +1,10 @@
 import * as React from 'react'
-import { TextStyle, View, ViewStyle, useWindowDimensions } from 'react-native'
-import { RecipeIngredientList, RecipeMeasurements, RecipeSteps, Text } from '~/components'
-import { colors } from '~/theme'
+import { RecipeIngredientList } from './RecipeIngredientList'
+import { RecipeMeasurements } from './RecipeMeasurements'
+import { RecipeSteps } from './RecipeSteps'
 import { SectionHeader } from './SectionList/SectionHeader'
+import { Tabs } from './Tabs'
+import { Text } from './Text'
 
 // import TabController from 'react-native-ui-lib/tabController'
 
@@ -26,12 +28,18 @@ export const RecipeTabs = function RecipeTabs({
   const [activeIndex, setActiveIndex] = React.useState(0)
 
   return (
-    <SectionHeader
-      sectionTitles={['Ingredients', 'Equipments', 'Method']}
-      activeIndex={activeIndex}
-      setActiveIndex={setActiveIndex}
-      scrollEnabled={false}
-    />
+    <Tabs>
+      <Tabs.TabBar />
+      <Tabs.TabPage title="Ingredients" initialIndex>
+        <Text>Page 1</Text>
+      </Tabs.TabPage>
+      <Tabs.TabPage title="Equipments">
+        <Text>Page 2</Text>
+      </Tabs.TabPage>
+      <Tabs.TabPage title="Method">
+        <Text>Page 3</Text>
+      </Tabs.TabPage>
+    </Tabs>
 
     // <TabController
     //   items={[{ label: 'Ingredients' }, { label: 'Equipments' }, { label: 'Method' }]}

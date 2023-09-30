@@ -12,6 +12,9 @@ export interface SectionHeaderProps {
   setIsNavScroll?: (v: boolean) => void
   scrollOffset?: number
   scrollEnabled?: boolean
+  className?: string
+  styleClassName?: string
+  onLayoutCalculated?: () => void
 }
 
 /**
@@ -24,7 +27,9 @@ export const SectionHeader = function SectionHeader({
   setActiveIndex,
   setIsNavScroll,
   scrollOffset,
+  styleClassName,
   scrollEnabled = true,
+  onLayoutCalculated,
 }: SectionHeaderProps) {
   const [measures, setMeasures] = useState<{ x: number; width: number }[]>(
     new Array(sectionTitles.length).fill(null),
@@ -42,9 +47,17 @@ export const SectionHeader = function SectionHeader({
     })
   }
 
+  useEffect(() => {
+    const minItemsToCheck = Math.min(5, sectionTitles.length)
+    if (measures.slice(0, minItemsToCheck).every((measure) => measure)) {
+      onLayoutCalculated && onLayoutCalculated()
+    }
+  }, [measures])
+
   const onHeaderItemLayout = (index) => {
     refs[index].current?.measure((fx, fy, width, height, px) => {
       const x = px // This gives the x position of the item relative to the FlatList
+
       if (measures[index]) return
 
       setMeasures((prev) => {
@@ -52,11 +65,6 @@ export const SectionHeader = function SectionHeader({
         ms[index] = { x, width }
         return ms
       })
-
-      // Check if all items have been measured
-      if (measures.slice(0, 5).every((measure) => measure) && activeIndex !== 0) {
-        setActiveIndex(0)
-      }
     })
   }
 
@@ -89,7 +97,7 @@ export const SectionHeader = function SectionHeader({
   })
 
   return (
-    <View ref={containerRef} onLayout={onContainerLayout}>
+    <View ref={containerRef} onLayout={onContainerLayout} className={styleClassName}>
       <FlatList
         horizontal
         data={sectionTitles}
