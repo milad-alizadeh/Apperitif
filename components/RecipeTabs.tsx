@@ -2,6 +2,7 @@ import * as React from 'react'
 import { TextStyle, View, ViewStyle, useWindowDimensions } from 'react-native'
 import { RecipeIngredientList, RecipeMeasurements, RecipeSteps, Text } from '~/components'
 import { colors } from '~/theme'
+import { SectionHeader } from './SectionList/SectionHeader'
 
 // import TabController from 'react-native-ui-lib/tabController'
 
@@ -22,10 +23,16 @@ export const RecipeTabs = function RecipeTabs({
   recipeIngredients,
   onIngredientPress,
 }: RecipeTabsProps) {
-  const tabWidth = useWindowDimensions().width - 48
+  const [activeIndex, setActiveIndex] = React.useState(0)
 
   return (
-    <View></View>
+    <SectionHeader
+      sectionTitles={['Ingredients', 'Equipments', 'Method']}
+      activeIndex={activeIndex}
+      setActiveIndex={setActiveIndex}
+      scrollEnabled={false}
+    />
+
     // <TabController
     //   items={[{ label: 'Ingredients' }, { label: 'Equipments' }, { label: 'Method' }]}
     //   asCarousel

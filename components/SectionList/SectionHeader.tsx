@@ -6,11 +6,12 @@ import { SectionHeaderItem } from './SectionHeaderItem'
 
 export interface SectionHeaderProps {
   sectionTitles: string[]
-  sectionListRef: RefObject<Biglist>
+  sectionListRef?: RefObject<Biglist>
   activeIndex: number
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>
-  setIsNavScroll: (v: boolean) => void
-  scrollOffset: number
+  setIsNavScroll?: (v: boolean) => void
+  scrollOffset?: number
+  scrollEnabled?: boolean
 }
 
 /**
@@ -23,26 +24,60 @@ export const SectionHeader = function SectionHeader({
   setActiveIndex,
   setIsNavScroll,
   scrollOffset,
+  scrollEnabled = true,
 }: SectionHeaderProps) {
   const [measures, setMeasures] = useState<{ x: number; width: number }[]>(
     new Array(sectionTitles.length).fill(null),
   )
-  const containerRef = useRef<FlatList<any>>(null)
+  const containerRef = useRef<View>(null)
+  const listRef = useRef<FlatList<any>>(null)
   const indicatorPos = useSharedValue({ width: 0, x: 0 })
   const refs = useMemo(() => sectionTitles.map(() => createRef<View>()), [])
+  const [containerX, setContainerX] = useState(0)
+
+  // Measure the x position of the FlatList on its layout
+  const onContainerLayout = () => {
+    containerRef.current?.measure((fx, fy, width, height, px) => {
+      setContainerX(px)
+    })
+  }
+
+  const onHeaderItemLayout = (index) => {
+    refs[index].current?.measure((fx, fy, width, height, px) => {
+      const x = px // This gives the x position of the item relative to the FlatList
+      if (measures[index]) return
+
+      setMeasures((prev) => {
+        const ms = [...prev]
+        ms[index] = { x, width }
+        return ms
+      })
+
+      // Check if all items have been measured
+      if (measures.slice(0, 5).every((measure) => measure) && activeIndex !== 0) {
+        setActiveIndex(0)
+      }
+    })
+  }
 
   useEffect(() => {
     if (activeIndex < 0) return
     // Scroll to the active item
-    containerRef?.current?.scrollToIndex({
-      index: activeIndex,
-      animated: true,
-      viewOffset: 0,
-      viewPosition: 0,
-    })
+    if (scrollEnabled) {
+      listRef?.current?.scrollToIndex({
+        index: activeIndex,
+        animated: true,
+        viewOffset: 0,
+        viewPosition: 0,
+      })
+    }
 
     // Set the position of indicator
-    if (measures[activeIndex]) indicatorPos.value = measures[activeIndex]
+    if (measures[activeIndex])
+      indicatorPos.value = {
+        width: measures[activeIndex].width,
+        x: measures[activeIndex].x - containerX,
+      }
   }, [activeIndex])
 
   const style = useAnimatedStyle(() => {
@@ -54,15 +89,17 @@ export const SectionHeader = function SectionHeader({
   })
 
   return (
-    <View>
+    <View ref={containerRef} onLayout={onContainerLayout}>
       <FlatList
         horizontal
         data={sectionTitles}
         showsHorizontalScrollIndicator={false}
         removeClippedSubviews={false}
-        ref={containerRef}
+        ref={listRef}
+        scrollEnabled={scrollEnabled}
+        className="w-full"
         ListFooterComponent={
-          <View className="h-5" style={{ width: useWindowDimensions().width }} />
+          scrollEnabled && <View className="h-5" style={{ width: useWindowDimensions().width }} />
         }
         renderItem={({ item, index }) => {
           return (
@@ -78,31 +115,20 @@ export const SectionHeader = function SectionHeader({
                 label={item}
                 active={activeIndex === index}
                 ref={refs[index]}
-                onLayout={() => {
-                  refs[index].current?.measure((fx, fy, width, height, px) => {
-                    const x = px // This gives the x position of the item relative to the FlatList
-                    if (measures[index]) return
-
-                    setMeasures((prev) => {
-                      const ms = [...prev]
-                      ms[index] = { x, width }
-                      return ms
-                    })
-
-                    // Check if all items have been measured
-                    if (measures.slice(0, 5).every((measure) => measure) && activeIndex !== 0) {
-                      setActiveIndex(0)
-                    }
-                  })
-                }}
+                onLayout={() => onHeaderItemLayout(index)}
                 onPress={() => {
-                  setIsNavScroll(true)
-                  const sectionOffset =
-                    sectionListRef?.current?.getItemOffset({
-                      index: 0,
-                      section: index,
-                    }) - scrollOffset
-                  sectionListRef?.current?.scrollToOffset({ offset: sectionOffset, animated: true })
+                  if (sectionListRef) {
+                    setIsNavScroll && setIsNavScroll(true)
+                    const sectionOffset =
+                      sectionListRef?.current?.getItemOffset({
+                        index: 0,
+                        section: index,
+                      }) - scrollOffset
+                    sectionListRef?.current?.scrollToOffset({
+                      offset: sectionOffset,
+                      animated: true,
+                    })
+                  }
                   setActiveIndex(index)
                 }}
               />
