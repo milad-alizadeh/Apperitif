@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import { FlatList, LayoutChangeEvent, View, ViewStyle } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
@@ -33,10 +33,11 @@ const TabPage: React.FC<TabPageProps> = ({ children, style }) => {
 }
 
 export const Tabs: React.FC<TabProps> = ({ pages, enableTabBar = true }) => {
-  const [activeIndex, setActiveIndex] = useState<number>(0)
-  const [containerWidth, setContainerWidth] = useState<number>(0)
+  const [activeIndex, setActiveIndex] = useState<number>(-1)
+  const [containerWidth, setContainerWidth] = useState<number>(345)
   const [tabWidth, setTabWidth] = useState<number>(200)
   const [initialIndex, setInitialIndex] = useState<number>(0)
+  const translateX = useSharedValue(0)
 
   useEffect(() => {
     const initialIndex = pages.findIndex((page) => page.initialIndex)
@@ -55,10 +56,9 @@ export const Tabs: React.FC<TabProps> = ({ pages, enableTabBar = true }) => {
 
   // Animate the tab container when the active index changes
   useEffect(() => {
+    if (activeIndex === -1) return
     translateX.value = withSpring(-containerWidth * activeIndex, { damping: ANIMATION_DAMPING })
   }, [activeIndex])
-
-  const translateX = useSharedValue(0)
 
   const gesture = Gesture.Pan()
     .onUpdate((event) => {
@@ -85,13 +85,16 @@ export const Tabs: React.FC<TabProps> = ({ pages, enableTabBar = true }) => {
     }
   })
 
-  const renderTabPages = ({ item }) => {
-    return (
-      <TabPage style={{ width: containerWidth, maxWidth: containerWidth }}>
-        {<item.TabContent />}
-      </TabPage>
-    )
-  }
+  const renderTabPages = useCallback(
+    ({ item }) => {
+      return (
+        <TabPage style={{ width: containerWidth, maxWidth: containerWidth }}>
+          {<item.TabContent />}
+        </TabPage>
+      )
+    },
+    [pages, containerWidth],
+  )
 
   return (
     <View onLayout={onContainerLayout} className="overflow-hidden">

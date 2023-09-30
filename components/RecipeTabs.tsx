@@ -1,8 +1,8 @@
 import * as React from 'react'
+import { View } from 'react-native'
 import { RecipeIngredientList } from './RecipeIngredientList'
 import { RecipeMeasurements } from './RecipeMeasurements'
 import { RecipeSteps } from './RecipeSteps'
-import { SectionHeader } from './SectionList/SectionHeader'
 import { Tabs } from './Tabs'
 import { Text } from './Text'
 
@@ -18,7 +18,12 @@ export interface RecipeTabsProps {
 }
 
 /**
- * Describe your component here
+ * Renders a tabbed view for displaying recipe ingredients, equipments and method.
+ * @param {Object} props - The component props.
+ * @param {Array} props.recipeSteps - The array of recipe steps.
+ * @param {Array} props.recipeIngredients - The array of recipe ingredients.
+ * @param {Function} props.onIngredientPress - The function to be called when an ingredient is pressed.
+ * @returns {JSX.Element} - The JSX element for the RecipeTabs component.
  */
 export const RecipeTabs = function RecipeTabs({
   recipeSteps,
@@ -28,77 +33,41 @@ export const RecipeTabs = function RecipeTabs({
   const [activeIndex, setActiveIndex] = React.useState(0)
 
   return (
-    <Tabs>
-      <Tabs.TabBar />
-      <Tabs.TabPage title="Ingredients" initialIndex>
-        <Text>Page 1</Text>
-      </Tabs.TabPage>
-      <Tabs.TabPage title="Equipments">
-        <Text>Page 2</Text>
-      </Tabs.TabPage>
-      <Tabs.TabPage title="Method">
-        <Text>Page 3</Text>
-      </Tabs.TabPage>
-    </Tabs>
+    <Tabs
+      pages={[
+        {
+          title: 'Ingredients',
+          initialIndex: true,
+          TabContent: () => (
+            <View className="p-5">
+              <RecipeMeasurements />
+              <RecipeIngredientList
+                recipeIngredients={recipeIngredients}
+                onPress={(id) => onIngredientPress(id)}
+              />
+            </View>
+          ),
+        },
+        {
+          title: 'Equipments',
 
-    // <TabController
-    //   items={[{ label: 'Ingredients' }, { label: 'Equipments' }, { label: 'Method' }]}
-    //   asCarousel
-    //   carouselPageWidth={tabWidth}
-    // >
-    //   <TabController.TabBar
-    //     backgroundColor={colors.neutral[100]}
-    //     height={40}
-    //     indicatorStyle={{ backgroundColor: colors.primary }}
-    //     labelColor={colors.neutral[500]}
-    //     labelStyle={$labelStyle}
-    //     selectedLabelStyle={$labelStyle}
-    //     selectedLabelColor={colors.primary}
-    //     containerWidth={tabWidth}
-    //     containerStyle={$tabBarStyle}
-    //   />
-
-    //   <TabController.PageCarousel>
-    //     <View style={{ width: tabWidth }}>
-    //       <TabController.TabPage index={0}>
-    //         <View className="p-5" style={{ width: tabWidth }}>
-    //           <RecipeMeasurements />
-    //           <RecipeIngredientList
-    //             recipeIngredients={recipeIngredients}
-    //             onPress={(id) => onIngredientPress(id)}
-    //           />
-    //         </View>
-    //       </TabController.TabPage>
-    //     </View>
-
-    //     <View style={{ width: tabWidth }}>
-    //       <TabController.TabPage index={1}>
-    //         <View className="p-5" style={{ width: tabWidth }}>
-    //           <Text>Page 2</Text>
-    //         </View>
-    //       </TabController.TabPage>
-    //     </View>
-
-    //     <View style={{ width: tabWidth }}>
-    //       <TabController.TabPage index={2}>
-    //         <View className="p-5" style={{ width: tabWidth }}>
-    //           <RecipeSteps steps={recipeSteps} />
-    //         </View>
-    //       </TabController.TabPage>
-    //     </View>
-    //   </TabController.PageCarousel>
-    // </TabController>
+          TabContent: () => (
+            <View className="p-5">
+              <Text>Page 2</Text>
+            </View>
+          ),
+        },
+        {
+          title: 'Method',
+          TabContent: () => (
+            <View className="p-5">
+              <RecipeSteps steps={recipeSteps} />
+            </View>
+          ),
+        },
+      ]}
+    />
   )
 }
 
-const $tabBarStyle: ViewStyle = {
-  borderTopLeftRadius: 16,
-  borderTopRightRadius: 16,
-  overflow: 'hidden',
-}
-
-const $labelStyle: TextStyle = {
-  fontWeight: '600',
-  fontSize: 16,
-}
 export default RecipeTabs
