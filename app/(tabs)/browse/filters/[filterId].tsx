@@ -4,7 +4,7 @@ import React, { useCallback, useMemo } from 'react'
 import { FlatList, ViewStyle } from 'react-native'
 import { FilterActions, Header, ListItem, Screen } from '~/components'
 import { GET_FILTER_DETAILS } from '~/graphql/queries/getFilterDetails'
-import { draftSelectedFiltersVar, toggleFilter } from '~/localState'
+import { draftSelectedFiltersVar, toggleFilter } from '~/store'
 
 export default function FilterDetailsScreen() {
   const { filterId } = useLocalSearchParams()

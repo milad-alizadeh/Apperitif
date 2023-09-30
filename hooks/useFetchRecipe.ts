@@ -2,7 +2,7 @@ import { useReactiveVar } from '@apollo/client'
 import humps from 'lodash-humps'
 import debounce from 'lodash/debounce'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { addFilter, clearFilters, searchQueryVar, selectedFiltersVar } from '~/localState'
+import { addFilter, clearFilters, searchQueryVar, selectedFiltersVar } from '~/store'
 import { api } from '../services/api'
 
 /**

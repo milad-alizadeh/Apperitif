@@ -1,7 +1,7 @@
 import { router } from 'expo-router'
 import * as React from 'react'
 import { View } from 'react-native'
-import { applyFilters, clearFilters } from '~/localState'
+import { applyFilters, clearFilters } from '~/store'
 import { Button } from './Button'
 
 /**

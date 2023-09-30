@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useEffect, useState } from 'react'
+import React, { FC, ReactNode, useCallback, useEffect, useState } from 'react'
 import { FlatList, LayoutChangeEvent, View, ViewStyle } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
@@ -24,7 +24,7 @@ interface TabPageProps {
   children?: ReactNode
 }
 
-const TabPage: React.FC<TabPageProps> = ({ children, style }) => {
+const TabPage: FC<TabPageProps> = ({ children, style }) => {
   return (
     <View className="flex-1 min-h-[200px]" style={style}>
       {children}
@@ -32,7 +32,7 @@ const TabPage: React.FC<TabPageProps> = ({ children, style }) => {
   )
 }
 
-export const Tabs: React.FC<TabProps> = ({ pages, enableTabBar = true }) => {
+export const Tabs: FC<TabProps> = ({ pages, enableTabBar = true }) => {
   const [activeIndex, setActiveIndex] = useState<number>(-1)
   const [containerWidth, setContainerWidth] = useState<number>(345)
   const [tabWidth, setTabWidth] = useState<number>(200)

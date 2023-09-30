@@ -4,7 +4,7 @@ import React, { useCallback, useMemo } from 'react'
 import { FlatList, View, ViewStyle } from 'react-native'
 import { FilterActions, Header, ListItem, Screen } from '~/components'
 import { useFetchFilters } from '~/hooks/useFetchFilters'
-import { draftSelectedFiltersVar } from '~/localState'
+import { draftSelectedFiltersVar } from '~/store'
 
 export default function AllFiltersScreen() {
   const { data } = useFetchFilters()

@@ -1,8 +1,8 @@
 import { makeVar } from '@apollo/client'
 
-export const selectedFiltersVar = makeVar([])
-export const searchQueryVar = makeVar('')
-export const draftSelectedFiltersVar = makeVar([])
+export const selectedFiltersVar = makeVar<string[]>([])
+export const searchQueryVar = makeVar<string>('')
+export const draftSelectedFiltersVar = makeVar<string[]>([])
 
 export const clearFilters = (draft: boolean) => {
   searchQueryVar('')
