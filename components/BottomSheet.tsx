@@ -1,7 +1,9 @@
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { Modal, TouchableOpacity, View } from 'react-native'
+import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
   Easing,
+  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -88,6 +90,18 @@ export const BottomSheet = forwardRef(function BottomSheet(
     }
   }
 
+  const gesture = Gesture.Pan()
+    .onUpdate((event) => {})
+    .onEnd((event) => {
+      const threshold = 50
+      if (event.velocityY < -threshold) {
+        console.log('swipe up')
+      } else if (event.velocityY > threshold) {
+        console.log('swipe down')
+        runOnJS(hide)()
+      }
+    })
+
   return (
     <Modal transparent visible={visible} onRequestClose={hide} statusBarTranslucent>
       <TouchableOpacity activeOpacity={1} onPress={hide}>
@@ -101,6 +115,9 @@ export const BottomSheet = forwardRef(function BottomSheet(
         className="absolute bg-white w-screen top-full z-50 rounded-t-[50px] overflow-hidden"
         style={[bottomSheetStyle, shadowLarge]}
       >
+        <GestureDetector gesture={gesture}>
+          <View className="h-20 absolute top-0 left-0 w-full z-10"></View>
+        </GestureDetector>
         <View onLayout={onContentLayout} style={bottomInset}>
           {children}
         </View>
