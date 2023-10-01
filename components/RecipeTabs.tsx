@@ -1,12 +1,11 @@
 import * as React from 'react'
 import { View } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler'
+import { ListItem } from './ListItem'
 import { RecipeIngredientList } from './RecipeIngredientList'
 import { RecipeMeasurements } from './RecipeMeasurements'
 import { RecipeSteps } from './RecipeSteps'
 import { Tabs } from './Tabs'
-import { Text } from './Text'
-
-// import TabController from 'react-native-ui-lib/tabController'
 
 export interface RecipeTabsProps {
   /**
@@ -14,6 +13,7 @@ export interface RecipeTabsProps {
    */
   recipeIngredients: any
   recipeSteps: any
+  recipesEquipments: any
   onIngredientPress: (id: string) => void
 }
 
@@ -28,7 +28,9 @@ export interface RecipeTabsProps {
 export const RecipeTabs = function RecipeTabs({
   recipeSteps,
   recipeIngredients,
+  recipesEquipments,
   onIngredientPress,
+  onEquipmentPress,
 }: RecipeTabsProps) {
   const [activeIndex, setActiveIndex] = React.useState(0)
 
@@ -53,7 +55,16 @@ export const RecipeTabs = function RecipeTabs({
 
           TabContent: () => (
             <View className="p-5">
-              <Text>Page 2</Text>
+              {recipesEquipments.map(({ id, name, imageUrl }) => (
+                <ListItem
+                  key={id}
+                  name={name}
+                  leftImage={imageUrl}
+                  rightIcon="text"
+                  onPress={() => onEquipmentPress(id)}
+                  styleClassName="mb-2"
+                />
+              ))}
             </View>
           ),
         },
