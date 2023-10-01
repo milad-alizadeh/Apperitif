@@ -41,37 +41,35 @@ export function useIngredients() {
     fetchPolicy: 'network-only',
   })
 
-  useEffect(() => {
-    if (!data) return
+  const fetchIngredients = async () => {
+    const { data: categories, error } = await api.supabase
+      .from('ingredients_by_categories')
+      .select('*')
 
+    const { data: mybar } = await api.supabase.from('profiles_ingredients').select('ingredient_id')
     const newSectionsData: SectionDataType[][] = []
     const newSectionsHeader: SectionHeaderType[] = []
     const newInitialSelectedItems: Record<string, boolean> = {}
 
-    data.categoriesCollection.edges
-      .filter((e) => e.node.ingredientsCategoriesCollection.edges.length > 0)
-      .forEach((edge) => {
-        const ingredientsEdges = edge.node.ingredientsCategoriesCollection.edges
-        const title = edge.node.name
-        const id = edge.node.id
-        const count = ingredientsEdges.length
+    categories.forEach(({ title, id, data, count }) => {
+      newSectionsData.push(data)
+      newSectionsHeader.push({ id, title, count })
+    })
 
-        const data = ingredientsEdges.map((edge) => {
-          const { id, name, profilesIngredientsCollection } = edge.node.ingredient
-          if (profilesIngredientsCollection.edges.length > 0) {
-            newInitialSelectedItems[id] = true
-          }
-          return { id, name }
-        })
-
-        newSectionsHeader.push({ id, title, count })
-        newSectionsData.push(data)
-      })
+    mybar.forEach(({ ingredient_id }) => {
+      newInitialSelectedItems[ingredient_id] = true
+    })
 
     setSectionsData(newSectionsData)
     setSectionsHeader(newSectionsHeader)
     setInitialSelectedItems(newInitialSelectedItems)
     setSelectedItems(newInitialSelectedItems)
+  }
+
+  useEffect(() => {
+    if (!data) return
+
+    fetchIngredients()
   }, [data])
 
   return {

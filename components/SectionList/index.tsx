@@ -77,8 +77,6 @@ export const SectionList = function SectionList({
     if (activeIndex < 0) return
     if (isNavScroll?.current) return
 
-    console.log('viewableItems', viewableItems)
-
     if (viewableItems[0]) {
       const activeIndex = viewableItems[0].section
       setActiveIndex(activeIndex < 0 ? 0 : activeIndex)
