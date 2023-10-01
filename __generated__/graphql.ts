@@ -34,6 +34,84 @@ export type Scalars = {
   UUID: { input: any; output: any; }
 };
 
+export type AppContent = Node & {
+  __typename?: 'AppContent';
+  content?: Maybe<Scalars['JSON']['output']>;
+  createdAt: Scalars['Datetime']['output'];
+  id: Scalars['UUID']['output'];
+  name: Scalars['String']['output'];
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID']['output'];
+  updatedAt: Scalars['Datetime']['output'];
+};
+
+export type AppContentConnection = {
+  __typename?: 'AppContentConnection';
+  edges: Array<AppContentEdge>;
+  pageInfo: PageInfo;
+};
+
+export type AppContentDeleteResponse = {
+  __typename?: 'AppContentDeleteResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<AppContent>;
+};
+
+export type AppContentEdge = {
+  __typename?: 'AppContentEdge';
+  cursor: Scalars['String']['output'];
+  node: AppContent;
+};
+
+export type AppContentFilter = {
+  createdAt?: InputMaybe<DatetimeFilter>;
+  id?: InputMaybe<UuidFilter>;
+  name?: InputMaybe<StringFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  updatedAt?: InputMaybe<DatetimeFilter>;
+};
+
+export type AppContentInsertInput = {
+  content?: InputMaybe<Scalars['JSON']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+export type AppContentInsertResponse = {
+  __typename?: 'AppContentInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<AppContent>;
+};
+
+export type AppContentOrderBy = {
+  createdAt?: InputMaybe<OrderByDirection>;
+  id?: InputMaybe<OrderByDirection>;
+  name?: InputMaybe<OrderByDirection>;
+  updatedAt?: InputMaybe<OrderByDirection>;
+};
+
+export type AppContentUpdateInput = {
+  content?: InputMaybe<Scalars['JSON']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['UUID']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+export type AppContentUpdateResponse = {
+  __typename?: 'AppContentUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<AppContent>;
+};
+
 /** Boolean expression comparing fields on type "BigFloat" */
 export type BigFloatFilter = {
   eq?: InputMaybe<Scalars['BigFloat']['input']>;
@@ -181,84 +259,6 @@ export type CategoriesUpdateResponse = {
   affectedCount: Scalars['Int']['output'];
   /** Array of records impacted by the mutation */
   records: Array<Categories>;
-};
-
-export type ContentApperitivo = Node & {
-  __typename?: 'ContentApperitivo';
-  content?: Maybe<Scalars['JSON']['output']>;
-  createdAt: Scalars['Datetime']['output'];
-  id: Scalars['UUID']['output'];
-  name: Scalars['String']['output'];
-  /** Globally Unique Record Identifier */
-  nodeId: Scalars['ID']['output'];
-  updatedAt: Scalars['Datetime']['output'];
-};
-
-export type ContentApperitivoConnection = {
-  __typename?: 'ContentApperitivoConnection';
-  edges: Array<ContentApperitivoEdge>;
-  pageInfo: PageInfo;
-};
-
-export type ContentApperitivoDeleteResponse = {
-  __typename?: 'ContentApperitivoDeleteResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int']['output'];
-  /** Array of records impacted by the mutation */
-  records: Array<ContentApperitivo>;
-};
-
-export type ContentApperitivoEdge = {
-  __typename?: 'ContentApperitivoEdge';
-  cursor: Scalars['String']['output'];
-  node: ContentApperitivo;
-};
-
-export type ContentApperitivoFilter = {
-  createdAt?: InputMaybe<DatetimeFilter>;
-  id?: InputMaybe<UuidFilter>;
-  name?: InputMaybe<StringFilter>;
-  nodeId?: InputMaybe<IdFilter>;
-  updatedAt?: InputMaybe<DatetimeFilter>;
-};
-
-export type ContentApperitivoInsertInput = {
-  content?: InputMaybe<Scalars['JSON']['input']>;
-  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
-  id?: InputMaybe<Scalars['UUID']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
-};
-
-export type ContentApperitivoInsertResponse = {
-  __typename?: 'ContentApperitivoInsertResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int']['output'];
-  /** Array of records impacted by the mutation */
-  records: Array<ContentApperitivo>;
-};
-
-export type ContentApperitivoOrderBy = {
-  createdAt?: InputMaybe<OrderByDirection>;
-  id?: InputMaybe<OrderByDirection>;
-  name?: InputMaybe<OrderByDirection>;
-  updatedAt?: InputMaybe<OrderByDirection>;
-};
-
-export type ContentApperitivoUpdateInput = {
-  content?: InputMaybe<Scalars['JSON']['input']>;
-  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
-  id?: InputMaybe<Scalars['UUID']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
-};
-
-export type ContentApperitivoUpdateResponse = {
-  __typename?: 'ContentApperitivoUpdateResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int']['output'];
-  /** Array of records impacted by the mutation */
-  records: Array<ContentApperitivo>;
 };
 
 /** Boolean expression comparing fields on type "Date" */
@@ -610,10 +610,10 @@ export type IntFilter = {
 /** The root type for creating and mutating data */
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Deletes zero or more records from the `AppContent` collection */
+  deleteFromAppContentCollection: AppContentDeleteResponse;
   /** Deletes zero or more records from the `Categories` collection */
   deleteFromCategoriesCollection: CategoriesDeleteResponse;
-  /** Deletes zero or more records from the `ContentApperitivo` collection */
-  deleteFromContentApperitivoCollection: ContentApperitivoDeleteResponse;
   /** Deletes zero or more records from the `Equipments` collection */
   deleteFromEquipmentsCollection: EquipmentsDeleteResponse;
   /** Deletes zero or more records from the `IngredientsCategories` collection */
@@ -638,10 +638,10 @@ export type Mutation = {
   deleteFromStepsCollection: StepsDeleteResponse;
   /** Deletes zero or more records from the `Units` collection */
   deleteFromUnitsCollection: UnitsDeleteResponse;
+  /** Adds one or more `AppContent` records to the collection */
+  insertIntoAppContentCollection?: Maybe<AppContentInsertResponse>;
   /** Adds one or more `Categories` records to the collection */
   insertIntoCategoriesCollection?: Maybe<CategoriesInsertResponse>;
-  /** Adds one or more `ContentApperitivo` records to the collection */
-  insertIntoContentApperitivoCollection?: Maybe<ContentApperitivoInsertResponse>;
   /** Adds one or more `Equipments` records to the collection */
   insertIntoEquipmentsCollection?: Maybe<EquipmentsInsertResponse>;
   /** Adds one or more `IngredientsCategories` records to the collection */
@@ -666,10 +666,10 @@ export type Mutation = {
   insertIntoStepsCollection?: Maybe<StepsInsertResponse>;
   /** Adds one or more `Units` records to the collection */
   insertIntoUnitsCollection?: Maybe<UnitsInsertResponse>;
+  /** Updates zero or more records in the `AppContent` collection */
+  updateAppContentCollection: AppContentUpdateResponse;
   /** Updates zero or more records in the `Categories` collection */
   updateCategoriesCollection: CategoriesUpdateResponse;
-  /** Updates zero or more records in the `ContentApperitivo` collection */
-  updateContentApperitivoCollection: ContentApperitivoUpdateResponse;
   /** Updates zero or more records in the `Equipments` collection */
   updateEquipmentsCollection: EquipmentsUpdateResponse;
   /** Updates zero or more records in the `IngredientsCategories` collection */
@@ -698,16 +698,16 @@ export type Mutation = {
 
 
 /** The root type for creating and mutating data */
-export type MutationDeleteFromCategoriesCollectionArgs = {
+export type MutationDeleteFromAppContentCollectionArgs = {
   atMost?: Scalars['Int']['input'];
-  filter?: InputMaybe<CategoriesFilter>;
+  filter?: InputMaybe<AppContentFilter>;
 };
 
 
 /** The root type for creating and mutating data */
-export type MutationDeleteFromContentApperitivoCollectionArgs = {
+export type MutationDeleteFromCategoriesCollectionArgs = {
   atMost?: Scalars['Int']['input'];
-  filter?: InputMaybe<ContentApperitivoFilter>;
+  filter?: InputMaybe<CategoriesFilter>;
 };
 
 
@@ -796,14 +796,14 @@ export type MutationDeleteFromUnitsCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationInsertIntoCategoriesCollectionArgs = {
-  objects: Array<CategoriesInsertInput>;
+export type MutationInsertIntoAppContentCollectionArgs = {
+  objects: Array<AppContentInsertInput>;
 };
 
 
 /** The root type for creating and mutating data */
-export type MutationInsertIntoContentApperitivoCollectionArgs = {
-  objects: Array<ContentApperitivoInsertInput>;
+export type MutationInsertIntoCategoriesCollectionArgs = {
+  objects: Array<CategoriesInsertInput>;
 };
 
 
@@ -880,18 +880,18 @@ export type MutationInsertIntoUnitsCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationUpdateCategoriesCollectionArgs = {
+export type MutationUpdateAppContentCollectionArgs = {
   atMost?: Scalars['Int']['input'];
-  filter?: InputMaybe<CategoriesFilter>;
-  set: CategoriesUpdateInput;
+  filter?: InputMaybe<AppContentFilter>;
+  set: AppContentUpdateInput;
 };
 
 
 /** The root type for creating and mutating data */
-export type MutationUpdateContentApperitivoCollectionArgs = {
+export type MutationUpdateCategoriesCollectionArgs = {
   atMost?: Scalars['Int']['input'];
-  filter?: InputMaybe<ContentApperitivoFilter>;
-  set: ContentApperitivoUpdateInput;
+  filter?: InputMaybe<CategoriesFilter>;
+  set: CategoriesUpdateInput;
 };
 
 
@@ -1280,10 +1280,10 @@ export type ProfilesUpdateResponse = {
 /** The root type for querying data */
 export type Query = {
   __typename?: 'Query';
+  /** A pagable collection of type `AppContent` */
+  appContentCollection?: Maybe<AppContentConnection>;
   /** A pagable collection of type `Categories` */
   categoriesCollection?: Maybe<CategoriesConnection>;
-  /** A pagable collection of type `ContentApperitivo` */
-  contentApperitivoCollection?: Maybe<ContentApperitivoConnection>;
   /** A pagable collection of type `Equipments` */
   equipmentsCollection?: Maybe<EquipmentsConnection>;
   /** A pagable collection of type `IngredientsCategories` */
@@ -1314,6 +1314,17 @@ export type Query = {
 
 
 /** The root type for querying data */
+export type QueryAppContentCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  filter?: InputMaybe<AppContentFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<AppContentOrderBy>>;
+};
+
+
+/** The root type for querying data */
 export type QueryCategoriesCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1321,17 +1332,6 @@ export type QueryCategoriesCollectionArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<CategoriesOrderBy>>;
-};
-
-
-/** The root type for querying data */
-export type QueryContentApperitivoCollectionArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  filter?: InputMaybe<ContentApperitivoFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ContentApperitivoOrderBy>>;
 };
 
 
@@ -2170,7 +2170,7 @@ export type GetContentQueryVariables = Exact<{
 }>;
 
 
-export type GetContentQuery = { __typename?: 'Query', contentApperitivoCollection?: { __typename?: 'ContentApperitivoConnection', edges: Array<{ __typename?: 'ContentApperitivoEdge', node: { __typename?: 'ContentApperitivo', id: any, content?: any | null } }> } | null };
+export type GetContentQuery = { __typename?: 'Query', appContentCollection?: { __typename?: 'AppContentConnection', edges: Array<{ __typename?: 'AppContentEdge', node: { __typename?: 'AppContent', id: any, content?: any | null } }> } | null };
 
 export type GetEquipmentDetailsQueryVariables = Exact<{
   equipmentId: Scalars['UUID']['input'];
@@ -2241,7 +2241,7 @@ export const DeleteFromFavouritesDocument = {"kind":"Document","definitions":[{"
 export const DeleteFromMyBarDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"deleteFromMyBar"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ingredientIds"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"profileIds"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteFromProfilesIngredientsCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"ingredientId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ingredientIds"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"profileId"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"profileIds"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"atMost"},"value":{"kind":"IntValue","value":"500"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ingredientId"}},{"kind":"Field","name":{"kind":"Name","value":"profileId"}}]}}]}}]}}]} as unknown as DocumentNode<DeleteFromMyBarMutation, DeleteFromMyBarMutationVariables>;
 export const GetCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCategories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ids"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"DescNullsFirst"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipesCategoriesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCategoriesQuery, GetCategoriesQueryVariables>;
 export const GetCategoryDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCategoryDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"categoryId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"categoryId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCategoryDetailsQuery, GetCategoryDetailsQueryVariables>;
-export const GetContentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getContent"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"contentApperitivoCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetContentQuery, GetContentQueryVariables>;
+export const GetContentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getContent"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"appContentCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetContentQuery, GetContentQueryVariables>;
 export const GetEquipmentDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getEquipmentDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"equipmentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"equipmentsCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"equipmentId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetEquipmentDetailsQuery, GetEquipmentDetailsQueryVariables>;
 export const GetFavouritesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getFavourites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profilesRecipesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetFavouritesQuery, GetFavouritesQueryVariables>;
 export const GetFilterDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getFilterDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filterId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filterId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetFilterDetailsQuery, GetFilterDetailsQueryVariables>;

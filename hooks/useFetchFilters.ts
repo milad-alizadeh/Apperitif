@@ -15,7 +15,7 @@ export const useFetchFilters = (): {
     fetchPolicy: 'cache-and-network',
   })
   const categoryIds = filterData
-    ? values(JSON.parse(filterData.contentApperitivoCollection.edges[0].node.content).filters)
+    ? values(JSON.parse(filterData.appContentCollection.edges[0].node.content).filters)
     : []
 
   if (filterError) return { data: null, loading: false, error: filterError }

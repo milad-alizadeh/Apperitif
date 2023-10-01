@@ -27,7 +27,7 @@ export default function BrowseHomeScreen() {
 
   try {
     if (browseData) {
-      const content = browseData.contentApperitivoCollection?.edges?.[0]?.node?.content
+      const content = browseData.appContentCollection?.edges?.[0]?.node?.content
       if (content) {
         const parsedContent = JSON.parse(content)
         if (parsedContent.categories) {

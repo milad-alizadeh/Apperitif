@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Apperitivo",
-    "slug": "apperitivo",
+    "name": "Apperitif",
+    "slug": "apperitif",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon-all.png",
@@ -15,7 +15,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bubblewrap.apperitivo"
+      "bundleIdentifier": "ai.bubblewrap.apperitif"
     },
     "android": {
       "adaptiveIcon": {
