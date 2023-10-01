@@ -1,22 +1,22 @@
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { router, useLocalSearchParams } from 'expo-router'
-import React, { FC, Suspense, useCallback, useRef, useState } from 'react'
+import { set } from 'lodash'
+import React, { Suspense, useCallback, useRef, useState } from 'react'
 import { ActivityIndicator, View, useWindowDimensions } from 'react-native'
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated'
 import {
   BottomSheet,
   BottomSheetRef,
   BouncyImage,
+  EquipmentDetails,
   FixedHeader,
   Heading,
   IngredientDetails,
   RecipeFavourite,
   Text,
 } from '~/components'
-import { ADD_TO_FAVOURITES } from '~/graphql/mutations/addToFavourite'
-import { DELETE_FROM_FAVOURITES } from '~/graphql/mutations/deleteFromFavourites'
-import { GET_RECIPE_DETAILS } from '~/graphql/queries'
-import { GET_FAVOURITES } from '~/graphql/queries/getFavourites'
+import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
+import { GET_FAVOURITES, GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useSession } from '~/hooks/useSession'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
@@ -26,6 +26,7 @@ const RecipeTabsLazy = React.lazy(() => import('~/components/RecipeTabs'))
 export default function RecipeDetailsScreen() {
   const bottomOffset = useSafeAreaInsetsStyle(['bottom'])
   const [ingredientId, setIngredientId] = useState<string>('')
+  const [equipmentId, setEquipmentId] = useState<string>('')
   const modalRef = useRef<BottomSheetRef>(null)
   const aref = useAnimatedRef<Animated.ScrollView>()
   const scrollY = useScrollViewOffset(aref)
@@ -53,6 +54,13 @@ export default function RecipeDetailsScreen() {
 
   const onIngredientPress = useCallback((id) => {
     setIngredientId(id)
+    setEquipmentId(null)
+    modalRef.current.show()
+  }, [])
+
+  const onEquipmentPress = useCallback((id) => {
+    setEquipmentId(id)
+    setIngredientId(null)
     modalRef.current.show()
   }, [])
 
@@ -103,7 +111,8 @@ export default function RecipeDetailsScreen() {
 
       {/* Ingredient Modal */}
       <BottomSheet ref={modalRef}>
-        <IngredientDetails ingredientId={ingredientId} />
+        {ingredientId && <IngredientDetails ingredientId={ingredientId} />}
+        {equipmentId && <EquipmentDetails equipmentId={equipmentId} />}
       </BottomSheet>
 
       <Animated.ScrollView style={bottomOffset} ref={aref} scrollEventThrottle={16}>
@@ -130,7 +139,7 @@ export default function RecipeDetailsScreen() {
                 recipeIngredients={recipeIngredients}
                 recipesEquipments={recipesEquipments}
                 onIngredientPress={onIngredientPress}
-                onEquipmentPress={() => {}}
+                onEquipmentPress={onEquipmentPress}
               />
             </Suspense>
           </View>

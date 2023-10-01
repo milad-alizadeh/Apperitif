@@ -15,10 +15,14 @@ export interface BottomSheetRef {
 }
 
 export interface BottomSheetProps {
+  onHide?: () => void
   children: React.ReactNode
 }
 
-export const BottomSheet = forwardRef(function BottomSheet({ children }: BottomSheetProps, ref) {
+export const BottomSheet = forwardRef(function BottomSheet(
+  { children, onHide }: BottomSheetProps,
+  ref,
+) {
   const [visible, setVisible] = useState(false)
   const offset = useSharedValue(0)
   const opacity = useSharedValue(0)
@@ -38,6 +42,8 @@ export const BottomSheet = forwardRef(function BottomSheet({ children }: BottomS
     setTimeout(() => {
       setVisible(false)
     }, duration)
+
+    onHide && onHide()
   }
 
   useImperativeHandle(

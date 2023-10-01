@@ -15,6 +15,7 @@ export interface RecipeTabsProps {
   recipeSteps: any
   recipesEquipments: any
   onIngredientPress: (id: string) => void
+  onEquipmentPress?: (id: string) => void
 }
 
 /**
@@ -61,7 +62,8 @@ export const RecipeTabs = function RecipeTabs({
                   name={name}
                   leftImage={imageUrl}
                   rightIcon="text"
-                  onPress={() => onEquipmentPress(id)}
+                  onPress={() => onEquipmentPress && onEquipmentPress(id)}
+                  onRightIconPress={() => onEquipmentPress && onEquipmentPress(id)}
                   styleClassName="mb-2"
                 />
               ))}
