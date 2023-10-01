@@ -38,7 +38,7 @@ export const SectionHeader = function SectionHeader({
   const listRef = useRef<FlatList<any>>(null)
   const indicatorPos = useSharedValue({ width: 0, x: 0 })
   const refs = useMemo(() => sectionTitles.map(() => createRef<View>()), [])
-  const [containerX, setContainerX] = useState(0)
+  const [containerX, setContainerX] = useState(-1)
 
   // Measure the x position of the FlatList on its layout
   const onContainerLayout = () => {
@@ -48,9 +48,11 @@ export const SectionHeader = function SectionHeader({
   }
 
   useEffect(() => {
-    const minItemsToCheck = Math.min(5, sectionTitles.length)
+    // console.log('measures', measures)
+    // console.log('containerX', containerX)
+    const minItemsToCheck = Math.min(4, sectionTitles.length)
     if (measures.slice(0, minItemsToCheck).every((measure) => measure)) {
-      if (!containerX) return
+      if (containerX === -1) return
       onLayoutCalculated && onLayoutCalculated()
     }
   }, [measures, containerX])

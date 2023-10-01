@@ -1,3 +1,4 @@
+import { set } from 'lodash'
 import React, { useCallback, useRef, useState } from 'react'
 import { View, ViewToken, useWindowDimensions } from 'react-native'
 import BigList from 'react-native-big-list'
@@ -74,7 +75,9 @@ export const SectionList = function SectionList({
 
   const onCheckViewableItems = ({ viewableItems }: { viewableItems: ViewToken[] }) => {
     if (activeIndex < 0) return
-    if (isNavScroll.current) return
+    if (isNavScroll?.current) return
+
+    console.log('viewableItems', viewableItems)
 
     if (viewableItems[0]) {
       const activeIndex = viewableItems[0].section
@@ -140,7 +143,7 @@ export const SectionList = function SectionList({
     )
   return (
     <View className="flex-1">
-      {showHeader && (
+      {showHeader && !!sectionsHeader?.length && (
         <Animated.View
           style={[navAnimatedStyle, { ...shadowHeader, top: FIXED_HEADER_HEIGHT }]}
           className="bg-white z-10 border-t-[1px] border-neutral-100 opacity-1"
@@ -151,6 +154,7 @@ export const SectionList = function SectionList({
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
             setIsNavScroll={setIsNavScroll}
+            onLayoutCalculated={() => setActiveIndex(0)}
             scrollOffset={FIXED_HEADER_HEIGHT + SECTION_HEADER_HEIGHT}
           />
         </Animated.View>
@@ -180,7 +184,7 @@ export const SectionList = function SectionList({
         scrollEnabled={!disableScroll}
         ref={sectionListRef}
         onScrollBeginDrag={() => {
-          if (isNavScroll.current) {
+          if (isNavScroll?.current) {
             setIsNavScroll(false)
           }
         }}
