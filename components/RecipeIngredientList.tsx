@@ -27,7 +27,7 @@ export const RecipeIngredientList = function RecipeIngredientList({
         <ListItem
           key={ingredient.id}
           name={ingredient.name}
-          leftText={`${quantity ?? ''} ${unit.name}`}
+          leftText={`${quantity ?? ''} ${unit?.name}`}
           rightIcon="text"
           onRightIconPress={() => onPress && onPress(ingredient.id)}
         />
