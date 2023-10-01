@@ -1,5 +1,5 @@
 import { useReactiveVar } from '@apollo/client'
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import {
   doubleRecipeVar,
@@ -9,6 +9,7 @@ import {
   selectedUnitSystemVar,
   unitSystemsVar,
 } from '~/store'
+import { UnitSystems } from '~/store'
 import { SegmentedControl } from './SegmentedControls'
 // import SegmentedControl from 'react-native-ui-lib/segmentedControl'
 import { Switch } from './Switch'
@@ -18,12 +19,6 @@ import { Text } from './Text'
  * A component that displays the recipe measurements and conversions.
  */
 export const RecipeMeasurements = function RecipeMeasurements() {
-  // const { recipeStore } = useStores()
-
-  // recipeStore.setDefaultMeasurements()
-
-  // const { units, availableJiggerSizes, setSelectedJiggerSize, doubleRecipe, setProp, setUnit } =
-  // recipeStore?.measurements[0]
   const unitSystems = useReactiveVar(unitSystemsVar)
   const jiggerSizesMetric = useReactiveVar(jiggerSizesMetricVar)
   const jiggerSizesImperial = useReactiveVar(jiggerSizesImperialVar)
@@ -31,31 +26,36 @@ export const RecipeMeasurements = function RecipeMeasurements() {
   const selectedUnitSystem = useReactiveVar(selectedUnitSystemVar)
   const selectedJiggerSize = useReactiveVar(selectedJiggerSizeVar)
 
-  const currentJiggerSizes =
-    selectedUnitSystem === 'metric' ? jiggerSizesMetric : jiggerSizesImperial
+  useEffect(() => {
+    doubleRecipeVar(false)
+  }, [])
+
+  const currentJiggerSizes = (unitSystem: UnitSystems) =>
+    unitSystem === UnitSystems.METRIC ? jiggerSizesMetric : jiggerSizesImperial
 
   return (
     <View className="flex-row justify-between pb-6 mb-6 border-b-[1px] border-primary">
-      {/* <View>
+      <View>
         <Text h4 styleClassName="text-primary mb-2">
           Unit
         </Text>
         <SegmentedControl
-          onChangeIndex={(i) => setUnit(units[i])}
-          segments={units.map((unit) => ({ label: unit }))}
+          selectedValue={selectedUnitSystem}
+          segments={unitSystems}
+          onValueChange={(value) => {
+            selectedUnitSystemVar(value)
+            selectedJiggerSizeVar(currentJiggerSizes(value)[0].value)
+          }}
         />
-      </View> */}
-      <View className="min-w-[120px]">
+      </View>
+      <View>
         <Text h4 styleClassName="text-primary mb-2">
           Jigger Size
         </Text>
         <SegmentedControl
-          segments={currentJiggerSizes}
-          onValueChange={(value) => selectedJiggerSize}
-          // onChangeIndex={(i) => setSelectedJiggerSize(availableJiggerSizes[i].size)}
-          // segments={availableJiggerSizes.map((jigger) => ({
-          //   label: jigger.label,
-          // }))}
+          selectedValue={selectedJiggerSize}
+          segments={currentJiggerSizes(selectedUnitSystem)}
+          onValueChange={(value) => selectedJiggerSizeVar(value)}
         />
       </View>
       <View className="items-center">

@@ -1,16 +1,37 @@
 import { makeVar } from '@apollo/client'
 
-export const jiggerSizesMetricVar = makeVar<{ label: string; value: number }[]>([
-  { label: '50ml', value: 50 },
-  { label: '60ml', value: 60 },
-])
-export const jiggerSizesImperialVar = makeVar<{ label: string; value: number }[]>([
-  { label: '1oz', value: 30 },
-  { label: '1½oz', value: 45 },
-  { label: '2oz', value: 60 },
-])
-export const unitSystemsVar = makeVar(['metric', 'imperial'])
+export enum UnitSystems {
+  IMPERIAL = 'imperial',
+  METRIC = 'metric',
+}
 
-export const selectedUnitSystemVar = makeVar<'metric' | 'imperial'>('metric')
-export const selectedJiggerSizeVar = makeVar(50)
+export enum JiggerSizes {
+  '30ml' = 30,
+  '45ml' = 45,
+  '50ml' = 50,
+  '60ml' = 60,
+}
+
+export const jiggerSizesMetricVar = makeVar([
+  { label: '50ml', value: JiggerSizes['50ml'] },
+  { label: '60ml', value: JiggerSizes['60ml'] },
+])
+export const jiggerSizesImperialVar = makeVar([
+  { label: '1oz', value: JiggerSizes['30ml'] },
+  { label: '1½oz', value: JiggerSizes['45ml'] },
+  { label: '2oz', value: JiggerSizes['60ml'] },
+])
+export const unitSystemsVar = makeVar([
+  {
+    label: 'ml',
+    value: UnitSystems.METRIC,
+  },
+  {
+    label: 'oz',
+    value: UnitSystems.IMPERIAL,
+  },
+])
+
+export const selectedUnitSystemVar = makeVar<UnitSystems>(UnitSystems.METRIC)
+export const selectedJiggerSizeVar = makeVar(JiggerSizes['50ml'])
 export const doubleRecipeVar = makeVar<boolean>(false)

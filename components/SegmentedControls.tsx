@@ -1,5 +1,5 @@
 import 'nativewind'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import Animated, {
   Easing,
@@ -11,25 +11,39 @@ import { useHaptic } from '~/hooks/useHaptics'
 import { shadowCard } from '~/theme/shadows'
 import { Text } from './Text'
 
-type Segment = {
+type Segment<T> = {
   label: string
-  value: string | number
+  value: T
 }
 
-type Props = {
-  segments: Segment[]
-  onValueChange: (value: Segment['value']) => void
+type Props<T> = {
+  segments: Segment<T>[]
+  selectedValue?: Segment<T>['value']
+  onValueChange: (value: Segment<T>['value']) => void
 }
 
-export const SegmentedControl: React.FC<Props> = ({ segments, onValueChange }) => {
+export const SegmentedControl = <T,>({ segments, onValueChange, selectedValue }: Props<T>) => {
   const [containerWidth, setContainerWidth] = useState(0)
-  const [activeIndex, setActiveIndex] = useState(0) // React state to keep track of active index
+  const [activeIndex, setActiveIndex] = useState(-1) // React state to keep track of active index
   const translateX = useSharedValue(0)
   const haptics = useHaptic('light')
 
-  const handlePress = (index: number, value: string | number) => {
+  useEffect(() => {
+    const newIndex = segments.findIndex((segment) => segment.value === selectedValue)
+    // console.log(selectedValue, newIndex, segments.length)
+    if (containerWidth === 0 || newIndex === -1) return
+
     const segmentWidth = containerWidth / segments.length
+    translateX.value = withTiming(newIndex * segmentWidth, {
+      easing: Easing.inOut(Easing.ease),
+      duration: 200,
+    })
+    setActiveIndex(newIndex)
+  }, [selectedValue, segments, containerWidth])
+
+  const handlePress = (index: number, value: T) => {
     haptics()
+    const segmentWidth = containerWidth / segments.length
     translateX.value = withTiming(index * segmentWidth, {
       easing: Easing.inOut(Easing.ease),
       duration: 200,
@@ -60,10 +74,10 @@ export const SegmentedControl: React.FC<Props> = ({ segments, onValueChange }) =
           <TouchableOpacity
             key={segment.value.toString()}
             onPress={() => handlePress(index, segment.value)}
-            className="flex-1 items-center justify-center p-2"
+            className="min-w-[38px] tems-center justify-center px-2 py-[5px]"
           >
             <Text
-              styleClassName={`text-sm font-medium ${
+              styleClassName={`text-sm font-medium text-center w-full ${
                 activeIndex === index ? 'text-white' : 'text-black'
               }`}
             >
