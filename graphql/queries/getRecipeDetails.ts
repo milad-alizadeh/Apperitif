@@ -23,6 +23,14 @@ export const GET_RECIPE_DETAILS = gql(/* GraphQL */ `
                 unit {
                   id
                   name
+                  plural
+                  abbreviation
+                  type
+                  system
+                  isConvertable
+                  baseUnitId
+                  systemToSystemConversionFactor
+                  baseConversionFactor
                 }
                 ingredient {
                   id

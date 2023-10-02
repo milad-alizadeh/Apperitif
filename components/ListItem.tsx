@@ -89,9 +89,7 @@ export const ListItem = memo(function ListItem({
         />
       )}
       {showCheckbox && <Checkbox checked={checked} onPress={onPress} styleClassName="mr-3" />}
-      {leftText && (
-        <Text styleClassName={`font-medium min-w-[80px] capitalize mr-3`}>{leftText}</Text>
-      )}
+      {leftText && <Text styleClassName={`font-medium min-w-[80px] mr-3`}>{leftText}</Text>}
       {leftIcon && (
         <Icon
           containerClassName="mr-3"

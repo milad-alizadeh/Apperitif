@@ -11,10 +11,8 @@ import {
 } from '~/store'
 import { UnitSystems } from '~/store'
 import { SegmentedControl } from './SegmentedControls'
-// import SegmentedControl from 'react-native-ui-lib/segmentedControl'
 import { Switch } from './Switch'
 import { Text } from './Text'
-import { GET_UNITS } from '~/graphql/queries'
 
 /**
  * A component that displays the recipe measurements and conversions.
@@ -26,8 +24,6 @@ export const RecipeMeasurements = function RecipeMeasurements() {
   const doubleRecipe = useReactiveVar(doubleRecipeVar)
   const selectedUnitSystem = useReactiveVar(selectedUnitSystemVar)
   const selectedJiggerSize = useReactiveVar(selectedJiggerSizeVar)
-
-  const  { data } = useQuery(GET_UNITS)
 
   useEffect(() => {
     doubleRecipeVar(false)

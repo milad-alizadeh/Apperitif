@@ -1,7 +1,10 @@
+import { useQuery, useReactiveVar } from '@apollo/client'
 import orderBy from 'lodash/orderBy'
 import React, { useCallback } from 'react'
-import { FlatList, View } from 'react-native'
-import { GetRecipeDetailsQuery } from '~/__generated__/graphql'
+import { View } from 'react-native'
+import { GetRecipeDetailsQuery, Units } from '~/__generated__/graphql'
+import { GET_UNITS } from '~/graphql/queries'
+import { convertUnitToOtherSystem, selectedUnitSystemVar } from '~/store'
 import { ListItem } from './ListItem'
 import { RecipeMeasurements } from './RecipeMeasurements'
 import { Tabs } from './Tabs'
@@ -40,19 +43,32 @@ export const RecipeTabs = function RecipeTabs({
   onIngredientPress,
   onEquipmentPress,
 }: RecipeTabsProps) {
+  const { data } = useQuery(GET_UNITS)
+  const selectedUnitSystem = useReactiveVar(selectedUnitSystemVar)
+  const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
+
+  console.log('ingredients', ingredients)
+
   const renderIngredientItem = useCallback(
     ({ ingredient, quantity, unit }: Ingredient) => {
+      if (!units || !quantity) return null
+      const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem(
+        unit as Units,
+        selectedUnitSystem,
+        quantity,
+        units,
+      )
       return (
         <ListItem
           key={ingredient.id}
           name={ingredient.name}
-          leftText={`${quantity ?? ''} ${unit?.name}`}
+          leftText={`${outputQuantity} ${outputUnit}`}
           rightIcon="text"
           onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
         />
       )
     },
-    [ingredients],
+    [ingredients, units],
   )
 
   const renderEquipmentItem = useCallback(
