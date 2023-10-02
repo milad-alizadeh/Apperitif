@@ -34,7 +34,7 @@ export const RecipeMeasurements = function RecipeMeasurements() {
     unitSystem === UnitSystems.METRIC ? jiggerSizesMetric : jiggerSizesImperial
 
   return (
-    <View className="flex-row justify-between pb-6 mb-6 border-b-[1px] border-primary">
+    <View className="flex-row justify-between pb-6 mb-6 border-b-[1px] border-neutral-200">
       <View>
         <Text h4 styleClassName="text-primary mb-2">
           Unit

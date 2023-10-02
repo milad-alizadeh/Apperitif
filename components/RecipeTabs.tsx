@@ -1,17 +1,26 @@
+import orderBy from 'lodash/orderBy'
 import React, { useCallback } from 'react'
 import { FlatList, View } from 'react-native'
+import { GetRecipeDetailsQuery } from '~/__generated__/graphql'
 import { ListItem } from './ListItem'
 import { RecipeMeasurements } from './RecipeMeasurements'
 import { Tabs } from './Tabs'
 import { Text } from './Text'
 
+type Ingredient =
+  GetRecipeDetailsQuery['recipesCollection']['edges'][0]['node']['recipesIngredientsCollection']['edges'][0]['node']
+type Equipment =
+  GetRecipeDetailsQuery['recipesCollection']['edges'][0]['node']['recipesEquipmentCollection']['edges'][0]['node']['equipment']
+type Step =
+  GetRecipeDetailsQuery['recipesCollection']['edges'][0]['node']['stepsCollection']['edges'][0]['node']
+
 export interface RecipeTabsProps {
   /**
    * An optional style override useful for padding & margin.
    */
-  ingredients: any
-  steps: any
-  equipment: any
+  ingredients: Ingredient[]
+  equipment: Equipment[]
+  steps: Step[]
   onIngredientPress: (id: string) => void
   onEquipmentPress?: (id: string) => void
 }
@@ -31,25 +40,8 @@ export const RecipeTabs = function RecipeTabs({
   onIngredientPress,
   onEquipmentPress,
 }: RecipeTabsProps) {
-  const [activeIndex, setActiveIndex] = React.useState(0)
-
-  const renderEquipmentItem = useCallback(
-    ({ item: { name, imageUrl, id } }) => {
-      return (
-        <ListItem
-          name={name}
-          leftImage={imageUrl}
-          rightIcon="text"
-          onPress={() => onEquipmentPress && onEquipmentPress(id)}
-          styleClassName="mb-2"
-        />
-      )
-    },
-    [equipment],
-  )
-
   const renderIngredientItem = useCallback(
-    ({ item: { ingredient, quantity, unit } }) => {
+    ({ ingredient, quantity, unit }: Ingredient) => {
       return (
         <ListItem
           key={ingredient.id}
@@ -63,9 +55,30 @@ export const RecipeTabs = function RecipeTabs({
     [ingredients],
   )
 
+  const renderEquipmentItem = useCallback(
+    ({ name, imageUrl, id }: Equipment) => {
+      return (
+        <ListItem
+          key={id}
+          name={name}
+          leftImage={imageUrl}
+          rightIcon="text"
+          onPress={() => onEquipmentPress && onEquipmentPress(id)}
+          styleClassName="mb-2"
+        />
+      )
+    },
+    [equipment],
+  )
+
   const renderStepItem = useCallback(
-    ({ item: { number, description } }) => {
-      return <ListItem name={description} leftText={`${number ?? ''}`} />
+    ({ number, description, id }: Step) => {
+      return (
+        <View key={id} className="flex-row mb-2 items-start">
+          <Text styleClassName="mr-2">{number}.</Text>
+          <Text>{description}</Text>
+        </View>
+      )
     },
     [steps],
   )
@@ -74,22 +87,15 @@ export const RecipeTabs = function RecipeTabs({
     <Tabs initialIndex={0}>
       <Tabs.TabPage title="Ingredients">
         <RecipeMeasurements />
-        <FlatList
-          data={ingredients}
-          renderItem={renderIngredientItem}
-          keyExtractor={(item) => item.id}
-        />
+        <View>{ingredients.map((ingredient) => renderIngredientItem(ingredient))}</View>
       </Tabs.TabPage>
 
       <Tabs.TabPage title="Equipments">
-        <FlatList
-          data={equipment}
-          renderItem={renderEquipmentItem}
-          keyExtractor={(item) => item.id}
-        />
+        <View>{equipment.map((equipment) => renderEquipmentItem(equipment))}</View>
       </Tabs.TabPage>
+
       <Tabs.TabPage title="Method">
-        <FlatList data={steps} renderItem={renderStepItem} keyExtractor={(item) => item.id} />
+        <View>{orderBy(steps, 'number').map((step) => renderStepItem(step))}</View>
       </Tabs.TabPage>
     </Tabs>
   )

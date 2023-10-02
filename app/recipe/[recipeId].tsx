@@ -41,10 +41,9 @@ export default function RecipeDetailsScreen() {
   })
 
   const recipe = data?.recipesCollection?.edges[0]?.node
-  const recipesEquipment =
-    recipe?.recipesEquipmentCollection?.edges.map((e) => e.node.equipment) ?? []
-  const recipeIngredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
-  const recipeSteps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
+  const equipment = recipe?.recipesEquipmentCollection?.edges.map((e) => e.node.equipment) ?? []
+  const ingredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
+  const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
 
   if (error) {
     return <Text>{error.message}</Text>
@@ -126,9 +125,9 @@ export default function RecipeDetailsScreen() {
 
           <View className="bg-white rounded-2xl" style={shadowLarge}>
             <RecipeTabs
-              recipeSteps={recipeSteps}
-              recipeIngredients={recipeIngredients}
-              recipesEquipment={recipesEquipment}
+              steps={steps}
+              ingredients={ingredients}
+              equipment={equipment}
               onIngredientPress={onIngredientPress}
               onEquipmentPress={onEquipmentPress}
             />
