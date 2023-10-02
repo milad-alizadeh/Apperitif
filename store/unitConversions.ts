@@ -73,8 +73,7 @@ export const formatQuantity = (quantity: string | null): string | null => {
 
   const parsedQuantity = parseFloat(quantity)
   if (isNaN(parsedQuantity)) {
-    console.error(`format Invalid quantity received: ${quantity}`) // Log the invalid quantity
-    throw new Error('Quantity is not a valid number')
+    throw new Error(`Quantity is not a valid number`)
   }
 
   const formatted = parseFloat(parsedQuantity.toFixed(2))
@@ -104,12 +103,19 @@ export const getConversionResult = (quantity: string | null, unit: Units) => {
  * @returns An object containing the converted quantity and the appropriate unit name of the other system.
  * @throws An error if the quantity is not a valid number or if the base unit for the other system of the same type cannot be found.
  */
-export const convertUnitToOtherSystem = (
-  unit: Units,
-  toSystem: UnitSystems,
-  quantity: string | null,
-  allUnits: Units[],
-) => {
+export const convertUnitToOtherSystem = ({
+  unit,
+  toSystem,
+  quantity,
+  units,
+  multiplier = 1,
+}: {
+  unit: Units
+  toSystem: UnitSystems
+  quantity: string | null
+  units: Units[]
+  multiplier?: number
+}) => {
   // If the unit is not convertible or quantity is null, return the original quantity and unit name
   if (!unit.isConvertable || quantity === null) return getConversionResult(quantity, unit)
 
@@ -118,8 +124,7 @@ export const convertUnitToOtherSystem = (
 
   const quantityFloat = parseFloat(quantity)
   if (isNaN(quantityFloat)) {
-    console.error(`Invalid quantity received: ${quantity}`) // Log the invalid quantity
-    throw new Error('Quantity is not a valid number')
+    throw new Error(`Quantity is not a valid number`)
   }
 
   // Convert to base unit if there is a base unit ID and a base conversion factor
@@ -131,7 +136,7 @@ export const convertUnitToOtherSystem = (
   const convertedQuantity = baseQuantity * (unit.systemToSystemConversionFactor || 1)
 
   // Find the base unit of the other system of the same type
-  const convertedBaseUnit = allUnits.find(
+  const convertedBaseUnit = units.find(
     (u) => u.type === unit.type && u.system === toSystem && !u.baseUnitId,
   )
 

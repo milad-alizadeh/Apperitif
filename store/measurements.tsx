@@ -23,7 +23,6 @@ export const jiggerSizesMetricVar = makeVar([
 ])
 
 export const jiggerSizesImperialVar = makeVar([
-  { label: '1oz', value: JiggerSizes['30ml'] },
   { label: '1½oz', value: JiggerSizes['45ml'] },
   { label: '2oz', value: JiggerSizes['60ml'] },
 ])

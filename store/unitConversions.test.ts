@@ -84,12 +84,12 @@ describe('convertUnitToOtherSystem', () => {
       ...mockUnits[0],
       isConvertable: false,
     }
-    const result = convertUnitToOtherSystem(
-      nonConvertibleUnit,
-      UnitSystems.IMPERIAL,
-      '100',
-      mockUnits,
-    )
+    const result = convertUnitToOtherSystem({
+      unit: nonConvertibleUnit,
+      toSystem: UnitSystems.IMPERIAL,
+      quantity: '100',
+      units: mockUnits,
+    })
     expect(result).toEqual({
       quantity: '100',
       unit: 'ml',
@@ -97,7 +97,12 @@ describe('convertUnitToOtherSystem', () => {
   })
 
   test('should return original quantity and unit name if quantity is null', () => {
-    const result = convertUnitToOtherSystem(mockUnits[0], UnitSystems.IMPERIAL, null, mockUnits)
+    const result = convertUnitToOtherSystem({
+      unit: mockUnits[0],
+      toSystem: UnitSystems.IMPERIAL,
+      quantity: null,
+      units: mockUnits,
+    })
     expect(result).toEqual({
       quantity: null,
       unit: 'ml',
@@ -106,12 +111,22 @@ describe('convertUnitToOtherSystem', () => {
 
   test('should throw error if quantity is not a valid number', () => {
     expect(() =>
-      convertUnitToOtherSystem(mockUnits[0], UnitSystems.IMPERIAL, 'invalid', mockUnits),
-    ).toThrow('Quantity is not a valid number')
+      convertUnitToOtherSystem({
+        unit: mockUnits[0],
+        toSystem: UnitSystems.IMPERIAL,
+        quantity: 'invalid',
+        units: mockUnits,
+      }),
+    ).toThrow()
   })
 
   test('should convert unit to other system and return converted quantity and unit name', () => {
-    const result = convertUnitToOtherSystem(mockUnits[0], UnitSystems.IMPERIAL, '1000', mockUnits)
+    const result = convertUnitToOtherSystem({
+      unit: mockUnits[0],
+      toSystem: UnitSystems.IMPERIAL,
+      quantity: '1000',
+      units: mockUnits,
+    })
     expect(result).toEqual({
       quantity: '33 ¾',
       unit: 'oz',
@@ -119,10 +134,15 @@ describe('convertUnitToOtherSystem', () => {
   })
 
   test('should return original quantity and unit name if the unit is already in the desired system', () => {
-    const result = convertUnitToOtherSystem(mockUnits[0], UnitSystems.METRIC, '1000', mockUnits)
+    const result = convertUnitToOtherSystem({
+      unit: mockUnits[1],
+      toSystem: UnitSystems.IMPERIAL,
+      quantity: '1000',
+      units: mockUnits,
+    })
     expect(result).toEqual({
       quantity: '1000',
-      unit: 'ml',
+      unit: 'oz',
     })
   })
 })

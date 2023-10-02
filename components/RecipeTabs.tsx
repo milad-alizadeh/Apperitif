@@ -1,5 +1,4 @@
 import { useQuery, useReactiveVar } from '@apollo/client'
-import orderBy from 'lodash/orderBy'
 import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { GetRecipeDetailsQuery, Units } from '~/__generated__/graphql'
@@ -47,28 +46,26 @@ export const RecipeTabs = function RecipeTabs({
   const selectedUnitSystem = useReactiveVar(selectedUnitSystemVar)
   const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
 
-  console.log('ingredients', ingredients)
-
   const renderIngredientItem = useCallback(
-    ({ ingredient, quantity, unit }: Ingredient) => {
+    ({ ingredient, quantity, unit, isOptional }: Ingredient) => {
       if (!units || !quantity) return null
-      const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem(
-        unit as Units,
-        selectedUnitSystem,
+      const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem({
+        unit: unit as Units,
+        toSystem: selectedUnitSystem,
         quantity,
         units,
-      )
+      })
       return (
         <ListItem
           key={ingredient.id}
-          name={ingredient.name}
+          name={`${ingredient.name} ${isOptional ? '(optional)' : ''}`}
           leftText={`${outputQuantity} ${outputUnit}`}
           rightIcon="text"
           onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
         />
       )
     },
-    [ingredients, units],
+    [ingredients, units, selectedUnitSystem],
   )
 
   const renderEquipmentItem = useCallback(
@@ -115,7 +112,7 @@ export const RecipeTabs = function RecipeTabs({
       </Tabs.TabPage>
 
       <Tabs.TabPage title="Method">
-        <View>{orderBy(steps, 'number').map((step) => renderStepItem(step))}</View>
+        <View>{steps.map((step) => renderStepItem(step))}</View>
       </Tabs.TabPage>
     </Tabs>
   )

@@ -19,6 +19,7 @@ export const GET_RECIPE_DETAILS = gql(/* GraphQL */ `
           recipesIngredientsCollection {
             edges {
               node {
+                isOptional
                 quantity
                 unit {
                   id

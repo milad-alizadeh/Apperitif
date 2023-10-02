@@ -1,5 +1,6 @@
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { router, useLocalSearchParams } from 'expo-router'
+import orderBy from 'lodash/orderBy'
 import React, { useCallback, useRef, useState } from 'react'
 import { View, useWindowDimensions } from 'react-native'
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated'
@@ -42,8 +43,13 @@ export default function RecipeDetailsScreen() {
 
   const recipe = data?.recipesCollection?.edges[0]?.node
   const equipment = recipe?.recipesEquipmentCollection?.edges.map((e) => e.node.equipment) ?? []
-  const ingredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
-  const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
+  const ingredients =
+    orderBy(
+      recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node),
+      ['isOptional', 'quantity'],
+      ['asc', 'desc'],
+    ) ?? []
+  const steps = orderBy(recipe?.stepsCollection?.edges.map((e) => e.node), 'name') ?? []
 
   if (error) {
     return <Text>{error.message}</Text>
