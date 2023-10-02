@@ -2,6 +2,7 @@ import { ApolloProvider } from '@apollo/client'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
+// import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SessionProvider } from '~/providers/SessionProvider'
 import { api } from '~/services/api'
 import { customFontsToLoad } from '../theme/typography'
@@ -44,6 +45,7 @@ function RootLayoutNav() {
   return (
     <SessionProvider>
       <ApolloProvider client={api.apolloClient}>
+        {/* <GestureHandlerRootView style={{ flex: 1 }}> */}
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" />
           <Stack.Screen name="(tabs)" />
@@ -51,6 +53,7 @@ function RootLayoutNav() {
           <Stack.Screen name="recipe/[recipeId]" />
           <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
         </Stack>
+        {/* </GestureHandlerRootView> */}
       </ApolloProvider>
     </SessionProvider>
   )

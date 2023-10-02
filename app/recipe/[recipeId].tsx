@@ -1,8 +1,7 @@
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { router, useLocalSearchParams } from 'expo-router'
-import { set } from 'lodash'
-import React, { Suspense, useCallback, useRef, useState } from 'react'
-import { ActivityIndicator, View, useWindowDimensions } from 'react-native'
+import React, { useCallback, useRef, useState } from 'react'
+import { View, useWindowDimensions } from 'react-native'
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated'
 import {
   BottomSheet,
@@ -13,6 +12,7 @@ import {
   Heading,
   IngredientDetails,
   RecipeFavourite,
+  RecipeTabs,
   Text,
 } from '~/components'
 import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
@@ -20,8 +20,6 @@ import { GET_FAVOURITES, GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useSession } from '~/hooks/useSession'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
-
-const RecipeTabsLazy = React.lazy(() => import('~/components/RecipeTabs'))
 
 export default function RecipeDetailsScreen() {
   const bottomOffset = useSafeAreaInsetsStyle(['bottom'])
@@ -127,21 +125,13 @@ export default function RecipeDetailsScreen() {
           </View>
 
           <View className="bg-white rounded-2xl" style={shadowLarge}>
-            <Suspense
-              fallback={
-                <View className="h-64 justify-center items-center w-full">
-                  <ActivityIndicator />
-                </View>
-              }
-            >
-              <RecipeTabsLazy
-                recipeSteps={recipeSteps}
-                recipeIngredients={recipeIngredients}
-                recipesEquipments={recipesEquipments}
-                onIngredientPress={onIngredientPress}
-                onEquipmentPress={onEquipmentPress}
-              />
-            </Suspense>
+            <RecipeTabs
+              recipeSteps={recipeSteps}
+              recipeIngredients={recipeIngredients}
+              recipesEquipments={recipesEquipments}
+              onIngredientPress={onIngredientPress}
+              onEquipmentPress={onEquipmentPress}
+            />
           </View>
         </View>
       </Animated.ScrollView>
