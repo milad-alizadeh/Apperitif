@@ -68,6 +68,7 @@ export const ListItem = memo(function ListItem({
 }: ListItemProps) {
   const shadow = card ? shadowCard : {}
   const haptic = useHaptic('medium')
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -105,10 +106,14 @@ export const ListItem = memo(function ListItem({
         <Icon
           icon={rightIcon}
           color={colors.neutral[500]}
-          onPress={() => {
-            if (enableHaptics) haptic()
-            onRightIconPress && onRightIconPress()
-          }}
+          onPress={
+            onRightIconPress
+              ? () => {
+                  if (enableHaptics) haptic()
+                  onRightIconPress()
+                }
+              : undefined
+          }
         />
       )}
 
