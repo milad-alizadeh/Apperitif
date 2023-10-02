@@ -285,8 +285,8 @@ export type DatetimeFilter = {
   neq?: InputMaybe<Scalars['Datetime']['input']>;
 };
 
-export type Equipments = Node & {
-  __typename?: 'Equipments';
+export type Equipment = Node & {
+  __typename?: 'Equipment';
   createdAt: Scalars['Datetime']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
@@ -294,41 +294,41 @@ export type Equipments = Node & {
   name: Scalars['String']['output'];
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID']['output'];
-  recipesEquipmentsCollection?: Maybe<RecipesEquipmentsConnection>;
+  recipesEquipmentCollection?: Maybe<RecipesEquipmentConnection>;
   updatedAt: Scalars['Datetime']['output'];
 };
 
 
-export type EquipmentsRecipesEquipmentsCollectionArgs = {
+export type EquipmentRecipesEquipmentCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
-  filter?: InputMaybe<RecipesEquipmentsFilter>;
+  filter?: InputMaybe<RecipesEquipmentFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<RecipesEquipmentsOrderBy>>;
+  orderBy?: InputMaybe<Array<RecipesEquipmentOrderBy>>;
 };
 
-export type EquipmentsConnection = {
-  __typename?: 'EquipmentsConnection';
-  edges: Array<EquipmentsEdge>;
+export type EquipmentConnection = {
+  __typename?: 'EquipmentConnection';
+  edges: Array<EquipmentEdge>;
   pageInfo: PageInfo;
 };
 
-export type EquipmentsDeleteResponse = {
-  __typename?: 'EquipmentsDeleteResponse';
+export type EquipmentDeleteResponse = {
+  __typename?: 'EquipmentDeleteResponse';
   /** Count of the records impacted by the mutation */
   affectedCount: Scalars['Int']['output'];
   /** Array of records impacted by the mutation */
-  records: Array<Equipments>;
+  records: Array<Equipment>;
 };
 
-export type EquipmentsEdge = {
-  __typename?: 'EquipmentsEdge';
+export type EquipmentEdge = {
+  __typename?: 'EquipmentEdge';
   cursor: Scalars['String']['output'];
-  node: Equipments;
+  node: Equipment;
 };
 
-export type EquipmentsFilter = {
+export type EquipmentFilter = {
   createdAt?: InputMaybe<DatetimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
@@ -338,7 +338,7 @@ export type EquipmentsFilter = {
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
 
-export type EquipmentsInsertInput = {
+export type EquipmentInsertInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
@@ -347,15 +347,15 @@ export type EquipmentsInsertInput = {
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
 
-export type EquipmentsInsertResponse = {
-  __typename?: 'EquipmentsInsertResponse';
+export type EquipmentInsertResponse = {
+  __typename?: 'EquipmentInsertResponse';
   /** Count of the records impacted by the mutation */
   affectedCount: Scalars['Int']['output'];
   /** Array of records impacted by the mutation */
-  records: Array<Equipments>;
+  records: Array<Equipment>;
 };
 
-export type EquipmentsOrderBy = {
+export type EquipmentOrderBy = {
   createdAt?: InputMaybe<OrderByDirection>;
   description?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
@@ -364,7 +364,7 @@ export type EquipmentsOrderBy = {
   updatedAt?: InputMaybe<OrderByDirection>;
 };
 
-export type EquipmentsUpdateInput = {
+export type EquipmentUpdateInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
@@ -373,12 +373,12 @@ export type EquipmentsUpdateInput = {
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
 
-export type EquipmentsUpdateResponse = {
-  __typename?: 'EquipmentsUpdateResponse';
+export type EquipmentUpdateResponse = {
+  __typename?: 'EquipmentUpdateResponse';
   /** Count of the records impacted by the mutation */
   affectedCount: Scalars['Int']['output'];
   /** Array of records impacted by the mutation */
-  records: Array<Equipments>;
+  records: Array<Equipment>;
 };
 
 export enum FilterIs {
@@ -687,8 +687,8 @@ export type Mutation = {
   deleteFromAppContentCollection: AppContentDeleteResponse;
   /** Deletes zero or more records from the `Categories` collection */
   deleteFromCategoriesCollection: CategoriesDeleteResponse;
-  /** Deletes zero or more records from the `Equipments` collection */
-  deleteFromEquipmentsCollection: EquipmentsDeleteResponse;
+  /** Deletes zero or more records from the `Equipment` collection */
+  deleteFromEquipmentCollection: EquipmentDeleteResponse;
   /** Deletes zero or more records from the `IngredientsByCategories` collection */
   deleteFromIngredientsByCategoriesCollection: IngredientsByCategoriesDeleteResponse;
   /** Deletes zero or more records from the `IngredientsCategories` collection */
@@ -705,8 +705,8 @@ export type Mutation = {
   deleteFromRecipesCategoriesCollection: RecipesCategoriesDeleteResponse;
   /** Deletes zero or more records from the `Recipes` collection */
   deleteFromRecipesCollection: RecipesDeleteResponse;
-  /** Deletes zero or more records from the `RecipesEquipments` collection */
-  deleteFromRecipesEquipmentsCollection: RecipesEquipmentsDeleteResponse;
+  /** Deletes zero or more records from the `RecipesEquipment` collection */
+  deleteFromRecipesEquipmentCollection: RecipesEquipmentDeleteResponse;
   /** Deletes zero or more records from the `RecipesIngredients` collection */
   deleteFromRecipesIngredientsCollection: RecipesIngredientsDeleteResponse;
   /** Deletes zero or more records from the `Steps` collection */
@@ -717,8 +717,8 @@ export type Mutation = {
   insertIntoAppContentCollection?: Maybe<AppContentInsertResponse>;
   /** Adds one or more `Categories` records to the collection */
   insertIntoCategoriesCollection?: Maybe<CategoriesInsertResponse>;
-  /** Adds one or more `Equipments` records to the collection */
-  insertIntoEquipmentsCollection?: Maybe<EquipmentsInsertResponse>;
+  /** Adds one or more `Equipment` records to the collection */
+  insertIntoEquipmentCollection?: Maybe<EquipmentInsertResponse>;
   /** Adds one or more `IngredientsByCategories` records to the collection */
   insertIntoIngredientsByCategoriesCollection?: Maybe<IngredientsByCategoriesInsertResponse>;
   /** Adds one or more `IngredientsCategories` records to the collection */
@@ -735,8 +735,8 @@ export type Mutation = {
   insertIntoRecipesCategoriesCollection?: Maybe<RecipesCategoriesInsertResponse>;
   /** Adds one or more `Recipes` records to the collection */
   insertIntoRecipesCollection?: Maybe<RecipesInsertResponse>;
-  /** Adds one or more `RecipesEquipments` records to the collection */
-  insertIntoRecipesEquipmentsCollection?: Maybe<RecipesEquipmentsInsertResponse>;
+  /** Adds one or more `RecipesEquipment` records to the collection */
+  insertIntoRecipesEquipmentCollection?: Maybe<RecipesEquipmentInsertResponse>;
   /** Adds one or more `RecipesIngredients` records to the collection */
   insertIntoRecipesIngredientsCollection?: Maybe<RecipesIngredientsInsertResponse>;
   /** Adds one or more `Steps` records to the collection */
@@ -747,8 +747,8 @@ export type Mutation = {
   updateAppContentCollection: AppContentUpdateResponse;
   /** Updates zero or more records in the `Categories` collection */
   updateCategoriesCollection: CategoriesUpdateResponse;
-  /** Updates zero or more records in the `Equipments` collection */
-  updateEquipmentsCollection: EquipmentsUpdateResponse;
+  /** Updates zero or more records in the `Equipment` collection */
+  updateEquipmentCollection: EquipmentUpdateResponse;
   /** Updates zero or more records in the `IngredientsByCategories` collection */
   updateIngredientsByCategoriesCollection: IngredientsByCategoriesUpdateResponse;
   /** Updates zero or more records in the `IngredientsCategories` collection */
@@ -765,8 +765,8 @@ export type Mutation = {
   updateRecipesCategoriesCollection: RecipesCategoriesUpdateResponse;
   /** Updates zero or more records in the `Recipes` collection */
   updateRecipesCollection: RecipesUpdateResponse;
-  /** Updates zero or more records in the `RecipesEquipments` collection */
-  updateRecipesEquipmentsCollection: RecipesEquipmentsUpdateResponse;
+  /** Updates zero or more records in the `RecipesEquipment` collection */
+  updateRecipesEquipmentCollection: RecipesEquipmentUpdateResponse;
   /** Updates zero or more records in the `RecipesIngredients` collection */
   updateRecipesIngredientsCollection: RecipesIngredientsUpdateResponse;
   /** Updates zero or more records in the `Steps` collection */
@@ -791,9 +791,9 @@ export type MutationDeleteFromCategoriesCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationDeleteFromEquipmentsCollectionArgs = {
+export type MutationDeleteFromEquipmentCollectionArgs = {
   atMost?: Scalars['Int']['input'];
-  filter?: InputMaybe<EquipmentsFilter>;
+  filter?: InputMaybe<EquipmentFilter>;
 };
 
 
@@ -854,9 +854,9 @@ export type MutationDeleteFromRecipesCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationDeleteFromRecipesEquipmentsCollectionArgs = {
+export type MutationDeleteFromRecipesEquipmentCollectionArgs = {
   atMost?: Scalars['Int']['input'];
-  filter?: InputMaybe<RecipesEquipmentsFilter>;
+  filter?: InputMaybe<RecipesEquipmentFilter>;
 };
 
 
@@ -894,8 +894,8 @@ export type MutationInsertIntoCategoriesCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationInsertIntoEquipmentsCollectionArgs = {
-  objects: Array<EquipmentsInsertInput>;
+export type MutationInsertIntoEquipmentCollectionArgs = {
+  objects: Array<EquipmentInsertInput>;
 };
 
 
@@ -948,8 +948,8 @@ export type MutationInsertIntoRecipesCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationInsertIntoRecipesEquipmentsCollectionArgs = {
-  objects: Array<RecipesEquipmentsInsertInput>;
+export type MutationInsertIntoRecipesEquipmentCollectionArgs = {
+  objects: Array<RecipesEquipmentInsertInput>;
 };
 
 
@@ -988,10 +988,10 @@ export type MutationUpdateCategoriesCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationUpdateEquipmentsCollectionArgs = {
+export type MutationUpdateEquipmentCollectionArgs = {
   atMost?: Scalars['Int']['input'];
-  filter?: InputMaybe<EquipmentsFilter>;
-  set: EquipmentsUpdateInput;
+  filter?: InputMaybe<EquipmentFilter>;
+  set: EquipmentUpdateInput;
 };
 
 
@@ -1060,10 +1060,10 @@ export type MutationUpdateRecipesCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationUpdateRecipesEquipmentsCollectionArgs = {
+export type MutationUpdateRecipesEquipmentCollectionArgs = {
   atMost?: Scalars['Int']['input'];
-  filter?: InputMaybe<RecipesEquipmentsFilter>;
-  set: RecipesEquipmentsUpdateInput;
+  filter?: InputMaybe<RecipesEquipmentFilter>;
+  set: RecipesEquipmentUpdateInput;
 };
 
 
@@ -1384,8 +1384,8 @@ export type Query = {
   appContentCollection?: Maybe<AppContentConnection>;
   /** A pagable collection of type `Categories` */
   categoriesCollection?: Maybe<CategoriesConnection>;
-  /** A pagable collection of type `Equipments` */
-  equipmentsCollection?: Maybe<EquipmentsConnection>;
+  /** A pagable collection of type `Equipment` */
+  equipmentCollection?: Maybe<EquipmentConnection>;
   /** A pagable collection of type `IngredientsByCategories` */
   ingredientsByCategoriesCollection?: Maybe<IngredientsByCategoriesConnection>;
   /** A pagable collection of type `IngredientsCategories` */
@@ -1404,8 +1404,8 @@ export type Query = {
   recipesCategoriesCollection?: Maybe<RecipesCategoriesConnection>;
   /** A pagable collection of type `Recipes` */
   recipesCollection?: Maybe<RecipesConnection>;
-  /** A pagable collection of type `RecipesEquipments` */
-  recipesEquipmentsCollection?: Maybe<RecipesEquipmentsConnection>;
+  /** A pagable collection of type `RecipesEquipment` */
+  recipesEquipmentCollection?: Maybe<RecipesEquipmentConnection>;
   /** A pagable collection of type `RecipesIngredients` */
   recipesIngredientsCollection?: Maybe<RecipesIngredientsConnection>;
   /** A pagable collection of type `Steps` */
@@ -1438,13 +1438,13 @@ export type QueryCategoriesCollectionArgs = {
 
 
 /** The root type for querying data */
-export type QueryEquipmentsCollectionArgs = {
+export type QueryEquipmentCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
-  filter?: InputMaybe<EquipmentsFilter>;
+  filter?: InputMaybe<EquipmentFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<EquipmentsOrderBy>>;
+  orderBy?: InputMaybe<Array<EquipmentOrderBy>>;
 };
 
 
@@ -1543,13 +1543,13 @@ export type QueryRecipesCollectionArgs = {
 
 
 /** The root type for querying data */
-export type QueryRecipesEquipmentsCollectionArgs = {
+export type QueryRecipesEquipmentCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
-  filter?: InputMaybe<RecipesEquipmentsFilter>;
+  filter?: InputMaybe<RecipesEquipmentFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<RecipesEquipmentsOrderBy>>;
+  orderBy?: InputMaybe<Array<RecipesEquipmentOrderBy>>;
 };
 
 
@@ -1596,7 +1596,7 @@ export type Recipes = Node & {
   nodeId: Scalars['ID']['output'];
   profilesRecipesCollection?: Maybe<ProfilesRecipesConnection>;
   recipesCategoriesCollection?: Maybe<RecipesCategoriesConnection>;
-  recipesEquipmentsCollection?: Maybe<RecipesEquipmentsConnection>;
+  recipesEquipmentCollection?: Maybe<RecipesEquipmentConnection>;
   recipesIngredientsCollection?: Maybe<RecipesIngredientsConnection>;
   stepsCollection?: Maybe<StepsConnection>;
   updatedAt: Scalars['Datetime']['output'];
@@ -1623,13 +1623,13 @@ export type RecipesRecipesCategoriesCollectionArgs = {
 };
 
 
-export type RecipesRecipesEquipmentsCollectionArgs = {
+export type RecipesRecipesEquipmentCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
-  filter?: InputMaybe<RecipesEquipmentsFilter>;
+  filter?: InputMaybe<RecipesEquipmentFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<RecipesEquipmentsOrderBy>>;
+  orderBy?: InputMaybe<Array<RecipesEquipmentOrderBy>>;
 };
 
 
@@ -1749,10 +1749,10 @@ export type RecipesEdge = {
   node: Recipes;
 };
 
-export type RecipesEquipments = Node & {
-  __typename?: 'RecipesEquipments';
+export type RecipesEquipment = Node & {
+  __typename?: 'RecipesEquipment';
   createdAt: Scalars['Datetime']['output'];
-  equipment: Equipments;
+  equipment: Equipment;
   equipmentId: Scalars['UUID']['output'];
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID']['output'];
@@ -1761,27 +1761,27 @@ export type RecipesEquipments = Node & {
   updatedAt: Scalars['Datetime']['output'];
 };
 
-export type RecipesEquipmentsConnection = {
-  __typename?: 'RecipesEquipmentsConnection';
-  edges: Array<RecipesEquipmentsEdge>;
+export type RecipesEquipmentConnection = {
+  __typename?: 'RecipesEquipmentConnection';
+  edges: Array<RecipesEquipmentEdge>;
   pageInfo: PageInfo;
 };
 
-export type RecipesEquipmentsDeleteResponse = {
-  __typename?: 'RecipesEquipmentsDeleteResponse';
+export type RecipesEquipmentDeleteResponse = {
+  __typename?: 'RecipesEquipmentDeleteResponse';
   /** Count of the records impacted by the mutation */
   affectedCount: Scalars['Int']['output'];
   /** Array of records impacted by the mutation */
-  records: Array<RecipesEquipments>;
+  records: Array<RecipesEquipment>;
 };
 
-export type RecipesEquipmentsEdge = {
-  __typename?: 'RecipesEquipmentsEdge';
+export type RecipesEquipmentEdge = {
+  __typename?: 'RecipesEquipmentEdge';
   cursor: Scalars['String']['output'];
-  node: RecipesEquipments;
+  node: RecipesEquipment;
 };
 
-export type RecipesEquipmentsFilter = {
+export type RecipesEquipmentFilter = {
   createdAt?: InputMaybe<DatetimeFilter>;
   equipmentId?: InputMaybe<UuidFilter>;
   nodeId?: InputMaybe<IdFilter>;
@@ -1789,41 +1789,41 @@ export type RecipesEquipmentsFilter = {
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
 
-export type RecipesEquipmentsInsertInput = {
+export type RecipesEquipmentInsertInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   equipmentId?: InputMaybe<Scalars['UUID']['input']>;
   recipeId?: InputMaybe<Scalars['UUID']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
 
-export type RecipesEquipmentsInsertResponse = {
-  __typename?: 'RecipesEquipmentsInsertResponse';
+export type RecipesEquipmentInsertResponse = {
+  __typename?: 'RecipesEquipmentInsertResponse';
   /** Count of the records impacted by the mutation */
   affectedCount: Scalars['Int']['output'];
   /** Array of records impacted by the mutation */
-  records: Array<RecipesEquipments>;
+  records: Array<RecipesEquipment>;
 };
 
-export type RecipesEquipmentsOrderBy = {
+export type RecipesEquipmentOrderBy = {
   createdAt?: InputMaybe<OrderByDirection>;
   equipmentId?: InputMaybe<OrderByDirection>;
   recipeId?: InputMaybe<OrderByDirection>;
   updatedAt?: InputMaybe<OrderByDirection>;
 };
 
-export type RecipesEquipmentsUpdateInput = {
+export type RecipesEquipmentUpdateInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   equipmentId?: InputMaybe<Scalars['UUID']['input']>;
   recipeId?: InputMaybe<Scalars['UUID']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
 
-export type RecipesEquipmentsUpdateResponse = {
-  __typename?: 'RecipesEquipmentsUpdateResponse';
+export type RecipesEquipmentUpdateResponse = {
+  __typename?: 'RecipesEquipmentUpdateResponse';
   /** Count of the records impacted by the mutation */
   affectedCount: Scalars['Int']['output'];
   /** Array of records impacted by the mutation */
-  records: Array<RecipesEquipments>;
+  records: Array<RecipesEquipment>;
 };
 
 export type RecipesFilter = {
@@ -2290,7 +2290,7 @@ export type GetEquipmentDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetEquipmentDetailsQuery = { __typename?: 'Query', equipmentsCollection?: { __typename?: 'EquipmentsConnection', edges: Array<{ __typename?: 'EquipmentsEdge', node: { __typename?: 'Equipments', id: any, name: string, description?: string | null, imageUrl?: string | null } }> } | null };
+export type GetEquipmentDetailsQuery = { __typename?: 'Query', equipmentCollection?: { __typename?: 'EquipmentConnection', edges: Array<{ __typename?: 'EquipmentEdge', node: { __typename?: 'Equipment', id: any, name: string, description?: string | null, imageUrl?: string | null } }> } | null };
 
 export type GetFavouritesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2333,7 +2333,7 @@ export type GetRecipeDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetRecipeDetailsQuery = { __typename?: 'Query', recipesCollection?: { __typename?: 'RecipesConnection', edges: Array<{ __typename?: 'RecipesEdge', node: { __typename?: 'Recipes', id: any, name: string, description?: string | null, imageUrl?: string | null, profilesRecipesCollection?: { __typename?: 'ProfilesRecipesConnection', edges: Array<{ __typename?: 'ProfilesRecipesEdge', node: { __typename?: 'ProfilesRecipes', profileId: any } }> } | null, recipesIngredientsCollection?: { __typename?: 'RecipesIngredientsConnection', edges: Array<{ __typename?: 'RecipesIngredientsEdge', node: { __typename?: 'RecipesIngredients', quantity?: any | null, unit?: { __typename?: 'Units', id: any, name: string } | null, ingredient: { __typename?: 'Ingredients', id: any, name: string } } }> } | null, recipesEquipmentsCollection?: { __typename?: 'RecipesEquipmentsConnection', edges: Array<{ __typename?: 'RecipesEquipmentsEdge', node: { __typename?: 'RecipesEquipments', equipment: { __typename?: 'Equipments', id: any, name: string, imageUrl?: string | null } } }> } | null, stepsCollection?: { __typename?: 'StepsConnection', edges: Array<{ __typename?: 'StepsEdge', node: { __typename?: 'Steps', id: any, number: number, description: string } }> } | null } }> } | null };
+export type GetRecipeDetailsQuery = { __typename?: 'Query', recipesCollection?: { __typename?: 'RecipesConnection', edges: Array<{ __typename?: 'RecipesEdge', node: { __typename?: 'Recipes', id: any, name: string, description?: string | null, imageUrl?: string | null, profilesRecipesCollection?: { __typename?: 'ProfilesRecipesConnection', edges: Array<{ __typename?: 'ProfilesRecipesEdge', node: { __typename?: 'ProfilesRecipes', profileId: any } }> } | null, recipesIngredientsCollection?: { __typename?: 'RecipesIngredientsConnection', edges: Array<{ __typename?: 'RecipesIngredientsEdge', node: { __typename?: 'RecipesIngredients', quantity?: any | null, unit?: { __typename?: 'Units', id: any, name: string } | null, ingredient: { __typename?: 'Ingredients', id: any, name: string } } }> } | null, recipesEquipmentCollection?: { __typename?: 'RecipesEquipmentConnection', edges: Array<{ __typename?: 'RecipesEquipmentEdge', node: { __typename?: 'RecipesEquipment', equipment: { __typename?: 'Equipment', id: any, name: string, imageUrl?: string | null } } }> } | null, stepsCollection?: { __typename?: 'StepsConnection', edges: Array<{ __typename?: 'StepsEdge', node: { __typename?: 'Steps', id: any, number: number, description: string } }> } | null } }> } | null };
 
 export type GetRecipesCategoriesQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -2355,12 +2355,12 @@ export const DeleteFromMyBarDocument = {"kind":"Document","definitions":[{"kind"
 export const GetCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCategories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ids"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"DescNullsFirst"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipesCategoriesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCategoriesQuery, GetCategoriesQueryVariables>;
 export const GetCategoryDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCategoryDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"categoryId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"categoryId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCategoryDetailsQuery, GetCategoryDetailsQueryVariables>;
 export const GetContentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getContent"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"appContentCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetContentQuery, GetContentQueryVariables>;
-export const GetEquipmentDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getEquipmentDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"equipmentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"equipmentsCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"equipmentId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetEquipmentDetailsQuery, GetEquipmentDetailsQueryVariables>;
+export const GetEquipmentDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getEquipmentDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"equipmentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"equipmentCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"equipmentId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetEquipmentDetailsQuery, GetEquipmentDetailsQueryVariables>;
 export const GetFavouritesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getFavourites"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profilesRecipesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetFavouritesQuery, GetFavouritesQueryVariables>;
 export const GetFilterDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getFilterDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filterId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filterId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetFilterDetailsQuery, GetFilterDetailsQueryVariables>;
 export const GetFiltersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getFilters"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ids"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ids"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"EnumValue","value":"DescNullsFirst"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"categoriesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetFiltersQuery, GetFiltersQueryVariables>;
 export const GetIngredientDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getIngredientDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ingredientId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ingredientsCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ingredientId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetIngredientDetailsQuery, GetIngredientDetailsQueryVariables>;
 export const GetIngredientsByCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getIngredientsByCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ingredientsByCategoriesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"100"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetIngredientsByCategoriesQuery, GetIngredientsByCategoriesQueryVariables>;
 export const GetMyBarDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getMyBar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profilesIngredientsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ingredientsCategoriesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMyBarQuery, GetMyBarQueryVariables>;
-export const GetRecipeDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRecipeDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"profilesRecipesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profileId"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipesIngredientsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"unit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipesEquipmentsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"equipment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stepsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"number"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetRecipeDetailsQuery, GetRecipeDetailsQueryVariables>;
+export const GetRecipeDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRecipeDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"profilesRecipesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profileId"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipesIngredientsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"unit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipesEquipmentCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"equipment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stepsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"number"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetRecipeDetailsQuery, GetRecipeDetailsQueryVariables>;
 export const GetRecipesCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRecipesCategories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"last"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"before"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Cursor"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Cursor"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RecipesCategoriesFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RecipesCategoriesOrderBy"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipesCategoriesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"last"},"value":{"kind":"Variable","name":{"kind":"Name","value":"last"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"before"},"value":{"kind":"Variable","name":{"kind":"Name","value":"before"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasPreviousPage"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"startCursor"}}]}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetRecipesCategoriesQuery, GetRecipesCategoriesQueryVariables>;

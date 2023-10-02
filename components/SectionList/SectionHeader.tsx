@@ -48,8 +48,6 @@ export const SectionHeader = function SectionHeader({
   }
 
   useEffect(() => {
-    // console.log('measures', measures)
-    // console.log('containerX', containerX)
     const minItemsToCheck = Math.min(4, sectionTitles.length)
     if (measures.slice(0, minItemsToCheck).every((measure) => measure)) {
       if (containerX === -1) return

@@ -31,7 +31,7 @@ export const GET_RECIPE_DETAILS = gql(/* GraphQL */ `
               }
             }
           }
-          recipesEquipmentsCollection {
+          recipesEquipmentCollection {
             edges {
               node {
                 equipment {

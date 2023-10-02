@@ -41,8 +41,8 @@ export default function RecipeDetailsScreen() {
   })
 
   const recipe = data?.recipesCollection?.edges[0]?.node
-  const recipesEquipments =
-    recipe?.recipesEquipmentsCollection?.edges.map((e) => e.node.equipment) ?? []
+  const recipesEquipment =
+    recipe?.recipesEquipmentCollection?.edges.map((e) => e.node.equipment) ?? []
   const recipeIngredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
   const recipeSteps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
 
@@ -128,7 +128,7 @@ export default function RecipeDetailsScreen() {
             <RecipeTabs
               recipeSteps={recipeSteps}
               recipeIngredients={recipeIngredients}
-              recipesEquipments={recipesEquipments}
+              recipesEquipment={recipesEquipment}
               onIngredientPress={onIngredientPress}
               onEquipmentPress={onEquipmentPress}
             />

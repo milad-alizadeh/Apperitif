@@ -1,19 +1,17 @@
-import * as React from 'react'
-import { View } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
+import React, { useCallback } from 'react'
+import { FlatList, View } from 'react-native'
 import { ListItem } from './ListItem'
-import { RecipeIngredientList } from './RecipeIngredientList'
 import { RecipeMeasurements } from './RecipeMeasurements'
-import { RecipeSteps } from './RecipeSteps'
 import { Tabs } from './Tabs'
+import { Text } from './Text'
 
 export interface RecipeTabsProps {
   /**
    * An optional style override useful for padding & margin.
    */
-  recipeIngredients: any
-  recipeSteps: any
-  recipesEquipments: any
+  ingredients: any
+  steps: any
+  equipment: any
   onIngredientPress: (id: string) => void
   onEquipmentPress?: (id: string) => void
 }
@@ -27,59 +25,73 @@ export interface RecipeTabsProps {
  * @returns {JSX.Element} - The JSX element for the RecipeTabs component.
  */
 export const RecipeTabs = function RecipeTabs({
-  recipeSteps,
-  recipeIngredients,
-  recipesEquipments,
+  steps,
+  ingredients,
+  equipment,
   onIngredientPress,
   onEquipmentPress,
 }: RecipeTabsProps) {
   const [activeIndex, setActiveIndex] = React.useState(0)
 
-  return (
-    <Tabs
-      pages={[
-        {
-          title: 'Ingredients',
-          initialIndex: true,
-          TabContent: () => (
-            <View className="p-5">
-              <RecipeMeasurements />
-              <RecipeIngredientList
-                recipeIngredients={recipeIngredients}
-                onPress={(id) => onIngredientPress(id)}
-              />
-            </View>
-          ),
-        },
-        {
-          title: 'Equipments',
+  const renderEquipmentItem = useCallback(
+    ({ item: { name, imageUrl, id } }) => {
+      return (
+        <ListItem
+          name={name}
+          leftImage={imageUrl}
+          rightIcon="text"
+          onPress={() => onEquipmentPress && onEquipmentPress(id)}
+          styleClassName="mb-2"
+        />
+      )
+    },
+    [equipment],
+  )
 
-          TabContent: () => (
-            <View className="p-5">
-              {recipesEquipments.map(({ id, name, imageUrl }) => (
-                <ListItem
-                  key={id}
-                  name={name}
-                  leftImage={imageUrl}
-                  rightIcon="text"
-                  onPress={() => onEquipmentPress && onEquipmentPress(id)}
-                  onRightIconPress={() => onEquipmentPress && onEquipmentPress(id)}
-                  styleClassName="mb-2"
-                />
-              ))}
-            </View>
-          ),
-        },
-        {
-          title: 'Method',
-          TabContent: () => (
-            <View className="p-5">
-              <RecipeSteps steps={recipeSteps} />
-            </View>
-          ),
-        },
-      ]}
-    />
+  const renderIngredientItem = useCallback(
+    ({ item: { ingredient, quantity, unit } }) => {
+      return (
+        <ListItem
+          key={ingredient.id}
+          name={ingredient.name}
+          leftText={`${quantity ?? ''} ${unit?.name}`}
+          rightIcon="text"
+          onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
+        />
+      )
+    },
+    [ingredients],
+  )
+
+  const renderStepItem = useCallback(
+    ({ item: { number, description } }) => {
+      return <ListItem name={description} leftText={`${number ?? ''}`} />
+    },
+    [steps],
+  )
+
+  return (
+    <Tabs initialIndex={0}>
+      <Tabs.TabPage title="Ingredients">
+        <RecipeMeasurements />
+        <FlatList
+          data={ingredients}
+          renderItem={renderIngredientItem}
+          keyExtractor={(item) => item.id}
+        />
+      </Tabs.TabPage>
+
+      <Tabs.TabPage title="Equipments">
+        <FlatList
+          data={equipment}
+          renderItem={renderEquipmentItem}
+          keyExtractor={(item) => item.id}
+        />
+      </Tabs.TabPage>
+      <Tabs.TabPage title="Method">
+        <FlatList data={steps} renderItem={renderStepItem} keyExtractor={(item) => item.id} />
+      </Tabs.TabPage>
+    </Tabs>
   )
 }
 

@@ -20,7 +20,7 @@ export const EquipmentDetails = function EquipmentDetails({ equipmentId }: Equip
     variables: { equipmentId },
   })
 
-  const equipment = data?.equipmentsCollection.edges[0]?.node
+  const equipment = data?.equipmentCollection.edges[0]?.node
 
   return (
     <ScrollView className="min-h-[200px] p-6 pt-6 flex-">

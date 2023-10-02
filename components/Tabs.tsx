@@ -1,131 +1,104 @@
-import React, { FC, ReactNode, useCallback, useEffect, useState } from 'react'
-import { FlatList, LayoutChangeEvent, View, ViewStyle } from 'react-native'
-import { Gesture, GestureDetector } from 'react-native-gesture-handler'
+import React, { FC, ReactNode, useRef, useState } from 'react'
+import { LayoutChangeEvent, View } from 'react-native'
 import Animated, {
   runOnJS,
-  useAnimatedStyle,
+  useAnimatedReaction,
+  useAnimatedScrollHandler,
+  useDerivedValue,
   useSharedValue,
-  withSpring,
 } from 'react-native-reanimated'
 import { SectionHeader } from './SectionList/SectionHeader'
 
-const ANIMATION_DAMPING = 18
-
 interface TabProps {
-  pages: TabPageProps[]
-  enableTabBar?: boolean
+  children: ReactNode
+  initialIndex?: number
 }
 
 interface TabPageProps {
+  children: ReactNode
+  containerWidth?: number
   title?: string
-  initialIndex?: boolean
-  style?: ViewStyle
-  TabContent?: () => ReactNode
-  children?: ReactNode
 }
 
-const TabPage: FC<TabPageProps> = ({ children, style }) => {
+const TabPage: FC<TabPageProps> = ({ children, containerWidth }) => {
   return (
-    <View className="flex-1 min-h-[200px]" style={style}>
+    <View className="p-6" style={{ width: containerWidth }}>
       {children}
     </View>
   )
 }
 
-export const Tabs: FC<TabProps> = ({ pages, enableTabBar = true }) => {
-  const [isSwiping, setIsSwiping] = useState<boolean>(false)
-  const [activeIndex, setActiveIndex] = useState<number>(-1)
-  const [containerWidth, setContainerWidth] = useState<number>(345)
-  const [tabWidth, setTabWidth] = useState<number>(200)
-  const [initialIndex, setInitialIndex] = useState<number>(0)
-  const translateX = useSharedValue(0)
+export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
+  children,
+  initialIndex = 0,
+}) => {
+  const [containerWidth, setContainerWidth] = useState(0)
+  const [activeIndex, setActiveIndex] = useState(initialIndex)
+  const scrollX = useSharedValue(0)
+  const scrollViewRef = useRef<Animated.ScrollView>(null)
 
-  useEffect(() => {
-    const initialIndex = pages.findIndex((page) => page.initialIndex)
-    setInitialIndex(initialIndex)
-  }, [])
-
-  // Calculate the width the container
   const onContainerLayout = (event: LayoutChangeEvent) => {
     setContainerWidth(event.nativeEvent.layout.width)
   }
 
-  // Calculate the width of the tab containers
-  useEffect(() => {
-    if (containerWidth) setTabWidth(containerWidth * pages.length)
-  }, [containerWidth])
+  const onSectionClick = (index: number) => {
+    setActiveIndex(index)
+    scrollViewRef.current?.scrollTo({ x: index * containerWidth, animated: true })
+  }
 
-  // Animate the tab container when the active index changes
-  useEffect(() => {
-    if (activeIndex === -1) return
-    translateX.value = withSpring(-containerWidth * activeIndex, { damping: ANIMATION_DAMPING })
-  }, [activeIndex])
-
-  const gesture = Gesture.Pan()
-    .onStart(() => {
-      runOnJS(setIsSwiping)(true) // Disable touchables when swiping starts
-    })
-    .activeOffsetX([-10, 10])
-    .onUpdate((event) => {
-      translateX.value = -containerWidth * activeIndex + event.translationX
-    })
-    .onEnd((event) => {
-      let newActiveIndex = activeIndex
-      const threshold = 50
-      if (event.velocityX < -threshold && activeIndex < pages.length - 1) {
-        newActiveIndex = activeIndex + 1
-      } else if (event.velocityX > threshold && activeIndex > 0) {
-        newActiveIndex = activeIndex - 1
-      }
-      runOnJS(setActiveIndex)(newActiveIndex)
-      translateX.value = withSpring(-containerWidth * newActiveIndex, {
-        velocity: event.velocityX,
-        damping: ANIMATION_DAMPING,
-      })
-      runOnJS(setIsSwiping)(false)
-    })
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: translateX.value }],
-    }
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollX.value = event.contentOffset.x
+    },
   })
 
-  const renderTabPages = useCallback(
-    ({ item }) => {
-      return (
-        <TabPage style={{ width: containerWidth, maxWidth: containerWidth }}>
-          {<item.TabContent />}
-        </TabPage>
-      )
+  const activeIndexDerived = useDerivedValue(() => {
+    return Math.round(scrollX.value / containerWidth)
+  })
+
+  useAnimatedReaction(
+    () => activeIndexDerived.value,
+    (newActiveIndex) => {
+      if (newActiveIndex !== activeIndex) {
+        runOnJS(setActiveIndex)(newActiveIndex) // Use runOnJS to safely update state
+      }
     },
-    [pages, containerWidth],
   )
 
+  const sectionTitles = React.Children.map(children, (child) => {
+    if (React.isValidElement(child) && child.type === TabPage) return child.props.title
+    return null
+  })
+
   return (
-    <View onLayout={onContainerLayout} className="overflow-hidden">
-      {enableTabBar && (
-        <SectionHeader
-          styleClassName="border-b-[1px] border-neutral-100"
-          sectionTitles={pages.map((page) => page.title)}
-          activeIndex={activeIndex}
-          setActiveIndex={setActiveIndex}
-          onLayoutCalculated={() => setActiveIndex(initialIndex || 0)}
-          scrollEnabled={false}
-        />
-      )}
-      <GestureDetector gesture={gesture}>
-        <Animated.View style={[animatedStyle, { width: tabWidth }]}>
-          <FlatList
-            horizontal
-            data={pages}
-            pointerEvents={isSwiping ? 'none' : 'auto'}
-            renderItem={renderTabPages}
-            scrollEnabled={false}
-            showsHorizontalScrollIndicator={false}
-          />
-        </Animated.View>
-      </GestureDetector>
+    <View onLayout={onContainerLayout} style={{ overflow: 'hidden' }}>
+      <SectionHeader
+        sectionTitles={sectionTitles}
+        activeIndex={activeIndex}
+        styleClassName="border-b-[1px] border-neutral-100"
+        setActiveIndex={onSectionClick}
+        onLayoutCalculated={() => onSectionClick(initialIndex)}
+        scrollEnabled={false}
+      />
+      <Animated.ScrollView
+        horizontal
+        pagingEnabled
+        ref={scrollViewRef}
+        showsHorizontalScrollIndicator={false}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+      >
+        {React.Children.map(children, (child) => {
+          if (React.isValidElement<TabPageProps>(child) && child.type === TabPage) {
+            return React.cloneElement(child, { containerWidth })
+          }
+          return child
+        })}
+      </Animated.ScrollView>
     </View>
   )
 }
+
+Tabs.TabPage = TabPage
+
+export default Tabs
