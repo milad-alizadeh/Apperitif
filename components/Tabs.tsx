@@ -33,6 +33,7 @@ const TabPage: FC<TabPageProps> = ({ children, style }) => {
 }
 
 export const Tabs: FC<TabProps> = ({ pages, enableTabBar = true }) => {
+  const [isSwiping, setIsSwiping] = useState<boolean>(false)
   const [activeIndex, setActiveIndex] = useState<number>(-1)
   const [containerWidth, setContainerWidth] = useState<number>(345)
   const [tabWidth, setTabWidth] = useState<number>(200)
@@ -61,6 +62,9 @@ export const Tabs: FC<TabProps> = ({ pages, enableTabBar = true }) => {
   }, [activeIndex])
 
   const gesture = Gesture.Pan()
+    .onStart(() => {
+      runOnJS(setIsSwiping)(true) // Disable touchables when swiping starts
+    })
     .activeOffsetX([-10, 10])
     .onUpdate((event) => {
       translateX.value = -containerWidth * activeIndex + event.translationX
@@ -78,6 +82,7 @@ export const Tabs: FC<TabProps> = ({ pages, enableTabBar = true }) => {
         velocity: event.velocityX,
         damping: ANIMATION_DAMPING,
       })
+      runOnJS(setIsSwiping)(false)
     })
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -114,6 +119,7 @@ export const Tabs: FC<TabProps> = ({ pages, enableTabBar = true }) => {
           <FlatList
             horizontal
             data={pages}
+            pointerEvents={isSwiping ? 'none' : 'auto'}
             renderItem={renderTabPages}
             scrollEnabled={false}
             showsHorizontalScrollIndicator={false}
