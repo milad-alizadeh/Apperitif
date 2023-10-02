@@ -115,10 +115,12 @@ export const BottomSheet = forwardRef(function BottomSheet(
         className="absolute bg-white w-screen top-full z-50 rounded-t-[50px] overflow-hidden"
         style={[bottomSheetStyle, shadowLarge]}
       >
+        {/* Swip Area */}
         <GestureDetector gesture={gesture}>
           <View className="h-20 absolute top-0 left-0 w-full z-10"></View>
         </GestureDetector>
-        <View onLayout={onContentLayout} style={bottomInset}>
+
+        <View onLayout={onContentLayout} className="min-h-[360px]" style={bottomInset}>
           {children}
         </View>
       </Animated.View>
