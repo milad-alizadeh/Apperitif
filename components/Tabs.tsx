@@ -61,6 +61,7 @@ export const Tabs: FC<TabProps> = ({ pages, enableTabBar = true }) => {
   }, [activeIndex])
 
   const gesture = Gesture.Pan()
+    .activeOffsetX([-10, 10])
     .onUpdate((event) => {
       translateX.value = -containerWidth * activeIndex + event.translationX
     })
