@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { SectionDataType, SectionHeaderType } from '~/components'
-import { GET_INGREDIENTS_CATEGORIES } from '~/graphql/queries/getIngtedientsCategories'
+import { GET_INGREDIENTS_BY_CATEGORIES } from '~/graphql/queries/getIngtedientsByCategories'
 import { api } from '../services/api'
 
 export function useIngredients() {
@@ -37,22 +37,16 @@ export function useIngredients() {
   }, [searchQuery])
 
   // Get ingredients categories
-  const { data } = useQuery(GET_INGREDIENTS_CATEGORIES, {
-    fetchPolicy: 'network-only',
-  })
+  const { data } = useQuery(GET_INGREDIENTS_BY_CATEGORIES)
 
   const fetchIngredients = async () => {
-    const { data: categories, error } = await api.supabase
-      .from('ingredients_by_categories')
-      .select('*')
-
     const { data: mybar } = await api.supabase.from('profiles_ingredients').select('ingredient_id')
     const newSectionsData: SectionDataType[][] = []
     const newSectionsHeader: SectionHeaderType[] = []
     const newInitialSelectedItems: Record<string, boolean> = {}
 
-    categories.forEach(({ title, id, data, count }) => {
-      newSectionsData.push(data)
+    data.ingredientsByCategoriesCollection.edges.forEach(({ node: { title, id, data, count } }) => {
+      newSectionsData.push(JSON.parse(data))
       newSectionsHeader.push({ id, title, count })
     })
 
