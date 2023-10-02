@@ -96,7 +96,7 @@ export const ListItem = memo(function ListItem({
         <Icon
           containerClassName="mr-3"
           icon={leftIcon}
-          color={colors.neutral[500]}
+          color={colors.neutral[800]}
           onPress={onLeftIconPress}
         />
       )}
@@ -105,7 +105,7 @@ export const ListItem = memo(function ListItem({
       {rightIcon && (
         <Icon
           icon={rightIcon}
-          color={colors.neutral[500]}
+          color={colors.neutral[800]}
           onPress={
             onRightIconPress
               ? () => {

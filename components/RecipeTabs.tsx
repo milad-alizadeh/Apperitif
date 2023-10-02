@@ -74,9 +74,13 @@ export const RecipeTabs = function RecipeTabs({
   const renderStepItem = useCallback(
     ({ number, description, id }: Step) => {
       return (
-        <View key={id} className="flex-row mb-2 items-start">
-          <Text styleClassName="mr-2">{number}.</Text>
-          <Text>{description}</Text>
+        <View key={id} className="mb-2">
+          <Text body>
+            <Text styleClassName="mr-4" weight="bold">
+              {`${number}. `}
+            </Text>
+            {description}
+          </Text>
         </View>
       )
     },
