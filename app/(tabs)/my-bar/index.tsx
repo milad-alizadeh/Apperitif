@@ -80,7 +80,7 @@ export default function MyBarHomeScreen() {
 
   const renderItem = useCallback(
     ({ item }) => {
-      if (!item.name) return <View className="w-full h-64 bg-white" />
+      if (!item.name) return <View className="w-full h-64 bg-white p-page-spacing" />
       return (
         <ListItem
           leftImage={item.imageUrl}

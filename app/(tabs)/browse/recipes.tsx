@@ -24,14 +24,18 @@ export default function RecipesScreen() {
         onPress={() =>
           router.push({ pathname: '/recipe/[recipeId]', params: { recipeId: item.id } })
         }
-        styleClassName="p-3"
-        half
+        styleClassName="w-1/2 px-3 mb-6"
       />
     )
   }, [])
 
   return (
-    <Screen preset="fixed" safeAreaEdges={['top']} KeyboardAvoidingViewProps={{ enabled: false }}>
+    <Screen
+      preset="fixed"
+      safeAreaEdges={['top']}
+      KeyboardAvoidingViewProps={{ enabled: false }}
+      contentContainerStyle={{ flex: 1 }}
+    >
       <TouchableOpacity
         className="h-8 w-40 absolute mx-auto right-[50%] -top-1 translate-x-20 z-20"
         onPress={() => listRef?.current?.scrollToOffset({ animated: true, offset: 0 })}
@@ -42,7 +46,7 @@ export default function RecipesScreen() {
         offset={10}
         title={pageInfo?.totalCount ? pageInfo?.totalCount + ' Recipes' : ''}
         onGoBack={() => router.back()}
-        styleClassName="-mt-3"
+        styleClassName="-mt-3 mb-3"
         alwaysShow
       />
 
@@ -52,12 +56,12 @@ export default function RecipesScreen() {
         numColumns={2}
         windowSize={10}
         nestedScrollEnabled
-        className="pt-12 px-6 -mx-3 -mt-3"
+        className="pt-12 px-6 flex-1 -mx-3"
         onScroll={scrollHandler}
         keyExtractor={(item) => item.id}
         refreshing={refreshing}
         onRefresh={manualRefresh}
-        ListHeaderComponent={<FilterBar autofocus={!categoryIds} styleClassName="py-3 -mx-3" />}
+        ListHeaderComponent={<FilterBar autofocus={!categoryIds} styleClassName="-mx-3 mb-6" />}
         ListEmptyComponent={() => {
           if (loading) return <ActivityIndicator />
           return <Text>{error?.message}</Text>

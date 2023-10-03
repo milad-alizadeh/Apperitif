@@ -58,7 +58,7 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
       </View>
 
       <FilterChips
-        styleClassName="mt-3"
+        styleClassName="mt-3 mx-6"
         categories={chips}
         onDismiss={(id) => removeFilter(id, false)}
       />

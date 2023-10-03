@@ -21,7 +21,7 @@ export const FilterChips = function FilterChips({
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        className={`flex-row px-6 ${styleClassName}`}
+        className={`flex-row ${styleClassName}`}
       >
         {categories.map((category) => {
           return (

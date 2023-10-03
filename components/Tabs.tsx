@@ -33,7 +33,7 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
   initialIndex = 0,
 }) => {
   const [containerWidth, setContainerWidth] = useState(0)
-  const [activeIndex, setActiveIndex] = useState(initialIndex)
+  const [activeIndex, setActiveIndex] = useState(-1)
   const scrollX = useSharedValue(0)
   const scrollViewRef = useRef<Animated.ScrollView>(null)
 
@@ -59,7 +59,8 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
   useAnimatedReaction(
     () => activeIndexDerived.value,
     (newActiveIndex) => {
-      if (newActiveIndex !== activeIndex) {
+      if (newActiveIndex !== activeIndex && !Number.isNaN(newActiveIndex) && activeIndex >= 0) {
+        console.log('newActiveIndex', newActiveIndex, activeIndex)
         runOnJS(setActiveIndex)(newActiveIndex) // Use runOnJS to safely update state
       }
     },

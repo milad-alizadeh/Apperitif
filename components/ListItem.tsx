@@ -7,6 +7,7 @@ import { Badge } from './Badge'
 import { Checkbox } from './Checkbox'
 import { Icon, IconTypes } from './Icon'
 import { Text } from './Text'
+import { View } from './Themed'
 
 /**
  * Props for the ListItem component
@@ -78,13 +79,13 @@ export const ListItem = memo(function ListItem({
       className={`flex-row items-center justify-between ${small ? 'h-10' : 'h-12'} ${
         card ? 'px-3' : ''
       }
-      } ${styleClassName} ${card ? 'bg-neutral-100 rounded-xl' : ''} ${leftImage ? 'h-16' : ''}`}
+      } ${styleClassName} ${card ? 'bg-neutral-100 rounded-xl' : ''} ${leftImage ? 'h-20' : ''}`}
       style={{ ...shadow }}
     >
       {leftImage && (
         <Image
           source={{ uri: leftImage }}
-          className="w-16 h-16 rounded-l-xl mr-3 -ml-3"
+          className="w-20 h-20 rounded-l-xl mr-3 -ml-3"
           style={{ resizeMode: 'cover' }}
         />
       )}
@@ -98,7 +99,11 @@ export const ListItem = memo(function ListItem({
           onPress={onLeftIconPress}
         />
       )}
-      <Text styleClassName={`mr-auto font-medium ${small ? 'text-sm' : 'text-base'}`}>{name}</Text>
+      <View className="flex-wrap flex-row bg-transparent w-4 flex-1">
+        <Text styleClassName={`flex-1 flex-wrap font-medium ${small ? 'text-sm' : 'text-base'}`}>
+          {name}
+        </Text>
+      </View>
 
       {rightIcon && (
         <Icon

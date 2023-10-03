@@ -70,7 +70,6 @@ export const RecipeTabs = function RecipeTabs({
           key={ingredient.id}
           name={`${ingredient.name} ${isOptional ? '(optional)' : ''}`}
           leftText={`${outputQuantity} ${outputUnit}`}
-          rightIcon="text"
           onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
         />
       )
@@ -85,7 +84,6 @@ export const RecipeTabs = function RecipeTabs({
           key={id}
           name={name}
           leftImage={imageUrl}
-          rightIcon="text"
           onPress={() => onEquipmentPress && onEquipmentPress(id)}
           styleClassName="mb-2"
         />
