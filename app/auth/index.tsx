@@ -24,7 +24,7 @@ export default function AuthHomeScreen() {
         </View>
 
         <View className="items-center">
-          <AppleAuthentication />
+          <AppleAuthentication attemptedRoute={attemptedRoute} />
         </View>
 
         <View className="items-center my-8">

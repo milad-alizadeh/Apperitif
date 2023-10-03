@@ -6,13 +6,21 @@ import {
   isAvailableAsync,
   signInAsync,
 } from 'expo-apple-authentication'
+import { router } from 'expo-router'
 import * as React from 'react'
 import { StyleProp, View, ViewStyle } from 'react-native'
+import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
 
-export interface AppleAuthenticationProps {}
+export interface AppleAuthenticationProps {
+  attemptedRoute: string | string[]
+}
 
-export const AppleAuthentication = function AppleAuthentication() {
+export const AppleAuthentication = function AppleAuthentication({
+  attemptedRoute,
+}: AppleAuthenticationProps) {
+  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
+
   return (
     <View>
       {!!isAvailableAsync && (
@@ -29,21 +37,30 @@ export const AppleAuthentication = function AppleAuthentication() {
                   AppleAuthenticationScope.EMAIL,
                 ],
               })
-
-              console.log(credential)
-
-              const { data, error } = await api.supabase.auth.signInWithIdToken({
-                provider: 'apple',
-                token: credential.identityToken,
-              })
-
-              console.log(data, 'data')
-              console.log(error, 'error')
-            } catch (e) {
-              if (e.code === 'ERR_CANCELED') {
-                console.log('User canceled Apple Sign in.')
+              // Sign in via Supabase Auth.
+              if (credential.identityToken) {
+                const {
+                  error,
+                  data: { user },
+                } = await api.supabase.auth.signInWithIdToken({
+                  provider: 'apple',
+                  token: credential.identityToken,
+                })
+                if (!error) {
+                  handleSuccessfulAuth()
+                } else {
+                  // handle errors
+                  console.log('error', error)
+                }
               } else {
-                console.log('error', e)
+                throw new Error('No identityToken.')
+              }
+            } catch (e) {
+              if (e.code === 'ERR_REQUEST_CANCELED') {
+                console.log('User canceled Apple Sign in.')
+                // handle that the user canceled the sign-in flow
+              } else {
+                console.log('Apple Signin Error', e)
               }
             }
           }}
