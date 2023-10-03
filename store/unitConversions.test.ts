@@ -145,4 +145,46 @@ describe('convertUnitToOtherSystem', () => {
       unit: 'oz',
     })
   })
+
+  test('should correctly apply the multiplier to the quantity', () => {
+    const result = convertUnitToOtherSystem({
+      unit: mockUnits[0],
+      toSystem: UnitSystems.IMPERIAL,
+      quantity: '60',
+      units: mockUnits,
+      multiplier: 0.75,
+    })
+    expect(result).toEqual({
+      quantity: '1 ½',
+      unit: 'oz',
+    })
+  })
+
+  test('should correctly apply a different multiplier to the quantity', () => {
+    const result = convertUnitToOtherSystem({
+      unit: mockUnits[0],
+      toSystem: UnitSystems.IMPERIAL,
+      quantity: '60',
+      units: mockUnits,
+      multiplier: 0.83,
+    })
+    expect(result).toEqual({
+      quantity: '1 ⅔', // 1000 ml * 0.83 to oz
+      unit: 'oz',
+    })
+  })
+
+  test('should correctly apply a multiplier of 2 to the quantity', () => {
+    const result = convertUnitToOtherSystem({
+      unit: mockUnits[0],
+      toSystem: UnitSystems.IMPERIAL,
+      quantity: '1000',
+      units: mockUnits,
+      multiplier: 2,
+    })
+    expect(result).toEqual({
+      quantity: '67 ⅔', // 1000 ml * 2 to oz
+      unit: 'oz',
+    })
+  })
 })

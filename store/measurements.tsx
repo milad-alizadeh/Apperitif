@@ -17,14 +17,16 @@ export enum JiggerSizes {
   '60ml' = 60,
 }
 
+export const defaultJiggerSize = JiggerSizes['60ml']
+
 export const jiggerSizesMetricVar = makeVar([
-  { label: '50ml', value: JiggerSizes['50ml'] },
   { label: '60ml', value: JiggerSizes['60ml'] },
+  { label: '50ml', value: JiggerSizes['50ml'] },
 ])
 
 export const jiggerSizesImperialVar = makeVar([
-  { label: '1½oz', value: JiggerSizes['45ml'] },
   { label: '2oz', value: JiggerSizes['60ml'] },
+  { label: '1½oz', value: JiggerSizes['45ml'] },
 ])
 
 export const unitSystemsVar = makeVar([

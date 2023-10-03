@@ -3,7 +3,13 @@ import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { GetRecipeDetailsQuery, Units } from '~/__generated__/graphql'
 import { GET_UNITS } from '~/graphql/queries'
-import { convertUnitToOtherSystem, selectedUnitSystemVar } from '~/store'
+import {
+  convertUnitToOtherSystem,
+  defaultJiggerSize,
+  doubleRecipeVar,
+  selectedJiggerSizeVar,
+  selectedUnitSystemVar,
+} from '~/store'
 import { ListItem } from './ListItem'
 import { RecipeMeasurements } from './RecipeMeasurements'
 import { Tabs } from './Tabs'
@@ -44,16 +50,20 @@ export const RecipeTabs = function RecipeTabs({
 }: RecipeTabsProps) {
   const { data } = useQuery(GET_UNITS)
   const selectedUnitSystem = useReactiveVar(selectedUnitSystemVar)
+  const doubleRecipe = useReactiveVar(doubleRecipeVar)
   const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
+  const selectedJiggerSize = useReactiveVar(selectedJiggerSizeVar)
+  const multiplier = (selectedJiggerSize / defaultJiggerSize) * (doubleRecipe ? 2 : 1)
 
   const renderIngredientItem = useCallback(
     ({ ingredient, quantity, unit, isOptional }: Ingredient) => {
-      if (!units || !quantity) return null
+      if (!units || !unit) return null
       const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem({
         unit: unit as Units,
         toSystem: selectedUnitSystem,
         quantity,
         units,
+        multiplier,
       })
       return (
         <ListItem
@@ -65,7 +75,7 @@ export const RecipeTabs = function RecipeTabs({
         />
       )
     },
-    [ingredients, units, selectedUnitSystem],
+    [ingredients, units, selectedUnitSystem, multiplier],
   )
 
   const renderEquipmentItem = useCallback(

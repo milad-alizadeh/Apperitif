@@ -116,13 +116,25 @@ export const convertUnitToOtherSystem = ({
   units: Units[]
   multiplier?: number
 }) => {
-  // If the unit is not convertible or quantity is null, return the original quantity and unit name
-  if (!unit.isConvertable || quantity === null) return getConversionResult(quantity, unit)
+  // If it's not convertible then only apply the multiplier if there is quantity and round it to a whole number
+
+  if (!unit.isConvertable || quantity === null) {
+    if (quantity !== null) {
+      const multipliedQuantity = parseFloat(quantity) * multiplier
+      const roundedQuantity = Math.round(multipliedQuantity).toString()
+      return getConversionResult(roundedQuantity, unit)
+    }
+    return getConversionResult(quantity, unit)
+  }
 
   // If the unit is already in the desired system, return the original quantity and unit name
-  if (unit.system === toSystem) return getConversionResult(quantity, unit)
+  if (unit.system === toSystem) {
+    const multipliedQuantity = parseFloat(quantity) * multiplier
+    const roundedToNearestFive = Math.round(multipliedQuantity / 5) * 5
+    return getConversionResult(roundedToNearestFive.toString(), unit)
+  }
 
-  const quantityFloat = parseFloat(quantity)
+  const quantityFloat = parseFloat(quantity) * multiplier
   if (isNaN(quantityFloat)) {
     throw new Error(`Quantity is not a valid number`)
   }

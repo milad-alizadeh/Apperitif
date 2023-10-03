@@ -1,4 +1,4 @@
-import { useQuery, useReactiveVar } from '@apollo/client'
+import { useReactiveVar } from '@apollo/client'
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import {
