@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { router } from 'expo-router'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { ActivityIndicator, FlatList, View, ViewStyle } from 'react-native'
 import { Header, ListItem, Screen, Text } from '~/components'
 import { DELETE_FROM_FAVOURITES } from '~/graphql/mutations/deleteFromFavourites'
@@ -22,11 +22,40 @@ export default function FavouritesScreen() {
       refetch()
     },
   })
+
+  const renderItem = useCallback(
+    ({ item }) => {
+      if (!item?.imageUrl) return null
+      console.log(item.imageUrl, 'item.imageUrl')
+      return (
+        <ListItem
+          leftImage={getImageUrl(item.imageUrl, imageSizes.THUMBNAIL)}
+          rightIcon="trash"
+          name={item.name}
+          styleClassName="mx-6"
+          card
+          onPress={() =>
+            router.push({ pathname: '/recipe/[recipeId]', params: { recipeId: item.id } })
+          }
+          onRightIconPress={() =>
+            deleteFromFavourites({
+              variables: { recipeId: item.id, profileId: user?.id },
+              onError: () => refetch(),
+            })
+          }
+        />
+      )
+    },
+    [data],
+  )
+
   return (
     <Screen safeAreaEdges={['top']} contentContainerStyle={$containerStyle}>
       <FlatList
         className="flex-1"
         data={flatListData}
+        refreshing={loading}
+        onRefresh={() => refetch()}
         ListHeaderComponent={
           <View className="mb-6">
             <Header title="Favourites" />
@@ -41,24 +70,7 @@ export default function FavouritesScreen() {
             <Text styleClassName="text-center">No favourites yet</Text>
           )
         }
-        renderItem={({ item }) => (
-          <ListItem
-            leftImage={getImageUrl(item.imageUrl, imageSizes.THUMBNAIL)}
-            rightIcon="trash"
-            name={item.name}
-            styleClassName="mx-6"
-            card
-            onPress={() =>
-              router.push({ pathname: '/recipe/[recipeId]', params: { recipeId: item.id } })
-            }
-            onRightIconPress={() =>
-              deleteFromFavourites({
-                variables: { recipeId: item.id, profileId: user?.id },
-                onError: () => refetch(),
-              })
-            }
-          />
-        )}
+        renderItem={renderItem}
         ItemSeparatorComponent={() => <View className="h-3" />}
         keyExtractor={(item) => item.id}
       />

@@ -26,9 +26,7 @@ export default function MyBarHomeScreen() {
   const [ingredientId, setIngredientId] = useState<string>('')
   const modalRef = useRef<BottomSheetRef>(null)
 
-  const { data, refetch } = useQuery(GET_MY_BAR, {
-    fetchPolicy: 'network-only',
-  })
+  const { data, refetch } = useQuery(GET_MY_BAR)
 
   const isFocused = useIsFocused()
 

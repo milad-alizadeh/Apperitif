@@ -117,7 +117,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
       >
         {/* Swip Area */}
         <GestureDetector gesture={gesture}>
-          <View className="h-20 absolute top-0 left-0 w-full z-10"></View>
+          <View className="h-32 absolute top-0 left-0 w-full z-10"></View>
         </GestureDetector>
 
         <View onLayout={onContentLayout} className="min-h-[360px]" style={bottomInset}>

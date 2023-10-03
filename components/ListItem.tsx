@@ -89,10 +89,13 @@ export const ListItem = memo(function ListItem({
           source={{ uri: getImageUrl(leftImage, imageSizes.THUMBNAIL) }}
           className="w-20 h-20 rounded-l-xl mr-3 -ml-3"
           contentFit="cover"
+          transition={500}
         />
       )}
       {showCheckbox && <Checkbox checked={checked} onPress={onPress} styleClassName="mr-3" />}
-      {leftText && <Text styleClassName={`font-medium min-w-[80px] mr-3`}>{leftText}</Text>}
+      {leftText && (
+        <Text styleClassName={`font-medium min-w-[80px] mr-3 text-base`}>{leftText}</Text>
+      )}
       {leftIcon && (
         <Icon
           containerClassName="mr-3"

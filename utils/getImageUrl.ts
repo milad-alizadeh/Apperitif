@@ -6,7 +6,9 @@ export enum imageSizes {
   DEFAULT = '',
 }
 
-export const getImageUrl = (url: string, size: imageSizes = imageSizes.DEFAULT): string => {
+export const getImageUrl = (url: string, size: imageSizes): string => {
+  if (!url || url.includes('@')) return url
+
   const pixelRatio = PixelRatio.get()
   let densitySuffix = ''
 
@@ -20,8 +22,10 @@ export const getImageUrl = (url: string, size: imageSizes = imageSizes.DEFAULT):
   const baseUrl = url.split('?')[0]
 
   if (size === imageSizes.DEFAULT) return `${baseUrl}${densitySuffix}`
+  if (size === imageSizes.MEDIUM) densitySuffix = '@2x'
 
   const parts = baseUrl.split('.')
   const extension = parts.pop()
+  console.log('parts', `${parts.join('.')}-${size}${densitySuffix}.${extension}`)
   return `${parts.join('.')}-${size}${densitySuffix}.${extension}`
 }

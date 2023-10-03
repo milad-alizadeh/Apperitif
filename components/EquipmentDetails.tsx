@@ -29,8 +29,9 @@ export const EquipmentDetails = function EquipmentDetails({ equipmentId }: Equip
       <View className="justify-end flex-1">
         <View className="flex-1">
           <Image
-            source={{ uri: getImageUrl(equipment?.imageUrl, imageSizes.MEDIUM) }}
+            source={{ uri: getImageUrl(equipment?.imageUrl, imageSizes.THUMBNAIL) }}
             contentFit="contain"
+            transition={300}
             className="w-full h-60 rounded-xl mb-4"
           />
 

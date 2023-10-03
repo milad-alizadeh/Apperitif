@@ -49,7 +49,7 @@ export default function RecipeDetailsScreen() {
       ['isOptional', 'quantity'],
       ['asc', 'desc'],
     ) ?? []
-  const steps = orderBy(recipe?.stepsCollection?.edges.map((e) => e.node), 'name') ?? []
+  const steps = orderBy(recipe?.stepsCollection?.edges.map((e) => e.node), 'number') ?? []
 
   if (error) {
     return <Text>{error.message}</Text>

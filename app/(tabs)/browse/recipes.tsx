@@ -46,7 +46,6 @@ export default function RecipesScreen() {
         offset={10}
         title={pageInfo?.totalCount ? pageInfo?.totalCount + ' Recipes' : ''}
         onGoBack={() => router.back()}
-        styleClassName="-mt-3 mb-3"
         alwaysShow
       />
 
