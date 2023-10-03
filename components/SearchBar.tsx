@@ -59,7 +59,7 @@ export const SearchBar = function SearchBar({
       {!!searchQuery && (
         <Icon
           icon="closeFilled"
-          containerClassName="z-10 w-6 h-6 mr-2 absolute right-0"
+          containerClassName="z-10 mr-2 absolute right-0"
           color={colors.neutral[400]}
           onPress={() => {
             setSearchQuery('')

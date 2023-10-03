@@ -65,8 +65,10 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
   useEffect(() => {
     clearFilters(false)
     const filter = Array.isArray(initialCategoryId) ? initialCategoryId[0] : initialCategoryId
-    addFilter(filter, false)
+    console.log('filter', filter)
     setIsInitialSetupComplete(true) // Set isInitialSetupComplete to true after setting the initial filter
+    if (!filter) return
+    addFilter(filter, false)
   }, []) // Empty dependency array ensures this runs only on mount
 
   // Call fetchRecipes once the initial setup is complete
