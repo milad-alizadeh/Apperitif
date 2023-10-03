@@ -19,6 +19,9 @@ export default {
       usesAppleSignIn: true,
       supportsTablet: true,
       bundleIdentifier: IS_DEV ? 'ai.bubblewrap.apperitif.dev' : 'ai.bubblewrap.apperitif',
+      config: {
+        usesNonExemptEncryption: true,
+      },
     },
     android: {
       adaptiveIcon: {
