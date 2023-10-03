@@ -1,11 +1,12 @@
+import { Image } from 'expo-image'
 import * as React from 'react'
-import { Image, useWindowDimensions } from 'react-native'
 import Animated, {
   Extrapolation,
   SharedValue,
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated'
+import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 
 export interface BouncyImageProps {
   /** The height of the image */
@@ -27,7 +28,12 @@ export const BouncyImage = function BouncyImage({ height, scrollY, imageUrl }: B
     >
       <Image
         className="w-full h-full"
-        source={typeof imageUrl === 'string' ? { uri: imageUrl } : imageUrl}
+        transition={500}
+        source={
+          typeof imageUrl === 'string'
+            ? { uri: getImageUrl(imageUrl, imageSizes.MEDIUM) }
+            : imageUrl
+        }
       />
     </Animated.View>
   )

@@ -1,7 +1,9 @@
 import { useQuery } from '@apollo/client'
+import { Image } from 'expo-image'
 import React from 'react'
-import { Image, ScrollView, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { GET_EQUIPMENT_DETAILS } from '~/graphql/queries/'
+import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 import { Text } from './Text'
 
 /**
@@ -27,8 +29,8 @@ export const EquipmentDetails = function EquipmentDetails({ equipmentId }: Equip
       <View className="justify-end flex-1">
         <View className="flex-1">
           <Image
-            source={{ uri: equipment?.imageUrl }}
-            resizeMode="contain"
+            source={{ uri: getImageUrl(equipment?.imageUrl, imageSizes.MEDIUM) }}
+            contentFit="contain"
             className="w-full h-60 rounded-xl mb-4"
           />
 

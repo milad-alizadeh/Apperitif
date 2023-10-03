@@ -1,5 +1,7 @@
+import { Image } from 'expo-image'
 import React, { memo } from 'react'
-import { Image, PixelRatio, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
+import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 import { Text } from './Text'
 
 export interface CardProps {
@@ -30,7 +32,11 @@ export const Card = memo(function Card({
           wide ? 'aspect-[4/3]' : 'aspect-square'
         }`}
       >
-        <Image source={{ uri: imageUrl }} className="w-full h-full" />
+        <Image
+          source={{ uri: getImageUrl(imageUrl, imageSizes.THUMBNAIL) }}
+          className="w-full h-full"
+          transition={500}
+        />
       </View>
       <Text styleClassName="text-sm font-medium mt-2">{name}</Text>
     </TouchableOpacity>

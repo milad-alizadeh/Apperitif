@@ -6,6 +6,7 @@ import { Header, ListItem, Screen, Text } from '~/components'
 import { DELETE_FROM_FAVOURITES } from '~/graphql/mutations/deleteFromFavourites'
 import { GET_FAVOURITES } from '~/graphql/queries/getFavourites'
 import { useSession } from '~/hooks/useSession'
+import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 
 export default function FavouritesScreen() {
   const { user } = useSession()
@@ -42,7 +43,7 @@ export default function FavouritesScreen() {
         }
         renderItem={({ item }) => (
           <ListItem
-            leftImage={item.imageUrl}
+            leftImage={getImageUrl(item.imageUrl, imageSizes.THUMBNAIL)}
             rightIcon="trash"
             name={item.name}
             styleClassName="mx-6"

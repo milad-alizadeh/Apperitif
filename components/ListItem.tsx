@@ -1,8 +1,10 @@
+import { Image } from 'expo-image'
 import React, { memo } from 'react'
-import { Image, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { useHaptic } from '~/hooks/useHaptics'
 import { colors } from '~/theme'
 import { shadowCard } from '~/theme/shadows'
+import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 import { Badge } from './Badge'
 import { Checkbox } from './Checkbox'
 import { Icon, IconTypes } from './Icon'
@@ -84,9 +86,9 @@ export const ListItem = memo(function ListItem({
     >
       {leftImage && (
         <Image
-          source={{ uri: leftImage }}
+          source={{ uri: getImageUrl(leftImage, imageSizes.THUMBNAIL) }}
           className="w-20 h-20 rounded-l-xl mr-3 -ml-3"
-          style={{ resizeMode: 'cover' }}
+          contentFit="cover"
         />
       )}
       {showCheckbox && <Checkbox checked={checked} onPress={onPress} styleClassName="mr-3" />}

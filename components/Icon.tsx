@@ -1,13 +1,7 @@
+import { Image } from 'expo-image'
 import * as React from 'react'
 import { ComponentType } from 'react'
-import {
-  Image,
-  ImageStyle,
-  StyleProp,
-  TouchableOpacity,
-  TouchableOpacityProps,
-  View,
-} from 'react-native'
+import { ImageStyle, StyleProp, TouchableOpacity, TouchableOpacityProps, View } from 'react-native'
 import { useHaptic } from '../hooks/useHaptics'
 
 export type IconTypes = keyof typeof iconRegistry
@@ -95,6 +89,7 @@ export function Icon(props: IconProps) {
         className={`w-full h-full items-center justify-center ${styleClassName}`}
         style={[$imageStyle, color && { tintColor: color }, $imageStyleOverride]}
         source={iconRegistry[icon]}
+        contentFit="contain"
       />
     </Wrapper>
   )
@@ -144,6 +139,5 @@ export const iconRegistry = {
 }
 
 const $imageStyle: ImageStyle = {
-  resizeMode: 'contain',
   aspectRatio: 1,
 }
