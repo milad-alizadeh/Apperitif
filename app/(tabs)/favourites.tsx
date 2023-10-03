@@ -26,7 +26,6 @@ export default function FavouritesScreen() {
   const renderItem = useCallback(
     ({ item }) => {
       if (!item?.imageUrl) return null
-      console.log(item.imageUrl, 'item.imageUrl')
       return (
         <ListItem
           leftImage={getImageUrl(item.imageUrl, imageSizes.THUMBNAIL)}

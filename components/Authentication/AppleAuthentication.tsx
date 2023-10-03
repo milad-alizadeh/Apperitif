@@ -30,14 +30,15 @@ export const AppleAuthentication = function AppleAuthentication() {
                 ],
               })
 
-              console.log(credential.identityToken)
+              console.log(credential)
 
-              const data = await api.supabase.auth.signInWithIdToken({
+              const { data, error } = await api.supabase.auth.signInWithIdToken({
                 provider: 'apple',
                 token: credential.identityToken,
               })
 
               console.log(data, 'data')
+              console.log(error, 'error')
             } catch (e) {
               if (e.code === 'ERR_CANCELED') {
                 console.log('User canceled Apple Sign in.')

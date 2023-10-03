@@ -94,10 +94,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
     .onUpdate((event) => {})
     .onEnd((event) => {
       const threshold = 50
-      if (event.velocityY < -threshold) {
-        console.log('swipe up')
-      } else if (event.velocityY > threshold) {
-        console.log('swipe down')
+      if (event.velocityY > threshold) {
         runOnJS(hide)()
       }
     })

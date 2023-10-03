@@ -26,6 +26,5 @@ export const getImageUrl = (url: string, size: imageSizes): string => {
 
   const parts = baseUrl.split('.')
   const extension = parts.pop()
-  console.log('parts', `${parts.join('.')}-${size}${densitySuffix}.${extension}`)
   return `${parts.join('.')}-${size}${densitySuffix}.${extension}`
 }
