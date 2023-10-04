@@ -17,14 +17,8 @@
       "usesAppleSignIn": true,
       "supportsTablet": false,
       "bundleIdentifier": "ai.bubblewrap.apperitif",
-      "infoPlist": {
-        "CFBundleURLTypes": [
-          {
-            "CFBundleURLSchemes": [
-              "com.googleusercontent.apps.387765460024-ojg03u9b2ssfrukq739udpuq12dvo9b8"
-            ]
-          }
-        ]
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
     "android": {
