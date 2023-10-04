@@ -4,7 +4,10 @@ const { getDefaultConfig } = require('expo/metro-config')
 /** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname, {
   // [Web-only]: Enables CSS support in Metro.
-  isCSSEnabled: true,
+  isCSSEnabled: false,
 })
+
+config.resolver.sourceExts.push('cjs')
+config.resolver.sourceExts.push('mjs')
 
 module.exports = config

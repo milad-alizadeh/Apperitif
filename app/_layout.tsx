@@ -44,8 +44,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <SessionProvider>
-      <ApolloProvider client={api.apolloClient}>
-        {/* <GestureHandlerRootView style={{ flex: 1 }}> */}
+      <ApolloProvider client={api?.apolloClient}>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" />
           <Stack.Screen name="(tabs)" />
@@ -53,7 +52,6 @@ function RootLayoutNav() {
           <Stack.Screen name="recipe/[recipeId]" />
           <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
         </Stack>
-        {/* </GestureHandlerRootView> */}
       </ApolloProvider>
     </SessionProvider>
   )
