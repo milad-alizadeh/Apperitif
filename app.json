@@ -19,6 +19,15 @@
       "bundleIdentifier": "ai.bubblewrap.apperitif",
       "config": {
         "usesNonExemptEncryption": true
+      },
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.387765460024-ojg03u9b2ssfrukq739udpuq12dvo9b8"
+            ]
+          }
+        ]
       }
     },
     "android": {
@@ -33,7 +42,11 @@
       "output": "static",
       "favicon": "./assets/images/app-icon-web-favicon.png"
     },
-    "plugins": ["expo-router", "expo-apple-authentication"],
+    "plugins": [
+      "expo-router",
+      "expo-apple-authentication",
+      "@react-native-google-signin/google-signin"
+    ],
     "experiments": {
       "typedRoutes": true
     },

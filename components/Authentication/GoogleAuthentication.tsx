@@ -1,38 +1,35 @@
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin'
-import { useState } from 'react'
+// import {
+//   GoogleSignin,
+//   GoogleSigninButton,
+//   statusCodes,
+// } from '@react-native-google-signin/google-signin'
+import { StatusBar } from 'expo-status-bar'
+import React, { useState } from 'react'
+import { Alert, StyleSheet, Text, View } from 'react-native'
+import { Button } from '../Button'
 
-export const GoogleAuthentication = function GoogleAuthentication({}) {
-  const [userInfo, setUserInfo] = useState(null)
-  // Somewhere in your code
+export const GoogleAuthentication = function GoogleAuthentication() {
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(false)
   const signIn = async () => {
-    try {
-      console.log('GoogleSignin', GoogleSignin)
-      await GoogleSignin.hasPlayServices()
-      const userInfo = await GoogleSignin.signIn()
-      setUserInfo(userInfo)
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-      } else {
-        // some other error happened
-      }
-    }
+    // try {
+    //   await GoogleSignin.hasPlayServices()
+    //   await GoogleSignin.signIn()
+    //   const userInfo = await GoogleSignin.getTokens()
+    //   return userInfo
+    // } catch (error) {
+    //   Alert.alert(error)
+    // }
   }
 
   return (
-    <GoogleSigninButton
-      size={GoogleSigninButton.Size.Wide}
-      color={GoogleSigninButton.Color.Dark}
-      onPress={() => signIn()}
-      // disabled={isSigninInProgress}
-    />
+    <View>
+      {/* <GoogleSigninButton
+        size={GoogleSigninButton.Size.Wide}
+        color={GoogleSigninButton.Color.Dark}
+        onPress={() => signIn()}
+        // disabled={isSigninInProgress}
+      /> */}
+    </View>
   )
 }

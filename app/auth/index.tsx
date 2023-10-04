@@ -5,7 +5,7 @@ import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { Platform } from 'react-native'
 import { AppleAuthentication, Icon, Screen, Text } from '~/components'
-// import { GoogleAuthentication } from '~/components/Authentication/GoogleAuthentication'
+import { GoogleAuthentication } from '~/components/Authentication/GoogleAuthentication'
 import { colors } from '~/theme'
 
 export default function AuthHomeScreen() {
@@ -34,6 +34,10 @@ export default function AuthHomeScreen() {
             <AppleAuthentication attemptedRoute={attemptedRoute} />
           </View>
         )}
+
+        <View className="items-center">
+          <GoogleAuthentication />
+        </View>
 
         <View className="items-center">{/* <GoogleAuthentication /> */}</View>
 
