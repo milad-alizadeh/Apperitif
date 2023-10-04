@@ -19,6 +19,7 @@ export default {
     ios: {
       usesAppleSignIn: true,
       supportsTablet: false,
+      googleServicesFile: './GoogleService-Info.plist',
       bundleIdentifier: APP_VARIANT
         ? `ai.bubblewrap.apperitif.${APP_VARIANT}`
         : 'ai.bubblewrap.apperitif',
@@ -31,6 +32,7 @@ export default {
         foregroundImage: './assets/images/app-icon-android-adaptive-foreground.png',
         backgroundImage: './assets/images/app-icon-android-adaptive-background.png',
       },
+      googleServicesFile: './google-services.json',
       package: APP_VARIANT ? `ai.bubblewrap.apperitif.${APP_VARIANT}` : 'ai.bubblewrap.apperitif',
     },
     web: {
@@ -38,7 +40,11 @@ export default {
       output: 'static',
       favicon: './assets/images/app-icon-web-favicon.png',
     },
-    plugins: ['expo-router', 'expo-apple-authentication'],
+    plugins: [
+      'expo-router',
+      'expo-apple-authentication',
+      '@react-native-google-signin/google-signin',
+    ],
     experiments: {
       typedRoutes: true,
     },
