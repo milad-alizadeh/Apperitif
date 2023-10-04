@@ -12,6 +12,9 @@
         "APP_VARIANT": "development",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0",
         "EXPO_PUBLIC_SUPABASE_URL": "http://192.168.68.52:54321"
+      },
+      "android": {
+        "buildType": "apk"
       }
     },
     "staging": {
@@ -21,6 +24,9 @@
         "APP_VARIANT": "staging",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2dGZzcHltenFzeWhtdmt6Z2VqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTUwNjQ2MzksImV4cCI6MjAxMDY0MDYzOX0.2L62sBDhHRNDbNWGcWsT91EFoqyM6oXIbh_L8JupACk",
         "EXPO_PUBLIC_SUPABASE_URL": "https://kvtfspymzqsyhmvkzgej.supabase.co"
+      },
+      "android": {
+        "buildType": "apk"
       }
     },
     "production": {
@@ -28,6 +34,9 @@
       "env": {
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZWNwd2hxZ3NuaXhraHN5dnl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTYzNzg3NDMsImV4cCI6MjAxMTk1NDc0M30.bs0CaSEdCwtVCVC5uIwq6GnNIF_ibNaU05R7PnuaJ0M",
         "EXPO_PUBLIC_SUPABASE_URL": "https://ddecpwhqgsnixkhsyvyt.supabase.co"
+      },
+      "android": {
+        "buildType": "apk"
       }
     }
   },
