@@ -13,8 +13,13 @@ export default function AuthHomeScreen() {
 
   return (
     <Screen
-      safeAreaEdges={['top', 'bottom']}
-      contentContainerStyle={{ backgroundColor: colors.white, padding: 24, flex: 1 }}
+      safeAreaEdges={['bottom']}
+      contentContainerStyle={{
+        backgroundColor: colors.white,
+        paddingHorizontal: 24,
+        flex: 1,
+        marginTop: 24,
+      }}
     >
       <Icon
         icon="close"
@@ -30,13 +35,13 @@ export default function AuthHomeScreen() {
         </View>
 
         {Platform.OS === 'ios' && (
-          <View className="items-center">
+          <View className="items-center mb-4">
             <AppleAuthentication attemptedRoute={attemptedRoute} />
           </View>
         )}
 
         <View className="items-center">
-          <GoogleAuthentication />
+          <GoogleAuthentication attemptedRoute={attemptedRoute} />
         </View>
 
         <View className="items-center">{/* <GoogleAuthentication /> */}</View>

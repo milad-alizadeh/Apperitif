@@ -6,7 +6,6 @@ import {
   isAvailableAsync,
   signInAsync,
 } from 'expo-apple-authentication'
-import { router } from 'expo-router'
 import * as React from 'react'
 import { StyleProp, View, ViewStyle } from 'react-native'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
@@ -71,6 +70,6 @@ export const AppleAuthentication = function AppleAuthentication({
 }
 
 const $buttonStyle: StyleProp<Omit<ViewStyle, 'backgroundColor' | 'borderRadius'>> = {
-  width: 240,
+  width: 256,
   height: 48,
 }

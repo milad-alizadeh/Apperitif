@@ -17,9 +17,6 @@
       "usesAppleSignIn": true,
       "supportsTablet": false,
       "bundleIdentifier": "ai.bubblewrap.apperitif",
-      "config": {
-        "usesNonExemptEncryption": true
-      },
       "infoPlist": {
         "CFBundleURLTypes": [
           {

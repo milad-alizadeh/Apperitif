@@ -1,35 +1,67 @@
-// import {
-//   GoogleSignin,
-//   GoogleSigninButton,
-//   statusCodes,
-// } from '@react-native-google-signin/google-signin'
-import { StatusBar } from 'expo-status-bar'
-import React, { useState } from 'react'
-import { Alert, StyleSheet, Text, View } from 'react-native'
-import { Button } from '../Button'
+import * as Google from 'expo-auth-session/providers/google'
+import * as WebBroowser from 'expo-web-browser'
+import React, { useEffect, useState } from 'react'
+import { Text, View } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
+import { api } from '~/services/api'
+import { shadowCard } from '~/theme'
+import { Icon } from '../Icon'
 
-export const GoogleAuthentication = function GoogleAuthentication() {
-  const [user, setUser] = useState(null)
+WebBroowser.maybeCompleteAuthSession()
+
+export interface AppleAuthenticationProps {
+  attemptedRoute: string | string[]
+}
+
+export const GoogleAuthentication = function GoogleAuthentication({ attemptedRoute }) {
   const [loading, setLoading] = useState(false)
-  const signIn = async () => {
-    // try {
-    //   await GoogleSignin.hasPlayServices()
-    //   await GoogleSignin.signIn()
-    //   const userInfo = await GoogleSignin.getTokens()
-    //   return userInfo
-    // } catch (error) {
-    //   Alert.alert(error)
-    // }
+  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
+    androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
+  })
+
+  const singInWithOAuth = async (response) => {
+    setLoading(true)
+    const token = response.params.id_token
+    const access_token = response.params.access_token
+
+    const { data, error } = await api.supabase.auth.signInWithIdToken({
+      provider: 'google',
+      token,
+      access_token,
+    })
+
+    if (!error) {
+      handleSuccessfulAuth()
+      setLoading(false)
+    } else {
+      // handle errors
+      console.log('error', error)
+    }
   }
+
+  useEffect(() => {
+    if (!response) return
+    if (response?.type === 'success') {
+      singInWithOAuth(response)
+    } else {
+      console.log('response error', response)
+    }
+  }, [response])
 
   return (
     <View>
-      {/* <GoogleSigninButton
-        size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={() => signIn()}
-        // disabled={isSigninInProgress}
-      /> */}
+      <TouchableOpacity
+        onPress={promptAsync}
+        className="bg-white flex-row w-64 h-12 items-center justify-center rounded-xl px-2"
+        style={{ ...shadowCard }}
+      >
+        <Icon icon="google" containerClassName="mr-2" />
+        <Text className="text-lg font-medium font-roboto">Continue with Google</Text>
+      </TouchableOpacity>
     </View>
   )
 }
