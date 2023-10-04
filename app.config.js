@@ -1,8 +1,9 @@
-const IS_DEV = process.env.APP_VARIANT === 'development'
+const APP_VARIANT = process.env.APP_VARIANT
+const IS_DEV = process.env.NODE_ENV === 'development'
 
 export default {
   expo: {
-    name: IS_DEV ? 'Apperitif Dev' : 'Apperitif',
+    name: `Apperitif ${APP_VARIANT ? ` ${APP_VARIANT}` : ''}`,
     slug: 'apperitif',
     version: '1.0.0',
     orientation: 'portrait',
@@ -17,8 +18,10 @@ export default {
     assetBundlePatterns: ['**/*'],
     ios: {
       usesAppleSignIn: true,
-      supportsTablet: true,
-      bundleIdentifier: IS_DEV ? 'ai.bubblewrap.apperitif.dev' : 'ai.bubblewrap.apperitif',
+      supportsTablet: false,
+      bundleIdentifier: APP_VARIANT
+        ? `ai.bubblewrap.apperitif.${APP_VARIANT}`
+        : 'ai.bubblewrap.apperitif',
       config: {
         usesNonExemptEncryption: true,
       },
