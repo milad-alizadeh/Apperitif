@@ -10,6 +10,7 @@ export const GoogleAuthentication = function GoogleAuthentication({}) {
   // Somewhere in your code
   const signIn = async () => {
     try {
+      console.log('GoogleSignin', GoogleSignin)
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn()
       setUserInfo(userInfo)
@@ -30,8 +31,8 @@ export const GoogleAuthentication = function GoogleAuthentication({}) {
     <GoogleSigninButton
       size={GoogleSigninButton.Size.Wide}
       color={GoogleSigninButton.Color.Dark}
-      onPress={this._signIn}
-      disabled={this.state.isSigninInProgress}
+      onPress={() => signIn()}
+      // disabled={isSigninInProgress}
     />
   )
 }

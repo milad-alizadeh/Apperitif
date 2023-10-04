@@ -16,6 +16,8 @@ web-build/
 *.key
 *.mobileprovision
 pc-api*.json
+ios
+android
 
 # Metro
 .metro-health-check*
