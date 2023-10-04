@@ -5,6 +5,7 @@ import { Text, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
+import { loadingVar } from '~/store/auth'
 import { shadowCard } from '~/theme'
 import { Icon } from '../Icon'
 
@@ -24,6 +25,7 @@ export const GoogleAuthentication = function GoogleAuthentication({ attemptedRou
   })
 
   const singInWithOAuth = async (response) => {
+    loadingVar(true)
     setLoading(true)
     const token = response.params.id_token
     const access_token = response.params.access_token
@@ -41,6 +43,8 @@ export const GoogleAuthentication = function GoogleAuthentication({ attemptedRou
       // handle errors
       console.log('error', error)
     }
+
+    loadingVar(false)
   }
 
   useEffect(() => {

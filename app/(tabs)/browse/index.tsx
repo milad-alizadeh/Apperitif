@@ -98,17 +98,19 @@ export default function BrowseHomeScreen() {
 
   return (
     <Screen preset="scroll" safeAreaEdges={['top']} KeyboardAvoidingViewProps={{ enabled: false }}>
-      <View className="flex-row space-between flex-1 mb-4">
-        <Header title="Browse" />
-
-        <Icon
-          icon="search"
-          onPress={() =>
-            router.push({ pathname: '/browse/recipes', params: { categoryIds: [''] } })
+      <View className="mb-4">
+        <Header
+          title="Browse"
+          rightElement={
+            <Icon
+              icon="search"
+              onPress={() =>
+                router.push({ pathname: '/browse/recipes', params: { categoryIds: [''] } })
+              }
+              size="large"
+              color={colors.neutral[800]}
+            />
           }
-          size="large"
-          containerClassName="absolute right-5 top-0"
-          color={colors.neutral[800]}
         />
       </View>
 

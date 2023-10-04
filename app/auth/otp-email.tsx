@@ -42,6 +42,7 @@ export default function AuthOtpEmailScreen({ route }) {
   // Send OTP to user
   const sendOtp = async () => {
     setLoading(true)
+
     const { error } = await api.supabase.auth.signInWithOtp({
       email,
       options: {

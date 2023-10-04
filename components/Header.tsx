@@ -27,9 +27,7 @@ export const Header = function Header({
 
   return (
     <View
-      className={`flex-row items-center justify-between px-6 ${verticalPadding ? 'py-6' : ''} ${
-        rightElement ? 'pb-3' : ''
-      }`}
+      className={`flex-row items-center justify-between px-6 ${verticalPadding ? 'py-6' : 'h-16'} `}
     >
       {backButton && (
         <Icon
