@@ -1,7 +1,8 @@
 {
   "cli": {
     "version": ">= 5.3.0",
-    "promptToConfigurePushNotifications": false
+    "promptToConfigurePushNotifications": false,
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -14,6 +15,7 @@
       }
     },
     "staging": {
+      "autoIncrement": true,
       "distribution": "internal",
       "env": {
         "APP_VARIANT": "staging",
@@ -22,6 +24,7 @@
       }
     },
     "production": {
+      "autoIncrement": true,
       "env": {
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZWNwd2hxZ3NuaXhraHN5dnl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTYzNzg3NDMsImV4cCI6MjAxMTk1NDc0M30.bs0CaSEdCwtVCVC5uIwq6GnNIF_ibNaU05R7PnuaJ0M",
         "EXPO_PUBLIC_SUPABASE_URL": "https://ddecpwhqgsnixkhsyvyt.supabase.co"

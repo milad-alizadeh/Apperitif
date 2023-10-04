@@ -20,6 +20,7 @@
     "build:production:ios": "eas build --profile production --platform ios --local",
     "build:production:android": "eas build --profile production --platform android --local",
     "build-and-submit:production:ios": "eas build --profile production --platform ios --auto-submit",
+    "build-and-submit:production:android": "eas build --profile production --platform android --auto-submit",
     "expo:doctor": "npx expo-doctor@latest",
     "expo:fix": "npx expo install --fix",
     "generate:types": "npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > types/supabase.ts",
@@ -32,6 +33,7 @@
   "dependencies": {
     "@apollo/client": "^3.8.4",
     "@expo/vector-icons": "^13.0.0",
+    "@react-native-google-signin/google-signin": "^10.0.1",
     "@react-navigation/native": "^6.0.2",
     "@supabase/supabase-js": "^2.36.0",
     "expo": "~49.0.13",
