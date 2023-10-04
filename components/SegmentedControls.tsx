@@ -30,7 +30,6 @@ export const SegmentedControl = <T,>({ segments, onValueChange, selectedValue }:
 
   useEffect(() => {
     const newIndex = segments.findIndex((segment) => segment.value === selectedValue)
-    // console.log(selectedValue, newIndex, segments.length)
     if (containerWidth === 0 || newIndex === -1) return
 
     const segmentWidth = containerWidth / segments.length

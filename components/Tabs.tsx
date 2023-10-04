@@ -60,7 +60,6 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
     () => activeIndexDerived.value,
     (newActiveIndex) => {
       if (newActiveIndex !== activeIndex && !Number.isNaN(newActiveIndex) && activeIndex >= 0) {
-        console.log('newActiveIndex', newActiveIndex, activeIndex)
         runOnJS(setActiveIndex)(newActiveIndex) // Use runOnJS to safely update state
       }
     },

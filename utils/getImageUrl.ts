@@ -7,7 +7,7 @@ export enum imageSizes {
 }
 
 export const getImageUrl = (url: string, size: imageSizes): string => {
-  if (!url || url.includes('@')) return url
+  if (!url || url.includes('@') || url.includes('unsplash')) return url
 
   const pixelRatio = PixelRatio.get()
   let densitySuffix = ''

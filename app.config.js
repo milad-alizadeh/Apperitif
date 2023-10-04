@@ -3,8 +3,8 @@ const IS_DEV = process.env.NODE_ENV === 'development'
 
 export default {
   expo: {
-    name: `Apperitif ${APP_VARIANT ? ` ${APP_VARIANT}` : ''}`,
-    slug: 'apperitif',
+    name: `Apperitif${APP_VARIANT ? ` ${APP_VARIANT}` : ''}`,
+    slug: `apperitif${APP_VARIANT ? `-${APP_VARIANT}` : ''}`,
     version: '1.0.0',
     orientation: 'portrait',
     icon: './assets/images/app-icon-all.png',
@@ -31,7 +31,7 @@ export default {
         foregroundImage: './assets/images/app-icon-android-adaptive-foreground.png',
         backgroundImage: './assets/images/app-icon-android-adaptive-background.png',
       },
-      package: IS_DEV ? 'ai.bubblewrap.apperitif.dev' : 'ai.bubblewrap.apperitif',
+      package: APP_VARIANT ? `ai.bubblewrap.apperitif.${APP_VARIANT}` : 'ai.bubblewrap.apperitif',
     },
     web: {
       bundler: 'metro',

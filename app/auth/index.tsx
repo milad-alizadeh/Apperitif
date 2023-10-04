@@ -1,18 +1,23 @@
 import { Image } from 'expo-image'
 import { router } from 'expo-router'
 import { useLocalSearchParams } from 'expo-router'
-import React, { FC } from 'react'
+import React from 'react'
 import { TouchableOpacity, View } from 'react-native'
-import { AppleAuthentication, Icon, Text } from '~/components'
+import { Platform } from 'react-native'
+import { AppleAuthentication, Icon, Screen, Text } from '~/components'
+import { colors } from '~/theme'
 
 export default function AuthHomeScreen() {
   const { attemptedRoute } = useLocalSearchParams()
 
   return (
-    <View className="flex-1 p-6 bg-white">
+    <Screen
+      safeAreaEdges={['top', 'bottom']}
+      contentContainerStyle={{ backgroundColor: colors.white, padding: 24, flex: 1 }}
+    >
       <Icon
         icon="close"
-        containerClassName="absolute top-6 right-6"
+        containerClassName="absolute top-0 right-6"
         onPress={() => router.back()}
       />
 
@@ -23,9 +28,13 @@ export default function AuthHomeScreen() {
           <Text body>It only takes a moment.</Text>
         </View>
 
-        <View className="items-center">
-          <AppleAuthentication attemptedRoute={attemptedRoute} />
-        </View>
+        {Platform.OS === 'ios' && (
+          <View className="items-center">
+            <AppleAuthentication attemptedRoute={attemptedRoute} />
+          </View>
+        )}
+
+        <View className="items-center"></View>
 
         <View className="items-center my-8">
           <Text body styleClassName="bg-white -mb-[10] z-10 px-2">
@@ -45,6 +54,6 @@ export default function AuthHomeScreen() {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </Screen>
   )
 }

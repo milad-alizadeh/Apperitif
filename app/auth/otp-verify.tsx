@@ -36,8 +36,6 @@ export default function AuthOtpVerifyScreen({ route }) {
   const verifyOtp = async () => {
     setLoading(true)
 
-    console.log({ email, otp, verificationType })
-
     const { error } = await api.supabase.auth.verifyOtp({
       email,
       token: otp,
