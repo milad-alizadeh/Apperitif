@@ -17,23 +17,21 @@ export const FilterChips = function FilterChips({
   styleClassName,
 }: FilterChipsProps) {
   return (
-    categories.length > 0 && (
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        className={`flex-row ${styleClassName}`}
-      >
-        {categories.map((category) => {
-          return (
-            <Chip
-              key={category.id}
-              label={`${category.name}`}
-              styleClassName="mr-3"
-              onDismiss={() => onDismiss(category.id)}
-            />
-          )
-        })}
-      </ScrollView>
-    )
+    <ScrollView
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+      className={`flex-row ${styleClassName}`}
+    >
+      {categories.map((category) => {
+        return (
+          <Chip
+            key={category.id}
+            label={`${category.name}`}
+            styleClassName="mr-3"
+            onDismiss={() => onDismiss(category.id)}
+          />
+        )
+      })}
+    </ScrollView>
   )
 }

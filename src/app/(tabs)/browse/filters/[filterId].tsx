@@ -36,7 +36,7 @@ export default function FilterDetailsScreen() {
         <ListItem
           key={item.id}
           name={`${item.name}`}
-          styleClassName="mb-4"
+          styleClassName="mb-3"
           showCheckbox
           checked={item.checked}
           card

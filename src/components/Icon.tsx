@@ -105,6 +105,8 @@ export const iconRegistry = {
   check: require('~assets/icons/check.png'),
   checkCircle: require('~assets/icons/check-circle.png'),
   chevronRight: require('~assets/icons/chevron-right.png'),
+  chevronUp: require('~assets/icons/chevron-up.png'),
+  chevronDown: require('~assets/icons/chevron-down.png'),
   close: require('~assets/icons/close.png'),
   closeFilled: require('~assets/icons/close-filled.png'),
   cocktail: require('~assets/icons/cocktail.png'),

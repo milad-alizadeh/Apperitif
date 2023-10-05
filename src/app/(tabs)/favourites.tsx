@@ -31,7 +31,7 @@ export default function FavouritesScreen() {
           leftImage={getImageUrl(item.imageUrl, imageSizes.THUMBNAIL)}
           rightIcon="trash"
           name={item.name}
-          styleClassName="mx-6 mb-4"
+          styleClassName="mx-6 mb-3"
           card
           onPress={() =>
             router.push({ pathname: '/recipe/[recipeId]', params: { recipeId: item.id } })

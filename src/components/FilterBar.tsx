@@ -21,7 +21,7 @@ export interface FIlterBarProps {
  * Describe your component here
  */
 export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
-  const { data, error } = useFetchFilters()
+  const { data, error, loading } = useFetchFilters()
 
   const selectedFilters = useReactiveVar(selectedFiltersVar)
 
@@ -57,11 +57,13 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
         )}
       </View>
 
-      <FilterChips
-        styleClassName="mt-3 pl-6 pr-12"
-        categories={chips}
-        onDismiss={(id) => removeFilter(id, false)}
-      />
+      {!!chips?.length && !loading && (
+        <FilterChips
+          styleClassName={`mt-3 -mb-3 pl-6 pr-12 min-h-[32px]`}
+          categories={chips}
+          onDismiss={(id) => removeFilter(id, false)}
+        />
+      )}
     </View>
   )
 }

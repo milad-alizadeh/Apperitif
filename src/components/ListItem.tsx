@@ -1,6 +1,6 @@
 import { Image } from 'expo-image'
 import React, { memo } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { useHaptic } from '~/hooks/useHaptics'
 import { colors } from '~/theme'
 import { shadowCard } from '~/theme/shadows'
@@ -9,7 +9,6 @@ import { Badge } from './Badge'
 import { Checkbox } from './Checkbox'
 import { Icon, IconTypes } from './Icon'
 import { Text } from './Text'
-import { View } from './Themed'
 
 /**
  * Props for the ListItem component
@@ -74,14 +73,15 @@ export const ListItem = memo(function ListItem({
 
   return (
     <TouchableOpacity
+      activeOpacity={0.5}
       onPress={() => {
         if (enableHaptics) haptic()
         onPress && onPress()
       }}
       className={`flex-row items-center justify-between 
-        ${small ? 'h-10' : 'h-12'}
         ${card ? 'px-3 bg-neutral-100 rounded-xl' : ''}
-        ${leftImage ? 'h-16' : ''}
+        ${small ? 'h-10' : 'min-h-[48px]'}
+        ${leftImage ? 'min-h-[64px]' : ''}
         ${styleClassName}
       `}
       style={{ ...shadow }}

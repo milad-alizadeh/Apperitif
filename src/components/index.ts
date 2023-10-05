@@ -1,3 +1,4 @@
+export * from './Accordion'
 export * from './Authentication/AppleAuthentication'
 export * from './Authentication/EmailAuthentication'
 export * from './Badge'

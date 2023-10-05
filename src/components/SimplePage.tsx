@@ -1,7 +1,6 @@
 import { router } from 'expo-router'
 import React, { FC } from 'react'
 import { View } from 'react-native'
-import { FixedHeader } from './FixedHeader'
 import { Header } from './Header'
 import { Markdown } from './Markdown'
 import { Screen } from './Screen'
