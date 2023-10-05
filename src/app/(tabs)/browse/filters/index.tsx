@@ -30,7 +30,7 @@ export default function AllFiltersScreen() {
           <ListItem
             key={item.id}
             name={item.name}
-            styleClassName="mb-3"
+            styleClassName="mb-4"
             card
             badgeNumber={badgeNumbers[item.id] || 0}
             rightIcon="chevronRight"

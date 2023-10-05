@@ -61,7 +61,7 @@ export default function FavouritesScreen() {
           <Text h3 styleClassName="text-center mb-3">
             Your favorites list is on a detox!
           </Text>
-          <Link href="/(tabs)/browse" className="text-primary underline text-base font-bold">
+          <Link href="/browse" className="text-primary underline text-base font-bold">
             Add some recipes
           </Link>
         </View>

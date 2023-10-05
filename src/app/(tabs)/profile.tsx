@@ -39,22 +39,22 @@ export default function ProfileHomeScreen() {
     {
       name: 'Account',
       icon: 'user',
-      route: '/profile/[profileId]',
+      route: '/profile/',
     },
     {
       name: 'FAQs',
       icon: 'chat',
-      route: '/profile/faqs',
+      route: '/faqs',
     },
     {
       name: 'Privacy Policy',
       icon: 'file',
-      route: '/profile/privacy-policy',
+      route: '/privacy-policy',
     },
     {
       name: 'Terms & Conditions',
       icon: 'file',
-      route: '/profile/terms-and-conditions',
+      route: '/terms-and-conditions',
     },
   ]
 

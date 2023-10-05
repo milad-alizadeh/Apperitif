@@ -49,6 +49,7 @@ function RootLayoutNav() {
           <Stack.Screen name="welcome" />
           <Stack.Screen name="recipe/[recipeId]" />
           <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="add-ingredients" />
         </Stack>
       </ApolloProvider>
     </SessionProvider>

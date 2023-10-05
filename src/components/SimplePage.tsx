@@ -13,14 +13,14 @@ interface SimplePageProps {
 
 export const SimplePage: FC<SimplePageProps> = ({ title, content, loading }) => {
   return (
-    <Screen preset="scroll" safeAreaEdges={['top']}>
+    <Screen preset="scroll" safeAreaEdges={['top', 'bottom']}>
       {loading ? (
         <View className="h-screen items-center justify-center">
           <ActivityIndicator className="-mt-32" />
         </View>
       ) : (
         <View>
-          <Header backButton title={title} styleClassName="min-h-[24px]" />
+          <Header backButton title={title} />
           <View className="px-6">
             <Markdown text={content} />
           </View>
