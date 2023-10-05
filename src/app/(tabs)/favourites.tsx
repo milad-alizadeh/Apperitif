@@ -56,7 +56,7 @@ export default function FavouritesScreen() {
     <Screen safeAreaEdges={['top']} contentContainerStyle={$containerStyle}>
       <Header title="Favourites" />
       {/* Empty state if there are no recipes in the bar */}
-      {!data?.profilesRecipesCollection?.edges.length ? (
+      {!data?.profilesRecipesCollection?.edges.length && !loading ? (
         <View className="w-full px-20 flex-1 justify-center items-center m-auto">
           <Text h3 styleClassName="text-center mb-3">
             Your favorites list is on a detox!

@@ -16,8 +16,6 @@ interface AccordionItemProps {
   title: string
   description: string
   isExpanded: boolean
-  onLayout: (e: LayoutChangeEvent, index: number) => void
-  index: number
   toggleExpand: (title: string) => void
 }
 
@@ -25,8 +23,6 @@ const AccordionItem: FC<AccordionItemProps> = ({
   title,
   description,
   isExpanded,
-  onLayout,
-  index,
   toggleExpand,
 }) => {
   const height = useSharedValue(0)
@@ -44,19 +40,17 @@ const AccordionItem: FC<AccordionItemProps> = ({
   const heightStyle = useAnimatedStyle(() => {
     return {
       height: isExpanded ? withTiming(height.value) : withTiming(0),
-      opacity: withTiming(opacity.value),
     }
   })
 
   const containerOpacity = useAnimatedStyle(() => {
     return {
-      height: isExpanded ? withTiming(height.value) : withTiming(0),
       opacity: withTiming(opacity.value),
     }
   })
 
   return (
-    <Animated.View key={title} className="mb-3">
+    <Animated.View key={title} style={containerOpacity} className="mb-3">
       <ListItem
         name={title}
         card
@@ -89,22 +83,14 @@ export const Accordion: FC<AccordionProps> = ({ content }) => {
     setExpanded((prev) => ({ ...prev, [title]: !prev[title] }))
   }, [])
 
-  const handleItemLayout = (e: LayoutChangeEvent, index: number) => {
-    const newMeasurements = [...measurements]
-    newMeasurements[index] = e.nativeEvent.layout.height
-    setMeasurements(newMeasurements)
-  }
-
   return (
     <View>
       {content.map(({ title, description }, index) => (
         <AccordionItem
-          key={index}
+          key={title}
           title={title}
           description={description}
           isExpanded={!!expanded[title]}
-          onLayout={handleItemLayout}
-          index={index}
           toggleExpand={toggleExpand}
         />
       ))}
