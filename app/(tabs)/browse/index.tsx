@@ -122,6 +122,7 @@ export default function BrowseHomeScreen() {
             listItems={listItems}
             title={title}
             wide={index === 1}
+            center={index === 2}
             showCount={false}
             styleClassName="mb-8"
           />

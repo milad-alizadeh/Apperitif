@@ -18,6 +18,8 @@ export interface HorizontalListProps {
   emptyStateText?: string
   /** Whether to show the count of items in the list */
   showCount?: boolean
+  /** Whether to center the text */
+  center: boolean
 }
 
 /**
@@ -30,6 +32,7 @@ export const HorizontalList = function HorizontalList({
   wide,
   emptyStateText,
   showCount = true,
+  center,
 }: HorizontalListProps) {
   /**
    * Renders a single item in the list.
@@ -38,7 +41,14 @@ export const HorizontalList = function HorizontalList({
    * @returns A Card component with the specified props.
    */
   const renderItem = ({ item, index }: { item: CardProps; index: number }) => {
-    return <Card {...item} styleClassName={`mr-4 ${index === 0 ? 'ml-6' : ''}`} wide={wide} />
+    return (
+      <Card
+        {...item}
+        center={center}
+        styleClassName={`mr-4 ${index === 0 ? 'ml-6' : ''}`}
+        wide={wide}
+      />
+    )
   }
 
   return (

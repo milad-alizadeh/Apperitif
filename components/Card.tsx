@@ -12,6 +12,7 @@ export interface CardProps {
   styleClassName?: string
   wide?: boolean
   half?: boolean
+  center?: boolean
 }
 
 export const Card = memo(function Card({
@@ -20,6 +21,7 @@ export const Card = memo(function Card({
   styleClassName,
   wide,
   onPress,
+  center,
 }: CardProps) {
   return (
     <TouchableOpacity
@@ -38,7 +40,7 @@ export const Card = memo(function Card({
           transition={500}
         />
       </View>
-      <Text styleClassName="text-sm font-medium mt-2">{name}</Text>
+      <Text styleClassName={`text-sm font-medium mt-2 ${center ? 'text-center' : ''}`}>{name}</Text>
     </TouchableOpacity>
   )
 })

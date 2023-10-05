@@ -25,11 +25,43 @@ export const Markdown: FC<{ text: string }> = ({ text }) => {
 }
 
 const $styles: MarkdownProps['style'] = {
+  largeHeading: { fontSize: 34 },
+  heading1: {
+    fontWeight: 'bold',
+    marginBottom: 16,
+    marginTop: 8,
+    fontSize: 28,
+    lineHeight: 34,
+  },
+  heading2: {
+    fontWeight: 'bold',
+    marginBottom: 16,
+    marginTop: 8,
+    fontSize: 24,
+    lineHeight: 30,
+  },
+  heading3: {
+    fontWeight: 'bold',
+    marginBottom: 16,
+    marginTop: 8,
+    fontSize: 20,
+    lineHeight: 24,
+  },
   body: {
     fontSize: 16,
     lineHeight: 20,
   },
+  hr: {
+    backgroundColor: colors.neutral[300],
+    height: 1,
+    marginHorizontal: 24,
+    marginVertical: 16,
+    marginTop: 8,
+  },
   link: {
     color: colors.primary,
+  },
+  list_item: {
+    marginBottom: 8,
   },
 }
