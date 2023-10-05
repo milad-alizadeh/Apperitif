@@ -10,7 +10,6 @@ import {
   BouncyImage,
   EquipmentDetails,
   FixedHeader,
-  Heading,
   IngredientDetails,
   RecipeFavourite,
   RecipeTabs,
@@ -123,9 +122,7 @@ export default function RecipeDetailsScreen() {
 
         <View className="flex-1 -mt-16 py-8 bg-white rounded-t-[50px] px-6">
           <View className="pb-12">
-            <Heading h1 loading={loading}>
-              {recipe?.name}
-            </Heading>
+            <Text h1>{recipe?.name}</Text>
             <Text body>{recipe?.description}</Text>
           </View>
 

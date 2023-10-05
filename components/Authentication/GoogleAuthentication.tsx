@@ -1,8 +1,7 @@
 import * as Google from 'expo-auth-session/providers/google'
 import * as WebBroowser from 'expo-web-browser'
-import React, { useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import React, { useEffect } from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
 import { loadingVar } from '~/store/auth'
@@ -56,7 +55,7 @@ export const GoogleAuthentication = function GoogleAuthentication({ attemptedRou
   return (
     <View>
       <TouchableOpacity
-        onPress={promptAsync}
+        onPress={() => promptAsync()}
         className="bg-white flex-row w-64 h-12 items-center justify-center rounded-xl px-2"
         style={{ ...shadowCard }}
       >
