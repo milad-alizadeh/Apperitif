@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { router } from 'expo-router'
+import { Link, router } from 'expo-router'
 import groupBy from 'lodash/groupBy'
 import values from 'lodash/values'
 import React, { FC } from 'react'
@@ -113,6 +113,9 @@ export default function BrowseHomeScreen() {
           }
         />
       </View>
+
+      <Link href="/(aux)/terms-and-conditions">Terms and Conditions</Link>
+      <Link href="/(aux)/privary-policy">Privacy Policy</Link>
 
       {!!error || (!!browseError && <Text>{error?.message || browseError?.message}</Text>)}
       {orderedCategories.map(({ listItems, title, id }, index) =>

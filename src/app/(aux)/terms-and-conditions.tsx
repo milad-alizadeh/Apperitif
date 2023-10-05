@@ -2,9 +2,9 @@ import { useQuery } from '@apollo/client'
 import { SimplePage } from '~/components'
 import { GET_CONTENT } from '~/graphql/queries'
 
-export default function PrivacyPolicy() {
+export default function TermsAndConditions() {
   const { data } = useQuery(GET_CONTENT, {
-    variables: { name: 'privacy-policy' },
+    variables: { name: 'terms-and-conditions' },
   })
 
   const pageContent = data?.appContentCollection?.edges?.[0].node.content
