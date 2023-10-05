@@ -21,10 +21,13 @@ export default function WelcomeScreen() {
         <Text largeHeading styleClassName="mb-4">
           It's time for a
         </Text>
+
         <Image style={$image} source={textDrink} className="mb-4" />
+
         <Text body styleClassName="mb-5">
           Find amazing cocktail recipes for any occassion.
         </Text>
+
         <View className="flex flex-row">
           <Link href={'/browse'} asChild>
             <Button label={'Get started'} />

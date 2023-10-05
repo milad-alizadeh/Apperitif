@@ -2,9 +2,9 @@ import { useQuery } from '@apollo/client'
 import { SimplePage } from '~/components'
 import { GET_CONTENT } from '~/graphql/queries'
 
-export default function TermsAndConditions() {
-  const { data } = useQuery(GET_CONTENT, {
-    variables: { name: 'terms-and-conditions' },
+export default function PrivacyPolicy() {
+  const { data, loading } = useQuery(GET_CONTENT, {
+    variables: { name: 'privacy-policy' },
   })
 
   const pageContent = data?.appContentCollection?.edges?.[0].node.content
@@ -12,7 +12,11 @@ export default function TermsAndConditions() {
 
   return (
     pageContentParsed && (
-      <SimplePage title={pageContentParsed.title} content={pageContentParsed.content} />
+      <SimplePage
+        title={pageContentParsed.title}
+        loading={loading}
+        content={pageContentParsed.content}
+      />
     )
   )
 }

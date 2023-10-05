@@ -26,8 +26,7 @@ export function Text({
   weight,
 }: TextProps) {
   const sizes = {
-    largeHeading: { fontSize: 34, fontFamily: typography?.primary?.bold },
-    h1: { fontSize: 28, fontFamily: typography?.primary?.bold },
+    h1: { fontSize: 26, fontFamily: typography?.primary?.bold },
     h2: { fontSize: 24, fontFamily: typography?.primary?.bold },
     h3: { fontSize: 20, fontFamily: typography?.primary?.bold },
     h4: { fontSize: 14, fontFamily: typography?.primary?.bold },
@@ -44,7 +43,6 @@ export function Text({
     h3 && sizes.h3,
     h4 && sizes.h4,
     body && sizes.body,
-    largeHeading && sizes.largeHeading,
   ]
 
   const defaultClassName = 'text-navy'

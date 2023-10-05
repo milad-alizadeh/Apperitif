@@ -1,4 +1,3 @@
-import * as Linking from 'expo-linking'
 import { router } from 'expo-router'
 import * as WebBrowser from 'expo-web-browser'
 import React, { FC, useEffect } from 'react'
@@ -28,19 +27,19 @@ const $styles: MarkdownProps['style'] = {
   heading1: {
     fontWeight: 'bold',
     marginTop: 16,
-    fontSize: 28,
-    lineHeight: 34,
+    fontSize: 24,
+    lineHeight: 30,
   },
   heading2: {
     fontWeight: 'bold',
     marginTop: 16,
-    fontSize: 24,
-    lineHeight: 30,
+    fontSize: 20,
+    lineHeight: 24,
   },
   heading3: {
     fontWeight: 'bold',
     marginTop: 16,
-    fontSize: 20,
+    fontSize: 18,
     lineHeight: 24,
   },
   body: {

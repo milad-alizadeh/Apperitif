@@ -63,7 +63,7 @@ const AccordionItem: FC<AccordionItemProps> = ({
         </Animated.View>
 
         {!isMeasured && (
-          <View className="p-3 pt-6 absolute" onLayout={calculateHeight}>
+          <View className="p-3 pt-6 absolute top-[2000px]" onLayout={calculateHeight}>
             <Text body>{description}</Text>
           </View>
         )}

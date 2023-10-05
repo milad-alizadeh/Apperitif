@@ -13,9 +13,8 @@ export default function FAQs() {
 
   return (
     pageContent && (
-      <Screen preset="scroll" safeAreaEdges={['top', 'bottom']}>
-        <Header backButton />
-        <Header title={pageContentParsed.title} styleClassName="mb-6" />
+      <Screen preset="scroll" safeAreaEdges={['top']}>
+        <Header title={pageContentParsed.title} styleClassName="mb-6" backButton />
         <View className="px-6">
           <Accordion content={pageContentParsed.faqs} />
         </View>
