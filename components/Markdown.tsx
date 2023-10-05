@@ -10,7 +10,7 @@ export const Markdown: FC<{ text: string }> = ({ text }) => {
   const handleLink = async (url: string) => {
     if (url.startsWith('http')) {
       await WebBrowser.openBrowserAsync(url)
-    } else {
+    } else if (url.startsWith('/')) {
       router.push(url as any)
     }
   }
