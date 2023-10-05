@@ -118,6 +118,7 @@ export const iconRegistry = {
   hurricane: require('~assets/icons/hurricane.png'),
   image: require('~assets/icons/image.png'),
   file: require('~assets/icons/file.png'),
+  logOut: require('~assets/icons/log-out.png'),
   infoCircle: require('~assets/icons/info-circle.png'),
   irishCoffeeMug: require('~assets/icons/irish-coffee-mug.png'),
   jigger: require('~assets/icons/jigger.png'),

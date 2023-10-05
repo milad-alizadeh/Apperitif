@@ -8,7 +8,7 @@ export default function FAQs() {
     variables: { name: 'faqs' },
   })
 
-  const pageContent = data?.appContentCollection?.edges?.[0].node.content
+  const pageContent = data?.appContentCollection?.edges?.[0]?.node.content
   const pageContentParsed = data ? JSON.parse(pageContent) : { title: '', content: '' }
 
   return (

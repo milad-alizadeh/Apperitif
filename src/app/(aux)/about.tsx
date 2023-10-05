@@ -1,24 +1,26 @@
-import { useQuery } from '@apollo/client'
+import * as Application from 'expo-application'
+import { Image } from 'expo-image'
 import { View } from 'react-native'
-import { Accordion, Header, Screen } from '~/components'
-import { GET_CONTENT } from '~/graphql/queries'
+import { Header, Screen, Text } from '~/components'
 
 export default function FAQs() {
-  const { data } = useQuery(GET_CONTENT, {
-    variables: { name: 'faqs' },
-  })
-
-  const pageContent = data?.appContentCollection?.edges?.[0].node.content
-  const pageContentParsed = data ? JSON.parse(pageContent) : { title: '', content: '' }
+  const version = Application.nativeBuildVersion
+  const versionCode = Application.applicationName
 
   return (
-    pageContent && (
-      <Screen preset="scroll" safeAreaEdges={['top']}>
-        <Header title={pageContentParsed.title} styleClassName="mb-6" backButton />
-        <View className="px-6">
-          <Accordion content={pageContentParsed.faqs} />
+    <Screen preset="scroll" safeAreaEdges={['top']} contentContainerStyle={{ flex: 1 }}>
+      <Header title="About" backButton />
+      <View className="px-6 justify-center items-center flex-1">
+        <View className="-translate-y-28 items-center">
+          <Image className="w-56 h-56" source={require('~assets/images/logo.png')} />
+          <Text h3 styleClassName="mb-2">
+            Version: {version}
+          </Text>
+          <Text styleClassName="mb-2">
+            © {new Date().getFullYear()} Bubblewrap Technologies LTD
+          </Text>
         </View>
-      </Screen>
-    )
+      </View>
+    </Screen>
   )
 }
