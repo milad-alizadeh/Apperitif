@@ -23,12 +23,12 @@ export interface BouncyImageProps {
 export const BouncyImage = function BouncyImage({ height, scrollY, imageUrl }: BouncyImageProps) {
   return (
     <Animated.View
-      className="aspect-square bg-neutral-300 w-full"
+      className="bg-neutral-300 w-full"
       style={[scrollY ? getBouncyTransform(scrollY, height) : {}, { height }]}
     >
       <Image
         className="w-full h-full"
-        transition={500}
+        transition={300}
         source={
           typeof imageUrl === 'string'
             ? { uri: getImageUrl(imageUrl, imageSizes.MEDIUM) }

@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { router } from 'expo-router'
+import { Link, router } from 'expo-router'
 import React, { useCallback } from 'react'
 import { ActivityIndicator, FlatList, View, ViewStyle } from 'react-native'
 import { Header, ListItem, Screen, Text } from '~/components'
@@ -48,31 +48,34 @@ export default function FavouritesScreen() {
     [data],
   )
 
+  if (error) {
+    return <Text>{error.message}</Text>
+  }
+
   return (
     <Screen safeAreaEdges={['top']} contentContainerStyle={$containerStyle}>
-      <FlatList
-        className="flex-1"
-        data={flatListData}
-        refreshing={loading}
-        onRefresh={() => refetch()}
-        ListHeaderComponent={
-          <View className="mb-6">
-            <Header title="Favourites" />
-          </View>
-        }
-        ListEmptyComponent={
-          loading ? (
-            <ActivityIndicator size="large" />
-          ) : error ? (
-            <Text styleClassName="text-center">{error.message}</Text>
-          ) : (
-            <Text styleClassName="text-center">No favourites yet</Text>
-          )
-        }
-        renderItem={renderItem}
-        ItemSeparatorComponent={() => <View className="h-3" />}
-        keyExtractor={(item) => item.id}
-      />
+      <Header title="Favourites" />
+      {/* Empty state if there are no recipes in the bar */}
+      {!data?.profilesRecipesCollection?.edges.length ? (
+        <View className="w-full px-20 flex-1 justify-center items-center m-auto">
+          <Text h3 styleClassName="text-center mb-3">
+            Your favorites list is on a detox!
+          </Text>
+          <Link href="/(tabs)/browse" className="mb-3 text-primary underline text-base font-bold">
+            Add some recipes
+          </Link>
+        </View>
+      ) : (
+        <FlatList
+          className="flex-1 h-full"
+          data={flatListData}
+          refreshing={loading}
+          onRefresh={() => refetch()}
+          renderItem={renderItem}
+          ItemSeparatorComponent={() => <View className="h-3" />}
+          keyExtractor={(item) => item.id}
+        />
+      )}
     </Screen>
   )
 }
