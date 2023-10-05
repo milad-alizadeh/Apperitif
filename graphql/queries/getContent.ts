@@ -6,6 +6,7 @@ export const GET_CONTENT = gql(/* GraphQL */ `
       edges {
         node {
           id
+          name
           content
         }
       }
