@@ -78,16 +78,18 @@ export const ListItem = memo(function ListItem({
         if (enableHaptics) haptic()
         onPress && onPress()
       }}
-      className={`flex-row items-center justify-between ${small ? 'h-10' : 'h-12'} ${
-        card ? 'px-3' : ''
-      }
-      } ${styleClassName} ${card ? 'bg-neutral-100 rounded-xl' : ''} ${leftImage ? 'h-20' : ''}`}
+      className={`flex-row items-center justify-between 
+        ${small ? 'h-10' : 'h-12'}
+        ${card ? 'px-3 bg-neutral-100 rounded-xl' : ''}
+        ${leftImage ? 'h-16' : ''}
+        ${styleClassName}
+      `}
       style={{ ...shadow }}
     >
       {leftImage && (
         <Image
           source={{ uri: getImageUrl(leftImage, imageSizes.THUMBNAIL) }}
-          className="w-20 h-20 rounded-l-xl mr-3 -ml-3"
+          className="w-16 h-16 rounded-l-xl mr-3 -ml-3"
           contentFit="cover"
           transition={500}
         />
@@ -113,7 +115,7 @@ export const ListItem = memo(function ListItem({
       {rightIcon && (
         <Icon
           icon={rightIcon}
-          color={colors.neutral[800]}
+          color={colors.neutral[400]}
           onPress={
             onRightIconPress
               ? () => {

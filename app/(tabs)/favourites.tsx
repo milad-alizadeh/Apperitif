@@ -31,7 +31,7 @@ export default function FavouritesScreen() {
           leftImage={getImageUrl(item.imageUrl, imageSizes.THUMBNAIL)}
           rightIcon="trash"
           name={item.name}
-          styleClassName="mx-6"
+          styleClassName="mx-6 mb-4"
           card
           onPress={() =>
             router.push({ pathname: '/recipe/[recipeId]', params: { recipeId: item.id } })
@@ -61,7 +61,7 @@ export default function FavouritesScreen() {
           <Text h3 styleClassName="text-center mb-3">
             Your favorites list is on a detox!
           </Text>
-          <Link href="/(tabs)/browse" className="mb-3 text-primary underline text-base font-bold">
+          <Link href="/(tabs)/browse" className="text-primary underline text-base font-bold">
             Add some recipes
           </Link>
         </View>
@@ -72,7 +72,6 @@ export default function FavouritesScreen() {
           refreshing={loading}
           onRefresh={() => refetch()}
           renderItem={renderItem}
-          ItemSeparatorComponent={() => <View className="h-3" />}
           keyExtractor={(item) => item.id}
         />
       )}
