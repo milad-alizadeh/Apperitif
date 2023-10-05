@@ -18,6 +18,8 @@ web-build/
 pc-api*.json
 ios
 android
+build-*.apk
+build-*.ipa
 
 # Metro
 .metro-health-check*

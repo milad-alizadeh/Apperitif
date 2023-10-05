@@ -70,6 +70,7 @@ export const RecipeTabs = function RecipeTabs({
           key={ingredient.id}
           name={`${ingredient.name} ${isOptional ? '(optional)' : ''}`}
           leftText={`${outputQuantity} ${outputUnit}`}
+          rightIcon="text"
           onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
         />
       )
@@ -84,6 +85,7 @@ export const RecipeTabs = function RecipeTabs({
           key={id}
           name={name}
           leftImage={imageUrl}
+          rightIcon="text"
           onPress={() => onEquipmentPress && onEquipmentPress(id)}
           styleClassName="mb-2"
         />
@@ -95,11 +97,9 @@ export const RecipeTabs = function RecipeTabs({
   const renderStepItem = useCallback(
     ({ number, description, id }: Step) => {
       return (
-        <View key={id} className="mb-2">
-          <Text body>
-            <Text styleClassName="mr-4" weight="bold">
-              {`${number}. `}
-            </Text>
+        <View key={id} className="mb-4 flex-row">
+          <Text weight="bold" styleClassName="mr-2" body>{`${number}.`}</Text>
+          <Text body styleClassName="flex-1">
             {description}
           </Text>
         </View>
@@ -111,7 +111,7 @@ export const RecipeTabs = function RecipeTabs({
   return (
     <Tabs initialIndex={0}>
       <Tabs.TabPage title="Ingredients">
-        <RecipeMeasurements />
+        <RecipeMeasurements styleClassName="pb-6 mb-3 border-b-[1px] border-neutral-200" />
         <View>{ingredients.map((ingredient) => renderIngredientItem(ingredient))}</View>
       </Tabs.TabPage>
 

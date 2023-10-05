@@ -1,5 +1,5 @@
 import { useReactiveVar } from '@apollo/client'
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import { View } from 'react-native'
 import {
   doubleRecipeVar,
@@ -17,7 +17,7 @@ import { Text } from './Text'
 /**
  * A component that displays the recipe measurements and conversions.
  */
-export const RecipeMeasurements = function RecipeMeasurements() {
+export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClassName }) => {
   const unitSystems = useReactiveVar(unitSystemsVar)
   const jiggerSizesMetric = useReactiveVar(jiggerSizesMetricVar)
   const jiggerSizesImperial = useReactiveVar(jiggerSizesImperialVar)
@@ -33,7 +33,7 @@ export const RecipeMeasurements = function RecipeMeasurements() {
     unitSystem === UnitSystems.METRIC ? jiggerSizesMetric : jiggerSizesImperial
 
   return (
-    <View className="flex-row justify-between pb-6 mb-6 border-b-[1px] border-neutral-200">
+    <View className={`flex-row justify-between ${styleClassName}`}>
       <View>
         <Text h4 styleClassName="text-primary mb-2">
           Unit
