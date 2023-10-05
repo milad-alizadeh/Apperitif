@@ -14,9 +14,9 @@ interface SimplePageProps {
 export const SimplePage: FC<SimplePageProps> = ({ title, content, loading }) => {
   return (
     <Screen preset="scroll" safeAreaEdges={['top']}>
-      {loading ? (
-        <View className="flex-1 items-center justify-center">
-          <ActivityIndicator />
+      {true ? (
+        <View className="h-screen items-center justify-center">
+          <ActivityIndicator className="-mt-32" />
         </View>
       ) : (
         <View>

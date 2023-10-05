@@ -31,20 +31,32 @@ const AccordionItem: FC<AccordionItemProps> = ({
 }) => {
   const height = useSharedValue(0)
   const [isMeasured, setIsMeasured] = useState(false)
+  const opacity = useSharedValue(0)
 
   const calculateHeight = (e: LayoutChangeEvent) => {
     height.value = e.nativeEvent.layout.height
+    setTimeout(() => {
+      opacity.value = 1
+    }, 200)
     setIsMeasured(true)
   }
 
   const heightStyle = useAnimatedStyle(() => {
     return {
       height: isExpanded ? withTiming(height.value) : withTiming(0),
+      opacity: withTiming(opacity.value),
+    }
+  })
+
+  const containerOpacity = useAnimatedStyle(() => {
+    return {
+      height: isExpanded ? withTiming(height.value) : withTiming(0),
+      opacity: withTiming(opacity.value),
     }
   })
 
   return (
-    <View key={title} className="mb-3">
+    <Animated.View key={title} className="mb-3">
       <ListItem
         name={title}
         card
@@ -52,23 +64,20 @@ const AccordionItem: FC<AccordionItemProps> = ({
         onPress={() => toggleExpand(title)}
         styleClassName="py-3 z-10"
       />
-      <View style={{ ...shadowCard }}>
-        <Animated.View
-          className="bg-white rounded-b-xl"
-          style={[heightStyle, { overflow: 'hidden' }]}
-        >
-          <View className="p-3 pt-9 -mt-6">
+      <View style={{ ...shadowCard }} className="bg-white rounded-b-xl -top-3">
+        <Animated.View style={[heightStyle, { overflow: 'hidden' }]}>
+          <View className="px-3 pt-12 -mt-6">
             <Text body>{description}</Text>
           </View>
         </Animated.View>
 
         {!isMeasured && (
-          <View className="p-3 pt-6 absolute top-[2000px]" onLayout={calculateHeight}>
+          <View className="px-3 pt-12 -mt-6 absolute top-full" onLayout={calculateHeight}>
             <Text body>{description}</Text>
           </View>
         )}
       </View>
-    </View>
+    </Animated.View>
   )
 }
 
