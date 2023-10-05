@@ -16,21 +16,19 @@ export interface AppleAuthenticationProps {
 }
 
 export const GoogleAuthentication = function GoogleAuthentication({ attemptedRoute }) {
-  const [loading, setLoading] = useState(false)
   const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
+  const [_request, response, promptAsync] = Google.useAuthRequest({
     iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
     androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
   })
 
   const singInWithOAuth = async (response) => {
     loadingVar(true)
-    setLoading(true)
     const token = response.params.id_token
     const access_token = response.params.access_token
 
-    const { data, error } = await api.supabase.auth.signInWithIdToken({
+    const { error } = await api.supabase.auth.signInWithIdToken({
       provider: 'google',
       token,
       access_token,
@@ -38,7 +36,6 @@ export const GoogleAuthentication = function GoogleAuthentication({ attemptedRou
 
     if (!error) {
       handleSuccessfulAuth()
-      setLoading(false)
     } else {
       // handle errors
       console.log('error', error)
