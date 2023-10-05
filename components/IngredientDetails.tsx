@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client'
 import React from 'react'
 import { ActivityIndicator, ScrollView, View } from 'react-native'
 import { GET_INGREDIENT_DETAILS } from '~/graphql/queries/getIngredientDetails'
+import { Markdown } from './Markdown'
 import { Text } from './Text'
 
 /**
@@ -35,9 +36,7 @@ export const IngredientDetails = function IngredientDetails({
               {ingredient?.name}
             </Text>
 
-            <Text body styleClassName="mb-1">
-              {ingredient?.description}
-            </Text>
+            <Markdown text={ingredient?.description} />
           </View>
         )}
       </View>

@@ -11,6 +11,7 @@ import {
   EquipmentDetails,
   FixedHeader,
   IngredientDetails,
+  Markdown,
   RecipeFavourite,
   RecipeTabs,
   Text,
@@ -122,8 +123,10 @@ export default function RecipeDetailsScreen() {
 
         <View className="flex-1 -mt-16 py-8 bg-white rounded-t-[50px] px-6">
           <View className="pb-12">
-            <Text h1>{recipe?.name}</Text>
-            <Text body>{recipe?.description}</Text>
+            <Text h1 styleClassName="mb-2">
+              {recipe?.name}
+            </Text>
+            <Markdown text={recipe?.description} />
           </View>
 
           <View className="bg-white rounded-2xl" style={shadowLarge}>
