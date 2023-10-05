@@ -111,7 +111,7 @@ export const SectionList = function SectionList({
         <View className="scale-125 -translate-y-8" style={{ top: FIXED_HEADER_HEIGHT }}>
           <BouncyImage
             height={defaultHeaderHeight}
-            imageUrl={require('~/assets/images/whiskey-bottle.jpg')}
+            imageUrl={require('~assets/images/whiskey-bottle.jpg')}
           />
         </View>
 

@@ -30,7 +30,7 @@ export default function AuthHomeScreen() {
 
       <View>
         <View className="items-center my-8">
-          <Image className="w-56 h-56" source={require('~/assets/images/logo.png')} />
+          <Image className="w-56 h-56" source={require('~assets/images/logo.png')} />
           <Text styleClassName="text-xl font-bold mb-2">Sign up or login to continue.</Text>
           <Text body>It only takes a moment.</Text>
         </View>

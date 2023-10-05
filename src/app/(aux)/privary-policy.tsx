@@ -10,6 +10,6 @@ export default function PrivacyPolicy() {
   const pageData = data.appContentCollection?.edges?.[0]?.node
 
   return (
-    pageData && <SimplePage title={pageData.t}  />
+    pageData && <SimplePage title={pageData.content.title} content={pageData.content.content} />
   )
 }

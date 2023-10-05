@@ -5,9 +5,9 @@ dotenv.config({ path: `.env.local` })
 
 const config: CodegenConfig = {
   schema: `${process.env.EXPO_PUBLIC_SUPABASE_URL}/graphql/v1`,
-  documents: ['./**/!(*.d).{ts,tsx}'],
+  documents: ['./src/**/!(*.d).{ts,tsx}'],
   generates: {
-    './__generated__/': {
+    './src/__generated__/': {
       preset: 'client',
       plugins: [],
       presetConfig: {

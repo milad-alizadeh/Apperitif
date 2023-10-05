@@ -9,8 +9,16 @@ module.exports = function (api) {
       [
         'babel-plugin-root-import',
         {
-          rootPathSuffix: './',
-          rootPathPrefix: '~/',
+          paths: [
+            {
+              rootPathSuffix: './src',
+              rootPathPrefix: '~/',
+            },
+            {
+              rootPathSuffix: './assets',
+              rootPathPrefix: '~assets/',
+            },
+          ],
         },
       ],
       '@babel/plugin-proposal-export-namespace-from',
