@@ -13,7 +13,9 @@
     "format": "prettier --write \"./**/*.{js,jsx,json,md,ts,tsx}\"",
     "compile": "tsc --noEmit -p . --pretty",
     "add:test-device": "eas device:create",
+    "buidl:run:simulator": "eas build:run -p ios --path",
     "build:dev:ios": "eas build --profile development --platform ios --local",
+    "build:dev:ios-simulator": "eas build --profile development-simulator --platform ios --local",
     "build:dev:android": "eas build --profile development --platform android --local",
     "build:staging:ios": "eas build --profile staging --platform ios --local",
     "build:staging:android": "eas build --profile staging --platform android --local",
@@ -35,7 +37,7 @@
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-navigation/native": "^6.0.2",
-    "@supabase/supabase-js": "^2.36.0",
+    "@supabase/supabase-js": "^2.38.0",
     "aes-js": "^3.1.2",
     "expo": "~49.0.13",
     "expo-apple-authentication": "~6.1.0",
@@ -92,7 +94,8 @@
     "prettier": "^3.0.3",
     "react-test-renderer": "18.2.0",
     "tailwindcss": "3.2.2",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.3",
+    "uri-scheme": "^1.1.0"
   },
   "prettier": {
     "printWidth": 100,

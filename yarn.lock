@@ -2900,7 +2900,7 @@
   dependencies:
     "@supabase/node-fetch" "^2.6.14"
 
-"@supabase/supabase-js@^2.36.0":
+"@supabase/supabase-js@^2.38.0":
   version "2.38.0"
   resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.38.0.tgz#c74167b3286c92b5822492dd1680eff2a50b9e6e"
   integrity sha512-FSkIcz+/+TTBqNqhR8AdtblxEqCF72//CCkmZFIRCa3Xh/aiI0F4cBdL7AB3aIQn2DhE4aGxZ4mGiGR593096Q==
@@ -11737,6 +11737,11 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+uri-scheme@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/uri-scheme/-/uri-scheme-1.1.0.tgz#505e8ff199207b4c195009564158f939932f3c14"
+  integrity sha512-Psup0SqWmpf2TDohyMVa9UwhmHGXCvn1/+5jkSKy9BwUq3grRmBCmhpClViiWSkqjyNfJmcbZH68RFYqE2hmbQ==
 
 url-join@4.0.0:
   version "4.0.0"

@@ -5,6 +5,23 @@
     "appVersionSource": "remote"
   },
   "build": {
+    "development-simulator": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_IOS_CLIENT_ID": "387765460024-u00ludqbbapijlebphm3a36c4kpsq2a8.apps.googleusercontent.com",
+        "EXPO_PUBLIC_ANDROID_CLIENT_ID": "387765460024-cffpkqkda7vh56hbd72k8j2ce8bjna7v.apps.googleusercontent.com",
+        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0",
+        "EXPO_PUBLIC_SUPABASE_URL": "http://192.168.68.52:54321"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
+      }
+    },
+
     "development": {
       "developmentClient": true,
       "distribution": "internal",

@@ -19,14 +19,29 @@
       "bundleIdentifier": "ai.bubblewrap.apperitif",
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "associatedDomains": ["applinks:bubblewrap.ai"]
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
       },
-      "package": "ai.bubblewrap.apperitif"
+      "package": "ai.bubblewrap.apperitif",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "*.bubblewrap.ai",
+              "pathPrefix": "/records"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "bundler": "metro",
