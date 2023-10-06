@@ -39,7 +39,7 @@ export const Prompt: FC<PromptProps> = forwardRef(
     const duration = 300
     const windowHeight = useWindowDimensions().height
     const initialOffset = windowHeight + 112
-    const offset = useSharedValue(0)
+    const offset = useSharedValue(initialOffset)
     const blurIntensity = useSharedValue(0)
 
     const animationConfig = {

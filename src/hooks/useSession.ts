@@ -7,5 +7,5 @@ export const useSession = () => {
     throw new Error('useSession must be used within a SessionProvider')
   }
 
-  return { isLoggedIn: !!session, user: session?.user }
+  return { isLoggedIn: !!session, user: session?.user, session }
 }

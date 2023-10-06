@@ -14,15 +14,17 @@ interface ProfileItem {
 }
 
 export default function ProfileHomeScreen() {
-  const { user } = useSession()
+  const { user, isLoggedIn } = useSession()
   const client = useApolloClient()
 
   const profileItems: ProfileItem[] | null[] = [
-    {
-      name: 'Account',
-      icon: 'user',
-      route: `/${user?.id}/account`,
-    },
+    isLoggedIn
+      ? {
+          name: 'Account',
+          icon: 'user',
+          route: `/${user?.id}/account`,
+        }
+      : undefined,
     {
       name: 'FAQs',
       icon: 'chat',
@@ -51,9 +53,9 @@ export default function ProfileHomeScreen() {
       route: 'mailto:contact@bubblewrap.ai',
     },
     {
-      name: 'Sign Out',
+      name: isLoggedIn ? 'Sign Out' : 'Log in or create an account',
       icon: 'logOut',
-      onPress: () => singOut(),
+      onPress: () => (isLoggedIn ? singOut() : router.push('/auth')),
     },
   ]
 
@@ -93,9 +95,11 @@ export default function ProfileHomeScreen() {
         renderItem={renderItem}
         contentContainerStyle={{ paddingBottom: 100 }}
         ListFooterComponent={
-          <View>
-            <Text styleClassName="text-sm px-11 font-medium">Logged in as {user?.email}</Text>
-          </View>
+          isLoggedIn && (
+            <View>
+              <Text styleClassName="text-sm px-11 font-medium">Logged in as {user?.email}</Text>
+            </View>
+          )
         }
       />
     </Screen>
