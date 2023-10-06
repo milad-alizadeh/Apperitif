@@ -1,15 +1,19 @@
+import { BlurView } from 'expo-blur'
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { Modal, TouchableOpacity, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
   Easing,
   runOnJS,
+  useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
+
+const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)
 
 export interface BottomSheetRef {
   show: () => void
@@ -27,19 +31,23 @@ export const BottomSheet = forwardRef(function BottomSheet(
 ) {
   const [visible, setVisible] = useState(false)
   const offset = useSharedValue(0)
-  const opacity = useSharedValue(0)
   const duration = 200
   const bottomInset = useSafeAreaInsetsStyle(['bottom'])
   const contentHeight = useRef(0)
+  const blurIntensity = useSharedValue(0)
+  const animationConfig = {
+    duration,
+    easing: Easing.inOut(Easing.ease),
+  }
 
   const show = () => {
     setVisible(true)
-    opacity.value = 1
+    blurIntensity.value = 30
   }
 
   const hide = () => {
     offset.value = 0
-    opacity.value = 0
+    blurIntensity.value = 0
 
     setTimeout(() => {
       setVisible(false)
@@ -63,21 +71,15 @@ export const BottomSheet = forwardRef(function BottomSheet(
     return {
       transform: [
         {
-          translateY: withTiming(offset.value, {
-            duration,
-            easing: Easing.inOut(Easing.ease),
-          }),
+          translateY: withTiming(offset.value, animationConfig),
         },
       ],
     }
   })
 
-  const backgroundStyle = useAnimatedStyle(() => {
+  const intensityProp = useAnimatedProps(() => {
     return {
-      opacity: withTiming(opacity.value, {
-        duration,
-        easing: Easing.inOut(Easing.ease),
-      }),
+      intensity: withTiming(blurIntensity.value, animationConfig),
     }
   })
 
@@ -101,26 +103,27 @@ export const BottomSheet = forwardRef(function BottomSheet(
 
   return (
     <Modal transparent visible={visible} onRequestClose={hide} statusBarTranslucent>
-      <TouchableOpacity activeOpacity={1} onPress={hide}>
-        <Animated.View
-          className="absolute z-10 w-screen h-screen left-0 top-0 bg-black/40"
-          style={backgroundStyle}
-        ></Animated.View>
+      <TouchableOpacity onPress={hide}>
+        <AnimatedBlurView
+          animatedProps={intensityProp}
+          tint="dark"
+          className="w-full h-full items-center justify-center"
+        >
+          <Animated.View
+            className="absolute bg-white w-screen top-full z-50 rounded-t-[50px] overflow-hidden"
+            style={[bottomSheetStyle, shadowLarge]}
+          >
+            {/* Swip Area */}
+            <GestureDetector gesture={gesture}>
+              <View className="h-32 absolute top-0 left-0 w-full z-10"></View>
+            </GestureDetector>
+
+            <View onLayout={onContentLayout} className="min-h-[360px]" style={bottomInset}>
+              {children}
+            </View>
+          </Animated.View>
+        </AnimatedBlurView>
       </TouchableOpacity>
-
-      <Animated.View
-        className="absolute bg-white w-screen top-full z-50 rounded-t-[50px] overflow-hidden"
-        style={[bottomSheetStyle, shadowLarge]}
-      >
-        {/* Swip Area */}
-        <GestureDetector gesture={gesture}>
-          <View className="h-32 absolute top-0 left-0 w-full z-10"></View>
-        </GestureDetector>
-
-        <View onLayout={onContentLayout} className="min-h-[360px]" style={bottomInset}>
-          {children}
-        </View>
-      </Animated.View>
     </Modal>
   )
 })

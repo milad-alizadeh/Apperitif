@@ -127,6 +127,7 @@ export const iconRegistry = {
   minus: require('~assets/icons/minus.png'),
   minusCircle: require('~assets/icons/minus-circle.png'),
   muddler: require('~assets/icons/muddler.png'),
+  mail: require('~assets/icons/mail.png'),
   mule: require('~assets/icons/mule.png'),
   pint: require('~assets/icons/pint.png'),
   plus: require('~assets/icons/plus.png'),

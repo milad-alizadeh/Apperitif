@@ -30,8 +30,8 @@ export const Button = forwardRef(function Button(
         }
         onPress && !loading && onPress()
       }}
-      className={`rounded-xl px-4 py-2 min-w-[100px] justify-center items-center ${
-        outline ? 'border-2 border-primary' : 'bg-primary'
+      className={`rounded-xl px-4 py-2 min-w-[100px] border-2 border-primary justify-center items-center ${
+        outline ? '' : 'bg-primary'
       } ${large ? 'h-12' : ''} ${styleClassName} `}
     >
       <Text
