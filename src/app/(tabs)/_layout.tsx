@@ -59,6 +59,7 @@ export default function TabLayout() {
         name="favourites"
         listeners={protectedRoute}
         options={{
+          tabBarLabel: 'Favourites',
           tabBarIcon: ({ color }) => <Icon icon="bookmark" color={color} />,
         }}
       />
