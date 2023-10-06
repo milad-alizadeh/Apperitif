@@ -1,8 +1,38 @@
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
 export interface Database {
   public: {
     Tables: {
+      app_content: {
+        Row: {
+          content: Json | null
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          content?: Json | null
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          content?: Json | null
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       categories: {
         Row: {
           created_at: string
@@ -30,38 +60,20 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'categories_parent_id_categories_id_fk'
-            columns: ['parent_id']
-            referencedRelation: 'categories'
-            referencedColumns: ['id']
+            foreignKeyName: "categories_parent_id_categories_id_fk"
+            columns: ["parent_id"]
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "categories_parent_id_categories_id_fk"
+            columns: ["parent_id"]
+            referencedRelation: "ingredients_by_categories"
+            referencedColumns: ["id"]
+          }
         ]
       }
-      content_apperitivo: {
-        Row: {
-          content: Json | null
-          created_at: string
-          id: string
-          name: string
-          updated_at: string
-        }
-        Insert: {
-          content?: Json | null
-          created_at?: string
-          id?: string
-          name: string
-          updated_at?: string
-        }
-        Update: {
-          content?: Json | null
-          created_at?: string
-          id?: string
-          name?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      equipments: {
+      equipment: {
         Row: {
           created_at: string
           description: string | null
@@ -133,17 +145,23 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'ingredients_categories_category_id_categories_id_fk'
-            columns: ['category_id']
-            referencedRelation: 'categories'
-            referencedColumns: ['id']
+            foreignKeyName: "ingredients_categories_category_id_categories_id_fk"
+            columns: ["category_id"]
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'ingredients_categories_ingredient_id_ingredients_id_fk'
-            columns: ['ingredient_id']
-            referencedRelation: 'ingredients'
-            referencedColumns: ['id']
+            foreignKeyName: "ingredients_categories_category_id_categories_id_fk"
+            columns: ["category_id"]
+            referencedRelation: "ingredients_by_categories"
+            referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "ingredients_categories_ingredient_id_ingredients_id_fk"
+            columns: ["ingredient_id"]
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
+          }
         ]
       }
       profiles: {
@@ -170,11 +188,11 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'fk_auth_users'
-            columns: ['id']
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "fk_auth_users"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
         ]
       }
       profiles_ingredients: {
@@ -198,17 +216,17 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'profiles_ingredients_ingredient_id_ingredients_id_fk'
-            columns: ['ingredient_id']
-            referencedRelation: 'ingredients'
-            referencedColumns: ['id']
+            foreignKeyName: "profiles_ingredients_ingredient_id_ingredients_id_fk"
+            columns: ["ingredient_id"]
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'profiles_ingredients_profile_id_profiles_id_fk'
-            columns: ['profile_id']
-            referencedRelation: 'profiles'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "profiles_ingredients_profile_id_profiles_id_fk"
+            columns: ["profile_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
         ]
       }
       profiles_recipes: {
@@ -232,17 +250,17 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'profiles_recipes_profile_id_profiles_id_fk'
-            columns: ['profile_id']
-            referencedRelation: 'profiles'
-            referencedColumns: ['id']
+            foreignKeyName: "profiles_recipes_profile_id_profiles_id_fk"
+            columns: ["profile_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'profiles_recipes_recipe_id_recipes_id_fk'
-            columns: ['recipe_id']
-            referencedRelation: 'recipes'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "profiles_recipes_recipe_id_recipes_id_fk"
+            columns: ["recipe_id"]
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          }
         ]
       }
       recipes: {
@@ -293,20 +311,26 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'recipes_categories_category_id_categories_id_fk'
-            columns: ['category_id']
-            referencedRelation: 'categories'
-            referencedColumns: ['id']
+            foreignKeyName: "recipes_categories_category_id_categories_id_fk"
+            columns: ["category_id"]
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'recipes_categories_recipe_id_recipes_id_fk'
-            columns: ['recipe_id']
-            referencedRelation: 'recipes'
-            referencedColumns: ['id']
+            foreignKeyName: "recipes_categories_category_id_categories_id_fk"
+            columns: ["category_id"]
+            referencedRelation: "ingredients_by_categories"
+            referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "recipes_categories_recipe_id_recipes_id_fk"
+            columns: ["recipe_id"]
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          }
         ]
       }
-      recipes_equipments: {
+      recipes_equipment: {
         Row: {
           created_at: string
           equipment_id: string
@@ -327,17 +351,17 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'recipes_equipments_equipment_id_equipments_id_fk'
-            columns: ['equipment_id']
-            referencedRelation: 'equipments'
-            referencedColumns: ['id']
+            foreignKeyName: "recipes_equipment_equipment_id_equipment_id_fk"
+            columns: ["equipment_id"]
+            referencedRelation: "equipment"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'recipes_equipments_recipe_id_recipes_id_fk'
-            columns: ['recipe_id']
-            referencedRelation: 'recipes'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "recipes_equipment_recipe_id_recipes_id_fk"
+            columns: ["recipe_id"]
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          }
         ]
       }
       recipes_ingredients: {
@@ -370,23 +394,23 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: 'recipes_ingredients_ingredient_id_ingredients_id_fk'
-            columns: ['ingredient_id']
-            referencedRelation: 'ingredients'
-            referencedColumns: ['id']
+            foreignKeyName: "recipes_ingredients_ingredient_id_ingredients_id_fk"
+            columns: ["ingredient_id"]
+            referencedRelation: "ingredients"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'recipes_ingredients_recipe_id_recipes_id_fk'
-            columns: ['recipe_id']
-            referencedRelation: 'recipes'
-            referencedColumns: ['id']
+            foreignKeyName: "recipes_ingredients_recipe_id_recipes_id_fk"
+            columns: ["recipe_id"]
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 'recipes_ingredients_unit_id_units_id_fk'
-            columns: ['unit_id']
-            referencedRelation: 'units'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "recipes_ingredients_unit_id_units_id_fk"
+            columns: ["unit_id"]
+            referencedRelation: "units"
+            referencedColumns: ["id"]
+          }
         ]
       }
       steps: {
@@ -395,7 +419,7 @@ export interface Database {
           description: string
           id: string
           number: number
-          recipe_id: string | null
+          recipe_id: string
           updated_at: string
         }
         Insert: {
@@ -403,7 +427,7 @@ export interface Database {
           description: string
           id?: string
           number: number
-          recipe_id?: string | null
+          recipe_id: string
           updated_at?: string
         }
         Update: {
@@ -411,45 +435,81 @@ export interface Database {
           description?: string
           id?: string
           number?: number
-          recipe_id?: string | null
+          recipe_id?: string
           updated_at?: string
         }
         Relationships: [
           {
-            foreignKeyName: 'steps_recipe_id_recipes_id_fk'
-            columns: ['recipe_id']
-            referencedRelation: 'recipes'
-            referencedColumns: ['id']
-          },
+            foreignKeyName: "steps_recipe_id_recipes_id_fk"
+            columns: ["recipe_id"]
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          }
         ]
       }
       units: {
         Row: {
+          abbreviation: string
+          base_conversion_factor: number | null
+          base_unit_id: string | null
           created_at: string
           id: string
-          is_convertable: boolean | null
+          is_convertable: boolean
           name: string
+          plural: string
+          system: string
+          system_to_system_conversion_factor: number | null
+          type: string
           updated_at: string
         }
         Insert: {
+          abbreviation: string
+          base_conversion_factor?: number | null
+          base_unit_id?: string | null
           created_at?: string
           id?: string
-          is_convertable?: boolean | null
-          name?: string
+          is_convertable?: boolean
+          name: string
+          plural: string
+          system?: string
+          system_to_system_conversion_factor?: number | null
+          type?: string
           updated_at?: string
         }
         Update: {
+          abbreviation?: string
+          base_conversion_factor?: number | null
+          base_unit_id?: string | null
           created_at?: string
           id?: string
-          is_convertable?: boolean | null
+          is_convertable?: boolean
           name?: string
+          plural?: string
+          system?: string
+          system_to_system_conversion_factor?: number | null
+          type?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "units_base_unit_id_units_id_fk"
+            columns: ["base_unit_id"]
+            referencedRelation: "units"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
-      [_ in never]: never
+      ingredients_by_categories: {
+        Row: {
+          count: number | null
+          data: Json | null
+          id: string | null
+          title: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       create_trigger_for_table: {
@@ -457,6 +517,10 @@ export interface Database {
           table_name: string
         }
         Returns: undefined
+      }
+      delete_user: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
       }
       does_email_exist: {
         Args: {
@@ -471,35 +535,35 @@ export interface Database {
           page_number: number
           page_size: number
         }
-        Returns: Database['public']['CompositeTypes']['recipes_page_info']
+        Returns: Database["public"]["CompositeTypes"]["recipes_page_info"]
       }
       gtrgm_compress: {
         Args: {
-          '': unknown
+          "": unknown
         }
         Returns: unknown
       }
       gtrgm_decompress: {
         Args: {
-          '': unknown
+          "": unknown
         }
         Returns: unknown
       }
       gtrgm_in: {
         Args: {
-          '': unknown
+          "": unknown
         }
         Returns: unknown
       }
       gtrgm_options: {
         Args: {
-          '': unknown
+          "": unknown
         }
         Returns: undefined
       }
       gtrgm_out: {
         Args: {
-          '': unknown
+          "": unknown
         }
         Returns: unknown
       }
@@ -507,11 +571,11 @@ export interface Database {
         Args: {
           search_term: string
         }
-        Returns: Database['public']['CompositeTypes']['ingredient_result'][]
+        Returns: Database["public"]["CompositeTypes"]["ingredient_result"][]
       }
       set_limit: {
         Args: {
-          '': number
+          "": number
         }
         Returns: number
       }
@@ -521,7 +585,7 @@ export interface Database {
       }
       show_trgm: {
         Args: {
-          '': string
+          "": string
         }
         Returns: unknown
       }

@@ -23,7 +23,7 @@
     "build-and-submit:production:android": "eas build --profile production --platform android --auto-submit",
     "expo:doctor": "npx expo-doctor@latest",
     "expo:fix": "npx expo install --fix",
-    "generate:types": "npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > types/supabase.ts",
+    "generate:types": "npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > src/types/supabase.ts",
     "generate:gql": "graphql-codegen",
     "generate:gqlwatch": "graphql-codegen -w"
   },

@@ -3,25 +3,29 @@ import { router, useLocalSearchParams } from 'expo-router'
 import React, { useRef } from 'react'
 import { Alert, View } from 'react-native'
 import { Button, Header, Prompt, PromptRef, Screen, Text } from '~/components'
+import { useHaptic } from '~/hooks/useHaptics'
 import { api } from '~/services'
 
 export default function FAQs() {
   const client = useApolloClient()
   const promptRef = useRef<PromptRef>(null)
+  const successHaptics = useHaptic('success')
+  const errorHaptics = useHaptic('error')
 
   const deleteUser = async () => {
-    console.log('deleteUser')
     const { data, error } = await api.supabase.rpc('delete_user')
 
     if (error) {
       Alert.alert(error.message)
     } else {
       if (data) {
+        successHaptics()
         await api.supabase.auth.signOut()
         await client.resetStore()
         Alert.alert('Account deleted')
         router.push('/browse')
       } else {
+        errorHaptics()
         Alert.alert('Could not delete account. Please try again or contact support.')
       }
     }
