@@ -26,6 +26,8 @@ export default function AuthOtpEmailScreen({ route }) {
       email,
     })
 
+    console.log(data, 'data')
+
     if (error) {
       Alert.alert(error.message)
     } else {

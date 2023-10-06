@@ -1,11 +1,31 @@
 import { useApolloClient } from '@apollo/client'
 import { router, useLocalSearchParams } from 'expo-router'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Alert, View } from 'react-native'
 import { Button, Header, Prompt, PromptRef, Screen, Text, TextField } from '~/components'
 import { useHaptic } from '~/hooks/useHaptics'
 import { useSession } from '~/hooks/useSession'
 import { api } from '~/services'
+
+async function changeEmail() {
+  console.log('change email')
+  // setEmailLoading(true)
+  const response = await api.supabase.auth.updateUser({ data: { name } })
+
+  console.log(response, 'data')
+
+  // if (error) {
+  //   Alert.alert(error.message)
+  // } else {
+  //   if (data) {
+  //     successHaptics()
+  //     Alert.alert('Email changed')
+  //   } else {
+  //     errorHaptics()
+  //     Alert.alert('Could not change email. Please try again or contact support.')
+  //   }
+  // }
+}
 
 export default function FAQs() {
   const client = useApolloClient()
@@ -18,18 +38,24 @@ export default function FAQs() {
   const [name, setName] = useState(user?.user_metadata.name)
   const [emailLoading, setEmailLoading] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [enableEmailChange, setEnableEmailChange] = useState(false)
+
+  useEffect(() => {
+    user?.app_metadata.provider === 'email' && setEnableEmailChange(true)
+  }, [user?.app_metadata.provider])
 
   const deleteUser = async () => {
     setLoading(true)
     const { data, error } = await api.supabase.rpc('delete_user')
 
     if (error) {
+      errorHaptics()
       Alert.alert(error.message)
     } else {
       if (data) {
         successHaptics()
-        await api.supabase.auth.signOut()
         await client.resetStore()
+        await api.supabase.auth.signOut()
         Alert.alert('Account deleted')
         router.push('/browse')
       } else {
@@ -41,29 +67,31 @@ export default function FAQs() {
   }
 
   const changeEmail = async () => {
-    console.log('change email')
-    try {
-      setEmailLoading(true)
-      const { data, error } = await api.supabase.auth.updateUser({ email, data: { name } })
+    const { data } = await api.supabase.auth.updateUser({
+      data: { name },
+      email,
+    })
 
-      console.log(data, error)
-
-      // if (error) {
-      //   Alert.alert(error.message)
-      // } else {
-      //   if (data) {
-      //     successHaptics()
-      //     Alert.alert('Email changed')
-      //   } else {
-      //     errorHaptics()
-      //     Alert.alert('Could not change email. Please try again or contact support.')
-      //   }
-      // }
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setEmailLoading(false)
+    if (data.user.email_change_sent_at) {
+      router.push({
+        pathname: '/auth/otp-verify',
+        params: { attemptedRoute: `/${user.id}/account`, email, verificationType: 'email_change' },
+      })
+    } else {
+      Alert.alert('Details updated')
     }
+
+    // if (error) {
+    //   Alert.alert(error.message)
+    // } else {
+    //   if (data) {
+    //     successHaptics()
+    //     Alert.alert('Email changed')
+    //   } else {
+    //     errorHaptics()
+    //     Alert.alert('Could not change email. Please try again or contact support.')
+    //   }
+    // }
   }
 
   return (
@@ -75,30 +103,49 @@ export default function FAQs() {
         contentContainerStyle={{ flex: 1 }}
       >
         <Header title="Account" backButton />
-
         <View className="px-6 flex-1">
-          <View className="mb-16 flex-1">
-            <TextField
-              label="Your Email"
-              onChange={setEmail}
-              value={email}
-              placeholder="email@example.com"
-              autoCapitalize="none"
-              styleClassName="w-full"
-            />
-            <View className="mt-3 mb-6">
-              <TextField label="Your Name" onChange={setName} value={name} />
+          {enableEmailChange ? (
+            <View className="mb-16 flex-1">
+              <TextField
+                label="Your Email"
+                onChange={setEmail}
+                value={email}
+                placeholder="email@example.com"
+                autoCapitalize="none"
+                styleClassName="w-full"
+              />
+              <View className="mt-3 mb-6">
+                <TextField label="Your Name" onChange={setName} value={name} />
+              </View>
+              <Button loading={emailLoading} label="Update Details" onPress={() => changeEmail()} />
             </View>
-            <Button
-              loading={emailLoading}
-              label="Update Details"
-              onPress={() => emailPromptRef?.current?.show()}
-            />
-          </View>
+          ) : (
+            <View>
+              <Text body>
+                Since you have used a social provider to sign up, you cannot change your email.
+              </Text>
+              <Text h3 styleClassName="mb-3 mt-6">
+                Provider
+              </Text>
+              <Text body styleClassName="capitalize">
+                {user?.app_metadata?.provider}
+              </Text>
+
+              <Text h3 styleClassName="mb-3 mt-6">
+                Name
+              </Text>
+              <Text body>{user?.user_metadata?.name}</Text>
+
+              <Text h3 styleClassName="mb-3 mt-6">
+                Email
+              </Text>
+              <Text body>{user?.email}</Text>
+            </View>
+          )}
 
           {/* Delete Account */}
           <View className="flex-1 absolute bottom-6 w-full left-6">
-            <Text h2 styleClassName="mb-6 text-primary">
+            <Text h3 styleClassName="mb-6 text-primary">
               Danger Zone
             </Text>
             <Button
