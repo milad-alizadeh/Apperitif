@@ -18,7 +18,11 @@ export default function AuthOtpEmailScreen({ route }) {
     setEmailExist(true)
   }, [])
 
-  // Check if email exist and if not add an email
+  /**
+   * Checks if the provided email exists in the database using a Supabase RPC call.
+   * If the email exists, it sends an OTP to the email.
+   * If the email does not exist, it sets the state variable 'emailExist' to false.
+   */
   const checkIfEmailExist = async () => {
     setLoading(true)
 
@@ -39,7 +43,10 @@ export default function AuthOtpEmailScreen({ route }) {
     setLoading(false)
   }
 
-  // Send OTP to user
+  /**
+   * Sends an OTP to the user's email address and navigates to the OTP verification screen.
+   * @returns {Promise<void>}
+   */
   const sendOtp = async () => {
     setLoading(true)
 
@@ -62,7 +69,11 @@ export default function AuthOtpEmailScreen({ route }) {
     setLoading(false)
   }
 
-  // Sign up user
+  /**
+   * Signs up the user with the provided email and a randomly generated password.
+   * If successful, navigates to the OTP verification screen.
+   * @returns {Promise<void>}
+   */
   const signup = async () => {
     setLoading(true)
     const { error } = await api.supabase.auth.signUp({

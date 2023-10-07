@@ -24,8 +24,11 @@ export default function FAQs() {
     user?.app_metadata.provider === 'email' && setEnableEmailChange(true)
   }, [user?.app_metadata.provider])
 
-  // Delete user account
-  const deleteUser = async () => {
+  /**
+   * Deletes the user's account.
+   * @returns {Promise<void>} A Promise that resolves when the account is deleted successfully.
+   */
+  const deleteUser = async (): Promise<void> => {
     setDeleteLoading(true)
     const { data, error } = await api.supabase.rpc('delete_user')
 
@@ -47,7 +50,11 @@ export default function FAQs() {
     setDeleteLoading(false)
   }
 
-  // Change email
+  /**
+   * Changes the account details of the user, including email and name.
+   * If the email is changed, an OTP is sent to the new email for verification.
+   * @returns {Promise<void>}
+   */
   const changeAccountDetails = async () => {
     setEmailLoading(true)
 

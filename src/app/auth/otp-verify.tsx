@@ -6,6 +6,12 @@ import { Button, Header, Screen, Text, TextField } from '~/components'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
 
+/**
+ * Component for verifying OTP (One-Time Password) during authentication.
+ *
+ * @param {object} route - The route object containing the attempted route, email, and verification type.
+ * @returns {JSX.Element} - The OTP verification screen.
+ */
 export default function AuthOtpVerifyScreen({ route }) {
   const { attemptedRoute, email, verificationType } = useLocalSearchParams() as {
     attemptedRoute: string
@@ -17,8 +23,11 @@ export default function AuthOtpVerifyScreen({ route }) {
   const [resendLoading, setResendLoading] = useState(false)
   const [otp, setOtp] = useState('')
 
-  // Resend OTP to user
-  const resendOtp = async () => {
+  /**
+   * Resends the OTP verification code to the user's email or mobile number.
+   * @returns {Promise<void>}
+   */
+  const resendOtp = async (): Promise<void> => {
     setResendLoading(true)
 
     if (verificationType === 'magiclink') {
@@ -35,12 +44,11 @@ export default function AuthOtpVerifyScreen({ route }) {
         Alert.alert('A verification code sent!')
       }
     } else {
+      // @TODO: Add mobile OTP resend not working with email change
       const { error, data } = await api.supabase.auth.resend({
         email,
         type: verificationType === 'email_change' ? 'email_change' : 'signup',
       })
-
-      console.log(error, data)
 
       if (error) {
         Alert.alert(error.message)
@@ -52,7 +60,12 @@ export default function AuthOtpVerifyScreen({ route }) {
     setResendLoading(false)
   }
 
-  // Verify OTP
+  /**
+   * Verify OTP code for the given email and verification type.
+   * @async
+   * @function verifyOtp
+   * @returns {Promise<void>}
+   */
   const verifyOtp = async () => {
     setLoading(true)
 
