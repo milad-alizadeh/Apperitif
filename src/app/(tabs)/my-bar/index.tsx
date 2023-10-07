@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { useIsFocused, useNavigation } from '@react-navigation/native'
+import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { View, ViewStyle } from 'react-native'
