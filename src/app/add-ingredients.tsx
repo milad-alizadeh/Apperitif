@@ -19,7 +19,6 @@ export default function AddIngredientsScreen() {
     setSearchQuery,
     setSelectedItems,
     setInitialSelectedItems,
-    setSearchInitiated,
   } = useIngredients()
 
   const [loading, setLoading] = useState(false)
@@ -114,7 +113,6 @@ export default function AddIngredientsScreen() {
           showHeader
           loading={loading}
           onSearch={(value) => {
-            setSearchInitiated(true)
             setSearchQuery(value)
           }}
           renderItem={renderItem}

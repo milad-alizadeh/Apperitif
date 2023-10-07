@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client'
+import { set } from 'lodash'
 import { useEffect, useState } from 'react'
 import { GetIngredientsByCategoriesQuery, GetMyBarQuery } from '~/__generated__/graphql'
 import { SectionDataType, SectionHeaderType } from '~/components'
@@ -12,7 +13,6 @@ export function useIngredients() {
     sectionsData: SectionDataType[][]
     sectionsHeader: SectionHeaderType[]
   }>()
-  const [searchInitiated, setSearchInitiated] = useState(false)
   const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({})
   const [sectionsData, setSectionsData] = useState<SectionDataType[][]>([])
   const [sectionsHeader, setSectionsHeader] = useState<SectionHeaderType[]>([])
@@ -23,6 +23,12 @@ export function useIngredients() {
    * @param searchQuery - The search query to match against ingredient names.
    */
   const searchIngredients = async (searchQuery: string) => {
+    if (!searchQuery) {
+      setSearchResults({
+        sectionsData: [[]],
+        sectionsHeader: [{ title: 'No results', id: 'no-results-id', count: 0 }],
+      })
+    }
     const { data } = await api.supabase.rpc('search_ingredients', {
       search_term: searchQuery,
     })
@@ -106,6 +112,5 @@ export function useIngredients() {
     initialSelectedItems,
     searchResults,
     setInitialSelectedItems,
-    setSearchInitiated,
   }
 }
