@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client'
-import { set } from 'lodash'
 import { useEffect, useState } from 'react'
 import { GetIngredientsByCategoriesQuery, GetMyBarQuery } from '~/__generated__/graphql'
 import { SectionDataType, SectionHeaderType } from '~/components'
@@ -29,6 +28,7 @@ export function useIngredients() {
         sectionsHeader: [{ title: 'No results', id: 'no-results-id', count: 0 }],
       })
     }
+
     const { data } = await api.supabase.rpc('search_ingredients', {
       search_term: searchQuery,
     })
