@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
+import { GetIngredientsByCategoriesQuery, GetMyBarQuery } from '~/__generated__/graphql'
 import { SectionDataType, SectionHeaderType } from '~/components'
+import { GET_MY_BAR } from '~/graphql/queries'
 import { GET_INGREDIENTS_BY_CATEGORIES } from '~/graphql/queries/getIngtedientsByCategories'
 import { api } from '../services/api'
 
@@ -10,13 +12,16 @@ export function useIngredients() {
     sectionsData: SectionDataType[][]
     sectionsHeader: SectionHeaderType[]
   }>()
-
+  const [searchInitiated, setSearchInitiated] = useState(false)
   const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({})
   const [sectionsData, setSectionsData] = useState<SectionDataType[][]>([])
   const [sectionsHeader, setSectionsHeader] = useState<SectionHeaderType[]>([])
   const [initialSelectedItems, setInitialSelectedItems] = useState<Record<string, boolean>>({})
 
-  // Search ingredients
+  /**
+   * Search for ingredients that match the given search query.
+   * @param searchQuery - The search query to match against ingredient names.
+   */
   const searchIngredients = async (searchQuery: string) => {
     const { data } = await api.supabase.rpc('search_ingredients', {
       search_term: searchQuery,
@@ -27,7 +32,7 @@ export function useIngredients() {
       : [{ title: 'No results', id: 'no-results-id', count: 0 }]
 
     setSearchResults({
-      sectionsData: data.length ? [data] : [[{ id: '', name: '' }]],
+      sectionsData: data.length ? [data] : [[]],
       sectionsHeader,
     })
   }
@@ -36,35 +41,59 @@ export function useIngredients() {
     searchIngredients(searchQuery)
   }, [searchQuery])
 
-  // Get ingredients categories
-  const { data } = useQuery(GET_INGREDIENTS_BY_CATEGORIES)
+  const { data: categories } = useQuery(GET_INGREDIENTS_BY_CATEGORIES)
+  const { data: selectedIngredients } = useQuery(GET_MY_BAR)
 
-  const fetchIngredients = async () => {
-    const { data: mybar } = await api.supabase.from('profiles_ingredients').select('ingredient_id')
-    const newSectionsData: SectionDataType[][] = []
-    const newSectionsHeader: SectionHeaderType[] = []
-    const newInitialSelectedItems: Record<string, boolean> = {}
+  /**
+   * Fetches ingredients data and updates the state with the fetched data.
+   * @param categories - The categories of ingredients to fetch.
+   * @param selectedIngredients - The selected ingredients to fetch.
+   */
+  const fetchIngredients = (
+    categories: GetIngredientsByCategoriesQuery,
+    selectedIngredients: GetMyBarQuery,
+  ) => {
+    const sectionsData: SectionDataType[][] = []
+    const sectionsHeader: SectionHeaderType[] = []
+    const initialSelectedItems: Record<string, boolean> = {}
 
-    data.ingredientsByCategoriesCollection.edges.forEach(({ node: { title, id, data, count } }) => {
-      newSectionsData.push(JSON.parse(data))
-      newSectionsHeader.push({ id, title, count })
-    })
+    categories.ingredientsByCategoriesCollection.edges.forEach(
+      ({ node: { title, id, data, count } }) => {
+        sectionsData.push(JSON.parse(data))
+        sectionsHeader.push({ id, title, count })
+      },
+    )
 
-    mybar.forEach(({ ingredient_id }) => {
-      newInitialSelectedItems[ingredient_id] = true
-    })
+    selectedIngredients.profilesIngredientsCollection.edges.forEach(
+      ({
+        node: {
+          ingredient: { id },
+        },
+      }) => {
+        initialSelectedItems[id] = true
+      },
+    )
 
-    setSectionsData(newSectionsData)
-    setSectionsHeader(newSectionsHeader)
-    setInitialSelectedItems(newInitialSelectedItems)
-    setSelectedItems(newInitialSelectedItems)
+    return {
+      sectionsData,
+      sectionsHeader,
+      initialSelectedItems,
+    }
   }
 
   useEffect(() => {
-    if (!data) return
+    if (!categories) return
 
-    fetchIngredients()
-  }, [data])
+    const { sectionsData, sectionsHeader, initialSelectedItems } = fetchIngredients(
+      categories,
+      selectedIngredients,
+    )
+
+    setSectionsData(sectionsData)
+    setSectionsHeader(sectionsHeader)
+    setInitialSelectedItems(initialSelectedItems)
+    setSelectedItems(initialSelectedItems)
+  }, [categories])
 
   return {
     searchQuery,
@@ -77,5 +106,6 @@ export function useIngredients() {
     initialSelectedItems,
     searchResults,
     setInitialSelectedItems,
+    setSearchInitiated,
   }
 }

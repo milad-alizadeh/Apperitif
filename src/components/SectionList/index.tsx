@@ -89,6 +89,13 @@ export const SectionList = function SectionList({
 
   const renderSectionHeader = useCallback(
     (sectionIndex) => {
+      if (!sectionsHeader[sectionIndex])
+        return (
+          <View
+            className="bg-white rounded-t-[50px] overflow-hidden"
+            style={{ height: SECTION_HEADER_HEIGHT }}
+          />
+        )
       const { title, count } = sectionsHeader[sectionIndex]
       return (
         <View
@@ -133,7 +140,9 @@ export const SectionList = function SectionList({
             onBlur={() => {
               setDisableScroll(false)
               setSearching(false)
-              navOpacity.value = withTiming(1, { duration: 200 })
+              if (sectionsData.length > 1) {
+                navOpacity.value = withTiming(1, { duration: 200 })
+              }
             }}
           />
         </View>
@@ -141,7 +150,7 @@ export const SectionList = function SectionList({
     )
   return (
     <View className="flex-1">
-      {showHeader && !!sectionsHeader?.length && (
+      {showHeader && (
         <Animated.View
           style={[navAnimatedStyle, { ...shadowHeader, top: FIXED_HEADER_HEIGHT }]}
           className="bg-white z-10 border-t-[1px] border-neutral-100 opacity-1"
@@ -176,7 +185,19 @@ export const SectionList = function SectionList({
       )}
 
       <BigList
-        sections={sectionsData}
+        sections={
+          sectionsData.length !== 1
+            ? sectionsData
+            : [
+                ...sectionsData,
+                [
+                  { id: '1', name: '' },
+                  { id: '2', name: '' },
+                  { id: '3', name: '' },
+                  { id: '4', name: '' },
+                ],
+              ]
+        }
         stickySectionHeadersEnabled={false}
         keyboardShouldPersistTaps="handled"
         scrollEnabled={!disableScroll}

@@ -56,7 +56,7 @@ export const SectionHeader = function SectionHeader({
   }, [measures, containerX])
 
   const onHeaderItemLayout = (index) => {
-    refs[index].current?.measure((fx, fy, width, height, px) => {
+    refs[index]?.current?.measure((fx, fy, width, height, px) => {
       const x = px // This gives the x position of the item relative to the FlatList
 
       if (measures[index]) return

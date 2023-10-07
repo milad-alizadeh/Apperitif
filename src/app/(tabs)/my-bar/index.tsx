@@ -46,6 +46,7 @@ export default function MyBarHomeScreen() {
   let sectionsData: SectionDataType[][] = []
   let sectionsHeader: SectionHeaderType[] = []
 
+  // Reduces an array of ingredients into an array of categories with their respective ingredients.
   const categoriesdIngredients =
     ingredientsInBar?.reduce((acc, item) => {
       const existingSection = acc.find((section) => section.title === item.category)
