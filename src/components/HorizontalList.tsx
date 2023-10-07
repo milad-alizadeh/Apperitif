@@ -19,7 +19,7 @@ export interface HorizontalListProps {
   /** Whether to show the count of items in the list */
   showCount?: boolean
   /** Whether to center the text */
-  center: boolean
+  center?: boolean
 }
 
 /**

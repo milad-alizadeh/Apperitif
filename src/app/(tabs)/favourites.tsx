@@ -67,7 +67,7 @@ export default function FavouritesScreen() {
         </View>
       ) : (
         <FlatList
-          className="flex-1 h-full"
+          className="flex-1"
           data={flatListData}
           refreshing={loading}
           onRefresh={() => refetch()}
