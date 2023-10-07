@@ -26,8 +26,6 @@ export default function AuthOtpEmailScreen({ route }) {
       email,
     })
 
-    console.log(data, 'data')
-
     if (error) {
       Alert.alert(error.message)
     } else {
@@ -48,7 +46,7 @@ export default function AuthOtpEmailScreen({ route }) {
     const { error } = await api.supabase.auth.signInWithOtp({
       email,
       options: {
-        shouldCreateUser: true,
+        shouldCreateUser: false,
       },
     })
 

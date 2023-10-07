@@ -1,31 +1,11 @@
 import { useApolloClient } from '@apollo/client'
-import { router, useLocalSearchParams } from 'expo-router'
+import { router } from 'expo-router'
 import React, { useEffect, useRef, useState } from 'react'
 import { Alert, View } from 'react-native'
 import { Button, Header, Prompt, PromptRef, Screen, Text, TextField } from '~/components'
 import { useHaptic } from '~/hooks/useHaptics'
 import { useSession } from '~/hooks/useSession'
 import { api } from '~/services'
-
-async function changeEmail() {
-  console.log('change email')
-  // setEmailLoading(true)
-  const response = await api.supabase.auth.updateUser({ data: { name } })
-
-  console.log(response, 'data')
-
-  // if (error) {
-  //   Alert.alert(error.message)
-  // } else {
-  //   if (data) {
-  //     successHaptics()
-  //     Alert.alert('Email changed')
-  //   } else {
-  //     errorHaptics()
-  //     Alert.alert('Could not change email. Please try again or contact support.')
-  //   }
-  // }
-}
 
 export default function FAQs() {
   const client = useApolloClient()
@@ -35,17 +15,18 @@ export default function FAQs() {
   const errorHaptics = useHaptic('error')
   const { isLoggedIn, user, session } = useSession()
   const [email, setEmail] = useState(user?.email)
-  const [name, setName] = useState(user?.user_metadata.name)
   const [emailLoading, setEmailLoading] = useState(false)
-  const [loading, setLoading] = useState(false)
   const [enableEmailChange, setEnableEmailChange] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false)
+  const [name, setName] = useState(user?.user_metadata.name)
 
   useEffect(() => {
     user?.app_metadata.provider === 'email' && setEnableEmailChange(true)
   }, [user?.app_metadata.provider])
 
+  // Delete user account
   const deleteUser = async () => {
-    setLoading(true)
+    setDeleteLoading(true)
     const { data, error } = await api.supabase.rpc('delete_user')
 
     if (error) {
@@ -63,35 +44,69 @@ export default function FAQs() {
         Alert.alert('Could not delete account. Please try again or contact support.')
       }
     }
-    setLoading(false)
+    setDeleteLoading(false)
   }
 
-  const changeEmail = async () => {
-    const { data } = await api.supabase.auth.updateUser({
-      data: { name },
-      email,
-    })
+  // Change email
+  const changeAccountDetails = async () => {
+    setEmailLoading(true)
 
-    if (data.user.email_change_sent_at) {
-      router.push({
-        pathname: '/auth/otp-verify',
-        params: { attemptedRoute: `/${user.id}/account`, email, verificationType: 'email_change' },
+    try {
+      const response = await fetch(`${process.env.EXPO_PUBLIC_SUPABASE_URL}/auth/v1/user`, {
+        headers: {
+          Authorization: `Bearer ${session?.access_token}`,
+          apikey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+          'content-type': 'application/json;charset=UTF-8',
+          'x-client-info': 'supabase-js-react-native/2.38.0',
+        },
+        body: JSON.stringify({
+          email,
+          data: { name },
+          code_challenge: null,
+          code_challenge_method: null,
+        }),
+        method: 'PUT',
+        mode: 'cors',
+        credentials: 'include',
       })
-    } else {
-      Alert.alert('Details updated')
-    }
 
-    // if (error) {
-    //   Alert.alert(error.message)
-    // } else {
-    //   if (data) {
-    //     successHaptics()
-    //     Alert.alert('Email changed')
-    //   } else {
-    //     errorHaptics()
-    //     Alert.alert('Could not change email. Please try again or contact support.')
-    //   }
-    // }
+      const data = await response.json()
+
+      // If email is changed then send OTP
+      if (user?.email !== email) {
+        // Check if new email exist and if not add an email
+        const { data: emailExists, error } = await api.supabase.rpc('does_email_exist', {
+          email,
+        })
+
+        if (error) {
+          Alert.alert(error.message)
+          return
+        }
+
+        if (emailExists) {
+          Alert.alert('Email already exist')
+          return
+        } else {
+          router.push({
+            pathname: '/auth/otp-verify',
+            params: {
+              attemptedRoute: `/${user.id}/account`,
+              email,
+              verificationType: 'email_change',
+            },
+          })
+        }
+      } else {
+        // Refresh session
+        await api.supabase.auth.refreshSession()
+        Alert.alert('Details updated')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setEmailLoading(false)
+    }
   }
 
   return (
@@ -117,7 +132,11 @@ export default function FAQs() {
               <View className="mt-3 mb-6">
                 <TextField label="Your Name" onChange={setName} value={name} />
               </View>
-              <Button loading={emailLoading} label="Update Details" onPress={() => changeEmail()} />
+              <Button
+                loading={emailLoading}
+                label="Update Details"
+                onPress={() => changeAccountDetails()}
+              />
             </View>
           ) : (
             <View>
@@ -149,7 +168,7 @@ export default function FAQs() {
               Danger Zone
             </Text>
             <Button
-              loading={loading}
+              loading={deleteLoading}
               label="Delete Account"
               onPress={() => deletPromptRef?.current?.show()}
             />
@@ -163,7 +182,7 @@ export default function FAQs() {
           confirmText="Update"
           description="Are you sure you want to change your email? "
           onCancel={emailPromptRef?.current?.hide}
-          onConfirm={changeEmail}
+          onConfirm={changeAccountDetails}
         />
 
         <Prompt
