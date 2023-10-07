@@ -86,13 +86,12 @@ export default function ProfileHomeScreen() {
 
   // Pull in navigation via hook
   return (
-    <Screen safeAreaEdges={['bottom', 'top']} contentContainerStyle={{ flex: 1 }}>
-      <Header title="Profile" />
-
+    <Screen safeAreaEdges={['top']} contentContainerStyle={{ flex: 1 }}>
       <FlatList
         className="flex-1"
         data={profileItems}
         renderItem={renderItem}
+        ListHeaderComponent={<Header title="Profile" />}
         contentContainerStyle={{ paddingBottom: 100 }}
         ListFooterComponent={
           isLoggedIn && (

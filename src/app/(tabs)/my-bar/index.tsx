@@ -104,13 +104,6 @@ export default function MyBarHomeScreen() {
 
   return (
     <Screen preset="fixed" contentContainerStyle={$container} safeAreaEdges={['top']}>
-      <Header
-        title="My Bar"
-        rightElement={
-          <Button label="Add Ingredients" onPress={() => router.push('/add-ingredients')} />
-        }
-      />
-
       {/* Empty state if there are no recipes in the bar */}
       {data && !data?.profilesIngredientsCollection.edges.length && (
         <View className="w-full flex-1 justify-center items-center m-auto">
@@ -129,14 +122,22 @@ export default function MyBarHomeScreen() {
           sectionsData={sectionsData}
           sectionsHeader={sectionsHeader}
           renderItem={renderItem}
-          headerHeight={128}
+          headerHeight={184}
           listHeaderComponent={
-            <HorizontalList
-              styleClassName="mt-4"
-              title="Recipes I can make"
-              listItems={[]}
-              emptyStateText="Add more ingredients to get recipe suggestions."
-            />
+            <View>
+              <Header
+                title="My Bar"
+                rightElement={
+                  <Button label="Add Ingredients" onPress={() => router.push('/add-ingredients')} />
+                }
+              />
+              <HorizontalList
+                styleClassName="mt-4"
+                title="Recipes I can make"
+                listItems={[]}
+                emptyStateText="Add more ingredients to get recipe suggestions."
+              />
+            </View>
           }
         />
       )}

@@ -54,7 +54,6 @@ export default function FavouritesScreen() {
 
   return (
     <Screen safeAreaEdges={['top']} contentContainerStyle={$containerStyle}>
-      <Header title="Favourites" />
       {/* Empty state if there are no recipes in the bar */}
       {!data?.profilesRecipesCollection?.edges.length && !loading ? (
         <View className="w-full px-20 flex-1 justify-center items-center m-auto">
@@ -69,7 +68,8 @@ export default function FavouritesScreen() {
         <FlatList
           className="flex-1"
           data={flatListData}
-          refreshing={loading}
+          refreshing={loading && flatListData?.length > 0}
+          ListHeaderComponent={<Header title="Favourites" />}
           onRefresh={() => refetch()}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
