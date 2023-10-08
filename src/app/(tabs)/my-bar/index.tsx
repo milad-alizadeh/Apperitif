@@ -37,12 +37,13 @@ export default function MyBarHomeScreen() {
 
   const getHeaderHeight = () => {
     const headerHeightNoRecipe = 184
-    const horizontalListHeight = 256
+    const horizontalListHeight = 272
     const partialMatchDataLength = getRecipeMatch(partialMatchData)?.length
     const totalMatchDataLength = getRecipeMatch(totalMatchData)?.length
 
+    if (!ingredientsInBar) return headerHeightNoRecipe
+
     let headerHeight = 0
-    if (!ingredientsInBar) return (headerHeight = headerHeightNoRecipe)
     if (totalMatchDataLength) headerHeight += horizontalListHeight
     if (partialMatchDataLength) headerHeight += horizontalListHeight
 
@@ -156,13 +157,22 @@ export default function MyBarHomeScreen() {
         contentContainerStyle={{ flex: !ingredientsInBar?.length ? 1 : undefined }}
         ListEmptyComponent={
           ingredientsInBar && (
-            <View className="w-full flex-1 justify-center items-center">
-              <Text h3 styleClassName="text-center max-w-[220px] mb-3">
-                Uh-oh, your bar is drier than a Martini!
-              </Text>
-              <Text styleClassName="text-center" body>
-                Add some ingredients to get shaking.
-              </Text>
+            <View className="flex-1 justify-center ">
+              <Header
+                title="My Bar"
+                styleClassName="mb-auto"
+                rightElement={
+                  <Button label="Add Ingredients" onPress={() => router.push('/add-ingredients')} />
+                }
+              />
+              <View className="w-full m-auto justify-center items-center">
+                <Text h3 styleClassName="text-center max-w-[220px] mb-3">
+                  Uh-oh, your bar is drier than a Martini!
+                </Text>
+                <Text styleClassName="text-center" body>
+                  Add some ingredients to get shaking.
+                </Text>
+              </View>
             </View>
           )
         }
