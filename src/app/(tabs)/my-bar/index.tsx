@@ -175,7 +175,7 @@ export default function MyBarHomeScreen() {
         ListHeaderComponent={
           <View>
             <HorizontalList
-              styleClassName="mb-8"
+              styleClassName="mb-4"
               title="Recipes I can make"
               listItems={getRecipeMatch(totalMatchData)}
             />
