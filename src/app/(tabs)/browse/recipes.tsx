@@ -58,12 +58,12 @@ export default function RecipesScreen() {
         refreshing={refreshing}
         onRefresh={manualRefresh}
         ListHeaderComponent={<FilterBar autofocus={!categoryIds} styleClassName="-mx-3 mb-6" />}
-        ListEmptyComponent={() => {
-          {
-            error && <Text>{error?.message}</Text>
-          }
-          return <ActivityIndicator animating={loading} />
-        }}
+        ListEmptyComponent={
+          <View>
+            {error && <Text>{error?.message}</Text>}
+            return <ActivityIndicator animating={loading} />
+          </View>
+        }
         onEndReached={loadMore}
         renderItem={renderItem}
       />

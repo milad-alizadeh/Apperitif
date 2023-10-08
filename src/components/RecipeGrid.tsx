@@ -4,11 +4,9 @@ import Animated from 'react-native-reanimated'
 import { CardProps } from './Card'
 
 interface RecipeGridProps {
-  error: any
   ListEmptyComponent?: JSX.Element
   ListFooterComponent?: JSX.Element
   ListHeaderComponent?: JSX.Element
-  loading: boolean
   loadMore: () => void
   manualRefresh: () => void
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
