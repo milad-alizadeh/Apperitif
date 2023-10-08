@@ -1,6 +1,6 @@
 import { set } from 'lodash'
 import React, { useCallback, useRef, useState } from 'react'
-import { View, ViewToken, useWindowDimensions } from 'react-native'
+import { View, ViewStyle, ViewToken, useWindowDimensions } from 'react-native'
 import BigList from 'react-native-big-list'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -32,8 +32,11 @@ export interface SectionListProps {
   showHeader?: boolean
   loading?: boolean
   renderItem: (item: any) => JSX.Element
-  listHeaderComponent?: JSX.Element
+  ListHeaderComponent?: JSX.Element
+  ListEmptyComponent?: JSX.Element
+  ListFooterComponent?: JSX.Element
   headerHeight?: number
+  contentContainerStyle?: ViewStyle
 }
 
 const FIXED_HEADER_HEIGHT = 40
@@ -53,8 +56,11 @@ export const SectionList = function SectionList({
   showHeader,
   renderItem,
   loading,
-  listHeaderComponent,
+  ListHeaderComponent,
+  ListEmptyComponent,
+  ListFooterComponent,
   headerHeight,
+  contentContainerStyle,
 }: SectionListProps) {
   const inset = useSafeAreaInsets()
   const [activeIndex, setActiveIndex] = useState(-1)
@@ -207,8 +213,13 @@ export const SectionList = function SectionList({
             setIsNavScroll(false)
           }
         }}
+        ListEmptyComponent={ListEmptyComponent}
         onViewableItemsChanged={onCheckViewableItems}
-        contentContainerStyle={{ minHeight: useWindowDimensions().height / 2 }}
+        contentContainerStyle={
+          contentContainerStyle ?? {
+            minHeight: useWindowDimensions().height / 2,
+          }
+        }
         keyExtractor={(item) => item.id}
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
@@ -218,8 +229,8 @@ export const SectionList = function SectionList({
         headerHeight={headerHeight ?? defaultHeaderHeight}
         footerHeight={footerHeight}
         sectionHeaderHeight={SECTION_HEADER_HEIGHT}
-        ListHeaderComponent={listHeaderComponent ?? defaultListHeaderComponent()}
-        ListFooterComponent={<View className="h-96 bg-white" />}
+        ListHeaderComponent={ListHeaderComponent ?? defaultListHeaderComponent()}
+        ListFooterComponent={ListFooterComponent ?? <View className="h-96 bg-white" />}
       />
     </View>
   )

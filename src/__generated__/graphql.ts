@@ -112,6 +112,104 @@ export type AppContentUpdateResponse = {
   records: Array<AppContent>;
 };
 
+export type AvailableRecipesForProfiles = Node & {
+  __typename?: 'AvailableRecipesForProfiles';
+  canAlmostMake?: Maybe<Scalars['Boolean']['output']>;
+  isTotalMatch?: Maybe<Scalars['Boolean']['output']>;
+  matchedIngredientsCount?: Maybe<Scalars['BigInt']['output']>;
+  missingIngredients?: Maybe<Scalars['JSON']['output']>;
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID']['output'];
+  profileId?: Maybe<Scalars['UUID']['output']>;
+  recipeId?: Maybe<Scalars['UUID']['output']>;
+  recipeImageUrl?: Maybe<Scalars['String']['output']>;
+  recipeName?: Maybe<Scalars['String']['output']>;
+  totalRequiredCount?: Maybe<Scalars['BigInt']['output']>;
+};
+
+export type AvailableRecipesForProfilesConnection = {
+  __typename?: 'AvailableRecipesForProfilesConnection';
+  edges: Array<AvailableRecipesForProfilesEdge>;
+  pageInfo: PageInfo;
+};
+
+export type AvailableRecipesForProfilesDeleteResponse = {
+  __typename?: 'AvailableRecipesForProfilesDeleteResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<AvailableRecipesForProfiles>;
+};
+
+export type AvailableRecipesForProfilesEdge = {
+  __typename?: 'AvailableRecipesForProfilesEdge';
+  cursor: Scalars['String']['output'];
+  node: AvailableRecipesForProfiles;
+};
+
+export type AvailableRecipesForProfilesFilter = {
+  canAlmostMake?: InputMaybe<BooleanFilter>;
+  isTotalMatch?: InputMaybe<BooleanFilter>;
+  matchedIngredientsCount?: InputMaybe<BigIntFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  profileId?: InputMaybe<UuidFilter>;
+  recipeId?: InputMaybe<UuidFilter>;
+  recipeImageUrl?: InputMaybe<StringFilter>;
+  recipeName?: InputMaybe<StringFilter>;
+  totalRequiredCount?: InputMaybe<BigIntFilter>;
+};
+
+export type AvailableRecipesForProfilesInsertInput = {
+  canAlmostMake?: InputMaybe<Scalars['Boolean']['input']>;
+  isTotalMatch?: InputMaybe<Scalars['Boolean']['input']>;
+  matchedIngredientsCount?: InputMaybe<Scalars['BigInt']['input']>;
+  missingIngredients?: InputMaybe<Scalars['JSON']['input']>;
+  profileId?: InputMaybe<Scalars['UUID']['input']>;
+  recipeId?: InputMaybe<Scalars['UUID']['input']>;
+  recipeImageUrl?: InputMaybe<Scalars['String']['input']>;
+  recipeName?: InputMaybe<Scalars['String']['input']>;
+  totalRequiredCount?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+export type AvailableRecipesForProfilesInsertResponse = {
+  __typename?: 'AvailableRecipesForProfilesInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<AvailableRecipesForProfiles>;
+};
+
+export type AvailableRecipesForProfilesOrderBy = {
+  canAlmostMake?: InputMaybe<OrderByDirection>;
+  isTotalMatch?: InputMaybe<OrderByDirection>;
+  matchedIngredientsCount?: InputMaybe<OrderByDirection>;
+  profileId?: InputMaybe<OrderByDirection>;
+  recipeId?: InputMaybe<OrderByDirection>;
+  recipeImageUrl?: InputMaybe<OrderByDirection>;
+  recipeName?: InputMaybe<OrderByDirection>;
+  totalRequiredCount?: InputMaybe<OrderByDirection>;
+};
+
+export type AvailableRecipesForProfilesUpdateInput = {
+  canAlmostMake?: InputMaybe<Scalars['Boolean']['input']>;
+  isTotalMatch?: InputMaybe<Scalars['Boolean']['input']>;
+  matchedIngredientsCount?: InputMaybe<Scalars['BigInt']['input']>;
+  missingIngredients?: InputMaybe<Scalars['JSON']['input']>;
+  profileId?: InputMaybe<Scalars['UUID']['input']>;
+  recipeId?: InputMaybe<Scalars['UUID']['input']>;
+  recipeImageUrl?: InputMaybe<Scalars['String']['input']>;
+  recipeName?: InputMaybe<Scalars['String']['input']>;
+  totalRequiredCount?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+export type AvailableRecipesForProfilesUpdateResponse = {
+  __typename?: 'AvailableRecipesForProfilesUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int']['output'];
+  /** Array of records impacted by the mutation */
+  records: Array<AvailableRecipesForProfiles>;
+};
+
 /** Boolean expression comparing fields on type "BigFloat" */
 export type BigFloatFilter = {
   eq?: InputMaybe<Scalars['BigFloat']['input']>;
@@ -685,6 +783,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Deletes zero or more records from the `AppContent` collection */
   deleteFromAppContentCollection: AppContentDeleteResponse;
+  /** Deletes zero or more records from the `AvailableRecipesForProfiles` collection */
+  deleteFromAvailableRecipesForProfilesCollection: AvailableRecipesForProfilesDeleteResponse;
   /** Deletes zero or more records from the `Categories` collection */
   deleteFromCategoriesCollection: CategoriesDeleteResponse;
   /** Deletes zero or more records from the `Equipment` collection */
@@ -715,6 +815,8 @@ export type Mutation = {
   deleteFromUnitsCollection: UnitsDeleteResponse;
   /** Adds one or more `AppContent` records to the collection */
   insertIntoAppContentCollection?: Maybe<AppContentInsertResponse>;
+  /** Adds one or more `AvailableRecipesForProfiles` records to the collection */
+  insertIntoAvailableRecipesForProfilesCollection?: Maybe<AvailableRecipesForProfilesInsertResponse>;
   /** Adds one or more `Categories` records to the collection */
   insertIntoCategoriesCollection?: Maybe<CategoriesInsertResponse>;
   /** Adds one or more `Equipment` records to the collection */
@@ -745,6 +847,8 @@ export type Mutation = {
   insertIntoUnitsCollection?: Maybe<UnitsInsertResponse>;
   /** Updates zero or more records in the `AppContent` collection */
   updateAppContentCollection: AppContentUpdateResponse;
+  /** Updates zero or more records in the `AvailableRecipesForProfiles` collection */
+  updateAvailableRecipesForProfilesCollection: AvailableRecipesForProfilesUpdateResponse;
   /** Updates zero or more records in the `Categories` collection */
   updateCategoriesCollection: CategoriesUpdateResponse;
   /** Updates zero or more records in the `Equipment` collection */
@@ -780,6 +884,13 @@ export type Mutation = {
 export type MutationDeleteFromAppContentCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<AppContentFilter>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationDeleteFromAvailableRecipesForProfilesCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<AvailableRecipesForProfilesFilter>;
 };
 
 
@@ -888,6 +999,12 @@ export type MutationInsertIntoAppContentCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
+export type MutationInsertIntoAvailableRecipesForProfilesCollectionArgs = {
+  objects: Array<AvailableRecipesForProfilesInsertInput>;
+};
+
+
+/** The root type for creating and mutating data */
 export type MutationInsertIntoCategoriesCollectionArgs = {
   objects: Array<CategoriesInsertInput>;
 };
@@ -976,6 +1093,14 @@ export type MutationUpdateAppContentCollectionArgs = {
   atMost?: Scalars['Int']['input'];
   filter?: InputMaybe<AppContentFilter>;
   set: AppContentUpdateInput;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationUpdateAvailableRecipesForProfilesCollectionArgs = {
+  atMost?: Scalars['Int']['input'];
+  filter?: InputMaybe<AvailableRecipesForProfilesFilter>;
+  set: AvailableRecipesForProfilesUpdateInput;
 };
 
 
@@ -1124,9 +1249,7 @@ export type PageInfo = {
 export type Profiles = Node & {
   __typename?: 'Profiles';
   createdAt: Scalars['Datetime']['output'];
-  email?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
-  name?: Maybe<Scalars['String']['output']>;
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID']['output'];
   profilesIngredientsCollection?: Maybe<ProfilesIngredientsConnection>;
@@ -1176,9 +1299,7 @@ export type ProfilesEdge = {
 
 export type ProfilesFilter = {
   createdAt?: InputMaybe<DatetimeFilter>;
-  email?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
-  name?: InputMaybe<StringFilter>;
   nodeId?: InputMaybe<IdFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
@@ -1262,9 +1383,7 @@ export type ProfilesIngredientsUpdateResponse = {
 
 export type ProfilesInsertInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
-  email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
 
@@ -1278,9 +1397,7 @@ export type ProfilesInsertResponse = {
 
 export type ProfilesOrderBy = {
   createdAt?: InputMaybe<OrderByDirection>;
-  email?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
-  name?: InputMaybe<OrderByDirection>;
   updatedAt?: InputMaybe<OrderByDirection>;
 };
 
@@ -1363,9 +1480,7 @@ export type ProfilesRecipesUpdateResponse = {
 
 export type ProfilesUpdateInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
-  email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
 
@@ -1382,6 +1497,8 @@ export type Query = {
   __typename?: 'Query';
   /** A pagable collection of type `AppContent` */
   appContentCollection?: Maybe<AppContentConnection>;
+  /** A pagable collection of type `AvailableRecipesForProfiles` */
+  availableRecipesForProfilesCollection?: Maybe<AvailableRecipesForProfilesConnection>;
   /** A pagable collection of type `Categories` */
   categoriesCollection?: Maybe<CategoriesConnection>;
   /** A pagable collection of type `Equipment` */
@@ -1423,6 +1540,17 @@ export type QueryAppContentCollectionArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<AppContentOrderBy>>;
+};
+
+
+/** The root type for querying data */
+export type QueryAvailableRecipesForProfilesCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  filter?: InputMaybe<AvailableRecipesForProfilesFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<AvailableRecipesForProfilesOrderBy>>;
 };
 
 
@@ -1980,8 +2108,8 @@ export type Steps = Node & {
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID']['output'];
   number: Scalars['Int']['output'];
-  recipe?: Maybe<Recipes>;
-  recipeId?: Maybe<Scalars['UUID']['output']>;
+  recipe: Recipes;
+  recipeId: Scalars['UUID']['output'];
   updatedAt: Scalars['Datetime']['output'];
 };
 
@@ -2347,6 +2475,11 @@ export type GetRecipesCategoriesQueryVariables = Exact<{
 
 export type GetRecipesCategoriesQuery = { __typename?: 'Query', recipesCategoriesCollection?: { __typename?: 'RecipesCategoriesConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, endCursor?: string | null, startCursor?: string | null }, edges: Array<{ __typename?: 'RecipesCategoriesEdge', node: { __typename?: 'RecipesCategories', recipe: { __typename?: 'Recipes', name: string, id: any, imageUrl?: string | null } } }> } | null };
 
+export type GetTotalmatchRecipesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTotalmatchRecipesQuery = { __typename?: 'Query', availableRecipesForProfilesCollection?: { __typename?: 'AvailableRecipesForProfilesConnection', edges: Array<{ __typename?: 'AvailableRecipesForProfilesEdge', node: { __typename?: 'AvailableRecipesForProfiles', profileId?: any | null, recipeName?: string | null, recipeId?: any | null, recipeImageUrl?: string | null, isTotalMatch?: boolean | null, missingIngredients?: any | null, canAlmostMake?: boolean | null, totalRequiredCount?: any | null } }> } | null };
+
 export type GetUnitsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2369,4 +2502,5 @@ export const GetIngredientsByCategoriesDocument = {"kind":"Document","definition
 export const GetMyBarDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getMyBar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profilesIngredientsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ingredientsCategoriesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMyBarQuery, GetMyBarQueryVariables>;
 export const GetRecipeDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRecipeDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"recipeId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"recipeId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"profilesRecipesCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profileId"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipesIngredientsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isOptional"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"unit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"plural"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"system"}},{"kind":"Field","name":{"kind":"Name","value":"isConvertable"}},{"kind":"Field","name":{"kind":"Name","value":"baseUnitId"}},{"kind":"Field","name":{"kind":"Name","value":"systemToSystemConversionFactor"}},{"kind":"Field","name":{"kind":"Name","value":"baseConversionFactor"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ingredient"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"recipesEquipmentCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"equipment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"stepsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"number"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetRecipeDetailsQuery, GetRecipeDetailsQueryVariables>;
 export const GetRecipesCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getRecipesCategories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"last"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"before"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Cursor"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Cursor"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RecipesCategoriesFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RecipesCategoriesOrderBy"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipesCategoriesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"last"},"value":{"kind":"Variable","name":{"kind":"Name","value":"last"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}},{"kind":"Argument","name":{"kind":"Name","value":"before"},"value":{"kind":"Variable","name":{"kind":"Name","value":"before"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}},{"kind":"Field","name":{"kind":"Name","value":"hasPreviousPage"}},{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"startCursor"}}]}},{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"recipe"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"imageUrl"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetRecipesCategoriesQuery, GetRecipesCategoriesQueryVariables>;
+export const GetTotalmatchRecipesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getTotalmatchRecipes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availableRecipesForProfilesCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"isTotalMatch"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profileId"}},{"kind":"Field","name":{"kind":"Name","value":"recipeName"}},{"kind":"Field","name":{"kind":"Name","value":"recipeId"}},{"kind":"Field","name":{"kind":"Name","value":"recipeImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"isTotalMatch"}},{"kind":"Field","name":{"kind":"Name","value":"missingIngredients"}},{"kind":"Field","name":{"kind":"Name","value":"canAlmostMake"}},{"kind":"Field","name":{"kind":"Name","value":"totalRequiredCount"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetTotalmatchRecipesQuery, GetTotalmatchRecipesQueryVariables>;
 export const GetUnitsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUnits"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unitsCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"plural"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"system"}},{"kind":"Field","name":{"kind":"Name","value":"isConvertable"}},{"kind":"Field","name":{"kind":"Name","value":"baseUnitId"}},{"kind":"Field","name":{"kind":"Name","value":"systemToSystemConversionFactor"}},{"kind":"Field","name":{"kind":"Name","value":"baseConversionFactor"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUnitsQuery, GetUnitsQueryVariables>;
