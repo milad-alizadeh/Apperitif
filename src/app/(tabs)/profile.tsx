@@ -61,7 +61,6 @@ export default function ProfileHomeScreen() {
 
   const singOut = async () => {
     await api.supabase.auth.signOut()
-    await client.resetStore()
     router.push('/browse')
   }
 

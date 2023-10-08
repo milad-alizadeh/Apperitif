@@ -3,7 +3,7 @@ import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { View, ViewStyle } from 'react-native'
-import { GetCanAlmostMakeRecipesQuery, GetTotalmatchRecipesQuery } from '~/__generated__/graphql'
+import { GetPartialMatchRecipesQuery, GetTotalmatchRecipesQuery } from '~/__generated__/graphql'
 import {
   BottomSheet,
   BottomSheetRef,
@@ -20,13 +20,8 @@ import {
   Text,
 } from '~/components'
 import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
-import { GET_CAN_ALMOST_MAKE_RECIPES, GET_MY_BAR, GET_TOTAL_MATCH_RECIPES } from '~/graphql/queries'
+import { GET_MY_BAR, GET_PARTIAL_MATCH_RECIPES, GET_TOTAL_MATCH_RECIPES } from '~/graphql/queries'
 import { useSession } from '~/hooks/useSession'
-
-const HEADER_HEIGHT_NO_RECIPES = 184
-const HEADER_HEIGHT_TOTAL_MATCHED = 184
-const HEADER_HEIGHT_PARTIAL_MATCH = 184
-const HEADER_HEIGHT = 1
 
 export default function MyBarHomeScreen() {
   const { user } = useSession()
@@ -34,15 +29,33 @@ export default function MyBarHomeScreen() {
   const modalRef = useRef<BottomSheetRef>(null)
 
   const { data: ingredientsData, refetch } = useQuery(GET_MY_BAR)
-  const { data: totalMatchData } = useQuery(GET_TOTAL_MATCH_RECIPES)
-  const { data: partialMatchData } = useQuery(GET_CAN_ALMOST_MAKE_RECIPES)
+  const { data: totalMatchData, refetch: totalMatchRefetch } = useQuery(GET_TOTAL_MATCH_RECIPES)
+  const { data: partialMatchData, refetch: partialMatchRefetch } =
+    useQuery(GET_PARTIAL_MATCH_RECIPES)
 
   const isFocused = useIsFocused()
+
+  const getHeaderHeight = () => {
+    const headerHeightNoRecipe = 184
+    const horizontalListHeight = 256
+    const partialMatchDataLength = getRecipeMatch(partialMatchData)?.length
+    const totalMatchDataLength = getRecipeMatch(totalMatchData)?.length
+
+    let headerHeight = 0
+    if (!ingredientsInBar) return (headerHeight = headerHeightNoRecipe)
+    if (totalMatchDataLength) headerHeight += horizontalListHeight
+    if (partialMatchDataLength) headerHeight += horizontalListHeight
+
+    console.log('headerHeight', headerHeight)
+    return headerHeight
+  }
 
   useEffect(() => {
     if (isFocused) {
       // Refetch the data when the tab gains focus
       refetch()
+      totalMatchRefetch()
+      partialMatchRefetch()
     }
   }, [isFocused, refetch])
 
@@ -53,7 +66,7 @@ export default function MyBarHomeScreen() {
   }))
 
   const getRecipeMatch = (
-    matchedData: GetTotalmatchRecipesQuery | GetCanAlmostMakeRecipesQuery,
+    matchedData: GetTotalmatchRecipesQuery | GetPartialMatchRecipesQuery,
   ): CardProps[] => {
     return (
       matchedData?.availableRecipesForProfilesCollection?.edges?.map(
@@ -119,6 +132,8 @@ export default function MyBarHomeScreen() {
               variables: { ingredientIds: [item.id], profileIds: [user?.id] },
               onCompleted: () => {
                 refetch()
+                totalMatchRefetch()
+                partialMatchRefetch()
               },
             })
           }}
@@ -136,9 +151,9 @@ export default function MyBarHomeScreen() {
         sectionsData={sectionsData}
         sectionsHeader={sectionsHeader}
         renderItem={renderItem}
-        headerHeight={HEADER_HEIGHT}
+        headerHeight={getHeaderHeight()}
         ListFooterComponent={<View />}
-        contentContainerStyle={{ flex: !ingredientsInBar ? 1 : undefined }}
+        contentContainerStyle={{ flex: !ingredientsInBar?.length ? 1 : undefined }}
         ListEmptyComponent={
           ingredientsInBar && (
             <View className="w-full flex-1 justify-center items-center">
@@ -160,23 +175,24 @@ export default function MyBarHomeScreen() {
               }
             />
 
-            {ingredientsInBar && (
-              <HorizontalList
-                styleClassName="mt-4"
-                title="Recipes I can make"
-                listItems={getRecipeMatch(totalMatchData)}
-                emptyStateText="Add more ingredients to get recipe suggestions."
-              />
-            )}
+            <HorizontalList
+              styleClassName="mt-4"
+              title="Recipes I can make"
+              listItems={getRecipeMatch(totalMatchData)}
+              emptyStateText={
+                getRecipeMatch(totalMatchData)?.length &&
+                getRecipeMatch(totalMatchData)?.length &&
+                ingredientsInBar
+                  ? 'Add more ingredients to get recipe suggestions.'
+                  : ''
+              }
+            />
 
-            {getRecipeMatch(partialMatchData)?.length && (
-              <HorizontalList
-                styleClassName="mt-4"
-                title="Recipes I can almost make"
-                listItems={getRecipeMatch(partialMatchData)}
-                emptyStateText="Add more ingredients to get recipe suggestions."
-              />
-            )}
+            <HorizontalList
+              styleClassName="mt-4"
+              title="Recipes I can almost make"
+              listItems={getRecipeMatch(partialMatchData)}
+            />
           </View>
         }
       />

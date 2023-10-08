@@ -54,9 +54,11 @@ export const HorizontalList = function HorizontalList({
   return (
     <View className={styleClassName}>
       {/* The title of the list */}
-      <Text h3 styleClassName="mb-4 ml-6">
-        {title} {showCount ? `(${listItems.length})` : ''}
-      </Text>
+      {(!!listItems.length || !!emptyStateText) && (
+        <Text h3 styleClassName="mb-4 ml-6">
+          {title} {showCount ? `(${listItems.length})` : ''}
+        </Text>
+      )}
 
       {/* The empty state text */}
       {emptyStateText && !listItems.length ? (

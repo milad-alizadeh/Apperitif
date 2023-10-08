@@ -29,8 +29,9 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
   }, [api.supabase.auth, api.apolloClient])
 
   useEffect(() => {
-    api.supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
+    api.supabase.auth.getSession().then(async ({ data: { session } }) => {
+      const { data: refreshedData } = await api.supabase.auth.refreshSession(session)
+      setSession(refreshedData.session)
     })
 
     api.supabase.auth.onAuthStateChange((_event, session) => {

@@ -38,7 +38,6 @@ export default function FAQs() {
     } else {
       if (data) {
         successHaptics()
-        await client.resetStore()
         await api.supabase.auth.signOut()
         Alert.alert('Account deleted')
         router.push('/browse')
