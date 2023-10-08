@@ -63,8 +63,6 @@ export const SectionList = function SectionList({
 }: SectionListProps) {
   const inset = useSafeAreaInsets()
   const [activeIndex, setActiveIndex] = useState(-1)
-  const [disableScroll, setDisableScroll] = useState(false)
-  const [searching, setSearching] = useState(false)
   const defaultHeaderHeight = useWindowDimensions().width - FIXED_HEADER_HEIGHT
   const footerHeight = inset.bottom + 60
   const isNavScroll = useRef(false)
@@ -134,8 +132,6 @@ export const SectionList = function SectionList({
           <SearchBar
             onChange={onSearch}
             onFocus={() => {
-              setSearching(true)
-              setDisableScroll(true)
               navOpacity.value = withTiming(0, { duration: 200 })
               sectionListRef.current?.scrollToOffset({
                 offset: SEARCH_SCROLL_OFFSET,
@@ -143,8 +139,6 @@ export const SectionList = function SectionList({
               })
             }}
             onBlur={() => {
-              setDisableScroll(false)
-              setSearching(false)
               if (sectionsData.length > 1) {
                 navOpacity.value = withTiming(1, { duration: 200 })
               }
@@ -172,7 +166,7 @@ export const SectionList = function SectionList({
         </Animated.View>
       )}
 
-      {!!hasSelection && !searching && showHeader && (
+      {!!hasSelection && showHeader && (
         <View
           style={{ paddingBottom: inset.bottom }}
           className="absolute bottom-0 w-full z-20 px-6"
@@ -205,7 +199,6 @@ export const SectionList = function SectionList({
         }
         stickySectionHeadersEnabled={false}
         keyboardShouldPersistTaps="handled"
-        scrollEnabled={!disableScroll}
         ref={sectionListRef}
         onScrollBeginDrag={() => {
           if (isNavScroll?.current) {

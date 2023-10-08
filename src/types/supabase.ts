@@ -167,23 +167,17 @@ export interface Database {
       profiles: {
         Row: {
           created_at: string
-          email: string | null
           id: string
-          name: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
-          email?: string | null
           id: string
-          name?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
-          email?: string | null
           id?: string
-          name?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -528,6 +522,22 @@ export interface Database {
         }
         Returns: boolean
       }
+      get_available_recipes_for_profile: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          profile_id: string
+          recipe_id: string
+          recipe_image_url: string
+          recipe_name: string
+          matched_ingredients_count: number
+          total_required_count: number
+          is_total_match: boolean
+          can_almost_make: boolean
+          missing_ingredients: Json[]
+        }[]
+      }
       get_recipes_by_category_ids: {
         Args: {
           search_term: string
@@ -602,6 +612,16 @@ export interface Database {
         id: string
         name: string
         image_url: string
+      }
+      recipe_profile_info: {
+        profile_id: string
+        recipe_id: string
+        recipe_name: string
+        matched_ingredients_count: number
+        total_required_count: number
+        is_total_match: boolean
+        can_almost_make: boolean
+        missing_ingredients: unknown
       }
       recipes_page_info: {
         recipes: unknown

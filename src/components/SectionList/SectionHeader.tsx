@@ -42,7 +42,7 @@ export const SectionHeader = function SectionHeader({
 
   // Measure the x position of the FlatList on its layout
   const onContainerLayout = () => {
-    containerRef.current?.measure((fx, fy, width, height, px) => {
+    containerRef?.current?.measure((fx, fy, width, height, px) => {
       setContainerX(px)
     })
   }
@@ -72,7 +72,7 @@ export const SectionHeader = function SectionHeader({
   useEffect(() => {
     if (activeIndex < 0) return
     // Scroll to the active item
-    if (scrollEnabled) {
+    if (scrollEnabled && sectionTitles.length > 1) {
       listRef?.current?.scrollToIndex({
         index: activeIndex,
         animated: true,

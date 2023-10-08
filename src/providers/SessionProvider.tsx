@@ -30,8 +30,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
 
   useEffect(() => {
     api.supabase.auth.getSession().then(async ({ data: { session } }) => {
-      const { data: refreshedData } = await api.supabase.auth.refreshSession(session)
-      setSession(refreshedData.session)
+      setSession(session)
     })
 
     api.supabase.auth.onAuthStateChange((_event, session) => {

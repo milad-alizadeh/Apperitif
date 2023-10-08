@@ -37,7 +37,7 @@ export default function MyBarHomeScreen() {
 
   const getHeaderHeight = () => {
     const headerHeightNoRecipe = 184
-    const horizontalListHeight = 272
+    const horizontalListHeight = 290
     const partialMatchDataLength = getRecipeMatch(partialMatchData)?.length
     const totalMatchDataLength = getRecipeMatch(totalMatchData)?.length
 
@@ -47,7 +47,6 @@ export default function MyBarHomeScreen() {
     if (totalMatchDataLength) headerHeight += horizontalListHeight
     if (partialMatchDataLength) headerHeight += horizontalListHeight
 
-    console.log('headerHeight', headerHeight)
     return headerHeight
   }
 
