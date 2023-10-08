@@ -57,7 +57,6 @@ export const RecipeTabs = function RecipeTabs({
 
   const renderIngredientItem = useCallback(
     ({ ingredient, quantity, unit, isOptional }: Ingredient) => {
-      if (!units || !unit) return null
       const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem({
         unit: unit as Units,
         toSystem: selectedUnitSystem,
@@ -115,12 +114,12 @@ export const RecipeTabs = function RecipeTabs({
         <View>{ingredients.map((ingredient) => renderIngredientItem(ingredient))}</View>
       </Tabs.TabPage>
 
-      <Tabs.TabPage title="Equipments">
-        <View>{equipment.map((equipment) => renderEquipmentItem(equipment))}</View>
-      </Tabs.TabPage>
-
       <Tabs.TabPage title="Method">
         <View>{steps.map((step) => renderStepItem(step))}</View>
+      </Tabs.TabPage>
+
+      <Tabs.TabPage title="Equipment">
+        <View>{equipment.map((equipment) => renderEquipmentItem(equipment))}</View>
       </Tabs.TabPage>
     </Tabs>
   )

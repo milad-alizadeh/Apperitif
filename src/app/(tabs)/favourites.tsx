@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { Link, router } from 'expo-router'
 import React, { useCallback } from 'react'
-import { ActivityIndicator, FlatList, View, ViewStyle } from 'react-native'
+import { FlatList, View, ViewStyle } from 'react-native'
 import { Header, ListItem, Screen, Text } from '~/components'
 import { DELETE_FROM_FAVOURITES } from '~/graphql/mutations/deleteFromFavourites'
 import { GET_FAVOURITES } from '~/graphql/queries/getFavourites'

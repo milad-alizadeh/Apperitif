@@ -89,8 +89,8 @@ export const formatQuantity = (quantity: string | null): string | null => {
 export const getConversionResult = (quantity: string | null, unit: Units) => {
   const formattedQuantity = formatQuantity(quantity)
   return {
-    quantity: formattedQuantity,
-    unit: getUnitName(unit, parseFloat(formattedQuantity || '0')),
+    quantity: !quantity ? '' : formattedQuantity,
+    unit: !unit ? '' : getUnitName(unit, parseFloat(formattedQuantity || '0')),
   }
 }
 
@@ -113,12 +113,11 @@ export const convertUnitToOtherSystem = ({
   unit: Units
   toSystem: UnitSystems
   quantity: string | null
-  units: Units[]
+  units: Units[] | null
   multiplier?: number
 }) => {
   // If it's not convertible then only apply the multiplier if there is quantity and round it to a whole number
-
-  if (!unit.isConvertable || quantity === null) {
+  if (!unit?.isConvertable || quantity === null) {
     if (quantity !== null) {
       const multipliedQuantity = parseFloat(quantity) * multiplier
       const roundedQuantity = Math.round(multipliedQuantity).toString()

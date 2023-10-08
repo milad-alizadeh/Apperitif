@@ -16,7 +16,9 @@ export const GET_RECIPE_DETAILS = gql(/* GraphQL */ `
               }
             }
           }
-          recipesIngredientsCollection {
+          recipesIngredientsCollection(
+            orderBy: { isOptional: AscNullsLast, quantity: DescNullsLast }
+          ) {
             edges {
               node {
                 isOptional
@@ -51,7 +53,7 @@ export const GET_RECIPE_DETAILS = gql(/* GraphQL */ `
               }
             }
           }
-          stepsCollection {
+          stepsCollection(orderBy: { number: AscNullsFirst }) {
             edges {
               node {
                 id

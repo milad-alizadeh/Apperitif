@@ -43,13 +43,8 @@ export default function RecipeDetailsScreen() {
 
   const recipe = data?.recipesCollection?.edges[0]?.node
   const equipment = recipe?.recipesEquipmentCollection?.edges.map((e) => e.node.equipment) ?? []
-  const ingredients =
-    orderBy(
-      recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node),
-      ['isOptional', 'quantity'],
-      ['asc', 'desc'],
-    ) ?? []
-  const steps = orderBy(recipe?.stepsCollection?.edges.map((e) => e.node), 'number') ?? []
+  const ingredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
+  const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
 
   if (error) {
     return <Text>{error.message}</Text>
