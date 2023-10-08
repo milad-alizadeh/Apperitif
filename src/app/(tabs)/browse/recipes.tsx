@@ -1,8 +1,9 @@
 import { router, useLocalSearchParams } from 'expo-router'
-import React, { FC, useCallback, useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
-import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
+import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 import { Card, FilterBar, FixedHeader, Screen, Text } from '~/components'
+import { RecipeGrid } from '~/components/RecipeGrid'
 import { useFetchRecipes } from '~/hooks/useFetchRecipe'
 
 export default function RecipesScreen() {
@@ -38,7 +39,7 @@ export default function RecipesScreen() {
     >
       <TouchableOpacity
         className="h-8 w-40 absolute mx-auto right-[50%] -top-1 translate-x-20 z-20"
-        onPress={() => listRef?.current?.scrollToOffset({ animated: true, offset: 0 })}
+        onPress={() => listRef?.current?.scrollToTop()}
       />
 
       <FixedHeader
@@ -49,23 +50,20 @@ export default function RecipesScreen() {
         alwaysShow
       />
 
-      <Animated.FlatList
+      <RecipeGrid
         ref={listRef}
         data={recipes}
-        numColumns={2}
-        windowSize={10}
-        nestedScrollEnabled
         className="pt-12 px-6 flex-1 -mx-3"
         onScroll={scrollHandler}
-        keyExtractor={(item) => item.id}
         refreshing={refreshing}
         onRefresh={manualRefresh}
         ListHeaderComponent={<FilterBar autofocus={!categoryIds} styleClassName="-mx-3 mb-6" />}
         ListEmptyComponent={() => {
-          if (loading) return <ActivityIndicator />
-          return <Text>{error?.message}</Text>
+          {
+            error && <Text>{error?.message}</Text>
+          }
+          return <ActivityIndicator animating={loading} />
         }}
-        onEndReachedThreshold={0.5}
         onEndReached={loadMore}
         renderItem={renderItem}
         ListFooterComponent={<View className="h-20"></View>}
