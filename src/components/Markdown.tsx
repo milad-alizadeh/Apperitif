@@ -1,7 +1,6 @@
 import { router } from 'expo-router'
 import * as WebBrowser from 'expo-web-browser'
-import React, { FC, useEffect } from 'react'
-import { View } from 'react-native'
+import React, { FC } from 'react'
 import MarkdownRenderer, { MarkdownProps } from 'react-native-markdown-display'
 import { colors } from '~/theme'
 

@@ -1,6 +1,6 @@
 import { BlurView } from 'expo-blur'
 import React, { FC, forwardRef, useImperativeHandle, useState } from 'react'
-import { Modal, TouchableOpacity, View, useWindowDimensions } from 'react-native'
+import { Modal, View, useWindowDimensions } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
   Easing,
