@@ -37,7 +37,7 @@ export default function MyBarHomeScreen() {
 
   const getHeaderHeight = () => {
     const headerHeightNoRecipe = 184
-    const horizontalListHeight = 290
+    const horizontalListHeight = 230
     const partialMatchDataLength = getRecipeMatch(partialMatchData)?.length
     const totalMatchDataLength = getRecipeMatch(totalMatchData)?.length
 
@@ -146,7 +146,13 @@ export default function MyBarHomeScreen() {
   return (
     <Screen preset="fixed" contentContainerStyle={$container} safeAreaEdges={['top']}>
       {/* List of ingredients in the bar */}
-
+      <Header
+        title="My Bar"
+        styleClassName="mb-auto"
+        rightElement={
+          <Button label="Add Ingredients" onPress={() => router.push('/add-ingredients')} />
+        }
+      />
       <SectionList
         sectionsData={sectionsData}
         sectionsHeader={sectionsHeader}
@@ -155,50 +161,27 @@ export default function MyBarHomeScreen() {
         ListFooterComponent={<View />}
         contentContainerStyle={{ flex: !ingredientsInBar?.length ? 1 : undefined }}
         ListEmptyComponent={
-          ingredientsInBar && (
-            <View className="flex-1 justify-center ">
-              <Header
-                title="My Bar"
-                styleClassName="mb-auto"
-                rightElement={
-                  <Button label="Add Ingredients" onPress={() => router.push('/add-ingredients')} />
-                }
-              />
-              <View className="w-full m-auto justify-center items-center">
-                <Text h3 styleClassName="text-center max-w-[220px] mb-3">
-                  Uh-oh, your bar is drier than a Martini!
-                </Text>
-                <Text styleClassName="text-center" body>
-                  Add some ingredients to get shaking.
-                </Text>
-              </View>
+          <View className="flex-1 justify-center ">
+            <View className="w-full justify-center items-center mt-8">
+              <Text h3 styleClassName="text-center max-w-[220px] mb-3">
+                Uh-oh, your bar is drier than a Martini!
+              </Text>
+              <Text styleClassName="text-center" body>
+                Add some ingredients to get shaking.
+              </Text>
             </View>
-          )
+          </View>
         }
         ListHeaderComponent={
           <View>
-            <Header
-              title="My Bar"
-              rightElement={
-                <Button label="Add Ingredients" onPress={() => router.push('/add-ingredients')} />
-              }
-            />
-
             <HorizontalList
-              styleClassName="mt-4"
+              styleClassName="mb-8"
               title="Recipes I can make"
               listItems={getRecipeMatch(totalMatchData)}
-              emptyStateText={
-                getRecipeMatch(totalMatchData)?.length &&
-                getRecipeMatch(totalMatchData)?.length &&
-                ingredientsInBar
-                  ? 'Add more ingredients to get recipe suggestions.'
-                  : ''
-              }
             />
 
             <HorizontalList
-              styleClassName="mt-4"
+              styleClassName="mb-8"
               title="Recipes I can almost make"
               listItems={getRecipeMatch(partialMatchData)}
             />
