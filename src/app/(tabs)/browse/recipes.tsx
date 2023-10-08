@@ -52,8 +52,8 @@ export default function RecipesScreen() {
 
       <RecipeGrid
         ref={listRef}
-        data={recipes}
-        className="pt-12 px-6 flex-1 -mx-3"
+        recipes={recipes}
+        styleClassName="pt-12 px-6 flex-1 -mx-3"
         onScroll={scrollHandler}
         refreshing={refreshing}
         onRefresh={manualRefresh}
@@ -66,7 +66,6 @@ export default function RecipesScreen() {
         }}
         onEndReached={loadMore}
         renderItem={renderItem}
-        ListFooterComponent={<View className="h-20"></View>}
       />
     </Screen>
   )

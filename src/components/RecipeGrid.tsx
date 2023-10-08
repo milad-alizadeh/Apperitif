@@ -1,20 +1,20 @@
 import React, { FC, forwardRef, useImperativeHandle, useRef } from 'react'
-import { View } from 'react-native'
+import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native'
 import Animated from 'react-native-reanimated'
+import { CardProps } from './Card'
 
 interface RecipeGridProps {
-  recipes: any
-  pageInfo: any
-  loading: any
   error: any
-  manualRefresh: any
-  refreshing: any
-  loadMore: any
-  renderItem: any
-  ListHeaderComponent: any
-  ListEmptyComponent: any
-  ListFooterComponent: any
-  onScroll: any
+  ListEmptyComponent?: JSX.Element
+  ListFooterComponent?: JSX.Element
+  ListHeaderComponent?: JSX.Element
+  loading: boolean
+  loadMore: () => void
+  manualRefresh: () => void
+  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
+  recipes: CardProps[]
+  refreshing: boolean
+  renderItem: ({ item }: { item: CardProps }) => JSX.Element
   styleClassName: string
 }
 
