@@ -47,7 +47,7 @@ function RootLayoutNav() {
           <Stack.Screen name="index" />
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="welcome" />
-          <Stack.Screen name="recipe/[recipeId]" />
+          <Stack.Screen name="recipe/[recipeId]" getId={({ params }) => params.recipeId} />
           <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
           <Stack.Screen name="add-ingredients" />
         </Stack>
