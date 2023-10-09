@@ -25,7 +25,7 @@ export const RecipeAttributes: FC<RecipeAttributesProps> = ({
   attributes,
 }: RecipeAttributesProps) => {
   return (
-    attributes.length && (
+    !!attributes.length && (
       <View className="flex-row w-full justify-between">
         {attributes.map((attribute) => {
           if (!attribute) return null

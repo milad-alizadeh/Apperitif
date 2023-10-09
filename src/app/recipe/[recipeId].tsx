@@ -60,8 +60,6 @@ export default function RecipeDetailsScreen() {
     categories.find((c) => c.parentId === id),
   )
 
-  console.log('attributes', attributes)
-
   const onIngredientPress = useCallback((id) => {
     setIngredientId(id)
     setEquipmentId(null)
