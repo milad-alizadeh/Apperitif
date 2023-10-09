@@ -1,6 +1,5 @@
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { router, useLocalSearchParams } from 'expo-router'
-import orderBy from 'lodash/orderBy'
 import React, { useCallback, useRef, useState } from 'react'
 import { View, useWindowDimensions } from 'react-native'
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated'
@@ -45,6 +44,7 @@ export default function RecipeDetailsScreen() {
     variables: {
       name: 'recipe_attributes',
     },
+    fetchPolicy: 'cache-and-network',
   })
 
   const recipe = data?.recipesCollection?.edges[0]?.node
@@ -52,13 +52,15 @@ export default function RecipeDetailsScreen() {
   const ingredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
   const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
   const categories = recipe?.recipesCategoriesCollection?.edges.map((e) => e.node.category) ?? []
-  const attributeCategories =
-    attributesData?.appContentCollection?.edges.map(
-      (e) => JSON.parse(e.node.content)?.category_ids,
-    ) ?? []
-  const attributes = categories.filter((c) => attributeCategories.includes(c.parentId)) ?? []
+  const attributeCategories = attributesData?.appContentCollection?.edges?.[0]?.node?.content
+  const attributeCategoriesParsed = attributeCategories
+    ? JSON.parse(attributeCategories)?.categoryIds
+    : []
+  const attributes = attributeCategoriesParsed.map((id: string) =>
+    categories.find((c) => c.parentId === id),
+  )
 
-  console.log(attributes)
+  console.log('attributes', attributes)
 
   const onIngredientPress = useCallback((id) => {
     setIngredientId(id)
@@ -127,14 +129,15 @@ export default function RecipeDetailsScreen() {
         <BouncyImage height={headerHeight} scrollY={scrollY} imageUrl={recipe?.imageUrl} />
 
         <View className="flex-1 -mt-16 py-8 bg-white rounded-t-[50px] px-6">
-          <View className="pb-12">
-            <Text h1 styleClassName="mb-2">
+          <View>
+            <Text h1 styleClassName="mb-3">
               {recipe?.name}
             </Text>
-            <Markdown text={recipe?.description} />
-
             <View>
-              <RecipeAttributes attributes={categories} />
+              <Markdown text={recipe?.description} />
+            </View>
+            <View className="py-9">
+              <RecipeAttributes attributes={attributes} />
             </View>
           </View>
 

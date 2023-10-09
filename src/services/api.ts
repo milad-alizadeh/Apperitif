@@ -68,10 +68,10 @@ class Api {
       data: measurementsDefaults,
     })
 
-    await persistCache({
-      cache,
-      storage: new AsyncStorageWrapper(AsyncStorage),
-    })
+    // await persistCache({
+    //   cache,
+    //   storage: new AsyncStorageWrapper(AsyncStorage),
+    // })
 
     this.apolloClient = new ApolloClient({
       link: this.authLink.concat(this.httpLink), // Chain it with the httpLink
