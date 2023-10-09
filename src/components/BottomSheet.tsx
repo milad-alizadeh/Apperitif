@@ -1,6 +1,6 @@
 import { BlurView } from 'expo-blur'
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { Modal, TouchableOpacity, View } from 'react-native'
+import { Modal, Pressable, TouchableOpacity, View } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
   Easing,
@@ -92,7 +92,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
     }
   }
 
-  const gesture = Gesture.Pan()
+  const swipeGesture = Gesture.Pan()
     .onUpdate((event) => {})
     .onEnd((event) => {
       const threshold = 50
@@ -103,7 +103,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
 
   return (
     <Modal transparent visible={visible} onRequestClose={hide} statusBarTranslucent>
-      <TouchableOpacity onPress={hide}>
+      <Pressable onPress={hide}>
         <AnimatedBlurView
           animatedProps={intensityProp}
           tint="dark"
@@ -114,7 +114,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
             style={[bottomSheetStyle, shadowLarge]}
           >
             {/* Swip Area */}
-            <GestureDetector gesture={gesture}>
+            <GestureDetector gesture={swipeGesture}>
               <View className="h-32 absolute top-0 left-0 w-full z-10"></View>
             </GestureDetector>
 
@@ -123,7 +123,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
             </View>
           </Animated.View>
         </AnimatedBlurView>
-      </TouchableOpacity>
+      </Pressable>
     </Modal>
   )
 })
