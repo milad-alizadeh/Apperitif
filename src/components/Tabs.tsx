@@ -12,17 +12,19 @@ import { SectionHeader } from './SectionList/SectionHeader'
 interface TabProps {
   children: ReactNode
   initialIndex?: number
+  styleClassName?: string
 }
 
 interface TabPageProps {
   children: ReactNode
   containerWidth?: number
   title?: string
+  styleClassName?: string
 }
 
-const TabPage: FC<TabPageProps> = ({ children, containerWidth }) => {
+const TabPage: FC<TabPageProps> = ({ children, containerWidth, styleClassName }) => {
   return (
-    <View className="p-6" style={{ width: containerWidth }}>
+    <View className={`p-6 w-full ${styleClassName}`} style={{ width: containerWidth }}>
       {children}
     </View>
   )
@@ -31,6 +33,7 @@ const TabPage: FC<TabPageProps> = ({ children, containerWidth }) => {
 export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
   children,
   initialIndex = 0,
+  styleClassName,
 }) => {
   const [containerWidth, setContainerWidth] = useState(0)
   const [activeIndex, setActiveIndex] = useState(-1)
@@ -71,7 +74,7 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
   })
 
   return (
-    <View onLayout={onContainerLayout} style={{ overflow: 'hidden' }}>
+    <View className={styleClassName} onLayout={onContainerLayout} style={{ overflow: 'hidden' }}>
       <SectionHeader
         sectionTitles={sectionTitles}
         activeIndex={activeIndex}

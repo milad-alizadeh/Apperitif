@@ -10,13 +10,14 @@ import {
   Button,
   CardProps,
   Header,
-  HorizontalList,
   IngredientDetails,
   ListItem,
+  RecipeGrid,
   Screen,
   SectionDataType,
   SectionHeaderType,
   SectionList,
+  Tabs,
   Text,
 } from '~/components'
 import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
@@ -29,26 +30,19 @@ export default function MyBarHomeScreen() {
   const modalRef = useRef<BottomSheetRef>(null)
 
   const { data: ingredientsData, refetch } = useQuery(GET_MY_BAR)
-  const { data: totalMatchData, refetch: totalMatchRefetch } = useQuery(GET_TOTAL_MATCH_RECIPES)
-  const { data: partialMatchData, refetch: partialMatchRefetch } =
-    useQuery(GET_PARTIAL_MATCH_RECIPES)
+  const {
+    data: totalMatchData,
+    refetch: totalMatchRefetch,
+    loading: totalMatchLoading,
+  } = useQuery(GET_TOTAL_MATCH_RECIPES)
+
+  const {
+    data: partialMatchData,
+    refetch: partialMatchRefetch,
+    loading: partialMatchLoading,
+  } = useQuery(GET_PARTIAL_MATCH_RECIPES)
 
   const isFocused = useIsFocused()
-
-  const getHeaderHeight = () => {
-    const headerHeightNoRecipe = 184
-    const horizontalListHeight = 230
-    const partialMatchDataLength = getRecipeMatch(partialMatchData)?.length
-    const totalMatchDataLength = getRecipeMatch(totalMatchData)?.length
-
-    if (!ingredientsInBar) return headerHeightNoRecipe
-
-    let headerHeight = 0
-    if (totalMatchDataLength) headerHeight += horizontalListHeight
-    if (partialMatchDataLength) headerHeight += horizontalListHeight
-
-    return headerHeight
-  }
 
   useEffect(() => {
     if (isFocused) {
@@ -116,7 +110,7 @@ export default function MyBarHomeScreen() {
     modalRef.current.show()
   }, [])
 
-  const renderItem = useCallback(
+  const renderIngredientItem = useCallback(
     ({ item }) => {
       if (!item.name) return <View className="w-full h-64 bg-white p-page-spacing" />
       return (
@@ -153,41 +147,63 @@ export default function MyBarHomeScreen() {
           <Button label="Add Ingredients" onPress={() => router.push('/add-ingredients')} />
         }
       />
-      <SectionList
-        sectionsData={sectionsData}
-        sectionsHeader={sectionsHeader}
-        renderItem={renderItem}
-        headerHeight={getHeaderHeight()}
-        ListFooterComponent={<View />}
-        contentContainerStyle={{ flex: !ingredientsInBar?.length ? 1 : undefined }}
-        ListEmptyComponent={
-          <View className="flex-1 justify-center ">
-            <View className="w-full justify-center items-center mt-8">
-              <Text h3 styleClassName="text-center max-w-[220px] mb-3">
-                Uh-oh, your bar is drier than a Martini!
-              </Text>
-              <Text styleClassName="text-center" body>
-                Add some ingredients to get shaking.
-              </Text>
-            </View>
-          </View>
-        }
-        ListHeaderComponent={
-          <View>
-            <HorizontalList
-              styleClassName="mb-4"
-              title="Recipes I can make"
-              listItems={getRecipeMatch(totalMatchData)}
-            />
 
-            <HorizontalList
-              styleClassName="mb-8"
-              title="Recipes I can almost make"
-              listItems={getRecipeMatch(partialMatchData)}
-            />
-          </View>
-        }
-      />
+      <Tabs styleClassName="flex-1">
+        <Tabs.TabPage title="Ingredients" styleClassName="p-0">
+          <SectionList
+            sectionsData={sectionsData}
+            sectionsHeader={sectionsHeader}
+            renderItem={renderIngredientItem}
+            headerHeight={200}
+            ListFooterComponent={<View />}
+            contentContainerStyle={{ minHeight: 600 }}
+            ListEmptyComponent={
+              <View className="flex-1 justify-center ">
+                <View className="w-full justify-center items-center mt-8">
+                  <Text h3 styleClassName="text-center max-w-[220px] mb-3">
+                    Uh-oh, your bar is drier than a Martini!
+                  </Text>
+                  <Text styleClassName="text-center" body>
+                    Add some ingredients to get shaking.
+                  </Text>
+                </View>
+              </View>
+            }
+          />
+        </Tabs.TabPage>
+
+        <Tabs.TabPage title="Available Cocktails" styleClassName="px-6 py-0">
+          <RecipeGrid
+            recipes={getRecipeMatch(totalMatchData)}
+            onRefresh={() => totalMatchRefetch()}
+            refreshing={totalMatchLoading}
+            ListHeaderComponent={<View className="h-6"></View>}
+            ListEmptyComponent={
+              <View>
+                <Text styleClassName="text-center" body>
+                  Add more ingredients to get recipe suggestions.
+                </Text>
+              </View>
+            }
+          />
+        </Tabs.TabPage>
+
+        <Tabs.TabPage title="Closest Match" styleClassName="px-6 py-0">
+          <RecipeGrid
+            recipes={getRecipeMatch(partialMatchData)}
+            onRefresh={() => partialMatchRefetch()}
+            refreshing={partialMatchLoading}
+            ListHeaderComponent={<View className="h-6"></View>}
+            ListEmptyComponent={
+              <View>
+                <Text styleClassName="text-center" body>
+                  Add more ingredients to get recipe suggestions.
+                </Text>
+              </View>
+            }
+          />
+        </Tabs.TabPage>
+      </Tabs>
 
       {/* Ingredient details Modal */}
       <BottomSheet ref={modalRef}>

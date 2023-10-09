@@ -1,8 +1,8 @@
 import { router, useLocalSearchParams } from 'expo-router'
-import React, { useCallback, useRef } from 'react'
+import React, { useRef } from 'react'
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
 import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
-import { Card, FilterBar, FixedHeader, Screen, Text } from '~/components'
+import { FilterBar, FixedHeader, Screen, Text } from '~/components'
 import { RecipeGrid } from '~/components/RecipeGrid'
 import { useFetchRecipes } from '~/hooks/useFetchRecipe'
 
@@ -16,19 +16,6 @@ export default function RecipesScreen() {
   })
   const { recipes, pageInfo, loading, error, manualRefresh, refreshing, loadMore } =
     useFetchRecipes(categoryIds)
-
-  const renderItem = useCallback(({ item }: { item; index: number }) => {
-    return (
-      <Card
-        {...item}
-        key={item.id}
-        onPress={() =>
-          router.push({ pathname: '/recipe/[recipeId]', params: { recipeId: item.id } })
-        }
-        styleClassName="w-1/2 px-3 mb-6"
-      />
-    )
-  }, [])
 
   return (
     <Screen
@@ -60,12 +47,11 @@ export default function RecipesScreen() {
         ListHeaderComponent={<FilterBar autofocus={!categoryIds} styleClassName="-mx-3 mb-6" />}
         ListEmptyComponent={
           <View>
-            {error && <Text>{error?.message}</Text>}
-            return <ActivityIndicator animating={loading} />
+            {!!error && <Text>{error?.message}</Text>}
+            <ActivityIndicator animating={loading} />
           </View>
         }
         onEndReached={loadMore}
-        renderItem={renderItem}
       />
     </Screen>
   )

@@ -22,20 +22,20 @@ export interface SectionHeaderType {
 }
 
 export interface SectionListProps {
-  sectionsData: SectionDataType[][]
-  sectionsHeader: SectionHeaderType[]
-  onSave?: (selectedItems: { [key: string]: boolean }) => void
-  onSearch?: (value: string) => void
-  selectedItems?: { [key: string]: boolean }
-  searchQuery?: string
-  showHeader?: boolean
-  loading?: boolean
-  renderItem: (item: any) => JSX.Element
-  ListHeaderComponent?: JSX.Element
+  contentContainerStyle?: ViewStyle
+  headerHeight?: number
   ListEmptyComponent?: JSX.Element
   ListFooterComponent?: JSX.Element
-  headerHeight?: number
-  contentContainerStyle?: ViewStyle
+  ListHeaderComponent?: JSX.Element
+  loading?: boolean
+  onSave?: (selectedItems: { [key: string]: boolean }) => void
+  onSearch?: (value: string) => void
+  renderItem: (item: any) => JSX.Element
+  searchQuery?: string
+  sectionsData: SectionDataType[][]
+  sectionsHeader: SectionHeaderType[]
+  selectedItems?: { [key: string]: boolean }
+  showHeader?: boolean
 }
 
 const FIXED_HEADER_HEIGHT = 40

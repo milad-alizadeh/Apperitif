@@ -1,19 +1,19 @@
-import React, { FC, forwardRef, useImperativeHandle, useRef } from 'react'
+import { router } from 'expo-router'
+import React, { FC, forwardRef, useCallback, useImperativeHandle, useRef } from 'react'
 import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native'
 import Animated from 'react-native-reanimated'
-import { CardProps } from './Card'
+import { Card, CardProps } from './Card'
 
 interface RecipeGridProps {
   ListEmptyComponent?: JSX.Element
   ListFooterComponent?: JSX.Element
   ListHeaderComponent?: JSX.Element
-  loadMore: () => void
-  manualRefresh: () => void
+  loadMore?: () => void
+  onRefresh?: () => void
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
   recipes: CardProps[]
-  refreshing: boolean
-  renderItem: ({ item }: { item: CardProps }) => JSX.Element
-  styleClassName: string
+  refreshing?: boolean
+  styleClassName?: string
 }
 
 export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
@@ -23,11 +23,10 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
       ListFooterComponent,
       ListHeaderComponent,
       loadMore,
-      manualRefresh,
+      onRefresh,
       onScroll,
       recipes,
       refreshing,
-      renderItem,
       styleClassName,
     },
     ref,
@@ -40,6 +39,19 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
 
     const listRef = useRef(null)
 
+    const renderItem = useCallback(({ item }: { item; index: number }) => {
+      return (
+        <Card
+          {...item}
+          key={item.id}
+          onPress={() =>
+            router.push({ pathname: '/recipe/[recipeId]', params: { recipeId: item.id } })
+          }
+          styleClassName="w-1/2 px-3 mb-6"
+        />
+      )
+    }, [])
+
     return (
       <Animated.FlatList
         ref={listRef}
@@ -47,11 +59,11 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
         numColumns={2}
         windowSize={10}
         nestedScrollEnabled
-        className={styleClassName}
+        className={`-mx-3 ${styleClassName}`}
         onScroll={onScroll}
         keyExtractor={(item) => item.id}
         refreshing={refreshing}
-        onRefresh={manualRefresh}
+        onRefresh={onRefresh}
         ListHeaderComponent={ListHeaderComponent}
         onEndReachedThreshold={0.5}
         onEndReached={loadMore}
