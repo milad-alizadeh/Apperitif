@@ -20,7 +20,7 @@ export const SectionHeaderItem = forwardRef<View, SectionHeaderItemProps>(
   ) {
     return (
       <View ref={ref} className="ml-6" onLayout={onLayout} style={style}>
-        <TouchableOpacity className="pt-3 pb-2" onPress={onPress}>
+        <TouchableOpacity className="py-2" onPress={onPress}>
           <Text
             styleClassName={`${
               active ? 'text-primary' : 'text-neutral-[400]'

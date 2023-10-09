@@ -80,7 +80,6 @@ export default function MyBarHomeScreen() {
       {/* List of ingredients in the bar */}
       <Header
         title="My Bar"
-        styleClassName="mb-auto"
         rightElement={
           <Button label="Add Ingredients" onPress={() => router.push('/add-ingredients')} />
         }
@@ -114,8 +113,9 @@ export default function MyBarHomeScreen() {
           />
         </Tabs.TabPage>
 
-        <Tabs.TabPage title="From My Bar" styleClassName="px-6 py-0">
+        <Tabs.TabPage title="From My Bar" styleClassName="p-0">
           <RecipeGrid
+            styleClassName="px-6"
             recipes={getRecipeMatch(totalMatchData)}
             onRefresh={() => totalMatchRefetch()}
             refreshing={totalMatchLoading}
@@ -142,8 +142,9 @@ export default function MyBarHomeScreen() {
           />
         </Tabs.TabPage>
 
-        <Tabs.TabPage title="Closest Match" styleClassName="px-6 py-0">
+        <Tabs.TabPage title="Closest Match" styleClassName="p-0">
           <RecipeGrid
+            styleClassName="px-6"
             recipes={getRecipeMatch(partialMatchData)}
             onRefresh={() => partialMatchRefetch()}
             refreshing={partialMatchLoading}

@@ -98,21 +98,19 @@ export default function BrowseHomeScreen() {
 
   return (
     <Screen preset="scroll" safeAreaEdges={['top']} KeyboardAvoidingViewProps={{ enabled: false }}>
-      <View className="mb-4">
-        <Header
-          title="Browse"
-          rightElement={
-            <Icon
-              icon="search"
-              onPress={() =>
-                router.push({ pathname: '/browse/recipes', params: { categoryIds: [''] } })
-              }
-              size="large"
-              color={colors.neutral[800]}
-            />
-          }
-        />
-      </View>
+      <Header
+        title="Browse"
+        rightElement={
+          <Icon
+            icon="search"
+            onPress={() =>
+              router.push({ pathname: '/browse/recipes', params: { categoryIds: [''] } })
+            }
+            size="large"
+            color={colors.neutral[800]}
+          />
+        }
+      />
 
       {!!error || (!!browseError && <Text>{error?.message || browseError?.message}</Text>)}
       {orderedCategories.map(({ listItems, title, id }, index) =>
