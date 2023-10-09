@@ -1,0 +1,7 @@
+# localState.graphql
+
+extend type Query {
+  selectedJiggerSize: Int
+  selectedUnitSystem: String
+  doubleRecipe: Boolean
+}

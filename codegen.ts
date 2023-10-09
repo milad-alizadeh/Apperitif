@@ -4,7 +4,10 @@ import * as dotenv from 'dotenv'
 dotenv.config({ path: `.env.local` })
 
 const config: CodegenConfig = {
-  schema: `${process.env.EXPO_PUBLIC_SUPABASE_URL}/graphql/v1`,
+  schema: [
+    `${process.env.EXPO_PUBLIC_SUPABASE_URL}/graphql/v1`,
+    './src/graphql/localState.graphql',
+  ],
   documents: ['./src/**/!(*.d).{ts,tsx}'],
   generates: {
     './src/__generated__/': {

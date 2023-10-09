@@ -2,14 +2,8 @@ import { useQuery, useReactiveVar } from '@apollo/client'
 import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { GetRecipeDetailsQuery, Units } from '~/__generated__/graphql'
-import { GET_UNITS } from '~/graphql/queries'
-import {
-  convertUnitToOtherSystem,
-  defaultJiggerSize,
-  doubleRecipeVar,
-  selectedJiggerSizeVar,
-  selectedUnitSystemVar,
-} from '~/store'
+import { GET_MEASUREMENTS, GET_UNITS } from '~/graphql/queries'
+import { UnitSystems, convertUnitToOtherSystem, defaultJiggerSize } from '~/store'
 import { ListItem } from './ListItem'
 import { RecipeMeasurements } from './RecipeMeasurements'
 import { Tabs } from './Tabs'
@@ -49,17 +43,16 @@ export const RecipeTabs = function RecipeTabs({
   onEquipmentPress,
 }: RecipeTabsProps) {
   const { data } = useQuery(GET_UNITS)
-  const selectedUnitSystem = useReactiveVar(selectedUnitSystemVar)
-  const doubleRecipe = useReactiveVar(doubleRecipeVar)
+  const { data: measurements } = useQuery(GET_MEASUREMENTS)
   const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
-  const selectedJiggerSize = useReactiveVar(selectedJiggerSizeVar)
-  const multiplier = (selectedJiggerSize / defaultJiggerSize) * (doubleRecipe ? 2 : 1)
+  const multiplier =
+    (measurements.selectedJiggerSize / defaultJiggerSize) * (measurements.doubleRecipe ? 2 : 1)
 
   const renderIngredientItem = useCallback(
     ({ ingredient, quantity, unit, isOptional }: Ingredient) => {
       const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem({
         unit: unit as Units,
-        toSystem: selectedUnitSystem,
+        toSystem: measurements.selectedUnitSystem as UnitSystems,
         quantity,
         units,
         multiplier,
@@ -74,7 +67,7 @@ export const RecipeTabs = function RecipeTabs({
         />
       )
     },
-    [ingredients, units, selectedUnitSystem, multiplier],
+    [ingredients, units, measurements.selectedUnitSystem, multiplier],
   )
 
   const renderEquipmentItem = useCallback(

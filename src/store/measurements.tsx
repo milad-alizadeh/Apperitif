@@ -1,4 +1,5 @@
 import { makeVar } from '@apollo/client'
+import { createFieldPolicy } from '~/utils/createFieldPolicy'
 
 export enum UnitSystems {
   IMPERIAL = 'imperial',
@@ -41,7 +42,18 @@ export const unitSystemsVar = makeVar([
 ])
 
 export const selectedUnitSystemVar = makeVar<UnitSystems>(UnitSystems.METRIC)
-
 export const selectedJiggerSizeVar = makeVar(JiggerSizes['50ml'])
-
 export const doubleRecipeVar = makeVar<boolean>(false)
+
+export const measurementFields = {
+  selectedJiggerSize: createFieldPolicy(selectedJiggerSizeVar),
+  selectedUnitSystem: createFieldPolicy(selectedUnitSystemVar),
+  doubleRecipe: createFieldPolicy(doubleRecipeVar),
+}
+
+// Set default values
+export const measurementsDefaults = {
+  selectedJiggerSize: selectedJiggerSizeVar(),
+  selectedUnitSystem: selectedUnitSystemVar(),
+  doubleRecipe: doubleRecipeVar(),
+}

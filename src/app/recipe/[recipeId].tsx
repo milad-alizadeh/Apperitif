@@ -45,10 +45,6 @@ export default function RecipeDetailsScreen() {
   const ingredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
   const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
 
-  if (error) {
-    return <Text>{error.message}</Text>
-  }
-
   const onIngredientPress = useCallback((id) => {
     setIngredientId(id)
     setEquipmentId(null)

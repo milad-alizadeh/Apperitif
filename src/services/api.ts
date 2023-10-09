@@ -10,6 +10,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SupabaseClient, createClient } from '@supabase/supabase-js'
 import { AsyncStorageWrapper, persistCache } from 'apollo3-cache-persist'
 import 'react-native-url-polyfill/auto'
+import { GET_MEASUREMENTS } from '~/graphql/queries'
+import { measurementFields, measurementsDefaults } from '~/store'
 import { Database } from '../types/supabase'
 import { LargeSecureStoreAdapter } from './storage'
 
@@ -52,7 +54,19 @@ class Api {
       }
     })
 
-    const cache = new InMemoryCache()
+    const cache = new InMemoryCache({
+      typePolicies: {
+        measureMents: {
+          fields: measurementFields,
+        },
+      },
+    })
+
+    // Set default values
+    cache.writeQuery({
+      query: GET_MEASUREMENTS,
+      data: measurementsDefaults,
+    })
 
     await persistCache({
       cache,
