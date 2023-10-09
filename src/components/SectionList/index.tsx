@@ -36,6 +36,7 @@ export interface SectionListProps {
   sectionsHeader: SectionHeaderType[]
   selectedItems?: { [key: string]: boolean }
   showHeader?: boolean
+  onRefresh?: () => void
 }
 
 const FIXED_HEADER_HEIGHT = 40
@@ -60,6 +61,7 @@ export const SectionList = function SectionList({
   ListFooterComponent,
   headerHeight,
   contentContainerStyle,
+  onRefresh,
 }: SectionListProps) {
   const inset = useSafeAreaInsets()
   const [activeIndex, setActiveIndex] = useState(-1)
@@ -200,6 +202,7 @@ export const SectionList = function SectionList({
         stickySectionHeadersEnabled={false}
         keyboardShouldPersistTaps="handled"
         ref={sectionListRef}
+        onRefresh={onRefresh}
         onScrollBeginDrag={() => {
           if (isNavScroll?.current) {
             setIsNavScroll(false)

@@ -1,11 +1,13 @@
+import { useReactiveVar } from '@apollo/client'
 import { router } from 'expo-router'
 import React, { useCallback, useRef, useState } from 'react'
-import { View, ViewStyle } from 'react-native'
+import { ActivityIndicator, View, ViewStyle } from 'react-native'
 import {
   BottomSheet,
   BottomSheetRef,
   Button,
   Header,
+  InfoBox,
   IngredientDetails,
   ListItem,
   RecipeGrid,
@@ -16,11 +18,15 @@ import {
 } from '~/components'
 import { useMatchedRecipes } from '~/hooks/useMatchedRecipes'
 import { useSession } from '~/hooks/useSession'
+import { partialMatchInfoBoxDismissedVar, totalMatchInfoBoxDismissedVar } from '~/store'
 
 export default function MyBarHomeScreen() {
   const { user } = useSession()
   const modalRef = useRef<BottomSheetRef>(null)
   const [ingredientId, setIngredientId] = useState<string>('')
+
+  const partialMatchInfoBoxDismissed = useReactiveVar(partialMatchInfoBoxDismissedVar)
+  const totalMatchInfoBoxDismissed = useReactiveVar(totalMatchInfoBoxDismissedVar)
 
   const handleIngredientPress = useCallback((ingredientId: string) => {
     setIngredientId(ingredientId)
@@ -28,17 +34,18 @@ export default function MyBarHomeScreen() {
   }, [])
 
   const {
-    sectionsData,
-    sectionsHeader,
     deleteFromMyBar,
-    ingredientRefetch,
-    totalMatchRefetch,
-    partialMatchRefetch,
     getRecipeMatch,
-    totalMatchData,
-    totalMatchLoading,
+    ingredientRefetch,
+    ingredientLoading,
     partialMatchData,
     partialMatchLoading,
+    partialMatchRefetch,
+    sectionsData,
+    sectionsHeader,
+    totalMatchData,
+    totalMatchLoading,
+    totalMatchRefetch,
   } = useMatchedRecipes()
 
   const renderIngredientItem = useCallback(
@@ -87,34 +94,50 @@ export default function MyBarHomeScreen() {
             renderItem={renderIngredientItem}
             headerHeight={200}
             ListFooterComponent={<View />}
-            contentContainerStyle={{ minHeight: 600 }}
+            contentContainerStyle={{ marginTop: -16 }}
             ListEmptyComponent={
-              <View className="flex-1 justify-center ">
-                <View className="w-full justify-center items-center mt-8">
-                  <Text h3 styleClassName="text-center max-w-[220px] mb-3">
-                    Uh-oh, your bar is drier than a Martini!
-                  </Text>
-                  <Text styleClassName="text-center" body>
-                    Add some ingredients to get shaking.
-                  </Text>
-                </View>
+              <View className="flex-1 justify-center w-full">
+                {ingredientLoading ? (
+                  <ActivityIndicator />
+                ) : (
+                  <View className="w-full justify-center items-center mt-8">
+                    <Text h3 styleClassName="text-center max-w-[220px] mb-3">
+                      Uh-oh, your bar is drier than a Martini!
+                    </Text>
+                    <Text styleClassName="text-center" body>
+                      Add some ingredients to get shaking.
+                    </Text>
+                  </View>
+                )}
               </View>
             }
           />
         </Tabs.TabPage>
 
-        <Tabs.TabPage title="Available Cocktails" styleClassName="px-6 py-0">
+        <Tabs.TabPage title="From My Bar" styleClassName="px-6 py-0">
           <RecipeGrid
             recipes={getRecipeMatch(totalMatchData)}
             onRefresh={() => totalMatchRefetch()}
             refreshing={totalMatchLoading}
-            ListHeaderComponent={<View className="h-6"></View>}
+            ListHeaderComponent={
+              !totalMatchInfoBoxDismissed ? (
+                <InfoBox
+                  styleClassName="m-3"
+                  description="These cocktails use only ingredients in your bar."
+                  onClose={() => totalMatchInfoBoxDismissedVar(true)}
+                />
+              ) : (
+                <View className="h-6"></View>
+              )
+            }
             ListEmptyComponent={
-              <View>
-                <Text styleClassName="text-center" body>
-                  Add more ingredients to get recipe suggestions.
-                </Text>
-              </View>
+              !totalMatchLoading && (
+                <View className="w-full flex-1 justify-center items-center mt-8">
+                  <Text h3 styleClassName="text-center max-w-[280px] mb-3">
+                    Add more ingredients to get recipe suggestions.
+                  </Text>
+                </View>
+              )
             }
           />
         </Tabs.TabPage>
@@ -124,13 +147,25 @@ export default function MyBarHomeScreen() {
             recipes={getRecipeMatch(partialMatchData)}
             onRefresh={() => partialMatchRefetch()}
             refreshing={partialMatchLoading}
-            ListHeaderComponent={<View className="h-6"></View>}
+            ListHeaderComponent={
+              !partialMatchInfoBoxDismissed ? (
+                <InfoBox
+                  styleClassName="m-3"
+                  description="These cocktails use ingredients in your bar and one or more ingredients you don't have."
+                  onClose={() => partialMatchInfoBoxDismissedVar(true)}
+                />
+              ) : (
+                <View className="h-6"></View>
+              )
+            }
             ListEmptyComponent={
-              <View>
-                <Text styleClassName="text-center" body>
-                  Add more ingredients to get recipe suggestions.
-                </Text>
-              </View>
+              !partialMatchLoading && (
+                <View className="w-full justify-center items-center mt-8">
+                  <Text h3 styleClassName="text-center max-w-[280px] mb-3">
+                    Add more ingredients to get recipe suggestions.
+                  </Text>
+                </View>
+              )
             }
           />
         </Tabs.TabPage>

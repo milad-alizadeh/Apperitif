@@ -8,7 +8,11 @@ import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
 import { GET_MY_BAR, GET_PARTIAL_MATCH_RECIPES, GET_TOTAL_MATCH_RECIPES } from '~/graphql/queries'
 
 export const useMatchedRecipes = () => {
-  const { data: ingredientsData, refetch: ingredientRefetch } = useQuery(GET_MY_BAR)
+  const {
+    data: ingredientsData,
+    loading: ingredientLoading,
+    refetch: ingredientRefetch,
+  } = useQuery(GET_MY_BAR)
   const {
     data: totalMatchData,
     refetch: totalMatchRefetch,
@@ -85,17 +89,18 @@ export const useMatchedRecipes = () => {
   const [deleteFromMyBar] = useMutation(DELETE_FROM_MY_BAR)
 
   return {
+    deleteFromMyBar,
+    getRecipeMatch,
+    ingredientLoading,
+    ingredientRefetch,
     ingredientsInBar,
+    partialMatchData,
+    partialMatchLoading,
+    partialMatchRefetch,
     sectionsData,
     sectionsHeader,
     totalMatchData,
     totalMatchLoading,
-    partialMatchData,
-    partialMatchLoading,
-    getRecipeMatch,
-    deleteFromMyBar,
-    ingredientRefetch,
     totalMatchRefetch,
-    partialMatchRefetch,
   }
 }
