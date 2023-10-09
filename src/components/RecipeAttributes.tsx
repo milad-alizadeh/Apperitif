@@ -32,7 +32,7 @@ export const RecipeAttributes: FC<RecipeAttributesProps> = ({
           return (
             <View key={attribute?.id} className="flex-row items-center">
               <Image
-                className="w-8 h-8 mr-1"
+                className="w-10 h-10 mr-1"
                 contentFit="contain"
                 source={{ uri: attribute?.imageUrl }}
               />

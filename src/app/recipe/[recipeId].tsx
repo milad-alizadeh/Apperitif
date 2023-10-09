@@ -131,10 +131,10 @@ export default function RecipeDetailsScreen() {
             <Text h1 styleClassName="mb-3">
               {recipe?.name}
             </Text>
-            <View>
+            <View className="-mb-3">
               <Markdown text={recipe?.description} />
             </View>
-            <View className="py-9">
+            <View className="py-6">
               <RecipeAttributes attributes={attributes} />
             </View>
           </View>
