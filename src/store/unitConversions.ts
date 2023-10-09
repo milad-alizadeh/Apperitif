@@ -129,8 +129,9 @@ export const convertUnitToOtherSystem = ({
   // If the unit is already in the desired system, return the original quantity and unit name
   if (unit.system === toSystem) {
     const multipliedQuantity = parseFloat(quantity) * multiplier
-    const roundedToNearestFive = Math.round(multipliedQuantity / 5) * 5
-    return getConversionResult(roundedToNearestFive.toString(), unit)
+    // Round to the nearest 2.5 if the unit is imperial
+    const roundedToNearestTwoPointFive = Math.round(multipliedQuantity / 2.5) * 2.5
+    return getConversionResult(roundedToNearestTwoPointFive.toString(), unit)
   }
 
   const quantityFloat = parseFloat(quantity) * multiplier
