@@ -38,7 +38,6 @@ export default function RecipeDetailsScreen() {
 
   const { data, error, loading, refetch } = useQuery(GET_RECIPE_DETAILS, {
     variables: { recipeId },
-    fetchPolicy: 'cache-and-network',
   })
 
   const recipe = data?.recipesCollection?.edges[0]?.node

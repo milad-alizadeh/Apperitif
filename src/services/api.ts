@@ -6,7 +6,9 @@ import {
   createHttpLink,
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SupabaseClient, createClient } from '@supabase/supabase-js'
+import { AsyncStorageWrapper, persistCache } from 'apollo3-cache-persist'
 import 'react-native-url-polyfill/auto'
 import { Database } from '../types/supabase'
 import { LargeSecureStoreAdapter } from './storage'
@@ -50,9 +52,16 @@ class Api {
       }
     })
 
+    const cache = new InMemoryCache()
+
+    await persistCache({
+      cache,
+      storage: new AsyncStorageWrapper(AsyncStorage),
+    })
+
     this.apolloClient = new ApolloClient({
       link: this.authLink.concat(this.httpLink), // Chain it with the httpLink
-      cache: new InMemoryCache(),
+      cache,
     })
   }
 
