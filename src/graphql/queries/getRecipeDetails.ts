@@ -16,6 +16,18 @@ export const GET_RECIPE_DETAILS = gql(/* GraphQL */ `
               }
             }
           }
+          recipesCategoriesCollection {
+            edges {
+              node {
+                category {
+                  id
+                  parentId
+                  name
+                  imageUrl
+                }
+              }
+            }
+          }
           recipesIngredientsCollection(
             orderBy: { isOptional: AscNullsLast, quantity: DescNullsLast }
           ) {

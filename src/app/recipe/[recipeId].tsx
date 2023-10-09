@@ -16,8 +16,9 @@ import {
   RecipeTabs,
   Text,
 } from '~/components'
+import { RecipeAttributes } from '~/components/RecipeAttributes'
 import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
-import { GET_FAVOURITES, GET_RECIPE_DETAILS } from '~/graphql/queries'
+import { GET_CONTENT, GET_FAVOURITES, GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useSession } from '~/hooks/useSession'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
@@ -40,10 +41,24 @@ export default function RecipeDetailsScreen() {
     variables: { recipeId },
   })
 
+  const { data: attributesData } = useQuery(GET_CONTENT, {
+    variables: {
+      name: 'recipe_attributes',
+    },
+  })
+
   const recipe = data?.recipesCollection?.edges[0]?.node
   const equipment = recipe?.recipesEquipmentCollection?.edges.map((e) => e.node.equipment) ?? []
   const ingredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
   const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
+  const categories = recipe?.recipesCategoriesCollection?.edges.map((e) => e.node.category) ?? []
+  const attributeCategories =
+    attributesData?.appContentCollection?.edges.map(
+      (e) => JSON.parse(e.node.content)?.category_ids,
+    ) ?? []
+  const attributes = categories.filter((c) => attributeCategories.includes(c.parentId)) ?? []
+
+  console.log(attributes)
 
   const onIngredientPress = useCallback((id) => {
     setIngredientId(id)
@@ -117,6 +132,10 @@ export default function RecipeDetailsScreen() {
               {recipe?.name}
             </Text>
             <Markdown text={recipe?.description} />
+
+            <View>
+              <RecipeAttributes attributes={categories} />
+            </View>
           </View>
 
           <View className="bg-white rounded-2xl" style={shadowLarge}>
