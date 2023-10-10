@@ -1,4 +1,4 @@
-import { useReactiveVar } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { router } from 'expo-router'
 import React, { useCallback, useRef, useState } from 'react'
 import { ActivityIndicator, View, ViewStyle } from 'react-native'
@@ -16,17 +16,20 @@ import {
   Tabs,
   Text,
 } from '~/components'
+import { GET_MEASUREMENTS } from '~/graphql/queries'
 import { useMatchedRecipes } from '~/hooks/useMatchedRecipes'
 import { useSession } from '~/hooks/useSession'
-import { partialMatchInfoBoxDismissedVar, totalMatchInfoBoxDismissedVar } from '~/store'
+import { useUpdateCache } from '~/hooks/useUpdateCache'
 
 export default function MyBarHomeScreen() {
   const { user } = useSession()
   const modalRef = useRef<BottomSheetRef>(null)
   const [ingredientId, setIngredientId] = useState<string>('')
 
-  const partialMatchInfoBoxDismissed = useReactiveVar(partialMatchInfoBoxDismissedVar)
-  const totalMatchInfoBoxDismissed = useReactiveVar(totalMatchInfoBoxDismissedVar)
+  const { data, loading, error } = useQuery(GET_MEASUREMENTS)
+  const updateCache = useUpdateCache()
+
+  console.log('data', data, loading, error)
 
   const handleIngredientPress = useCallback((ingredientId: string) => {
     setIngredientId(ingredientId)
@@ -120,11 +123,13 @@ export default function MyBarHomeScreen() {
             onRefresh={() => totalMatchRefetch()}
             refreshing={totalMatchLoading}
             ListHeaderComponent={
-              !totalMatchInfoBoxDismissed ? (
+              !data?.totalMatchInfoBoxDismissed ? (
                 <InfoBox
                   styleClassName="m-3"
                   description="These cocktails use only ingredients in your bar."
-                  onClose={() => totalMatchInfoBoxDismissedVar(true)}
+                  onClose={() =>
+                    updateCache(GET_MEASUREMENTS, { totalMatchInfoBoxDismissed: true })
+                  }
                 />
               ) : (
                 <View className="h-6"></View>
@@ -149,11 +154,13 @@ export default function MyBarHomeScreen() {
             onRefresh={() => partialMatchRefetch()}
             refreshing={partialMatchLoading}
             ListHeaderComponent={
-              !partialMatchInfoBoxDismissed ? (
+              !data?.partialMatchInfoBoxDismissed ? (
                 <InfoBox
                   styleClassName="m-3"
                   description="These cocktails use ingredients in your bar and one or more ingredients you don't have."
-                  onClose={() => partialMatchInfoBoxDismissedVar(true)}
+                  onClose={() =>
+                    updateCache(GET_MEASUREMENTS, { partialMatchInfoBoxDismissed: true })
+                  }
                 />
               ) : (
                 <View className="h-6"></View>

@@ -42,7 +42,6 @@ export const BouncyImage = function BouncyImage({ height, scrollY, imageUrl }: B
         className="w-full h-full"
         transition={300}
         onLoad={() => {
-          console.log('loaded')
           setLoaded(true)
         }}
         source={

@@ -5,5 +5,7 @@ export const GET_MEASUREMENTS = gql(/* GraphQL */ `
     selectedUnitSystem @client
     selectedJiggerSize @client
     doubleRecipe @client
+    partialMatchInfoBoxDismissed @client
+    totalMatchInfoBoxDismissed @client
   }
 `)

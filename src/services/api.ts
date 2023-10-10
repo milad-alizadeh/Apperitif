@@ -73,6 +73,9 @@ class Api {
       storage: new AsyncStorageWrapper(AsyncStorage),
     })
 
+    const cachedData = cache.readQuery({ query: GET_MEASUREMENTS })
+    console.log('Cached Data after restoration:', cachedData)
+
     this.apolloClient = new ApolloClient({
       link: this.authLink.concat(this.httpLink), // Chain it with the httpLink
       cache,
