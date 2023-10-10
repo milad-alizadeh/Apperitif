@@ -35,6 +35,13 @@ class Api {
     await this.initializeApolloClient()
   }
 
+  setDefaults(cache: InMemoryCache) {
+    cache.writeQuery({
+      query: GET_MEASUREMENTS,
+      data: measurementsDefaults,
+    })
+  }
+
   async initializeApolloClient() {
     this.httpLink = createHttpLink({
       uri: URI,
@@ -62,24 +69,20 @@ class Api {
       },
     })
 
-    // Set default values
-    cache.writeQuery({
-      query: GET_MEASUREMENTS,
-      data: measurementsDefaults,
-    })
+    this.setDefaults(cache)
 
     await persistCache({
       cache,
       storage: new AsyncStorageWrapper(AsyncStorage),
     })
 
-    const cachedData = cache.readQuery({ query: GET_MEASUREMENTS })
-    console.log('Cached Data after restoration:', cachedData)
-
     this.apolloClient = new ApolloClient({
       link: this.authLink.concat(this.httpLink), // Chain it with the httpLink
       cache,
     })
+
+    this.apolloClient.onResetStore(async () => this.setDefaults(cache))
+    this.apolloClient.onClearStore(async () => this.setDefaults(cache))
   }
 
   createSupabaseClient() {

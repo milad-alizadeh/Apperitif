@@ -50,10 +50,10 @@ export const RecipeTabs = function RecipeTabs({
 
   const renderIngredientItem = useCallback(
     ({ ingredient, quantity, unit, isOptional }: Ingredient) => {
-      // if (!units || !measurements) return null
+      if (!units || !measurements) return null
       const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem({
         unit: unit as Units,
-        toSystem: measurements.selectedUnitSystem as UnitSystems,
+        toSystem: measurements?.selectedUnitSystem as UnitSystems,
         quantity,
         units,
         multiplier,
