@@ -14,7 +14,7 @@
     "format": "prettier --write \"./**/*.{js,jsx,json,md,ts,tsx}\"",
     "compile": "tsc --noEmit -p . --pretty",
     "add:test-device": "eas device:create",
-    "buidl:run:simulator": "eas build:run -p ios --path",
+    "build:run:simulator": "eas build:run -p ios --path",
     "build:dev:ios": "eas build --profile development --platform ios --local",
     "build:dev:ios-simulator": "eas build --profile development-simulator --platform ios --local",
     "build:dev:android": "eas build --profile development --platform android --local",

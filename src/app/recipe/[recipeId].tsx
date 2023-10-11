@@ -1,6 +1,5 @@
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { router, useLocalSearchParams } from 'expo-router'
-import orderBy from 'lodash/orderBy'
 import React, { useCallback, useRef, useState } from 'react'
 import { View, useWindowDimensions } from 'react-native'
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated'
@@ -16,8 +15,9 @@ import {
   RecipeTabs,
   Text,
 } from '~/components'
+import { RecipeAttributes } from '~/components/RecipeAttributes'
 import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
-import { GET_FAVOURITES, GET_RECIPE_DETAILS } from '~/graphql/queries'
+import { GET_CONTENT, GET_FAVOURITES, GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useSession } from '~/hooks/useSession'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
@@ -40,10 +40,25 @@ export default function RecipeDetailsScreen() {
     variables: { recipeId },
   })
 
+  const { data: attributesData } = useQuery(GET_CONTENT, {
+    variables: {
+      name: 'recipe_attributes',
+    },
+    fetchPolicy: 'cache-and-network',
+  })
+
   const recipe = data?.recipesCollection?.edges[0]?.node
   const equipment = recipe?.recipesEquipmentCollection?.edges.map((e) => e.node.equipment) ?? []
   const ingredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
   const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
+  const categories = recipe?.recipesCategoriesCollection?.edges.map((e) => e.node.category) ?? []
+  const attributeCategories = attributesData?.appContentCollection?.edges?.[0]?.node?.content
+  const attributeCategoriesParsed = attributeCategories
+    ? JSON.parse(attributeCategories)?.categoryIds
+    : []
+  const attributes = attributeCategoriesParsed.map((id: string) =>
+    categories.find((c) => c.parentId === id),
+  )
 
   const onIngredientPress = useCallback((id) => {
     setIngredientId(id)
@@ -112,11 +127,16 @@ export default function RecipeDetailsScreen() {
         <BouncyImage height={headerHeight} scrollY={scrollY} imageUrl={recipe?.imageUrl} />
 
         <View className="flex-1 -mt-16 py-8 bg-white rounded-t-[50px] px-6">
-          <View className="pb-12">
-            <Text h1 styleClassName="mb-2">
+          <View>
+            <Text h1 styleClassName="mb-3">
               {recipe?.name}
             </Text>
-            <Markdown text={recipe?.description} />
+            <View className="-mb-3">
+              <Markdown text={recipe?.description} />
+            </View>
+            <View className="py-6">
+              <RecipeAttributes attributes={attributes} />
+            </View>
           </View>
 
           <View className="bg-white rounded-2xl" style={shadowLarge}>

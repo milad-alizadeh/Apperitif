@@ -1,5 +1,6 @@
 import * as Google from 'expo-auth-session/providers/google'
-import * as WebBroowser from 'expo-web-browser'
+import * as Linking from 'expo-linking'
+import * as WebBrowser from 'expo-web-browser'
 import React, { useEffect } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
@@ -8,7 +9,7 @@ import { loadingVar } from '~/store/auth'
 import { shadowCard } from '~/theme'
 import { Icon } from '../Icon'
 
-WebBroowser.maybeCompleteAuthSession()
+WebBrowser.maybeCompleteAuthSession()
 
 export interface AppleAuthenticationProps {
   attemptedRoute: string | string[]
@@ -16,6 +17,16 @@ export interface AppleAuthenticationProps {
 
 export const GoogleAuthentication = function GoogleAuthentication({ attemptedRoute }) {
   const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
+
+  useEffect(() => {
+    const handleDeepLink = ({ url }) => {
+      // Process the URL here
+      console.log('url', url)
+    }
+
+    // Add a listener for incoming URLs
+    Linking.addEventListener('url', handleDeepLink)
+  }, [])
 
   const [_request, response, promptAsync] = Google.useAuthRequest({
     iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,

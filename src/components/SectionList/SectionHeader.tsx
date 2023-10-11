@@ -39,10 +39,12 @@ export const SectionHeader = function SectionHeader({
   const indicatorPos = useSharedValue({ width: 0, x: 0 })
   const refs = useMemo(() => sectionTitles.map(() => createRef<View>()), [])
   const [containerX, setContainerX] = useState(-1)
+  const [containerWidth, setContainerWidth] = useState(0)
 
   // Measure the x position of the FlatList on its layout
   const onContainerLayout = () => {
     containerRef?.current?.measure((fx, fy, width, height, px) => {
+      setContainerWidth(width)
       setContainerX(px)
     })
   }
@@ -109,6 +111,15 @@ export const SectionHeader = function SectionHeader({
         className="w-full"
         ListFooterComponent={
           scrollEnabled && <View className="h-5" style={{ width: useWindowDimensions().width }} />
+        }
+        contentContainerStyle={
+          !scrollEnabled
+            ? {
+                justifyContent: 'space-between',
+                width: '100%',
+                paddingRight: 24,
+              }
+            : {}
         }
         renderItem={({ item, index }) => {
           return (

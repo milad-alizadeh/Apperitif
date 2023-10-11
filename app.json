@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon-all.png",
-    "scheme": "myapp",
+    "scheme": "ai.bubblewrap.apperitif",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash-logo-all.png",

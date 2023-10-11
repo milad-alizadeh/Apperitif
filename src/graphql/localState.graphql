@@ -4,4 +4,6 @@ extend type Query {
   selectedJiggerSize: Int
   selectedUnitSystem: String
   doubleRecipe: Boolean
+  totalMatchInfoBoxDismissed: Boolean
+  partialMatchInfoBoxDismissed: Boolean
 }

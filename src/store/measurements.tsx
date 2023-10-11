@@ -44,11 +44,15 @@ export const unitSystemsVar = makeVar([
 export const selectedUnitSystemVar = makeVar<UnitSystems>(UnitSystems.METRIC)
 export const selectedJiggerSizeVar = makeVar(JiggerSizes['50ml'])
 export const doubleRecipeVar = makeVar<boolean>(false)
+export const partialMatchInfoBoxDismissedVar = makeVar(false)
+export const totalMatchInfoBoxDismissedVar = makeVar(false)
 
 export const measurementFields = {
   selectedJiggerSize: createFieldPolicy(selectedJiggerSizeVar),
   selectedUnitSystem: createFieldPolicy(selectedUnitSystemVar),
   doubleRecipe: createFieldPolicy(doubleRecipeVar),
+  partialMatchInfoBoxDismissed: createFieldPolicy(partialMatchInfoBoxDismissedVar),
+  totalMatchInfoBoxDismissed: createFieldPolicy(totalMatchInfoBoxDismissedVar),
 }
 
 // Set default values
@@ -56,4 +60,6 @@ export const measurementsDefaults = {
   selectedJiggerSize: selectedJiggerSizeVar(),
   selectedUnitSystem: selectedUnitSystemVar(),
   doubleRecipe: doubleRecipeVar(),
+  partialMatchInfoBoxDismissed: partialMatchInfoBoxDismissedVar(),
+  totalMatchInfoBoxDismissed: totalMatchInfoBoxDismissedVar(),
 }

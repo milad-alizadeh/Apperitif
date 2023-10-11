@@ -46,13 +46,14 @@ export const RecipeTabs = function RecipeTabs({
   const { data: measurements } = useQuery(GET_MEASUREMENTS)
   const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
   const multiplier =
-    (measurements.selectedJiggerSize / defaultJiggerSize) * (measurements.doubleRecipe ? 2 : 1)
+    (measurements?.selectedJiggerSize / defaultJiggerSize) * (measurements?.doubleRecipe ? 2 : 1)
 
   const renderIngredientItem = useCallback(
     ({ ingredient, quantity, unit, isOptional }: Ingredient) => {
+      if (!units || !measurements) return null
       const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem({
         unit: unit as Units,
-        toSystem: measurements.selectedUnitSystem as UnitSystems,
+        toSystem: measurements?.selectedUnitSystem as UnitSystems,
         quantity,
         units,
         multiplier,
@@ -67,7 +68,7 @@ export const RecipeTabs = function RecipeTabs({
         />
       )
     },
-    [ingredients, units, measurements.selectedUnitSystem, multiplier],
+    [ingredients, units, measurements?.selectedUnitSystem, multiplier],
   )
 
   const renderEquipmentItem = useCallback(

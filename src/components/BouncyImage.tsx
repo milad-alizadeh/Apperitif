@@ -1,5 +1,6 @@
 import { Image } from 'expo-image'
 import * as React from 'react'
+import { useWindowDimensions } from 'react-native'
 import Animated, {
   Extrapolation,
   SharedValue,
@@ -7,6 +8,7 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated'
 import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
+import { SkeletonView } from './SkeletonView'
 
 export interface BouncyImageProps {
   /** The height of the image */
@@ -21,14 +23,27 @@ export interface BouncyImageProps {
  * A component that renders an animated image that bounces as the user scrolls.
  */
 export const BouncyImage = function BouncyImage({ height, scrollY, imageUrl }: BouncyImageProps) {
+  const [loaded, setLoaded] = React.useState(false)
+  const width = useWindowDimensions().width
   return (
     <Animated.View
       className="bg-neutral-300 w-full"
       style={[scrollY ? getBouncyTransform(scrollY, height) : {}, { height }]}
     >
+      {!loaded && (
+        <SkeletonView
+          style={{ position: 'absolute', left: 0, top: 0 }}
+          visible={loaded}
+          height={height}
+          width={width}
+        />
+      )}
       <Image
         className="w-full h-full"
         transition={300}
+        onLoad={() => {
+          setLoaded(true)
+        }}
         source={
           typeof imageUrl === 'string'
             ? { uri: getImageUrl(imageUrl, imageSizes.MEDIUM) }
