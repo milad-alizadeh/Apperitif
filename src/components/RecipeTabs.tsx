@@ -69,7 +69,6 @@ export const RecipeTabs = function RecipeTabs({
           showCheckbox
           checked={inMyBar}
           disableCheckbox={!inMyBar}
-          // primaryTextColor={!inMyBar}
           onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
         />
       )
