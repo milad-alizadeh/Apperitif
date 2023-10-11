@@ -29,8 +29,6 @@ export default function MyBarHomeScreen() {
   const { data, loading, error } = useQuery(GET_MEASUREMENTS)
   const updateCache = useUpdateCache()
 
-  console.log('data', data, loading, error)
-
   const handleIngredientPress = useCallback((ingredientId: string) => {
     setIngredientId(ingredientId)
     modalRef.current.show()
