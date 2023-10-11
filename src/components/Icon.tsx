@@ -136,6 +136,8 @@ export const iconRegistry = {
   settings: require('~assets/icons/settings.png'),
   shaker: require('~assets/icons/shaker.png'),
   shot: require('~assets/icons/shot.png'),
+  slashCircle: require('~assets/icons/slash-circle.png'),
+  slashDoubleCircle: require('~assets/icons/slash-double-circle.png'),
   sliders: require('~assets/icons/sliders.png'),
   text: require('~assets/icons/text.png'),
   trash: require('~assets/icons/trash.png'),

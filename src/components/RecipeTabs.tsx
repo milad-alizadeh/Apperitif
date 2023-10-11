@@ -20,7 +20,7 @@ export interface RecipeTabsProps {
   /**
    * An optional style override useful for padding & margin.
    */
-  ingredients: Ingredient[]
+  ingredients: (Ingredient & { inMyBar: boolean })[]
   equipment: Equipment[]
   steps: Step[]
   onIngredientPress: (id: string) => void
@@ -48,8 +48,11 @@ export const RecipeTabs = function RecipeTabs({
   const multiplier =
     (measurements?.selectedJiggerSize / defaultJiggerSize) * (measurements?.doubleRecipe ? 2 : 1)
 
+  const missingIngredients = ingredients.filter((ingredient) => !ingredient.inMyBar)
+  const inStockIngredients = ingredients.filter((ingredient) => ingredient.inMyBar)
+
   const renderIngredientItem = useCallback(
-    ({ ingredient, quantity, unit, isOptional }: Ingredient) => {
+    ({ ingredient, quantity, unit, isOptional, inMyBar }: Ingredient & { inMyBar: boolean }) => {
       if (!units || !measurements) return null
       const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem({
         unit: unit as Units,
@@ -63,7 +66,10 @@ export const RecipeTabs = function RecipeTabs({
           key={ingredient.id}
           name={`${ingredient.name} ${isOptional ? '(optional)' : ''}`}
           leftText={`${outputQuantity} ${outputUnit}`}
-          rightIcon="text"
+          showCheckbox
+          checked={inMyBar}
+          disableCheckbox={!inMyBar}
+          // primaryTextColor={!inMyBar}
           onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
         />
       )
@@ -105,7 +111,23 @@ export const RecipeTabs = function RecipeTabs({
     <Tabs initialIndex={0}>
       <Tabs.TabPage title="Ingredients">
         <RecipeMeasurements styleClassName="pb-6 mb-3 border-b-[1px] border-neutral-200" />
-        <View>{ingredients.map((ingredient) => renderIngredientItem(ingredient))}</View>
+        {!!inStockIngredients?.length && (
+          <View>
+            {/* <Text body weight="bold" styleClassName="mb-3">
+              In Stock
+            </Text> */}
+            <View>{inStockIngredients.map((ingredient) => renderIngredientItem(ingredient))}</View>
+          </View>
+        )}
+
+        {!!missingIngredients?.length && (
+          <View>
+            {/* <Text body weight="bold" styleClassName="mb-3 text-primary">
+              Missing from my bar
+            </Text> */}
+            {missingIngredients.map((ingredient) => renderIngredientItem(ingredient))}
+          </View>
+        )}
       </Tabs.TabPage>
 
       <Tabs.TabPage title="Method">

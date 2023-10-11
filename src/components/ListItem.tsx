@@ -46,6 +46,12 @@ export interface ListItemProps {
   small?: boolean
   /** Whether to enable haptics when the item is pressed */
   enableHaptics?: boolean
+  /** Whether to use primary text color */
+  primaryTextColor?: boolean
+  /** Whether to display a checkbox */
+  hasCheckbox?: boolean
+  /** Whether to disable the checkbox */
+  disableCheckbox?: boolean
 }
 
 /**
@@ -59,7 +65,6 @@ export const ListItem = memo(function ListItem({
   styleClassName,
   card,
   showCheckbox,
-  checked,
   onLeftIconPress,
   onRightIconPress,
   onPress,
@@ -67,6 +72,9 @@ export const ListItem = memo(function ListItem({
   leftImage,
   enableHaptics = true,
   small,
+  primaryTextColor,
+  checked,
+  disableCheckbox,
 }: ListItemProps) {
   const shadow = card ? shadowCard : {}
   const haptic = useHaptic('medium')
@@ -94,9 +102,22 @@ export const ListItem = memo(function ListItem({
           transition={500}
         />
       )}
-      {showCheckbox && <Checkbox checked={checked} onPress={onPress} styleClassName="mr-3" />}
+      {showCheckbox && (
+        <Checkbox
+          disabled={disableCheckbox}
+          checked={checked}
+          onPress={onPress}
+          styleClassName="mr-3"
+        />
+      )}
       {leftText && (
-        <Text styleClassName={`font-medium min-w-[80px] mr-3 text-base`}>{leftText}</Text>
+        <Text
+          styleClassName={`font-medium min-w-[80px] text-base 
+            ${primaryTextColor ? 'text-primary' : ''}
+          `}
+        >
+          {leftText}
+        </Text>
       )}
       {leftIcon && (
         <Icon
@@ -107,7 +128,12 @@ export const ListItem = memo(function ListItem({
         />
       )}
       <View className="flex-wrap flex-row bg-transparent w-4 flex-1">
-        <Text styleClassName={`flex-1 flex-wrap font-medium ${small ? 'text-sm' : 'text-base'}`}>
+        <Text
+          styleClassName={`flex-1 flex-wrap font-medium
+           ${small ? 'text-sm' : 'text-base'}
+           ${primaryTextColor ? 'text-primary' : ''}
+           `}
+        >
           {name}
         </Text>
       </View>

@@ -7,12 +7,18 @@ export interface CheckboxProps {
   checked?: boolean
   onPress?: (value: boolean) => void
   styleClassName?: string
+  disabled?: boolean
 }
 
 /**
  * Describe your component here
  */
-export const Checkbox = function Checkbox({ checked, onPress, styleClassName }: CheckboxProps) {
+export const Checkbox = function Checkbox({
+  checked,
+  onPress,
+  styleClassName,
+  disabled,
+}: CheckboxProps) {
   return (
     <TouchableOpacity className={styleClassName} activeOpacity={1} onPress={() => onPress(checked)}>
       {checked ? (
@@ -21,6 +27,13 @@ export const Checkbox = function Checkbox({ checked, onPress, styleClassName }: 
           size="small"
           containerClassName="rounded-full bg-primary"
           color={colors.white}
+        />
+      ) : disabled ? (
+        <Icon
+          icon="slashCircle"
+          size="small"
+          containerClassName="rounded-full p-0"
+          color={colors.neutral[400]}
         />
       ) : (
         <View className="rounded-full w-6 h-6 p-1 border-2 border-neutral-400" />

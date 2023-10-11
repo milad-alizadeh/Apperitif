@@ -17,7 +17,7 @@ import {
 } from '~/components'
 import { RecipeAttributes } from '~/components/RecipeAttributes'
 import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
-import { GET_CONTENT, GET_FAVOURITES, GET_RECIPE_DETAILS } from '~/graphql/queries'
+import { GET_CONTENT, GET_FAVOURITES, GET_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useSession } from '~/hooks/useSession'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
@@ -40,6 +40,8 @@ export default function RecipeDetailsScreen() {
     variables: { recipeId },
   })
 
+  const { data: barIngredients } = useQuery(GET_MY_BAR)
+
   const { data: attributesData } = useQuery(GET_CONTENT, {
     variables: {
       name: 'recipe_attributes',
@@ -49,7 +51,7 @@ export default function RecipeDetailsScreen() {
 
   const recipe = data?.recipesCollection?.edges[0]?.node
   const equipment = recipe?.recipesEquipmentCollection?.edges.map((e) => e.node.equipment) ?? []
-  const ingredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
+  const recipeIngredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
   const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
   const categories = recipe?.recipesCategoriesCollection?.edges.map((e) => e.node.category) ?? []
   const attributeCategories = attributesData?.appContentCollection?.edges?.[0]?.node?.content
@@ -59,6 +61,16 @@ export default function RecipeDetailsScreen() {
   const attributes = attributeCategoriesParsed.map((id: string) =>
     categories.find((c) => c.parentId === id),
   )
+
+  const myBar = barIngredients.profilesIngredientsCollection.edges.map((e) => e.node.ingredient.id)
+
+  const mergedRecipeIngredients = recipeIngredients.map((recipeIngredient) => {
+    const inMyBar = myBar.includes(recipeIngredient.ingredient.id)
+    return {
+      ...recipeIngredient,
+      inMyBar,
+    }
+  })
 
   const onIngredientPress = useCallback((id) => {
     setIngredientId(id)
@@ -142,7 +154,7 @@ export default function RecipeDetailsScreen() {
           <View className="bg-white rounded-2xl" style={shadowLarge}>
             <RecipeTabs
               steps={steps}
-              ingredients={ingredients}
+              ingredients={mergedRecipeIngredients}
               equipment={equipment}
               onIngredientPress={onIngredientPress}
               onEquipmentPress={onEquipmentPress}
