@@ -68,6 +68,7 @@ export const RecipeTabs = function RecipeTabs({
           leftText={`${outputQuantity} ${outputUnit}`}
           showCheckbox
           checked={inMyBar}
+          outline
           disableCheckbox={!inMyBar}
           onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
         />

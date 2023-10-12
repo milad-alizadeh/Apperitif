@@ -1,6 +1,6 @@
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { router } from 'expo-router'
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { View, ViewStyle } from 'react-native'
 import { FixedHeader, IngredientListItem, Screen, SectionList } from '~/components'
 import { ADD_TO_MY_BAR } from '~/graphql/mutations/addToMyBar'

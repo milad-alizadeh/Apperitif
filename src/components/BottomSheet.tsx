@@ -1,6 +1,6 @@
 import { BlurView } from 'expo-blur'
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { Modal, Pressable, TouchableOpacity, View } from 'react-native'
+import { Modal, Pressable, ScrollView, View, useWindowDimensions } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
   Easing,
@@ -10,8 +10,9 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { shadowLarge } from '~/theme/shadows'
-import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
+import { Icon } from './Icon'
 
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)
 
@@ -31,9 +32,12 @@ export const BottomSheet = forwardRef(function BottomSheet(
 ) {
   const [visible, setVisible] = useState(false)
   const offset = useSharedValue(0)
+  const paddingTop = useSharedValue(0)
   const duration = 200
-  const bottomInset = useSafeAreaInsetsStyle(['bottom'])
-  const contentHeight = useRef(0)
+  const topInset = useSafeAreaInsets().top
+  const windowHeight = useWindowDimensions().height
+  const bottomInset = useSafeAreaInsets().bottom
+  const contentHeight = useSharedValue(0)
   const blurIntensity = useSharedValue(0)
   const animationConfig = {
     duration,
@@ -67,8 +71,10 @@ export const BottomSheet = forwardRef(function BottomSheet(
     [],
   )
 
-  const bottomSheetStyle = useAnimatedStyle(() => {
+  const containerStyle = useAnimatedStyle(() => {
     return {
+      paddingTop: withTiming(paddingTop.value, animationConfig),
+      height: withTiming(contentHeight.value, animationConfig),
       transform: [
         {
           translateY: withTiming(offset.value, animationConfig),
@@ -87,43 +93,52 @@ export const BottomSheet = forwardRef(function BottomSheet(
     const height = event.nativeEvent.layout.height
 
     if (height > 0) {
-      contentHeight.current = height
-      offset.value = -contentHeight.current
+      const isLargerThanWindow = height > windowHeight - topInset
+      const newContentHeight = isLargerThanWindow ? windowHeight : height
+      contentHeight.value = newContentHeight
+      paddingTop.value = isLargerThanWindow ? topInset : 0
+      offset.value = -newContentHeight
     }
   }
 
-  const swipeGesture = Gesture.Pan()
-    .onUpdate((event) => {})
-    .onEnd((event) => {
-      const threshold = 50
-      if (event.velocityY > threshold) {
-        runOnJS(hide)()
-      }
-    })
+  const swipeGesture = Gesture.Pan().onEnd((event) => {
+    const threshold = 50
+    if (event.velocityY > threshold) {
+      runOnJS(hide)()
+    }
+  })
 
   return (
     <Modal transparent visible={visible} onRequestClose={hide} statusBarTranslucent>
-      <Pressable onPress={hide}>
-        <AnimatedBlurView
-          animatedProps={intensityProp}
-          tint="dark"
-          className="w-full h-full items-center justify-center"
+      <AnimatedBlurView
+        animatedProps={intensityProp}
+        tint="dark"
+        className="w-full h-full items-center justify-center"
+      >
+        <Pressable onPress={hide}>
+          <View className="left-0 top-0 h-screen w-screen z-10" />
+        </Pressable>
+
+        <Animated.View
+          style={[containerStyle, shadowLarge]}
+          className="absolute bg-white w-screen top-full z-50 rounded-t-[50px] overflow-hidden"
         >
-          <Animated.View
-            className="absolute bg-white w-screen top-full z-50 rounded-t-[50px] overflow-hidden"
-            style={[bottomSheetStyle, shadowLarge]}
-          >
+          <ScrollView>
+            <View className="absolute right-6 top-6 z-20">
+              <Icon icon="close" size="large" onPress={hide} />
+            </View>
             {/* Swip Area */}
             <GestureDetector gesture={swipeGesture}>
-              <View className="h-32 absolute top-0 left-0 w-full z-10"></View>
+              <View className="h-32absolute top-0 left-0 w-full z-10"></View>
             </GestureDetector>
 
-            <View onLayout={onContentLayout} className="min-h-[360px]" style={bottomInset}>
+            <View onLayout={onContentLayout} className="min-h-[360px]">
               {children}
+              <View style={{ height: bottomInset }}></View>
             </View>
-          </Animated.View>
-        </AnimatedBlurView>
-      </Pressable>
+          </ScrollView>
+        </Animated.View>
+      </AnimatedBlurView>
     </Modal>
   )
 })

@@ -131,7 +131,9 @@ export default function RecipeDetailsScreen() {
 
       {/* Ingredient Modal */}
       <BottomSheet ref={modalRef}>
-        {ingredientId && <IngredientDetails ingredientId={ingredientId} />}
+        {ingredientId && (
+          <IngredientDetails onClosed={modalRef.current.hide} ingredientId={ingredientId} />
+        )}
         {equipmentId && <EquipmentDetails equipmentId={equipmentId} />}
       </BottomSheet>
 

@@ -6,6 +6,7 @@ import { colors } from '~/theme'
 import { shadowCard } from '~/theme/shadows'
 import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 import { Badge } from './Badge'
+import { Button } from './Button'
 import { Checkbox } from './Checkbox'
 import { Icon, IconTypes } from './Icon'
 import { Text } from './Text'
@@ -52,6 +53,8 @@ export interface ListItemProps {
   hasCheckbox?: boolean
   /** Whether to disable the checkbox */
   disableCheckbox?: boolean
+  /** Whether to display an outline */
+  outline?: boolean
 }
 
 /**
@@ -73,6 +76,7 @@ export const ListItem = memo(function ListItem({
   enableHaptics = true,
   small,
   primaryTextColor,
+  outline,
   checked,
   disableCheckbox,
 }: ListItemProps) {
@@ -104,9 +108,12 @@ export const ListItem = memo(function ListItem({
       )}
       {showCheckbox && (
         <Checkbox
+          onPress={() => {
+            if (enableHaptics) haptic()
+            onPress && onPress()
+          }}
           disabled={disableCheckbox}
           checked={checked}
-          onPress={onPress}
           styleClassName="mr-3"
         />
       )}
@@ -132,6 +139,7 @@ export const ListItem = memo(function ListItem({
           styleClassName={`flex-1 flex-wrap font-medium
            ${small ? 'text-sm' : 'text-base'}
            ${primaryTextColor ? 'text-primary' : ''}
+           ${outline ? 'underline' : ''}
            `}
         >
           {name}
