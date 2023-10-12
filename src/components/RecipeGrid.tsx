@@ -8,7 +8,7 @@ interface RecipeGridProps {
   ListEmptyComponent?: JSX.Element
   ListFooterComponent?: JSX.Element
   ListHeaderComponent?: JSX.Element
-  loadMore?: () => void
+  onEndReach?: () => void
   onRefresh?: () => void
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
   recipes: CardProps[]
@@ -22,7 +22,7 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
       ListEmptyComponent,
       ListFooterComponent,
       ListHeaderComponent,
-      loadMore,
+      onEndReached,
       onRefresh,
       onScroll,
       recipes,
@@ -66,7 +66,7 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
         onRefresh={onRefresh}
         ListHeaderComponent={ListHeaderComponent}
         onEndReachedThreshold={0.5}
-        onEndReached={loadMore}
+        onEndReached={onEndReached}
         renderItem={renderItem}
         ListFooterComponent={ListFooterComponent ?? <View className="h-20"></View>}
         ListEmptyComponent={ListEmptyComponent}
