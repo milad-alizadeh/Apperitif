@@ -28,7 +28,7 @@ export const IngredientDetails = function IngredientDetails({
   ingredientId,
   onClosed,
 }: IngredientDetailsProps) {
-  const { user } = useSession()
+  const { user, isLoggedIn } = useSession()
   const { data, loading } = useQuery(GET_INGREDIENT_DETAILS, {
     variables: { ingredientId },
   })
@@ -90,7 +90,7 @@ export const IngredientDetails = function IngredientDetails({
             </View>
 
             {/* Related Recipes */}
-            <View className="-mx-6 mt-6">
+            <View className="-mx-6 mt-6 min-h-[200px]">
               <HorizontalList
                 listItems={availableRecipes as any}
                 title="Recipes"
@@ -98,23 +98,28 @@ export const IngredientDetails = function IngredientDetails({
               />
             </View>
 
-            {/* Stock information */}
-            <View className="flex-row items-center mr-2 rounded-xl mt-6">
-              <Checkbox checked={isInMyBar} disabled styleClassName="mr-3" />
-              <Text body weight="bold">
-                {isInMyBar ? 'In My Bar' : 'You don’t have this in your bar'}
-              </Text>
-            </View>
+            {isLoggedIn && (
+              <View>
+                {/* Stock information */}
+                <View className="flex-row items-center mr-2 rounded-xl mt-6">
+                  <Checkbox checked={isInMyBar} disabled styleClassName="mr-3" />
+                  <Text body weight="bold">
+                    {isInMyBar ? 'In My Bar' : 'You don’t have this ingredient in your bar'}
+                  </Text>
+                </View>
 
-            {/* Add to my bar */}
-            {!isInMyBar && (
-              <Button
-                styleClassName="mt-6"
-                loading={addLoading}
-                large
-                label="Add To My Bar"
-                onPress={() => handleAddToMyBar(ingredientId)}
-              />
+                {/* Add to my bar */}
+                {!isInMyBar && (
+                  <Button
+                    styleClassName="mt-6"
+                    loading={addLoading}
+                    large
+                    label="Add To My Bar"
+                    enableHaptics
+                    onPress={() => handleAddToMyBar(ingredientId)}
+                  />
+                )}
+              </View>
             )}
           </View>
         )}

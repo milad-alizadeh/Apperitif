@@ -83,6 +83,13 @@ export const BottomSheet = forwardRef(function BottomSheet(
     }
   })
 
+  const closeStyle = useAnimatedStyle(() => {
+    return {
+      top: withTiming(paddingTop.value + 24, animationConfig),
+      opacity: withTiming(paddingTop.value > 0 ? 1 : 0, animationConfig),
+    }
+  })
+
   const intensityProp = useAnimatedProps(() => {
     return {
       intensity: withTiming(blurIntensity.value, animationConfig),
@@ -116,27 +123,27 @@ export const BottomSheet = forwardRef(function BottomSheet(
         className="w-full h-full items-center justify-center"
       >
         <Pressable onPress={hide}>
-          <View className="left-0 top-0 h-screen w-screen z-10" />
+          <View className="left-0 top-0 h-screen w-screen" />
         </Pressable>
 
         <Animated.View
           style={[containerStyle, shadowLarge]}
-          className="absolute bg-white w-screen top-full z-50 rounded-t-[50px] overflow-hidden"
+          className="absolute bg-white w-screen top-full rounded-t-[50px] overflow-hidden"
         >
+          <Animated.View style={closeStyle} className="absolute right-6 z-10 bg-white rounded-full">
+            <Icon icon="close" size="large" onPress={hide} />
+          </Animated.View>
           <ScrollView>
-            <View className="absolute right-6 top-6 z-20">
-              <Icon icon="close" size="large" onPress={hide} />
-            </View>
-            {/* Swip Area */}
-            <GestureDetector gesture={swipeGesture}>
-              <View className="h-32absolute top-0 left-0 w-full z-10"></View>
-            </GestureDetector>
-
             <View onLayout={onContentLayout} className="min-h-[360px]">
               {children}
               <View style={{ height: bottomInset }}></View>
             </View>
           </ScrollView>
+
+          {/* Swip Area */}
+          <GestureDetector gesture={swipeGesture}>
+            <View className="h-32 absolute top-0 left-0 w-full"></View>
+          </GestureDetector>
         </Animated.View>
       </AnimatedBlurView>
     </Modal>

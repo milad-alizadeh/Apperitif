@@ -90,7 +90,7 @@ export const ListItem = memo(function ListItem({
         if (enableHaptics) haptic()
         onPress && onPress()
       }}
-      className={`flex-row items-center justify-between 
+      className={`flex-row items-center justify-between flex
         ${card ? 'px-3 bg-neutral-100 rounded-xl' : ''}
         ${small ? 'h-10' : 'min-h-[48px]'}
         ${leftImage ? 'min-h-[64px]' : ''}
@@ -118,13 +118,15 @@ export const ListItem = memo(function ListItem({
         />
       )}
       {leftText && (
-        <Text
-          styleClassName={`font-medium min-w-[80px] text-base 
+        <View className="mr-3 min-w-[80px]">
+          <Text
+            styleClassName={`font-medium text-base
             ${primaryTextColor ? 'text-primary' : ''}
           `}
-        >
-          {leftText}
-        </Text>
+          >
+            {leftText}
+          </Text>
+        </View>
       )}
       {leftIcon && (
         <Icon
@@ -134,17 +136,15 @@ export const ListItem = memo(function ListItem({
           onPress={onLeftIconPress}
         />
       )}
-      <View className="flex-wrap flex-row bg-transparent w-4 flex-1">
-        <Text
-          styleClassName={`flex-1 flex-wrap font-medium
+      <Text
+        styleClassName={`flex-1 flex-wrap font-medium mr-auto
            ${small ? 'text-sm' : 'text-base'}
            ${primaryTextColor ? 'text-primary' : ''}
            ${outline ? 'underline' : ''}
            `}
-        >
-          {name}
-        </Text>
-      </View>
+      >
+        {name}
+      </Text>
 
       {rightIcon && (
         <Icon

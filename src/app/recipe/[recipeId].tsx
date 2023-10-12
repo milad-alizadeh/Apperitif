@@ -62,7 +62,8 @@ export default function RecipeDetailsScreen() {
     categories.find((c) => c.parentId === id),
   )
 
-  const myBar = barIngredients.profilesIngredientsCollection.edges.map((e) => e.node.ingredient.id)
+  const myBar =
+    barIngredients?.profilesIngredientsCollection.edges.map((e) => e.node.ingredient.id) ?? []
 
   const mergedRecipeIngredients = recipeIngredients.map((recipeIngredient) => {
     const inMyBar = myBar.includes(recipeIngredient.ingredient.id)

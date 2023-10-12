@@ -3,6 +3,7 @@ import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { GetRecipeDetailsQuery, Units } from '~/__generated__/graphql'
 import { GET_MEASUREMENTS, GET_UNITS } from '~/graphql/queries'
+import { useSession } from '~/hooks/useSession'
 import { UnitSystems, convertUnitToOtherSystem, defaultJiggerSize } from '~/store'
 import { ListItem } from './ListItem'
 import { RecipeMeasurements } from './RecipeMeasurements'
@@ -45,6 +46,7 @@ export const RecipeTabs = function RecipeTabs({
   const { data } = useQuery(GET_UNITS)
   const { data: measurements } = useQuery(GET_MEASUREMENTS)
   const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
+  const { isLoggedIn } = useSession()
   const multiplier =
     (measurements?.selectedJiggerSize / defaultJiggerSize) * (measurements?.doubleRecipe ? 2 : 1)
 
@@ -66,7 +68,7 @@ export const RecipeTabs = function RecipeTabs({
           key={ingredient.id}
           name={`${ingredient.name} ${isOptional ? '(optional)' : ''}`}
           leftText={`${outputQuantity} ${outputUnit}`}
-          showCheckbox
+          showCheckbox={isLoggedIn}
           checked={inMyBar}
           outline
           disableCheckbox={!inMyBar}
@@ -111,22 +113,15 @@ export const RecipeTabs = function RecipeTabs({
     <Tabs initialIndex={0}>
       <Tabs.TabPage title="Ingredients">
         <RecipeMeasurements styleClassName="pb-6 mb-3 border-b-[1px] border-neutral-200" />
+
         {!!inStockIngredients?.length && (
           <View>
-            {/* <Text body weight="bold" styleClassName="mb-3">
-              In Stock
-            </Text> */}
             <View>{inStockIngredients.map((ingredient) => renderIngredientItem(ingredient))}</View>
           </View>
         )}
 
         {!!missingIngredients?.length && (
-          <View>
-            {/* <Text body weight="bold" styleClassName="mb-3 text-primary">
-              Missing from my bar
-            </Text> */}
-            {missingIngredients.map((ingredient) => renderIngredientItem(ingredient))}
-          </View>
+          <View>{missingIngredients.map((ingredient) => renderIngredientItem(ingredient))}</View>
         )}
       </Tabs.TabPage>
 
