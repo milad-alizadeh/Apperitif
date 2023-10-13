@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon-all.png",
-    "scheme": "ai.bubblewrap.apperitif",
+    "scheme": "ai.bubblewrap.apperitif.staging",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash-logo-all.png",
@@ -16,7 +16,7 @@
     "ios": {
       "usesAppleSignIn": true,
       "supportsTablet": false,
-      "bundleIdentifier": "ai.bubblewrap.apperitif",
+      "bundleIdentifier": "ai.bubblewrap.apperitif.staging",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -27,7 +27,7 @@
         "foregroundImage": "./assets/images/app-icon-android-adaptive-foreground.png",
         "backgroundImage": "./assets/images/app-icon-android-adaptive-background.png"
       },
-      "package": "ai.bubblewrap.apperitif",
+      "package": "ai.bubblewrap.apperitif.staging",
       "intentFilters": [
         {
           "action": "VIEW",

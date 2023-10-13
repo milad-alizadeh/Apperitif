@@ -1,0 +1,62 @@
+name: Expo CI
+
+on:
+  push:
+    branches:
+      - staging
+      - production
+
+jobs:
+  build-or-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: 🌐 Setup Node.js Environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: 🧶 Install Project Dependencies
+        run: yarn install
+
+      - name: 🚀 Cache Dependencies for Faster Builds
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+
+      - name: 🔍 Check for App Version Change
+        id: version-check
+        run: |
+          VERSION_CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'app.json')
+          if [[ "$VERSION_CHANGED" != "" ]]; then
+            echo "::set-output name=version_changed::true"
+          else
+            echo "::set-output name=version_changed::false"
+          fi
+
+      - name: 🍏 Build & Submit iOS App
+        if: steps.version-check.outputs.version_changed == 'true'
+        run: |
+          eas build --platform ios --local --profile ${{ github.ref_name }}
+          eas submit --platform ios --latest --profile ${{ github.ref_name }}
+
+      - name: 🤖 Build & Submit Android App
+        if: steps.version-check.outputs.version_changed == 'true'
+        run: |
+          eas build --platform android --local --profile ${{ github.ref_name }}
+          eas submit --platform android --latest --profile ${{ github.ref_name }}
+
+      - name: 🔄 Push EAS Update
+        if: steps.version-check.outputs.version_changed == 'false'
+        run: eas update --branch ${{ github.ref_name }}
+
+      - name: 🗂 Archive Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: ./artifacts
