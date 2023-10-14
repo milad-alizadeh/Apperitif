@@ -32,7 +32,7 @@ jobs:
       - name: 🔍 Check for App Version Change
         id: version-check
         run: |
-          VERSION_CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'app.json')
+          VERSION_CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'app.config.js')
           if [[ "$VERSION_CHANGED" != "" ]]; then
             echo "::set-output name=version_changed::true"
           else
