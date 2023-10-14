@@ -1,11 +1,10 @@
-const APP_VARIANT = process.env.APP_VARIANT
-const APP_NAME = `Apperitif${APP_VARIANT ? ` (${APP_VARIANT})` : ''}`
-const BUNDLE_ID = `ai.bubblewrap.apperitif.${APP_VARIANT ? `.${APP_VARIANT}` : ''}`
-const SLUG = `apperitif${APP_VARIANT ? `-${APP_VARIANT}` : ''}`
+const APP_VARIANT = ''
+const APP_NAME = `Apperitif${APP_VARIANT ? `-${APP_VARIANT}` : ''}`
+const BUNDLE_ID = `ai.bubblewrap.apperitif${APP_VARIANT ? `.${APP_VARIANT}` : ''}`
 
 export default {
   name: APP_NAME,
-  slug: SLUG,
+  slug: 'apperitif',
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/images/app-icon-all.png',
