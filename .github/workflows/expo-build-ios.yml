@@ -1,0 +1,42 @@
+name: EAS Build Android
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        type: choice
+        description: Build profile to use
+        options:
+          - staging
+          - production
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: 📦 Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+          cache: yarn
+
+      - name: 🧶 Install Project Dependencies
+        run: yarn install
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          token: ${{ secrets.EXPO_TOKEN }}
+          expo-version: latest
+          eas-version: latest
+
+      - name: 🏗 Setup EAS local builds
+        run: yarn global add eas-cli-local-build-plugin
+
+      - name: 🍏 Build & Submit iOS App
+        run: |
+          eas build --platform ios --non-interactive --local --profile ${{ github.event.inputs.profile }} --output ./artifacts/${{ github.event.inputs.profile }}.ipa
+          eas submit --platform ios --profile ${{ github.event.inputs.profile }} --path ./artifacts/${{ github.event.inputs.profile }}.ipa

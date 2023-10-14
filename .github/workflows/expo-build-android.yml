@@ -1,0 +1,42 @@
+name: EAS Build Android
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        type: choice
+        description: Build profile to use
+        options:
+          - staging
+          - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+          cache: yarn
+
+      - name: 🧶 Install Project Dependencies
+        run: yarn install
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          token: ${{ secrets.EXPO_TOKEN }}
+          expo-version: latest
+          eas-version: latest
+
+      - name: 🏗 Setup EAS local builds
+        run: yarn global add eas-cli-local-build-plugin
+
+      - name: 🤖 Build & Submit Android App
+        run: |
+          eas build --platform android --non-interactive --local --profile ${{ github.ref_name }} --output ./artifacts/${{ github.ref_name }}.ipa
+          eas submit --platform android --profile ${{ github.ref_name }} --path ./artifacts/${{ github.ref_name }}.ipa
