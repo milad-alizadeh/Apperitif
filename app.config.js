@@ -4,7 +4,6 @@ const BUNDLE_ID = `ai.bubblewrap.apperitif${APP_VARIANT ? `.${APP_VARIANT}` : ''
 
 export default ({ config }) => {
   return {
-    ...config,
     name: APP_NAME,
     slug: 'apperitif',
     version: '1.0.0',

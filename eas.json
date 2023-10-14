@@ -2,7 +2,7 @@
   "cli": {
     "version": ">= 5.3.0",
     "promptToConfigurePushNotifications": false,
-    "appVersionSource": "local"
+    "appVersionSource": "remote"
   },
   "build": {
     "development-simulator": {
@@ -66,6 +66,15 @@
     }
   },
   "submit": {
-    "production": {}
+    "staging": {
+      "appleId": "contact@bubblewrap.ai",
+      "ascAppId": "6469188369",
+      "appleTeamId": "4D3DFR8J3X"
+    },
+    "production": {
+      "appleId": "contact@bubblewrap.ai",
+      "ascAppId": "6468588899",
+      "appleTeamId": "4D3DFR8J3X"
+    }
   }
 }
