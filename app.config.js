@@ -16,6 +16,12 @@ export default {
     backgroundColor: '#FFFFFF',
   },
   assetBundlePatterns: ['**/*'],
+  updates: {
+    url: 'https://u.expo.dev/0fe189be-8677-4ba8-b1e9-c3b3e63b388f',
+  },
+  runtimeVersion: {
+    policy: 'appVersion',
+  },
   ios: {
     usesAppleSignIn: true,
     supportsTablet: false,
