@@ -2,13 +2,14 @@
   "cli": {
     "version": ">= 5.3.0",
     "promptToConfigurePushNotifications": false,
-    "appVersionSource": "remote"
+    "appVersionSource": "local"
   },
   "build": {
     "development-simulator": {
       "developmentClient": true,
       "distribution": "internal",
       "env": {
+        "APP_VARIANT": "development-simulator",
         "EXPO_PUBLIC_IOS_CLIENT_ID": "387765460024-u00ludqbbapijlebphm3a36c4kpsq2a8.apps.googleusercontent.com",
         "EXPO_PUBLIC_ANDROID_CLIENT_ID": "387765460024-cffpkqkda7vh56hbd72k8j2ce8bjna7v.apps.googleusercontent.com",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0",
@@ -26,6 +27,7 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
+        "APP_VARIANT": "development",
         "EXPO_PUBLIC_IOS_CLIENT_ID": "387765460024-u00ludqbbapijlebphm3a36c4kpsq2a8.apps.googleusercontent.com",
         "EXPO_PUBLIC_ANDROID_CLIENT_ID": "387765460024-cffpkqkda7vh56hbd72k8j2ce8bjna7v.apps.googleusercontent.com",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0",
@@ -39,6 +41,9 @@
       "autoIncrement": true,
       "channel": "staging",
       "env": {
+        "APP_VARIANT": "staging",
+        "EXPO_PUBLIC_IOS_CLIENT_ID": "387765460024-n1rej4c8npbr7jcijr3b7tq25a8m93ci.apps.googleusercontent.com",
+        "EXPO_PUBLIC_ANDROID_CLIENT_ID": "387765460024-s1t0op27cenve9qerh7dqbj7837o12gk.apps.googleusercontent.com",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZWNwd2hxZ3NuaXhraHN5dnl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTYzNzg3NDMsImV4cCI6MjAxMTk1NDc0M30.bs0CaSEdCwtVCVC5uIwq6GnNIF_ibNaU05R7PnuaJ0M",
         "EXPO_PUBLIC_SUPABASE_URL": "https://ddecpwhqgsnixkhsyvyt.supabase.co"
       },

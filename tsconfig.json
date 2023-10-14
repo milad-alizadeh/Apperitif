@@ -14,6 +14,7 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "src/app/(tabs)/profile/_layout."
+    "src/app/(tabs)/profile/_layout.",
+    "app.config.js"
   ]
 }
