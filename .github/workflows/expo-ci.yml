@@ -29,29 +29,25 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-node-
 
-      - name: 🔍 Check for App Version Change
-        id: version-check
-        run: |
-          CURRENT_VERSION=$(grep "version: '.*'," app.config.js | sed "s/[^'']*'\([^']*\)'.*/\1/")
-          PREVIOUS_VERSION=$(git show ${{ github.event.before }}:./app.config.js | grep "version: '.*'," | sed "s/[^'']*'\([^']*\)'.*/\1/")
-          if [[ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ]]; then
-              echo "::set-output name=version_changed::true"
-          else
-              echo "::set-output name=version_changed::false"
-          fi
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          token: ${{ secrets.EXPO_TOKEN }}
+          expo-version: latest
+          eas-version: latest
+
+      - name: 🏗 Setup EAS local builds
+        run: yarn global add eas-cli-local-build-plugin
 
       - name: 🍏 Build & Submit iOS App
-        if: steps.version-check.outputs.version_changed == 'true'
         run: |
           eas build --platform ios --non-interactive --local --profile ${{ github.ref_name }} --output ./artifacts/${{ github.ref_name }}.ipa
           eas submit --platform ios --profile ${{ github.ref_name }} --path ./artifacts/${{ github.ref_name }}.ipa
 
       # - name: 🤖 Build & Submit Android App
-      #   if: steps.version-check.outputs.version_changed == 'true'
       #   run: |
       #     eas build --platform android --non-interactive --local --profile ${{ github.ref_name }}  --output ./artifacts/${{ github.ref_name }}.apk
       #     eas submit --platform android --profile ${{ github.ref_name }} --path ./artifacts/${{ github.ref_name }}.apk
 
-      - name: 🔄 Push EAS Update
-        if: steps.version-check.outputs.version_changed == 'false'
-        run: eas update --branch ${{ github.ref_name }}
+      # - name: 🔄 Push EAS Update
+      #   run: eas update --branch ${{ github.ref_name }}
