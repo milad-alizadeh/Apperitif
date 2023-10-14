@@ -1,5 +1,5 @@
 const APP_VARIANT = process.env.APP_VARIANT
-const APP_NAME = `Apperitif${APP_VARIANT ? `-${APP_VARIANT}` : ''}`
+const APP_NAME = `Apperitif${APP_VARIANT ? ` (${APP_VARIANT})` : ''}`
 const BUNDLE_ID = `ai.bubblewrap.apperitif${APP_VARIANT ? `.${APP_VARIANT}` : ''}`
 
 export default ({ config }) => {
