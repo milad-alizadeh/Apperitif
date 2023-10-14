@@ -15,7 +15,7 @@
     "compile": "tsc --noEmit -p . --pretty",
     "add:test-device": "eas device:create",
     "build:run:simulator": "eas build:run -p ios --path",
-    "build:dev:ios": "eas build --profile development --platform ios --local",
+    "build:dev:ios": "eas build --profile development --platform ios --local --output ./builds/development",
     "build:dev:ios-simulator": "eas build --profile development-simulator --platform ios --local",
     "build:dev:android": "eas build --profile development --platform android --local",
     "build:staging:ios": "eas build --profile staging --platform ios --local",
@@ -26,7 +26,7 @@
     "build-and-submit:production:android": "eas build --profile production --platform android --auto-submit",
     "expo:doctor": "npx expo-doctor@latest",
     "expo:fix": "npx expo install --fix",
-    "generate:types": "npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > src/types/supabase.ts",
+    "generate:types": " npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > src/types/supabase.ts",
     "generate:gql": "graphql-codegen",
     "generate:gqlwatch": "graphql-codegen -w"
   },

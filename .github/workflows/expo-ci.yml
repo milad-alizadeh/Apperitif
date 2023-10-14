@@ -42,21 +42,15 @@ jobs:
       - name: 🍏 Build & Submit iOS App
         if: steps.version-check.outputs.version_changed == 'true'
         run: |
-          eas build --platform ios --local --profile ${{ github.ref_name }}
-          eas submit --platform ios --latest --profile ${{ github.ref_name }}
+          eas build --platform ios --local --profile ${{ github.ref_name }} --output ./artifacts/${{ github.ref_name }}.ipa
+          eas submit --platform ios --profile ${{ github.ref_name }} --path ./artifacts/${{ github.ref_name }}.ipa
 
       - name: 🤖 Build & Submit Android App
         if: steps.version-check.outputs.version_changed == 'true'
         run: |
-          eas build --platform android --local --profile ${{ github.ref_name }}
-          eas submit --platform android --latest --profile ${{ github.ref_name }}
+          eas build --platform android --local --profile ${{ github.ref_name }}  --output ./artifacts/${{ github.ref_name }}.apk
+          eas submit --platform android --profile ${{ github.ref_name }} --path ./artifacts/${{ github.ref_name }}.apk
 
       - name: 🔄 Push EAS Update
         if: steps.version-check.outputs.version_changed == 'false'
         run: eas update --branch ${{ github.ref_name }}
-
-      - name: 🗂 Archive Build Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: build-artifacts
-          path: ./artifacts
