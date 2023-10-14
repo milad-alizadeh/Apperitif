@@ -1,4 +1,4 @@
-name: Expo CI
+name: EAS Update
 
 on:
   push:
