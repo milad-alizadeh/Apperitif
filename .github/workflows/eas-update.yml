@@ -30,4 +30,4 @@ jobs:
           eas-version: latest
 
       - name: 🔄 Push EAS Update
-        run: eas update --branch ${{ github.ref_name }}
+        run: eas update --branch ${{ github.ref_name }} --message "Update from GitHub Actions"
