@@ -42,14 +42,14 @@ jobs:
       - name: 🍏 Build & Submit iOS App
         if: steps.version-check.outputs.version_changed == 'true'
         run: |
-          eas build --platform ios --local --profile ${{ github.ref_name }} --output ./artifacts/${{ github.ref_name }}.ipa
+          eas build --platform ios --non-interactive --local --profile ${{ github.ref_name }} --output ./artifacts/${{ github.ref_name }}.ipa
           eas submit --platform ios --profile ${{ github.ref_name }} --path ./artifacts/${{ github.ref_name }}.ipa
 
-      - name: 🤖 Build & Submit Android App
-        if: steps.version-check.outputs.version_changed == 'true'
-        run: |
-          eas build --platform android --local --profile ${{ github.ref_name }}  --output ./artifacts/${{ github.ref_name }}.apk
-          eas submit --platform android --profile ${{ github.ref_name }} --path ./artifacts/${{ github.ref_name }}.apk
+      # - name: 🤖 Build & Submit Android App
+      #   if: steps.version-check.outputs.version_changed == 'true'
+      #   run: |
+      #     eas build --platform android --non-interactive --local --profile ${{ github.ref_name }}  --output ./artifacts/${{ github.ref_name }}.apk
+      #     eas submit --platform android --profile ${{ github.ref_name }} --path ./artifacts/${{ github.ref_name }}.apk
 
       - name: 🔄 Push EAS Update
         if: steps.version-check.outputs.version_changed == 'false'
