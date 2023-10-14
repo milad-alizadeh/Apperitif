@@ -3,9 +3,8 @@ const APP_NAME = `Apperitif${APP_VARIANT ? `-${APP_VARIANT}` : ''}`
 const BUNDLE_ID = `ai.bubblewrap.apperitif${APP_VARIANT ? `.${APP_VARIANT}` : ''}`
 
 export default ({ config }) => {
-  console.log(config)
-
   return {
+    ...config,
     name: APP_NAME,
     slug: 'apperitif',
     version: '1.0.0',
@@ -29,14 +28,12 @@ export default ({ config }) => {
       usesAppleSignIn: true,
       supportsTablet: false,
       bundleIdentifier: BUNDLE_ID,
-      buildNumber: appBuildNumbers.expo.ios.buildNumber,
       config: {
         usesNonExemptEncryption: false,
       },
       associatedDomains: ['applinks:bubblewrap.ai'],
     },
     android: {
-      versionCode: appBuildNumbers.expo.android.versionCode,
       adaptiveIcon: {
         foregroundImage: './assets/images/app-icon-android-adaptive-foreground.png',
         backgroundImage: './assets/images/app-icon-android-adaptive-background.png',
