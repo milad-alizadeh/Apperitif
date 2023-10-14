@@ -32,11 +32,12 @@ jobs:
       - name: 🔍 Check for App Version Change
         id: version-check
         run: |
-          VERSION_CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'app.config.js')
-          if [[ "$VERSION_CHANGED" != "" ]]; then
-            echo "::set-output name=version_changed::true"
+          CURRENT_VERSION=$(grep "version: '.*'," app.config.js | sed "s/[^'']*'\([^']*\)'.*/\1/")
+          PREVIOUS_VERSION=$(git show ${{ github.event.before }}:./app.config.js | grep "version: '.*'," | sed "s/[^'']*'\([^']*\)'.*/\1/")
+          if [[ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ]]; then
+              echo "::set-output name=version_changed::true"
           else
-            echo "::set-output name=version_changed::false"
+              echo "::set-output name=version_changed::false"
           fi
 
       - name: 🍏 Build & Submit iOS App
