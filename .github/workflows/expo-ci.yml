@@ -7,27 +7,20 @@ on:
       - production
 
 jobs:
-  build-or-update:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: macos-latest
     steps:
       - name: 📦 Checkout Repository
         uses: actions/checkout@v2
 
-      - name: 🌐 Setup Node.js Environment
+      - name: 🏗 Setup Node
         uses: actions/setup-node@v2
         with:
           node-version: '20'
+          cache: yarn
 
       - name: 🧶 Install Project Dependencies
         run: yarn install
-
-      - name: 🚀 Cache Dependencies for Faster Builds
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
 
       - name: 🏗 Setup Expo and EAS
         uses: expo/expo-github-action@v7
