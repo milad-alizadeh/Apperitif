@@ -1,4 +1,4 @@
-name: EAS Build iOS
+name: EAS Local - Build And Submit iOS
 
 on:
   workflow_dispatch:
