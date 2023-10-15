@@ -16,7 +16,7 @@ export interface ButtonProps {
  * Describe your component here
  */
 export const Button = forwardRef(function Button(
-  { label, onPress, outline, styleClassName, large, enableHaptics, loading }: ButtonProps,
+  { label, onPress, outline, styleClassName, large = true, enableHaptics, loading }: ButtonProps,
   ref: any,
 ) {
   const hapticSuccess = useHaptic('success')

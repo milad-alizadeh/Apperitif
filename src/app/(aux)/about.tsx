@@ -15,10 +15,17 @@ export default function FAQs() {
       <View className="px-6 justify-center items-center flex-1">
         <View className="-translate-y-28 items-center">
           <Image className="w-56 h-56" source={require('~assets/images/logo.png')} />
-          <Text body styleClassName="mb-4" weight="bold">
-            {appName} v{version} ({buildNumber}) - u{Updates.updateId.slice(0, 8)}
+          <Text body weight="bold">
+            {appName} v{version} ({buildNumber})
           </Text>
-          <Text>© {new Date().getFullYear()} Bubblewrap Technologies LTD</Text>
+          {!!Updates?.updateId && (
+            <Text body styleClassName="mt-2 text-center" weight="bold">
+              u{Updates.updateId.slice(0, 5)}
+            </Text>
+          )}
+          <Text styleClassName="mt-4">
+            © {new Date().getFullYear()} Bubblewrap Technologies LTD
+          </Text>
         </View>
       </View>
     </Screen>

@@ -82,7 +82,11 @@ export default function MyBarHomeScreen() {
       <Header
         title="My Bar"
         rightElement={
-          <Button label="Add Ingredients" onPress={() => router.push('/add-ingredients')} />
+          <Button
+            large={false}
+            label="Add Ingredients"
+            onPress={() => router.push('/add-ingredients')}
+          />
         }
       />
 
