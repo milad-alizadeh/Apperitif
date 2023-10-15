@@ -38,4 +38,5 @@ jobs:
 
       - name: 🤖 Build & Submit Android App
         run: |
-          eas build --platform android --non-interactive --local --profile ${{ github.event.inputs.profile }} --output ./artifacts/${{ github.event.inputs.profile }}.ipa
+          eas build --platform android --non-interactive --local --profile ${{ github.event.inputs.profile }} --output ./artifacts/${{ github.event.inputs.profile }}.aab
+          eas submit --platform ios --profile ${{ github.event.inputs.profile }} --path ./artifacts/${{ github.event.inputs.profile }}.aab
