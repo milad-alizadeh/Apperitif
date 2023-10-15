@@ -58,7 +58,16 @@ export default () => {
       output: 'static',
       favicon: './assets/images/app-icon-web-favicon.png',
     },
-    plugins: ['expo-router', 'expo-apple-authentication'],
+    plugins: [
+      'expo-router',
+      'expo-apple-authentication',
+      [
+        'expo-updates',
+        {
+          username: 'bubblewrap',
+        },
+      ],
+    ],
     experiments: {
       typedRoutes: true,
     },
