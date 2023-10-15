@@ -2,6 +2,7 @@ import { ApolloProvider } from '@apollo/client'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
+import { useExpoUpdate } from '~/hooks/useExpoUpdate'
 import { SessionProvider } from '~/providers/SessionProvider'
 import { api } from '~/services/api'
 import { customFontsToLoad } from '../theme/typography'
@@ -19,6 +20,7 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
+  useExpoUpdate()
   const [loaded, error] = useFonts(customFontsToLoad)
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
