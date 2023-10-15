@@ -23,6 +23,7 @@
     "submit:staging:ios": "eas submit --platform ios --profile staging --path ./artifacts/staging.ipa",
     "submit:staging:android": "eas submit --platform android --profile staging --path ./artifacts/staging.aab",
     "build-and-submit:staging:ios": "yarn build:staging:ios && yarn submit:staging:ios",
+    "build-and-submit:staging:android": "yarn build:staging:android && yarn submit:staging:android",
     "expo:doctor": "npx expo-doctor@latest",
     "expo:fix": "npx expo install --fix",
     "generate:types": " npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > src/types/supabase.ts",

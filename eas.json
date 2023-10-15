@@ -71,6 +71,10 @@
       }
     },
     "production": {
+      "android": {
+        "serviceAccountKeyPath": "pc-api-4712839384198130201-585-35f364de464c.json",
+        "track": "internal"
+      },
       "ios": {
         "appleId": "contact@bubblewrap.ai",
         "ascAppId": "6468588899",
