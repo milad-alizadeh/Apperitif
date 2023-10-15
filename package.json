@@ -30,6 +30,7 @@
     "submit:production:android": "eas submit --platform android --profile production --path ./artifacts/production.aab",
     "build-and-submit:production:ios": "yarn build:production:ios && yarn submit:production:ios",
     "build-and-submit:production:android": "yarn build:production:android && yarn submit:production:android",
+    "update": "eas update --auto",
     "expo:doctor": "npx expo-doctor@latest",
     "expo:fix": "npx expo install --fix",
     "generate:types": " npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > src/types/supabase.ts",
