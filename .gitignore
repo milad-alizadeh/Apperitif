@@ -28,6 +28,7 @@ build-*.ipa
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+artifacts/*
 
 # macOS
 .DS_Store
