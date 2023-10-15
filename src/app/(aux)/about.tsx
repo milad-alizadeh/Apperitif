@@ -1,5 +1,6 @@
 import * as Application from 'expo-application'
 import { Image } from 'expo-image'
+import * as Updates from 'expo-updates'
 import { View } from 'react-native'
 import { Header, Screen, Text } from '~/components'
 
@@ -15,7 +16,7 @@ export default function FAQs() {
         <View className="-translate-y-28 items-center">
           <Image className="w-56 h-56" source={require('~assets/images/logo.png')} />
           <Text body styleClassName="mb-4" weight="bold">
-            {appName} v{version} ({buildNumber})
+            {appName} v{version} ({buildNumber}) - u{Updates.updateId.slice(0, 8)}
           </Text>
           <Text>© {new Date().getFullYear()} Bubblewrap Technologies LTD</Text>
         </View>
