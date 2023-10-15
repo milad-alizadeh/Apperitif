@@ -1,33 +1,39 @@
-name: EAS Update
-
+name: update
 on:
   push:
     branches:
-      - staging
       - production
+      - staging
 
 jobs:
-  build:
+  update:
+    name: EAS Update
     runs-on: ubuntu-latest
     steps:
-      - name: 📦 Checkout Repository
-        uses: actions/checkout@v2
+      - name: Check for EXPO_TOKEN
+        run: |
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+            exit 1
+          fi
 
-      - name: 🏗 Setup Node
-        uses: actions/setup-node@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18.x
           cache: yarn
 
-      - name: 🧶 Install Project Dependencies
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
         run: yarn install
 
-      - name: 🏗 Setup Expo and EAS
-        uses: expo/expo-github-action@v7
-        with:
-          token: ${{ secrets.EXPO_TOKEN }}
-          expo-version: latest
-          eas-version: latest
-
-      - name: 🔄 Push EAS Update
-        run: eas update --branch ${{ github.ref_name }} --message "Update from GitHub Actions"
+      - name: Publish update
+        run: eas update --auto
