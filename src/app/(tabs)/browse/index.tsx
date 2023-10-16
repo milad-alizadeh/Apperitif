@@ -35,7 +35,7 @@ export default function BrowseHomeScreen() {
       }
     }
   } catch (error) {
-    console.error('Error parsing categories:', error)
+    throw new Error('Error parsing categories', error)
   }
 
   // Fetch categories

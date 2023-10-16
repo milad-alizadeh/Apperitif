@@ -15,9 +15,9 @@
     "compile": "tsc --noEmit -p . --pretty",
     "add:test-device": "eas device:create",
     "build:run:simulator": "eas build:run -p ios --path",
-    "build:dev:ios": "eas build --profile development --platform ios --local --output ./builds/development",
+    "build:dev:ios": "eas build --profile development --non-interactive --platform ios --local --output ./builds/development",
     "build:dev:ios-simulator": "eas build --profile development-simulator --platform ios --local",
-    "build:dev:android": "eas build --profile development --platform android --local",
+    "build:dev:android": "eas build --profile development --non-interactive --platform android --local",
     "build:staging:ios": "eas build --platform ios --local --non-interactive --profile staging --output ./artifacts/staging.ipa",
     "build:staging:android": "eas build --platform android --local --non-interactive --profile staging --output ./artifacts/staging.aab",
     "submit:staging:ios": "eas submit --platform ios --profile staging --path ./artifacts/staging.ipa",
@@ -88,7 +88,7 @@
     "react-native-shimmer-placeholder": "^2.0.9",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.6",
-    "sentry-expo": "~7.0.0"
+    "sentry-expo": "~7.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
