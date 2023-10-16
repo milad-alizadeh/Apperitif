@@ -1,6 +1,7 @@
 const APP_VARIANT = process.env.APP_VARIANT
 const APP_NAME = `Apperitif${APP_VARIANT ? ` (${APP_VARIANT})` : ''}`
 const BUNDLE_ID = `ai.bubblewrap.apperitif${APP_VARIANT ? `.${APP_VARIANT}` : ''}`
+process.env.SENTRY_AUTH_TOKEN = 'f89a222eb984184bf32443b7cb57d2bea0d54b8f2f26b7f05add783952b4843f'
 
 export default () => {
   return {
@@ -79,6 +80,11 @@ export default () => {
       eas: {
         projectId: '0fe189be-8677-4ba8-b1e9-c3b3e63b388f',
       },
+      sentry: {
+        dsn: process.env.SENTRY_DSN,
+      },
+      SENTRY_PROJECT: process.env.SENTRY_PROJECT || 'apperitif',
+      SENTRY_ORG: process.env.SENTRY_ORG || 'bubblewrap',
     },
     hooks: {
       postPublish: [
