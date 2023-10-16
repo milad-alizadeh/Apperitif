@@ -1,6 +1,6 @@
 import * as Updates from 'expo-updates'
-import { FC, useRef, useState } from 'react'
-import { Alert, View } from 'react-native'
+import { FC, useRef } from 'react'
+import { Alert } from 'react-native'
 import { Prompt, PromptRef } from './Prompt'
 
 export const EasUpdate: FC = () => {

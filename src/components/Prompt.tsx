@@ -134,6 +134,7 @@ export const Prompt: FC<PromptProps> = forwardRef(
               </View>
               <View className="px-2 flex-1">
                 <Button
+                  large={false}
                   label={confirmText}
                   onPress={() => {
                     onConfirm?.()
