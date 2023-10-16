@@ -15,7 +15,7 @@
     "compile": "tsc --noEmit -p . --pretty",
     "add:test-device": "eas device:create",
     "build:run:simulator": "eas build:run -p ios --path",
-    "build:dev:ios": "eas build --profile development --non-interactive --platform ios --local --output ./builds/development",
+    "build:dev:ios": "eas build --profile development --non-interactive --platform ios --local --output ./builds/development.ipa",
     "build:dev:ios-simulator": "eas build --profile development-simulator --platform ios --local",
     "build:dev:android": "eas build --profile development --non-interactive --platform android --local",
     "build:staging:ios": "eas build --platform ios --local --non-interactive --profile staging --output ./artifacts/staging.ipa",
