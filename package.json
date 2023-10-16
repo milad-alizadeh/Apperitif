@@ -31,7 +31,7 @@
     "build-and-submit:production:ios": "yarn build:production:ios && yarn submit:production:ios",
     "build-and-submit:production:android": "yarn build:production:android && yarn submit:production:android",
     "expo-publish": "expo publish",
-    "update": "eas update --auto && yarn upload-sentry",
+    "update": "eas update --auto",
     "upload-sentry": "ts-node sentry-sourcemap -p production",
     "expo:doctor": "npx expo-doctor@latest",
     "expo:fix": "npx expo install --fix",
