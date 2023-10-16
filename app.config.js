@@ -80,19 +80,14 @@ export default () => {
       eas: {
         projectId: '0fe189be-8677-4ba8-b1e9-c3b3e63b388f',
       },
-      sentry: {
-        dsn: process.env.SENTRY_DSN,
-      },
-      SENTRY_PROJECT: process.env.SENTRY_PROJECT || 'apperitif',
-      SENTRY_ORG: process.env.SENTRY_ORG || 'bubblewrap',
     },
     hooks: {
       postPublish: [
         {
           file: 'sentry-expo/upload-sourcemaps',
           config: {
-            organization: process.env.SENTRY_ORG,
-            project: process.env.SENTRY_PROJECT,
+            organization: process.env.EXPO_PUBLIC_SENTRY_ORG,
+            project: process.env.EXPO_PUBLIC_SENTRY_PROJECT,
           },
         },
       ],
