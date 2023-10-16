@@ -34,15 +34,13 @@ export const EasUpdate: FC = () => {
   Updates.useUpdateEvents(eventListener)
 
   return (
-    <View>
-      <Prompt
-        ref={promptRef}
-        title="Update Available"
-        description="A new version of the app is available. Would you like to update now?"
-        confirmText="Update"
-        cancelText="Not Now"
-        onConfirm={onFetchUpdateAsync}
-      />
-    </View>
+    <Prompt
+      ref={promptRef}
+      title="Update Available"
+      description="A new version of the app is available. Would you like to update now?"
+      confirmText="Update"
+      cancelText="Not Now"
+      onConfirm={onFetchUpdateAsync}
+    />
   )
 }
