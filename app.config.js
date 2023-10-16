@@ -61,6 +61,7 @@ export default () => {
     plugins: [
       'expo-router',
       'expo-apple-authentication',
+      'sentry-expo',
       [
         'expo-updates',
         {
@@ -78,6 +79,17 @@ export default () => {
       eas: {
         projectId: '0fe189be-8677-4ba8-b1e9-c3b3e63b388f',
       },
+    },
+    hooks: {
+      postPublish: [
+        {
+          file: 'sentry-expo/upload-sourcemaps',
+          config: {
+            organization: process.env.SENTRY_ORG,
+            project: process.env.SENTRY_PROJECT,
+          },
+        },
+      ],
     },
   }
 }
