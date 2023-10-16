@@ -126,6 +126,7 @@ export const Prompt: FC<PromptProps> = forwardRef(
                 <Button
                   label={cancelText}
                   outline
+                  large={false}
                   onPress={() => {
                     onCancel?.()
                     hide()
