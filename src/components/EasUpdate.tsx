@@ -1,6 +1,11 @@
 import * as Updates from 'expo-updates'
+import { FC, useRef, useState } from 'react'
+import { Alert, View } from 'react-native'
+import { Prompt, PromptRef } from './Prompt'
 
-export const useExpoUpdate = () => {
+export const EasUpdate: FC = () => {
+  const promptRef = useRef<PromptRef>(null)
+
   async function onFetchUpdateAsync() {
     try {
       const update = await Updates.checkForUpdateAsync()
@@ -18,17 +23,26 @@ export const useExpoUpdate = () => {
   const eventListener = (event) => {
     if (event.type === Updates.UpdateEventType.ERROR) {
       // Handle error
-      console.log('update error', event)
-      alert('update error')
-    } else if (event.type === Updates.UpdateEventType.NO_UPDATE_AVAILABLE) {
-      // Handle no update available
-      console.log('no update available', event)
-      alert('no update available')
+      Alert.alert(
+        'App update error',
+        'There was an error updating the app. Please restart the app.',
+      )
     } else if (event.type === Updates.UpdateEventType.UPDATE_AVAILABLE) {
-      // Handle update available
-      console.log('update available', event)
-      alert('update available')
+      promptRef.current?.show()
     }
   }
   Updates.useUpdateEvents(eventListener)
+
+  return (
+    <View>
+      <Prompt
+        ref={promptRef}
+        title="Update Available"
+        description="A new version of the app is available. Would you like to update now?"
+        confirmText="Update"
+        cancelText="Not Now"
+        onConfirm={onFetchUpdateAsync}
+      />
+    </View>
+  )
 }
