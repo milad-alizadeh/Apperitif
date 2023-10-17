@@ -34,8 +34,6 @@
       "env": {
         "APP_VARIANT": "staging",
         "EXPO_PUBLIC_SENTRY_DSN": "https://ddd6990a76b5dbf8816a4292e0288dba@o4506057195585536.ingest.sentry.io/4506057201418241",
-        "EXPO_PUBLIC_SENTRY_ORG": "bubblewrap",
-        "EXPO_PUBLIC_SENTRY_PROJECT": "apperitif-staging",
         "EXPO_PUBLIC_IOS_CLIENT_ID": "387765460024-n1rej4c8npbr7jcijr3b7tq25a8m93ci.apps.googleusercontent.com",
         "EXPO_PUBLIC_ANDROID_CLIENT_ID": "387765460024-s1t0op27cenve9qerh7dqbj7837o12gk.apps.googleusercontent.com",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRkZWNwd2hxZ3NuaXhraHN5dnl0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTYzNzg3NDMsImV4cCI6MjAxMTk1NDc0M30.bs0CaSEdCwtVCVC5uIwq6GnNIF_ibNaU05R7PnuaJ0M",
@@ -47,8 +45,6 @@
       "channel": "production",
       "env": {
         "EXPO_PUBLIC_SENTRY_DSN": "https://7e6f18a1c3b107d00d654b86112f657e@o4506057195585536.ingest.sentry.io/4506057225601024",
-        "EXPO_PUBLIC_SENTRY_ORG": "bubblewrap",
-        "EXPO_PUBLIC_SENTRY_PROJECT": "apperitif",
         "EXPO_PUBLIC_IOS_CLIENT_ID": "387765460024-u00ludqbbapijlebphm3a36c4kpsq2a8.apps.googleusercontent.com",
         "EXPO_PUBLIC_ANDROID_CLIENT_ID": "387765460024-cffpkqkda7vh56hbd72k8j2ce8bjna7v.apps.googleusercontent.com",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2dGZzcHltenFzeWhtdmt6Z2VqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTUwNjQ2MzksImV4cCI6MjAxMDY0MDYzOX0.2L62sBDhHRNDbNWGcWsT91EFoqyM6oXIbh_L8JupACk",

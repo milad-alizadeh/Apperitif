@@ -9,16 +9,18 @@ import eas from './eas.json'
 dotenv.config({ path: `.env.local` })
 
 const APP_VARIANT = process.env.APP_VARIANT
-const EXPO_PUBLIC_SENTRY_ORG = process.env.EXPO_PUBLIC_SENTRY_ORG
-const EXPO_PUBLIC_SENTRY_PROJECT = process.env.EXPO_PUBLIC_SENTRY_PROJECT
+const SENTRY_ORG = process.env.SENTRY_ORG
+const SENTRY_PROJECT = process.env.SENTRY_PROJECT
+const SENTRY_AUTH_TOKEN = process.env.SENTRY_AUTH_TOKEN
 const BUNDLE_ID = `ai.bubblewrap.apperitif${
   APP_VARIANT === 'staging' || APP_VARIANT === 'development' ? `.${APP_VARIANT}` : ''
 }`
 
 console.log('BUNDLE_ID', BUNDLE_ID)
 console.log('APP_VARIANT', APP_VARIANT)
-console.log('EXPO_PUBLIC_SENTRY_ORG', EXPO_PUBLIC_SENTRY_ORG)
-console.log('EXPO_PUBLIC_SENTRY_PROJECT', EXPO_PUBLIC_SENTRY_PROJECT)
+console.log('SENTRY_ORG', SENTRY_ORG)
+console.log('SENTRY_PROJECT', SENTRY_PROJECT)
+console.log('SENTRY_AUTH_TOKEN', SENTRY_AUTH_TOKEN)
 
 const promisifiedExec = util.promisify(exec)
 const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCode: string) => {
@@ -35,8 +37,8 @@ const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCod
   const release = await promisifiedExec(`
         cross-env ./node_modules/@sentry/cli/bin/sentry-cli \
         releases \
-        --org ${EXPO_PUBLIC_SENTRY_ORG} \
-        --project ${EXPO_PUBLIC_SENTRY_PROJECT} \
+        --org ${SENTRY_ORG} \
+        --project ${SENTRY_PROJECT} \
         files ${BUNDLE_ID}@${appVersion}+${androidVersionCode} \
         upload-sourcemaps \
         --dist ${androidUpdateId} \
@@ -63,8 +65,8 @@ const uploadIosSourceMap = async (iosUpdateId: string, iosBuildNumber: string) =
   const release = await promisifiedExec(`
         cross-env ./node_modules/@sentry/cli/bin/sentry-cli \
         releases \
-        --org ${EXPO_PUBLIC_SENTRY_ORG} \
-        --project ${EXPO_PUBLIC_SENTRY_PROJECT} \
+        --org ${SENTRY_ORG} \
+        --project ${SENTRY_PROJECT} \
         files ${BUNDLE_ID}@${appVersion}+${iosBuildNumber} \
         upload-sourcemaps \
         --dist ${iosUpdateId} \
