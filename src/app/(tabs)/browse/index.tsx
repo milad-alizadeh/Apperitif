@@ -3,7 +3,6 @@ import { router } from 'expo-router'
 import groupBy from 'lodash/groupBy'
 import values from 'lodash/values'
 import React from 'react'
-import * as Sentry from 'sentry-expo'
 import { GetCategoriesQuery } from '~/__generated__/graphql'
 import {
   Button,
@@ -17,6 +16,7 @@ import {
 } from '~/components'
 import { GET_CATEGORIES, GET_CONTENT } from '~/graphql/queries'
 import { colors } from '~/theme/colors'
+import { captureError } from '~/utils/captureError'
 
 interface ListType {
   listItems: CardProps[]
@@ -93,7 +93,7 @@ export default function BrowseHomeScreen() {
   }
 
   const handleError = () => {
-    Sentry.Native.captureException(new Error('Test Error 3'))
+    captureError('Test Error 5')
   }
 
   // match the order of categroriesData with categoryIds

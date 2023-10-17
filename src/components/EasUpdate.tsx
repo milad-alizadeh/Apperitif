@@ -1,6 +1,7 @@
 import * as Updates from 'expo-updates'
 import { FC, useRef } from 'react'
 import { Alert } from 'react-native'
+import { captureError } from '~/utils/captureError'
 import { Prompt, PromptRef } from './Prompt'
 
 export const EasUpdate: FC = () => {
@@ -15,6 +16,7 @@ export const EasUpdate: FC = () => {
         await Updates.reloadAsync()
       }
     } catch (error) {
+      captureError(error)
       // You can also add an alert() to see the error message in case of an error when fetching updates.
       alert(`Error fetching latest Expo update: ${error}`)
     }
@@ -23,6 +25,7 @@ export const EasUpdate: FC = () => {
   const eventListener = (event) => {
     if (event.type === Updates.UpdateEventType.ERROR) {
       // Handle error
+      captureError(event.message)
       Alert.alert(
         'App update error',
         'There was an error updating the app. Please restart the app.',
@@ -31,7 +34,6 @@ export const EasUpdate: FC = () => {
       promptRef.current?.show()
     }
   }
-  Updates.useUpdateEvents(eventListener)
 
   return (
     <Prompt
