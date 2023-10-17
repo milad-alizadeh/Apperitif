@@ -93,7 +93,7 @@ export default function BrowseHomeScreen() {
   }
 
   const handleError = () => {
-    Sentry.Native.captureException(new Error('Test Error'))
+    Sentry.Native.captureException(new Error('Test Error 2'))
   }
 
   // match the order of categroriesData with categoryIds
