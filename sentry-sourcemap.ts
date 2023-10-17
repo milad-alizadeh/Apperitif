@@ -9,9 +9,16 @@ import eas from './eas.json'
 dotenv.config({ path: `.env.local` })
 
 const APP_VARIANT = process.env.APP_VARIANT
+const EXPO_PUBLIC_SENTRY_ORG = process.env.EXPO_PUBLIC_SENTRY_ORG
+const EXPO_PUBLIC_SENTRY_PROJECT = process.env.EXPO_PUBLIC_SENTRY_PROJECT
 const BUNDLE_ID = `ai.bubblewrap.apperitif${
   APP_VARIANT === 'staging' || APP_VARIANT === 'development' ? `.${APP_VARIANT}` : ''
 }`
+
+console.log('BUNDLE_ID', BUNDLE_ID)
+console.log('APP_VARIANT', APP_VARIANT)
+console.log('EXPO_PUBLIC_SENTRY_ORG', EXPO_PUBLIC_SENTRY_ORG)
+console.log('EXPO_PUBLIC_SENTRY_PROJECT', EXPO_PUBLIC_SENTRY_PROJECT)
 
 const promisifiedExec = util.promisify(exec)
 const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCode: string) => {
@@ -28,8 +35,8 @@ const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCod
   const release = await promisifiedExec(`
         cross-env ./node_modules/@sentry/cli/bin/sentry-cli \
         releases \
-        --org ${process.env.EXPO_PUBLIC_SENTRY_ORG} \
-        --project ${process.env.EXPO_PUBLIC_SENTRY_PROJECT} \
+        --org ${EXPO_PUBLIC_SENTRY_ORG} \
+        --project ${EXPO_PUBLIC_SENTRY_PROJECT} \
         files ${BUNDLE_ID}@${appVersion}+${androidVersionCode} \
         upload-sourcemaps \
         --dist ${androidUpdateId} \
@@ -56,8 +63,8 @@ const uploadIosSourceMap = async (iosUpdateId: string, iosBuildNumber: string) =
   const release = await promisifiedExec(`
         cross-env ./node_modules/@sentry/cli/bin/sentry-cli \
         releases \
-        --org ${process.env.EXPO_PUBLIC_SENTRY_ORG} \
-        --project ${process.env.EXPO_PUBLIC_SENTRY_PROJECT} \
+        --org ${EXPO_PUBLIC_SENTRY_ORG} \
+        --project ${EXPO_PUBLIC_SENTRY_PROJECT} \
         files ${BUNDLE_ID}@${appVersion}+${iosBuildNumber} \
         upload-sourcemaps \
         --dist ${iosUpdateId} \
