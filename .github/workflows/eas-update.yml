@@ -39,8 +39,18 @@ jobs:
       # - name: Publish update
       #   run: eas update --auto
 
+      - name: Determine SENTRY_PROJECT
+        id: determine_project_name
+        run: |
+          if [[ "${{ github.ref_name }}" == "staging" ]]; then
+            echo "::set-output name=SENTRY_PROJECT::$EXPO_PUBLIC_SENTRY_PROJECT-staging"
+          else
+            echo "::set-output name=SENTRY_PROJECT::$EXPO_PUBLIC_SENTRY_PROJECT"
+          fi
+
       - name: Upload sourcemaps to Sentry
         run: yarn upload-sourcemap -p ${{ github.ref_name }}
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           APP_VARIANT: ${{ github.ref_name }}
+          EXPO_PUBLIC_SENTRY_PROJECT: ${{ steps.determine_project_name.outputs.SENTRY_PROJECT }}
