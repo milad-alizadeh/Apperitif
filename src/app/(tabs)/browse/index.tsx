@@ -4,16 +4,7 @@ import groupBy from 'lodash/groupBy'
 import values from 'lodash/values'
 import React from 'react'
 import { GetCategoriesQuery } from '~/__generated__/graphql'
-import {
-  Button,
-  CardProps,
-  Header,
-  HorizontalList,
-  Icon,
-  Screen,
-  Text,
-  VerticalList,
-} from '~/components'
+import { CardProps, Header, HorizontalList, Icon, Screen, Text, VerticalList } from '~/components'
 import { GET_CATEGORIES, GET_CONTENT } from '~/graphql/queries'
 import { colors } from '~/theme/colors'
 import { captureError } from '~/utils/captureError'
@@ -45,7 +36,7 @@ export default function BrowseHomeScreen() {
       }
     }
   } catch (error) {
-    throw new Error('Error parsing categories', error)
+    captureError(error)
   }
 
   // Fetch categories
