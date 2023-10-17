@@ -1,4 +1,4 @@
-name: EAS Update Staging
+name: EAS Update Production
 
 on:
   push:
