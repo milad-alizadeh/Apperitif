@@ -11,15 +11,18 @@ dotenv.config({ path: `.env.local` })
 const APP_VARIANT = process.env.APP_VARIANT
 const BUNDLE_ID = `ai.bubblewrap.apperitif${APP_VARIANT ? `.${APP_VARIANT}` : ''}`
 
-// https://github.com/expo/sentry-expo/issues/319#issuecomment-1434954552
 const promisifiedExec = util.promisify(exec)
-
 const uploadAndroidSourceMap = async (updates: any) => {
   const appVersion = app().version
 
-  const androidVersionCode = app().android?.versionCode || 50
+  const androidVersionCode = app().android?.versionCode || 21
   const androidUpdateId = updates.find((update: any) => update.platform === 'android').id
-  //   await promisifiedExec(`mv dist/bundles/android-*.hbc dist/bundles/index.android.bundle`)
+
+  console.log('androidUpdateId', androidUpdateId)
+  await promisifiedExec(`
+    if find dist/bundles/ -name "android-*.hbc" -print | grep -q .; then
+        mv dist/bundles/android-*.hbc dist/bundles/index.android.bundle
+    fi`)
   const release = await promisifiedExec(`
         export APP_VARIANT=${APP_VARIANT} \
         export SENTRY_AUTH_TOKEN=${process.env.SENTRY_AUTH_TOKEN} && \
@@ -31,7 +34,7 @@ const uploadAndroidSourceMap = async (updates: any) => {
         upload-sourcemaps \
         --dist ${androidUpdateId} \
         --rewrite \
-        dist/bundles/index.android.bundle dist/bundles/android-9263048ccc9db0e5ff878939f4aa1c9f.map`)
+        dist/bundles/index.android.bundle dist/bundles/android-*.map`)
 
   if (release.stderr) {
     console.error(release.stderr)
@@ -43,9 +46,13 @@ const uploadAndroidSourceMap = async (updates: any) => {
 const uploadIosSourceMap = async (updates: any) => {
   const appVersion = app().version
 
-  const iosBuildNumber = app().ios?.buildNumber || 50
+  const iosBuildNumber = app().ios?.buildNumber || 21
   const iosUpdateId = updates.find((update: any) => update.platform === 'ios').id
-  //   await promisifiedExec(`mv dist/bundles/ios-*.hbc dist/bundles/main.jsbundle`)
+  console.log('iosUpdateId', iosUpdateId)
+  await promisifiedExec(`
+    if find dist/bundles/ -name "ios-*.hbc" -print | grep -q .; then
+        mv dist/bundles/ios-*.hbc dist/bundles/main.jsbundle
+    fi`)
   console.log('iosUpdateId', app())
   const release = await promisifiedExec(`
         export APP_VARIANT=${APP_VARIANT} \
@@ -58,7 +65,7 @@ const uploadIosSourceMap = async (updates: any) => {
         upload-sourcemaps \
         --dist ${iosUpdateId} \
         --rewrite \
-        dist/bundles/main.jsbundle dist/bundles/ios-37a27518d1c25fc5fce5076547bd39c7.map`)
+        dist/bundles/main.jsbundle dist/bundles/ios-*.map`)
   if (release.stderr) {
     console.error(release.stderr)
   } else {
