@@ -17,7 +17,7 @@ const uploadAndroidSourceMap = async (updates: any) => {
   const androidVersionCode = app().android?.versionCode || 50
   const androidPackageName = app().android?.package
   const androidUpdateId = updates.find((update: any) => update.platform === 'android').id
-  await promisifiedExec(`mv ./dist/bundles/android*.map ./dist/bundles/index.android.bundle`)
+  await promisifiedExec(`mv dist/bundles/android-*.hbc dist/bundles/index.android.bundle`)
   const release = await promisifiedExec(`
         export SENTRY_AUTH_TOKEN=${process.env.SENTRY_AUTH_TOKEN} && \
         cross-env ./node_modules/@sentry/cli/bin/sentry-cli \
@@ -28,7 +28,8 @@ const uploadAndroidSourceMap = async (updates: any) => {
         upload-sourcemaps \
         --dist ${androidUpdateId} \
         --rewrite \
-        dist/bundles/index.android.bundle dist/bundles/android-*.map`)
+        dist/bundles/index.android.bundle dist/bundles/android-9263048ccc9db0e5ff878939f4aa1c9f.map`)
+
   if (release.stderr) {
     console.error(release.stderr)
   } else {
@@ -42,7 +43,7 @@ const uploadIosSourceMap = async (updates: any) => {
   const iosBuildNumber = app().ios?.buildNumber || 50
   const iosBundleID = app().ios?.bundleIdentifier
   const iosUpdateId = updates.find((update: any) => update.platform === 'ios').id
-  await promisifiedExec(`mv ./dist/bundles/ios*.map ./dist/bundles/main.jsbundle`)
+  await promisifiedExec(`mv dist/bundles/ios-*.hbc dist/bundles/main.jsbundle`)
   console.log('iosUpdateId', app())
   const release = await promisifiedExec(`
         export SENTRY_AUTH_TOKEN=${process.env.SENTRY_AUTH_TOKEN} && \
@@ -54,7 +55,7 @@ const uploadIosSourceMap = async (updates: any) => {
         upload-sourcemaps \
         --dist ${iosUpdateId} \
         --rewrite \
-        dist/bundles/main.jsbundle dist/bundles/ios-*.map`)
+        dist/bundles/main.jsbundle dist/bundles/ios-37a27518d1c25fc5fce5076547bd39c7.map`)
   if (release.stderr) {
     console.error(release.stderr)
   } else {
