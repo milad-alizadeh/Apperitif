@@ -36,8 +36,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      # - name: Publish update
-      #   run: eas update --auto
+      - name: Publish update
+        run: eas update --auto
 
       - name: Determine SENTRY_PROJECT
         id: determine_project_name
