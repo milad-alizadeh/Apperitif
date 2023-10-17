@@ -92,10 +92,6 @@ export default function BrowseHomeScreen() {
     return { listItems, title, id: edge.node.id }
   }
 
-  const handleError = () => {
-    captureError('Test Error 5')
-  }
-
   // match the order of categroriesData with categoryIds
   const getBrowseCategories = (
     queryData: GetCategoriesQuery,
@@ -124,8 +120,6 @@ export default function BrowseHomeScreen() {
           />
         }
       />
-
-      <Button label="Test Error" onPress={handleError} />
 
       {!!error || (!!browseError && <Text>{error?.message || browseError?.message}</Text>)}
       {orderedCategories.map(({ listItems, title, id }, index) =>
