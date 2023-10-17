@@ -53,7 +53,6 @@ const uploadIosSourceMap = async (updates: any) => {
     if find dist/bundles/ -name "ios-*.hbc" -print | grep -q .; then
         mv dist/bundles/ios-*.hbc dist/bundles/main.jsbundle
     fi`)
-  console.log('iosUpdateId', app())
   const release = await promisifiedExec(`
         export APP_VARIANT=${APP_VARIANT} \
         export SENTRY_AUTH_TOKEN=${process.env.SENTRY_AUTH_TOKEN} && \
