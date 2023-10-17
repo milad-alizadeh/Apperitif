@@ -35,6 +35,8 @@ export const EasUpdate: FC = () => {
     }
   }
 
+  Updates.useUpdateEvents(eventListener)
+
   return (
     <Prompt
       ref={promptRef}
