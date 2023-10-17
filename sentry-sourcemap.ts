@@ -1,9 +1,12 @@
 import { exec } from 'child_process'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Command } from 'commander'
+import * as dotenv from 'dotenv'
 import util from 'util'
 import app from './app.config'
 import eas from './eas.json'
+
+dotenv.config({ path: `.env.local` })
 
 // https://github.com/expo/sentry-expo/issues/319#issuecomment-1434954552
 const promisifiedExec = util.promisify(exec)
@@ -15,10 +18,12 @@ const uploadAndroidSourceMap = async (updates: any) => {
   const androidPackageName = app().android?.package
   const androidUpdateId = updates.find((update: any) => update.platform === 'android').id
   await promisifiedExec(`mv ./dist/bundles/android*.map ./dist/bundles/index.android.bundle`)
-  const release = await promisifiedExec(`cross-env ./node_modules/@sentry/cli/bin/sentry-cli \
+  const release = await promisifiedExec(`
+        export SENTRY_AUTH_TOKEN=${process.env.SENTRY_AUTH_TOKEN} && \
+        cross-env ./node_modules/@sentry/cli/bin/sentry-cli \
         releases \
-        --org ${app().extra.SENTRY_ORG} \
-        --project ${app().extra.SENTRY_PROJECT} \
+        --org ${process.env.EXPO_PUBLIC_SENTRY_ORG} \
+        --project ${process.env.EXPO_PUBLIC_SENTRY_PROJECT} \
         files ${androidPackageName}@${appVersion}+${androidVersionCode} \
         upload-sourcemaps \
         --dist ${androidUpdateId} \
@@ -39,10 +44,12 @@ const uploadIosSourceMap = async (updates: any) => {
   const iosUpdateId = updates.find((update: any) => update.platform === 'ios').id
   await promisifiedExec(`mv ./dist/bundles/ios*.map ./dist/bundles/main.jsbundle`)
   console.log('iosUpdateId', app())
-  const release = await promisifiedExec(`cross-env ./node_modules/@sentry/cli/bin/sentry-cli \
+  const release = await promisifiedExec(`
+        export SENTRY_AUTH_TOKEN=${process.env.SENTRY_AUTH_TOKEN} && \
+        cross-env ./node_modules/@sentry/cli/bin/sentry-cli \
         releases \
-        --org ${app().extra.SENTRY_ORG} \
-        --project ${app().extra.SENTRY_PROJECT} \
+        --org ${process.env.EXPO_PUBLIC_SENTRY_ORG} \
+        --project ${process.env.EXPO_PUBLIC_SENTRY_PROJECT} \
         files ${iosBundleID}@${appVersion}+${iosBuildNumber} \
         upload-sourcemaps \
         --dist ${iosUpdateId} \
