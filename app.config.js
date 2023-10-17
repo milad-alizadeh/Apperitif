@@ -1,6 +1,6 @@
 const APP_VARIANT = process.env.APP_VARIANT
 const APP_NAME = `Apperitif${APP_VARIANT ? ` (${APP_VARIANT})` : ''}`
-const BUNDLE_ID = `ai.bubblewrap.apperitif${APP_VARIANT ? `.${APP_VARIANT}` : ''}`
+export const BUNDLE_ID = `ai.bubblewrap.apperitif${APP_VARIANT ? `.${APP_VARIANT}` : ''}`
 process.env.SENTRY_AUTH_TOKEN = 'f89a222eb984184bf32443b7cb57d2bea0d54b8f2f26b7f05add783952b4843f'
 
 export default () => {
