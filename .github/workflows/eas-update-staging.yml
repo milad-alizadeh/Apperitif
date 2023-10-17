@@ -35,23 +35,15 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Print Specific Environment Variables
-        run: |
-          echo "EXPO_PUBLIC_ANDROID_CLIENT_ID: $STAGING_EXPO_PUBLIC_ANDROID_CLIENT_ID"
-          echo "EXPO_PUBLIC_IOS_CLIENT_ID: $STAGING_EXPO_PUBLIC_IOS_CLIENT_ID"
-
-      - name: Print All Environment Variables
-        run: printenv
-
       - name: Publish update
         run: eas update --auto
         env:
           APP_VARIANT: ${{ github.ref_name }}
-          EXPO_PUBLIC_ANDROID_CLIENT_ID: ${{ env.STAGING_EXPO_PUBLIC_ANDROID_CLIENT_ID }}
-          EXPO_PUBLIC_IOS_CLIENT_ID: ${{ env.STAGING_EXPO_PUBLIC_IOS_CLIENT_ID }}
-          EXPO_PUBLIC_SENTRY_DSN: ${{ env.STAGING_EXPO_PUBLIC_SENTRY_DSN }}
-          EXPO_PUBLIC_SUPABASE_URL: ${{ env.STAGING_EXPO_PUBLIC_SUPABASE_URL }}
-          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ env.STAGING_EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+          EXPO_PUBLIC_ANDROID_CLIENT_ID: ${{ vars.STAGING_EXPO_PUBLIC_ANDROID_CLIENT_ID }}
+          EXPO_PUBLIC_IOS_CLIENT_ID: ${{ vars.STAGING_EXPO_PUBLIC_IOS_CLIENT_ID }}
+          EXPO_PUBLIC_SENTRY_DSN: ${{ vars.STAGING_EXPO_PUBLIC_SENTRY_DSN }}
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.STAGIN_EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+          EXPO_PUBLIC_SUPABASE_URL: ${{ vars.STAGING_EXPO_PUBLIC_SUPABASE_URL }}
 
       - name: Upload sourcemaps to Sentry
         run: yarn upload-sourcemap -p ${{ github.ref_name }}
