@@ -12,12 +12,20 @@ import { AsyncStorageWrapper, persistCache } from 'apollo3-cache-persist'
 import 'react-native-url-polyfill/auto'
 import { GET_MEASUREMENTS } from '~/graphql/queries'
 import { measurementFields, measurementsDefaults } from '~/store'
+import { captureError } from '~/utils/captureError'
 import { Database } from '../types/supabase'
 import { LargeSecureStoreAdapter } from './storage'
 
 const ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY
 const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL
 const URI = `${SUPABASE_URL}/graphql/v1`
+
+if (!ANON_KEY) {
+  captureError('Missing Supabase anon key')
+}
+if (!SUPABASE_URL) {
+  captureError('Missing Supabase URL')
+}
 
 class Api {
   supabase: SupabaseClient<Database>
@@ -71,13 +79,13 @@ class Api {
 
     this.setDefaults(cache)
 
-    // if (process.env.NODE_ENV !== 'development') {
-    //   console.log('persisting cache')
-    //   await persistCache({
-    //     cache,
-    //     storage: new AsyncStorageWrapper(AsyncStorage),
-    //   })
-    // }
+    if (process.env.NODE_ENV !== 'development') {
+      console.log('persisting cache')
+      await persistCache({
+        cache,
+        storage: new AsyncStorageWrapper(AsyncStorage),
+      })
+    }
 
     this.apolloClient = new ApolloClient({
       link: this.authLink.concat(this.httpLink), // Chain it with the httpLink
