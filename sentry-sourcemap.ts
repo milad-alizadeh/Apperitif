@@ -26,8 +26,6 @@ const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCod
     fi`)
 
   const release = await promisifiedExec(`
-        export APP_VARIANT=${APP_VARIANT} \
-        export SENTRY_AUTH_TOKEN=${process.env.SENTRY_AUTH_TOKEN} && \
         cross-env ./node_modules/@sentry/cli/bin/sentry-cli \
         releases \
         --org ${process.env.EXPO_PUBLIC_SENTRY_ORG} \
@@ -56,8 +54,6 @@ const uploadIosSourceMap = async (iosUpdateId: string, iosBuildNumber: string) =
         mv dist/bundles/ios-*.hbc dist/bundles/main.jsbundle
     fi`)
   const release = await promisifiedExec(`
-        export APP_VARIANT=${APP_VARIANT} \
-        export SENTRY_AUTH_TOKEN=${process.env.SENTRY_AUTH_TOKEN} && \
         cross-env ./node_modules/@sentry/cli/bin/sentry-cli \
         releases \
         --org ${process.env.EXPO_PUBLIC_SENTRY_ORG} \
@@ -114,7 +110,6 @@ const program = new Command()
     }
 
     const parsedUpdates = JSON.parse(updates.stdout)
-
     const androidUpdateId = parsedUpdates.find((update: any) => update.platform === 'android').id
     const androidVersionCode = await getBuildNumber('android', channel)
     const iosUpdateId = parsedUpdates.find((update: any) => update.platform === 'ios').id
