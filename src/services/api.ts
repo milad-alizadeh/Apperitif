@@ -71,14 +71,13 @@ class Api {
 
     this.setDefaults(cache)
 
-    if (process.env.NODE_ENV !== 'development') {
-      console.log('persisting cache')
-      await persistCache({
-        cache,
-        storage: new AsyncStorageWrapper(AsyncStorage),
-      })
-    }
-
+    // if (process.env.NODE_ENV !== 'development') {
+    //   console.log('persisting cache')
+    //   await persistCache({
+    //     cache,
+    //     storage: new AsyncStorageWrapper(AsyncStorage),
+    //   })
+    // }
 
     this.apolloClient = new ApolloClient({
       link: this.authLink.concat(this.httpLink), // Chain it with the httpLink
