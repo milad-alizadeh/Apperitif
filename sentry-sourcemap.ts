@@ -12,17 +12,17 @@ const APP_VARIANT = process.env.APP_VARIANT
 const BUNDLE_ID = `ai.bubblewrap.apperitif${APP_VARIANT ? `.${APP_VARIANT}` : ''}`
 
 const promisifiedExec = util.promisify(exec)
-const uploadAndroidSourceMap = async (updates: any) => {
+const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCode: string) => {
   const appVersion = app().version
 
-  const androidVersionCode = app().android?.versionCode || 21
-  const androidUpdateId = updates.find((update: any) => update.platform === 'android').id
-
   console.log('androidUpdateId', androidUpdateId)
+  console.log('androidVersionCode', androidVersionCode)
+
   await promisifiedExec(`
     if find dist/bundles/ -name "android-*.hbc" -print | grep -q .; then
-        mv dist/bundles/android-*.hbc dist/bundles/index.android.bundle
+      mv dist/bundles/android-*.hbc dist/bundles/index.android.bundle
     fi`)
+
   const release = await promisifiedExec(`
         export APP_VARIANT=${APP_VARIANT} \
         export SENTRY_AUTH_TOKEN=${process.env.SENTRY_AUTH_TOKEN} && \
@@ -43,12 +43,12 @@ const uploadAndroidSourceMap = async (updates: any) => {
   }
 }
 
-const uploadIosSourceMap = async (updates: any) => {
+const uploadIosSourceMap = async (iosUpdateId: string, iosBuildNumber: string) => {
   const appVersion = app().version
 
-  const iosBuildNumber = app().ios?.buildNumber || 21
-  const iosUpdateId = updates.find((update: any) => update.platform === 'ios').id
   console.log('iosUpdateId', iosUpdateId)
+  console.log('iosBuildNumber', iosBuildNumber)
+
   await promisifiedExec(`
     if find dist/bundles/ -name "ios-*.hbc" -print | grep -q .; then
         mv dist/bundles/ios-*.hbc dist/bundles/main.jsbundle
@@ -72,8 +72,23 @@ const uploadIosSourceMap = async (updates: any) => {
   }
 }
 
+const getBuildNumber = async (platform: string, channel: string) => {
+  const buildNumber = await promisifiedExec(
+    `eas build:version:get -p ${platform} --profile ${channel} --non-interactive --json`,
+  )
+  if (buildNumber.stderr) {
+    console.error(buildNumber.stderr)
+  }
+
+  if (platform === 'ios') {
+    return JSON.parse(buildNumber.stdout).buildNumber
+  } else {
+    return JSON.parse(buildNumber.stdout).versionCode
+  }
+}
+
 const program = new Command()
-  .requiredOption('-p, --profile  [value]', 'EAS profile')
+  .requiredOption('-p, --profile [value]', 'EAS profile')
   .action(async (options) => {
     if (!Object.keys(eas.build).includes(options.profile)) {
       console.error('Profile must be includes in : ', Object.keys(eas.build))
@@ -88,12 +103,6 @@ const program = new Command()
       console.error(channelUpdates.stderr)
     }
 
-    // With update of web using now Metro, channelUpdates' creates 2 updates
-    // Seemly web doesn't contain runtime and thus it is publishing
-    // multiple update groups with the following message:
-    // 👉 Since multiple runtime versions are defined, multiple update groups have been published.
-    // For this reason the first element with 'android, ios' platforms will be found and the group gotten from it
-    // TODO: As I understand sentry-expo doesn't work similarly for web with expo-router as Metro is used.
     const groupID = JSON.parse(channelUpdates.stdout).currentPage.find(
       (currentPage: any) => currentPage.platforms === 'android, ios',
     ).group
@@ -102,8 +111,15 @@ const program = new Command()
       console.error(updates.stderr)
     }
 
-    await uploadAndroidSourceMap(JSON.parse(updates.stdout))
-    await uploadIosSourceMap(JSON.parse(updates.stdout))
+    const parsedUpdates = JSON.parse(updates.stdout)
+
+    const androidUpdateId = parsedUpdates.find((update: any) => update.platform === 'android').id
+    const androidVersionCode = await getBuildNumber('android', channel)
+    const iosUpdateId = parsedUpdates.find((update: any) => update.platform === 'ios').id
+    const iosBuildNumber = await getBuildNumber('ios', channel)
+
+    await uploadAndroidSourceMap(androidUpdateId, androidVersionCode)
+    await uploadIosSourceMap(iosUpdateId, iosBuildNumber)
   })
 
 program.parse(process.argv)
