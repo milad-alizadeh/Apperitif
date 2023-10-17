@@ -3,8 +3,18 @@ import { router } from 'expo-router'
 import groupBy from 'lodash/groupBy'
 import values from 'lodash/values'
 import React from 'react'
+import * as Sentry from 'sentry-expo'
 import { GetCategoriesQuery } from '~/__generated__/graphql'
-import { CardProps, Header, HorizontalList, Icon, Screen, Text, VerticalList } from '~/components'
+import {
+  Button,
+  CardProps,
+  Header,
+  HorizontalList,
+  Icon,
+  Screen,
+  Text,
+  VerticalList,
+} from '~/components'
 import { GET_CATEGORIES, GET_CONTENT } from '~/graphql/queries'
 import { colors } from '~/theme/colors'
 
@@ -82,6 +92,10 @@ export default function BrowseHomeScreen() {
     return { listItems, title, id: edge.node.id }
   }
 
+  const handleError = () => {
+    Sentry.Native.captureException('Sample Error for Sentry.io')
+  }
+
   // match the order of categroriesData with categoryIds
   const getBrowseCategories = (
     queryData: GetCategoriesQuery,
@@ -110,6 +124,8 @@ export default function BrowseHomeScreen() {
           />
         }
       />
+
+      <Button label="Test Error" onPress={handleError} />
 
       {!!error || (!!browseError && <Text>{error?.message || browseError?.message}</Text>)}
       {orderedCategories.map(({ listItems, title, id }, index) =>

@@ -14,7 +14,7 @@ const promisifiedExec = util.promisify(exec)
 const uploadAndroidSourceMap = async (updates: any) => {
   const appVersion = app().version
 
-  const androidVersionCode = app().android?.versionCode
+  const androidVersionCode = app().android?.versionCode || 50
   const androidPackageName = app().android?.package
   const androidUpdateId = updates.find((update: any) => update.platform === 'android').id
   await promisifiedExec(`mv ./dist/bundles/android*.map ./dist/bundles/index.android.bundle`)
@@ -39,7 +39,7 @@ const uploadAndroidSourceMap = async (updates: any) => {
 const uploadIosSourceMap = async (updates: any) => {
   const appVersion = app().version
 
-  const iosBuildNumber = app().ios?.buildNumber
+  const iosBuildNumber = app().ios?.buildNumber || 50
   const iosBundleID = app().ios?.bundleIdentifier
   const iosUpdateId = updates.find((update: any) => update.platform === 'ios').id
   await promisifiedExec(`mv ./dist/bundles/ios*.map ./dist/bundles/main.jsbundle`)
