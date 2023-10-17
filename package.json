@@ -35,6 +35,7 @@
     "upload-sentry:production": "ts-node sentry-sourcemap -p production",
     "upload-sentry:staging": "ts-node sentry-sourcemap -p staging",
     "expo:doctor": "npx expo-doctor@latest",
+    "upload-sourcemap": "ts-node sentry-sourcemap",
     "expo:fix": "npx expo install --fix",
     "generate:types": " npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > src/types/supabase.ts",
     "generate:gql": "graphql-codegen",

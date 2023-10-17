@@ -37,4 +37,7 @@ jobs:
         run: yarn install
 
       - name: Publish update
-        run: eas update --auto
+        run: SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} && \
+          APP_VARIANT === ${{ github.ref_name }} \
+          eas update --auto && \
+          yarn upload-sourcemap -p ${{ github.ref_name }}

@@ -9,7 +9,9 @@ import eas from './eas.json'
 dotenv.config({ path: `.env.local` })
 
 const APP_VARIANT = process.env.APP_VARIANT
-const BUNDLE_ID = `ai.bubblewrap.apperitif${APP_VARIANT ? `.${APP_VARIANT}` : ''}`
+const BUNDLE_ID = `ai.bubblewrap.apperitif${
+  APP_VARIANT === 'staging' || APP_VARIANT === 'development' ? `.${APP_VARIANT}` : ''
+}`
 
 const promisifiedExec = util.promisify(exec)
 const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCode: string) => {
