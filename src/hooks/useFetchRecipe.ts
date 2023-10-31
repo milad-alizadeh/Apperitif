@@ -104,7 +104,6 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
 
   // Function to load more recipes when user reaches the end of the list
   const loadMore = () => {
-    console.log('Loading more recipes...')
     if (pageInfo?.hasNextPage) {
       setPageNumber((prevPageNumber) => {
         const newPageNumber = prevPageNumber + 1
