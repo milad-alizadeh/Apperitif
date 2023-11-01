@@ -3,11 +3,11 @@ name: EAS Update Production
 on:
   push:
     branches:
-      - production
+      - production-update
 
 jobs:
   update:
-    name: EAS Update
+    name: EAS Update Production
     runs-on: ubuntu-latest
     steps:
       - name: Check for EXPO_TOKEN

@@ -1,28 +1,34 @@
 name: EAS Build Staging
+
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - staging
 
 jobs:
   build:
-    name: Install and build
+    name: Build & Submit Staging
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: 📦 Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v3
         with:
           node-version: 18.x
           cache: yarn
 
-      - name: Setup Expo and EAS
+      - name: 🏗 Setup Expo and EAS
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Install dependencies
+      - name: 🧶 Install Project Dependencies
         run: yarn
 
-      - name: Build on EAS
+      - name: 🍏 | 🤖 Build on EAS
         run: eas build --platform all --profile staging --non-interactive --auto-submit
         env:
           APP_VARIANT: staging

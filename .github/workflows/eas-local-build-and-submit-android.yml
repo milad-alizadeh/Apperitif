@@ -12,6 +12,7 @@ on:
 
 jobs:
   build:
+    name: Local Build & Submit Android
     runs-on: ubuntu-latest
     steps:
       - name: 📦 Checkout Repository

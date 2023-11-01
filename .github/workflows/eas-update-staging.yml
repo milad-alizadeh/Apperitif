@@ -3,11 +3,11 @@ name: EAS Update Staging
 on:
   push:
     branches:
-      - staging
+      - staging-update
 
 jobs:
   update:
-    name: EAS Update
+    name: EAS Update Staging
     runs-on: ubuntu-latest
     steps:
       - name: Check for EXPO_TOKEN

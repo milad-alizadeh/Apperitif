@@ -12,6 +12,7 @@ on:
 
 jobs:
   build:
+    name: Local Build & Submit iOS
     runs-on: macos-latest
     steps:
       - name: 📦 Checkout Repository
