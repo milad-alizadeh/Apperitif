@@ -6,8 +6,7 @@ on:
       - production-update
 
 jobs:
-  update:
-    name: EAS Update Production
+  update-production:
     runs-on: ubuntu-latest
     steps:
       - name: Check for EXPO_TOKEN

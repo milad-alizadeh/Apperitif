@@ -1,13 +1,12 @@
-name: EAS Build Staging
+name: EAS Build & Submit Production
 
 on:
   push:
     branches:
-      - staging
+      - production
 
 jobs:
-  build:
-    name: Build & Submit Staging
+  eas-build-production:
     runs-on: ubuntu-latest
     steps:
       - name: 📦 Checkout Repository
@@ -31,12 +30,11 @@ jobs:
       - name: 🍏 | 🤖 Build on EAS
         run: eas build --platform all --profile staging --non-interactive --auto-submit
         env:
-          APP_VARIANT: staging
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          EXPO_PUBLIC_ANDROID_CLIENT_ID: ${{ vars.STAGING_EXPO_PUBLIC_ANDROID_CLIENT_ID }}
-          EXPO_PUBLIC_IOS_CLIENT_ID: ${{ vars.STAGING_EXPO_PUBLIC_IOS_CLIENT_ID }}
-          EXPO_PUBLIC_SENTRY_DSN: ${{ vars.STAGING_EXPO_PUBLIC_SENTRY_DSN }}
-          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.STAGING_EXPO_PUBLIC_SUPABASE_ANON_KEY }}
-          EXPO_PUBLIC_SUPABASE_URL: ${{ vars.STAGING_EXPO_PUBLIC_SUPABASE_URL }}
+          EXPO_PUBLIC_ANDROID_CLIENT_ID: ${{ vars.PROD_EXPO_PUBLIC_ANDROID_CLIENT_ID }}
+          EXPO_PUBLIC_IOS_CLIENT_ID: ${{ vars.PROD_EXPO_PUBLIC_IOS_CLIENT_ID }}
+          EXPO_PUBLIC_SENTRY_DSN: ${{ vars.PROD_EXPO_PUBLIC_SENTRY_DSN }}
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.PROD_EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+          EXPO_PUBLIC_SUPABASE_URL: ${{ vars.PROD_EXPO_PUBLIC_SUPABASE_URL }}

@@ -1,4 +1,4 @@
-name: EAS Local - Build And Submit iOS
+name: Github Actions - Build And Submit iOS
 
 on:
   workflow_dispatch:
@@ -11,8 +11,7 @@ on:
           - production
 
 jobs:
-  build:
-    name: Local Build & Submit iOS
+  github-actions-build-ios:
     runs-on: macos-latest
     steps:
       - name: 📦 Checkout Repository

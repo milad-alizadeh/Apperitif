@@ -1,4 +1,4 @@
-name: EAS Local - Build And Submit Android
+name: Github Actions - Build And Submit Android
 
 on:
   workflow_dispatch:
@@ -11,8 +11,7 @@ on:
           - production
 
 jobs:
-  build:
-    name: Local Build & Submit Android
+  github-actions-build-android:
     runs-on: ubuntu-latest
     steps:
       - name: 📦 Checkout Repository
