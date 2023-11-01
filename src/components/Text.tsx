@@ -81,7 +81,6 @@ export function Text({
 
   return (
     <View
-      className={`${defaultClassName} ${styleClassName}`}
       onLayout={(e: LayoutChangeEvent) => {
         if (skeletonWidth) return
         setSkeletonWidthLocal(e.nativeEvent.layout.width)
@@ -92,7 +91,7 @@ export function Text({
           <SkeletonView
             key={index}
             height={height}
-            style={{ marginBottom: skeletonLinesNumber > 1 ? 12 : 0 }}
+            style={{ marginBottom: 12 }}
             width={
               skeletonLinesNumber - 1 === index && skeletonLinesNumber > 1
                 ? (skeletonWidth * 3) / 4

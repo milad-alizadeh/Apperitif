@@ -34,7 +34,7 @@ export const Markdown: FC<Props> = ({ text, loading, skeletonLinesNumber = 3 }) 
             <SkeletonView
               key={index}
               height={16}
-              style={{ marginBottom: skeletonLinesNumber > 1 ? 12 : 0 }}
+              style={{ marginBottom: 12 }}
               width={
                 skeletonLinesNumber - 1 === index && skeletonLinesNumber > 1
                   ? (skeletonWidth * 3) / 4
