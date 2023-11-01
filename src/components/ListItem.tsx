@@ -55,6 +55,8 @@ export interface ListItemProps {
   disableCheckbox?: boolean
   /** Whether to display an outline */
   outline?: boolean
+  /** Whether to display a loading skeleton */
+  loading?: boolean
 }
 
 /**
@@ -78,6 +80,7 @@ export const ListItem = memo(function ListItem({
   primaryTextColor,
   outline,
   checked,
+  loading,
   disableCheckbox,
 }: ListItemProps) {
   const shadow = card ? shadowCard : {}
@@ -120,6 +123,7 @@ export const ListItem = memo(function ListItem({
       {leftText && (
         <View className="mr-3 min-w-[80px]">
           <Text
+            loading={loading}
             styleClassName={`font-medium text-base
             ${primaryTextColor ? 'text-primary' : ''}
           `}
@@ -137,6 +141,7 @@ export const ListItem = memo(function ListItem({
         />
       )}
       <Text
+        loading={loading}
         styleClassName={`flex-1 flex-wrap font-medium mr-auto
            ${small ? 'text-sm' : 'text-base'}
            ${primaryTextColor ? 'text-primary' : ''}

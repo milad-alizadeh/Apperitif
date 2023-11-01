@@ -1,10 +1,20 @@
 import { router } from 'expo-router'
 import * as WebBrowser from 'expo-web-browser'
 import React, { FC } from 'react'
+import { LayoutChangeEvent, View } from 'react-native'
 import MarkdownRenderer, { MarkdownProps } from 'react-native-markdown-display'
 import { colors } from '~/theme'
+import { SkeletonView } from './SkeletonView'
 
-export const Markdown: FC<{ text: string }> = ({ text }) => {
+interface Props {
+  text: string
+  loading?: boolean
+  skeletonLinesNumber?: number
+}
+
+export const Markdown: FC<Props> = ({ text, loading, skeletonLinesNumber = 3 }) => {
+  const [skeletonWidth, setSkeletonWidth] = React.useState(200)
+
   const handleLink = async (url: string) => {
     if (url.startsWith('http')) {
       await WebBrowser.openBrowserAsync(url)
@@ -14,11 +24,30 @@ export const Markdown: FC<{ text: string }> = ({ text }) => {
   }
 
   return (
-    text && (
-      <MarkdownRenderer style={$styles} onLinkPress={(url) => handleLink(url)}>
-        {text}
-      </MarkdownRenderer>
-    )
+    <View
+      onLayout={(e: LayoutChangeEvent) => {
+        setSkeletonWidth(e.nativeEvent.layout.width)
+      }}
+    >
+      {loading
+        ? Array.from({ length: skeletonLinesNumber }).map((_, index) => (
+            <SkeletonView
+              key={index}
+              height={16}
+              style={{ marginBottom: skeletonLinesNumber > 1 ? 12 : 0 }}
+              width={
+                skeletonLinesNumber - 1 === index && skeletonLinesNumber > 1
+                  ? (skeletonWidth * 3) / 4
+                  : skeletonWidth
+              }
+            />
+          ))
+        : text && (
+            <MarkdownRenderer style={$styles} onLinkPress={(url) => handleLink(url)}>
+              {text}
+            </MarkdownRenderer>
+          )}
+    </View>
   )
 }
 

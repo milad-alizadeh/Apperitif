@@ -26,6 +26,7 @@ export interface RecipeTabsProps {
   steps: Step[]
   onIngredientPress: (id: string) => void
   onEquipmentPress?: (id: string) => void
+  loading?: boolean
 }
 
 /**
@@ -42,6 +43,7 @@ export const RecipeTabs = function RecipeTabs({
   equipment,
   onIngredientPress,
   onEquipmentPress,
+  loading,
 }: RecipeTabsProps) {
   const { data } = useQuery(GET_UNITS)
   const { data: measurements } = useQuery(GET_MEASUREMENTS)
@@ -71,6 +73,7 @@ export const RecipeTabs = function RecipeTabs({
           showCheckbox={isLoggedIn}
           checked={inMyBar}
           outline
+          loading={loading}
           onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
         />
       )

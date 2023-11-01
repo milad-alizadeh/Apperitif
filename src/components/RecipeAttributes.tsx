@@ -1,6 +1,7 @@
 import { Image } from 'expo-image'
 import React, { FC } from 'react'
 import { View } from 'react-native'
+import { SkeletonView } from './SkeletonView'
 import { Text } from './Text'
 
 export interface RecipeAttributesProps {
@@ -12,6 +13,7 @@ export interface RecipeAttributesProps {
     id: any
     imageUrl: string
   }[]
+  loading?: boolean
 }
 
 /**
@@ -23,24 +25,29 @@ export interface RecipeAttributesProps {
 
 export const RecipeAttributes: FC<RecipeAttributesProps> = ({
   attributes,
+  loading,
 }: RecipeAttributesProps) => {
   return (
-    !!attributes.length && (
-      <View className="flex-row w-full justify-between">
-        {attributes.map((attribute) => {
-          if (!attribute) return null
-          return (
-            <View key={attribute?.id} className="flex-row items-center">
+    <View className="flex-row w-full justify-between">
+      {attributes.map((attribute) => {
+        return (
+          <View key={attribute?.id} className="flex-row items-center">
+            {loading ? (
+              <View className="w-10 h-10 mr-1 bg-neutral-200" />
+            ) : (
               <Image
                 className="w-10 h-10 mr-1"
                 contentFit="contain"
                 source={{ uri: attribute?.imageUrl }}
               />
-              <Text styleClassName="text-sm font-medium">{attribute.name}</Text>
-            </View>
-          )
-        })}
-      </View>
-    )
+            )}
+
+            <Text loading={loading} skeletonWidth={48} styleClassName="text-sm font-medium">
+              {attribute?.name}
+            </Text>
+          </View>
+        )
+      })}
+    </View>
   )
 }

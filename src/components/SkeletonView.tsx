@@ -26,6 +26,7 @@ export const SkeletonView = function SkeletonView({
   height,
 }: SkeletonViewProps) {
   const shimmerColors = [colors.neutral[200], colors.neutral[100], colors.neutral[200]]
+
   return (
     <ShimmerPlaceholder
       style={style}
