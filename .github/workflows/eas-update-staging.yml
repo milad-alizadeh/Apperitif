@@ -6,7 +6,7 @@ on:
       - staging-update
 
 jobs:
-  update-staging:
+  eas-update-staging:
     runs-on: ubuntu-latest
     steps:
       - name: Check for EXPO_TOKEN
