@@ -1,4 +1,4 @@
-import { useQuery, useReactiveVar } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { GetRecipeDetailsQuery, Units } from '~/__generated__/graphql'

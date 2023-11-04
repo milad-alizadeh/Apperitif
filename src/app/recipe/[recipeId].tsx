@@ -40,9 +40,6 @@ export default function RecipeDetailsScreen() {
     variables: { recipeId },
   })
 
-  // const data = undefined
-  // const loading = true
-
   const { data: barIngredients } = useQuery(GET_MY_BAR)
 
   const { data: attributesData } = useQuery(GET_CONTENT, {
@@ -63,7 +60,7 @@ export default function RecipeDetailsScreen() {
     : []
   const attributes = attributeCategoriesParsed.map((id: string) =>
     categories.find((c) => c.parentId === id),
-  ) ?? [{}, {}, {}]
+  ) ?? [{ id: '1' }, { id: '2' }, { id: '3' }]
 
   const myBar =
     barIngredients?.profilesIngredientsCollection.edges.map((e) => e.node.ingredient.id) ?? []
@@ -146,9 +143,11 @@ export default function RecipeDetailsScreen() {
 
         <View className="flex-1 -mt-16 py-8 bg-white rounded-t-[50px] px-6">
           <View>
-            <Text loading={loading} skeletonWidth={200} h1 styleClassName="mb-3">
-              {recipe?.name}
-            </Text>
+            <View>
+              <Text loading={loading} skeletonWidth={200} h1 styleClassName="mb-3">
+                {recipe?.name}
+              </Text>
+            </View>
             <View className="-mb-3">
               <Markdown loading={loading} skeletonLinesNumber={4} text={recipe?.description} />
             </View>
