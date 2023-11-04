@@ -16,6 +16,7 @@ import {
   Text,
 } from '~/components'
 import { RecipeAttributes } from '~/components/RecipeAttributes'
+import { RecipeShare } from '~/components/RecipeShare'
 import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
 import { GET_CONTENT, GET_FAVOURITES, GET_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useSession } from '~/hooks/useSession'
@@ -143,10 +144,11 @@ export default function RecipeDetailsScreen() {
 
         <View className="flex-1 -mt-16 py-8 bg-white rounded-t-[50px] px-6">
           <View>
-            <View>
+            <View className="justify-between flex-row">
               <Text loading={loading} skeletonWidth={200} h1 styleClassName="mb-3">
                 {recipe?.name}
               </Text>
+              <RecipeShare recipe={recipe} />
             </View>
             <View className="-mb-3">
               <Markdown loading={loading} skeletonLinesNumber={4} text={recipe?.description} />

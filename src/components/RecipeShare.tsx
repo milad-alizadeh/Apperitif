@@ -37,7 +37,7 @@ ${recipe?.recipesIngredientsCollection?.edges
       multiplier,
     })
 
-    return `${outputQuantity} ${outputUnit} ${e.node.ingredient.name}`
+    return `- ${e.node.ingredient.name} ${outputQuantity} ${outputUnit}`
   })
   .join('\n')}
 
@@ -53,12 +53,12 @@ Equipment:
 ${recipe?.recipesEquipmentCollection?.edges
   .map((e) => {
     const { name } = e.node.equipment
-    return name
+    return `- ${name}`
   })
   .join('\n')}
     `
     try {
-      const result = await Share.share({
+      await Share.share({
         message: recipeText,
       })
     } catch (error: any) {
@@ -66,5 +66,5 @@ ${recipe?.recipesEquipmentCollection?.edges
     }
   }
 
-  return <Icon icon="share" onPress={handleShare} />
+  return <Icon icon="share" size="large" onPress={handleShare} />
 }
