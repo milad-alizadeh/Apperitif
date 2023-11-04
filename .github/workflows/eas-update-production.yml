@@ -3,7 +3,7 @@ name: EAS Update Production
 on:
   push:
     branches:
-      - production-update
+      - production
 
 jobs:
   eas-update-production:

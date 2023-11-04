@@ -3,7 +3,7 @@ name: EAS Update Staging
 on:
   push:
     branches:
-      - staging-update
+      - staging
 
 jobs:
   eas-update-staging:

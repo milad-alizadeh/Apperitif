@@ -3,7 +3,7 @@ name: EAS Build & Submit Production
 on:
   push:
     branches:
-      - production
+      - production-build
 
 jobs:
   eas-build-production:

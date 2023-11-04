@@ -3,7 +3,7 @@ name: EAS Build & Submit Staging
 on:
   push:
     branches:
-      - staging
+      - staging-build
 
 jobs:
   eas-build-staging:
