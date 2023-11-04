@@ -148,7 +148,7 @@ export default function RecipeDetailsScreen() {
               <Text loading={loading} skeletonWidth={200} h1 styleClassName="mb-3">
                 {recipe?.name}
               </Text>
-              <RecipeShare recipe={recipe} />
+              <RecipeShare recipe={recipe} loading={loading} />
             </View>
             <View className="-mb-3">
               <Markdown loading={loading} skeletonLinesNumber={4} text={recipe?.description} />

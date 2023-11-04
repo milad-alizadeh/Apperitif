@@ -6,12 +6,14 @@ import { GET_MEASUREMENTS, GET_UNITS } from '~/graphql/queries'
 import { UnitSystems, convertUnitToOtherSystem, defaultJiggerSize } from '~/store'
 import { captureError } from '~/utils/captureError'
 import { Icon } from './Icon'
+import { SkeletonView } from './SkeletonView'
 
 interface RecipeShareProps {
   recipe: any
+  loading?: boolean
 }
 
-export const RecipeShare: FC<RecipeShareProps> = ({ recipe }) => {
+export const RecipeShare: FC<RecipeShareProps> = ({ recipe, loading }) => {
   const { data: unitsData } = useQuery(GET_UNITS)
   const { data: measurements } = useQuery(GET_MEASUREMENTS)
 
@@ -59,6 +61,7 @@ ${recipe?.recipesEquipmentCollection?.edges
     `
     try {
       await Share.share({
+        title: recipe?.name,
         message: recipeText,
       })
     } catch (error: any) {
@@ -66,5 +69,9 @@ ${recipe?.recipesEquipmentCollection?.edges
     }
   }
 
-  return <Icon icon="share" size="large" onPress={handleShare} />
+  return (
+    <SkeletonView visible={!loading} width={30} height={30}>
+      <Icon icon="share" onPress={handleShare} />
+    </SkeletonView>
+  )
 }
