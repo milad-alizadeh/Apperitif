@@ -37,7 +37,7 @@ jobs:
       - name: Publish update
         run: eas update --auto
         env:
-          APP_VARIANT: staging
+          APP_VARIANT: ${{ github.ref_name }}
           EXPO_PUBLIC_ANDROID_CLIENT_ID: ${{ vars.STAGING_EXPO_PUBLIC_ANDROID_CLIENT_ID }}
           EXPO_PUBLIC_IOS_CLIENT_ID: ${{ vars.STAGING_EXPO_PUBLIC_IOS_CLIENT_ID }}
           EXPO_PUBLIC_SENTRY_DSN: ${{ vars.STAGING_EXPO_PUBLIC_SENTRY_DSN }}
@@ -45,9 +45,9 @@ jobs:
           EXPO_PUBLIC_SUPABASE_URL: ${{ vars.STAGING_EXPO_PUBLIC_SUPABASE_URL }}
 
       - name: Upload sourcemaps to Sentry
-        run: yarn upload-sourcemap -p staging
+        run: yarn upload-sourcemap -p ${{ github.ref_name }}
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          APP_VARIANT: staging
+          APP_VARIANT: ${{ github.ref_name }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}-staging
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}

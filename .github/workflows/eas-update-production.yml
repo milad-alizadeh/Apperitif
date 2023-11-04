@@ -44,7 +44,7 @@ jobs:
           EXPO_PUBLIC_SUPABASE_URL: ${{ vars.PROD_EXPO_PUBLIC_SUPABASE_URL }}
 
       - name: Upload sourcemaps to Sentry
-        run: yarn upload-sourcemap -p production
+        run: yarn upload-sourcemap -p ${{ github.ref_name }}
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}

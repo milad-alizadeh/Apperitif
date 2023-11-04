@@ -28,7 +28,7 @@ jobs:
         run: yarn
 
       - name: 🍏 | 🤖 Build on EAS
-        run: eas build --platform all --profile staging --non-interactive --auto-submit
+        run: eas build --platform all --profile production --non-interactive --auto-submit
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
