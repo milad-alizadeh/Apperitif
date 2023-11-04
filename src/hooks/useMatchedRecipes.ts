@@ -36,8 +36,6 @@ export const useMatchedRecipes = () => {
     }
   }, [isFocused, ingredientRefetch, totalMatchRefetch, partialMatchRefetch])
 
-  console.log('ingredientsData', ingredientsData)
-
   const ingredientsInBar = ingredientsData?.profilesIngredientsCollection.edges.map((e) => ({
     name: e.node.ingredient.name,
     id: e.node.ingredient.id,
