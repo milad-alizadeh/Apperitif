@@ -1,15 +1,13 @@
 import { Image } from 'expo-image'
 import React, { memo } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { useHaptic } from '~/hooks/useHaptics'
 import { colors } from '~/theme'
 import { shadowCard } from '~/theme/shadows'
 import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 import { Badge } from './Badge'
-import { Button } from './Button'
 import { Checkbox } from './Checkbox'
 import { Icon, IconTypes } from './Icon'
-import { Text } from './Text'
 
 /**
  * Props for the ListItem component
@@ -123,8 +121,7 @@ export const ListItem = memo(function ListItem({
       {leftText && (
         <View className="mr-3 min-w-[80px]">
           <Text
-            loading={loading}
-            styleClassName={`font-medium text-base
+            className={`font-medium text-base
             ${primaryTextColor ? 'text-primary' : ''}
           `}
           >
@@ -141,8 +138,7 @@ export const ListItem = memo(function ListItem({
         />
       )}
       <Text
-        loading={loading}
-        styleClassName={`flex-1 flex-wrap font-medium mr-auto
+        className={`flex-1 flex-wrap font-medium mr-auto
            ${small ? 'text-sm' : 'text-base'}
            ${primaryTextColor ? 'text-primary' : ''}
            ${outline ? 'underline' : ''}

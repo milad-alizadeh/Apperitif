@@ -1,10 +1,9 @@
 import React, { memo } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { useHaptic } from '~/hooks/useHaptics'
 import { colors } from '~/theme'
 import { shadowCard } from '~/theme/shadows'
 import { Icon } from './Icon'
-import { Text } from './Text'
 
 /**
  * Props for the IngredientListItem component
@@ -43,7 +42,7 @@ export const IngredientListItem = memo(function IngredientListItem({
       ) : (
         <View className="rounded-full w-6 h-6 p-1 border-2 border-neutral-400" />
       )}
-      <Text styleClassName={`mr-auto ml-4 font-medium text-base`}>{name}</Text>
+      <Text className={`mr-auto ml-4 font-medium text-base`}>{name}</Text>
     </TouchableOpacity>
   )
 })

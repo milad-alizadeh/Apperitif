@@ -71,8 +71,8 @@ export const IngredientDetails = function IngredientDetails({
   }
 
   return (
-    <View className="min-h-[200px] p-6 pt-6 flex-">
-      <View className="justify-end flex-1">
+    <View className="min-h-[500px] p-6 flex-">
+      <View className={`${loading ? 'flex-1 justify-center' : 'justify-start'}`}>
         {loading ? (
           <ActivityIndicator />
         ) : (

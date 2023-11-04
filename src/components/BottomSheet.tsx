@@ -36,6 +36,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
   const duration = 200
   const topInset = useSafeAreaInsets().top
   const windowHeight = useWindowDimensions().height
+  const windowWidth = useWindowDimensions().width
   const bottomInset = useSafeAreaInsets().bottom
   const contentHeight = useSharedValue(0)
   const blurIntensity = useSharedValue(0)
@@ -85,7 +86,6 @@ export const BottomSheet = forwardRef(function BottomSheet(
 
   const closeStyle = useAnimatedStyle(() => {
     return {
-      top: withTiming(paddingTop.value + 24, animationConfig),
       opacity: withTiming(paddingTop.value > 0 ? 1 : 0, animationConfig),
     }
   })
@@ -130,11 +130,14 @@ export const BottomSheet = forwardRef(function BottomSheet(
           style={[containerStyle, shadowLarge]}
           className="absolute bg-white w-screen top-full rounded-t-[50px] overflow-hidden"
         >
-          <Animated.View style={closeStyle} className="absolute right-6 z-10 bg-white rounded-full">
-            <Icon icon="close" size="large" onPress={hide} />
-          </Animated.View>
           <ScrollView>
             <View onLayout={onContentLayout} className="min-h-[360px]">
+              <Animated.View
+                style={closeStyle}
+                className="z-10 justify-center items-center rounded-full absolute right-6 top-5"
+              >
+                <Icon icon="close" size="large" onPress={hide} />
+              </Animated.View>
               {children}
               <View style={{ height: bottomInset }}></View>
             </View>
@@ -142,7 +145,10 @@ export const BottomSheet = forwardRef(function BottomSheet(
 
           {/* Swip Area */}
           <GestureDetector gesture={swipeGesture}>
-            <View className="h-32 absolute top-0 left-0 w-full"></View>
+            <View
+              className="h-32 absolute top-0 left-16 right-0 m-auto"
+              style={{ width: windowWidth - 128 }}
+            ></View>
           </GestureDetector>
         </Animated.View>
       </AnimatedBlurView>
