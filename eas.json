@@ -41,7 +41,6 @@
     "staging": {
       "android": {
         "releaseStatus": "draft",
-        "serviceAccountKeyPath": "pc-api-4712839384198130201-585-35f364de464c.json",
         "track": "internal"
       },
       "ios": {
@@ -53,7 +52,6 @@
     "production": {
       "android": {
         "releaseStatus": "draft",
-        "serviceAccountKeyPath": "pc-api-4712839384198130201-585-35f364de464c.json",
         "track": "internal"
       },
       "ios": {
