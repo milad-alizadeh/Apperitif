@@ -104,7 +104,7 @@ describe('convertUnitToOtherSystem', () => {
       units: mockUnits,
     })
     expect(result).toEqual({
-      quantity: null,
+      quantity: '',
       unit: 'ml',
     })
   })
