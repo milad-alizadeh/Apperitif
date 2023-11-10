@@ -24,8 +24,8 @@
     "build:staging:android": "eas build --platform android --local --non-interactive --profile staging --output ./artifacts/staging.aab",
     "submit:staging:ios": "eas submit --platform ios --profile staging --path ./artifacts/staging.ipa",
     "submit:staging:android": "eas submit --platform android --profile staging --path ./artifacts/staging.aab",
-    "build-and-submit:staging:ios": "yarn build:staging:ios && yarn submit:staging:ios",
-    "build-and-submit:staging:android": "yarn build:staging:android && yarn submit:staging:android",
+    "build-and-submit:staging:ios": "export APP_VARIANT=staging && yarn build:staging:ios && yarn submit:staging:ios",
+    "build-and-submit:staging:android": "export APP_VARIANT=staging && yarn build:staging:android && yarn submit:staging:android",
     "build:production:ios": "eas build --platform ios --local --non-interactive --profile production --output ./artifacts/production.ipa",
     "build:production:android": "eas build --platform android --local --non-interactive --profile production --output ./artifacts/production.aab",
     "submit:production:ios": "eas submit --platform ios --profile production --path ./artifacts/production.ipa",
@@ -59,11 +59,11 @@
     "expo-blur": "~12.4.1",
     "expo-constants": "~14.4.2",
     "expo-crypto": "~12.4.1",
-    "expo-dev-client": "~2.4.11",
+    "expo-dev-client": "~2.4.12",
     "expo-device": "~5.4.0",
     "expo-font": "~11.4.0",
     "expo-haptics": "~12.4.0",
-    "expo-image": "~1.3.4",
+    "expo-image": "~1.3.5",
     "expo-linear-gradient": "~12.3.0",
     "expo-linking": "~5.0.2",
     "expo-router": "^2.0.0",
@@ -142,7 +142,9 @@
       }
     },
     "preset": "jest-expo",
-    "setupFilesAfterEnv": ["<rootDir>/jest.setupFilesAfterEnv.ts"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setupFilesAfterEnv.ts"
+    ],
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
     ],
