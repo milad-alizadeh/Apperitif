@@ -31,8 +31,6 @@ export function Text({
   styleClassName,
   weight,
 }: TextProps) {
-  const [skeletonWidthLocal, setSkeletonWidthLocal] = React.useState(skeletonWidth)
-
   const sizes = {
     h1: { fontSize: 26, fontFamily: typography?.primary?.bold, lineHeight: 32 },
     h2: { fontSize: 24, fontFamily: typography?.primary?.bold, lineHeight: 30 },
@@ -80,12 +78,7 @@ export function Text({
   }
 
   return (
-    <View
-      onLayout={(e: LayoutChangeEvent) => {
-        if (skeletonWidth) return
-        setSkeletonWidthLocal(e.nativeEvent.layout.width)
-      }}
-    >
+    <>
       {loading ? (
         Array.from({ length: skeletonLinesNumber }).map((_, index) => (
           <SkeletonView
@@ -104,6 +97,6 @@ export function Text({
           {children}
         </RNText>
       )}
-    </View>
+    </>
   )
 }

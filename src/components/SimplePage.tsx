@@ -1,4 +1,3 @@
-import { router } from 'expo-router'
 import React, { FC } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 import { Header } from './Header'
