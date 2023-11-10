@@ -27,6 +27,9 @@ jobs:
       - name: 🧶 Install Project Dependencies
         run: yarn
 
+      - name: Run Unit Tests
+        run: yarn test
+
       - name: 🍏 | 🤖 Build on EAS
         run: eas build --platform all --profile production --non-interactive --auto-submit
         env:
