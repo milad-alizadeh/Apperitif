@@ -24,6 +24,9 @@ interface AccordionItemProps {
   toggleExpand: (title: string) => void
 }
 
+/**
+ * Accordion component that displays a list of items that can be expanded
+ */
 export const AccordionItem: FC<AccordionItemProps> = ({
   title,
   description,

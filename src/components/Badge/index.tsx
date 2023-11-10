@@ -9,7 +9,7 @@ export interface BadgeProps {
 }
 
 /**
- * Badge component
+ * Badge component that displays a label
  */
 export const Badge: FC<BadgeProps> = ({ label, styleClassName }) => {
   return (

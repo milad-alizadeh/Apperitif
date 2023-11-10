@@ -67,7 +67,7 @@ export const EmailAuthentication = function EmailAuthentication({
         />
       </View>
       <View>
-        <Button label="Sign in" onPress={() => signInWithEmail()} />
+        <Button label="Sign in" loading={loading} onPress={() => signInWithEmail()} />
       </View>
     </View>
   )
