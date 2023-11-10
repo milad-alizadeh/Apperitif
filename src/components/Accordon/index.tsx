@@ -19,7 +19,7 @@ interface AccordionItemProps {
   toggleExpand: (title: string) => void
 }
 
-const AccordionItem: FC<AccordionItemProps> = ({
+export const AccordionItem: FC<AccordionItemProps> = ({
   title,
   description,
   isExpanded,
@@ -59,7 +59,7 @@ const AccordionItem: FC<AccordionItemProps> = ({
         styleClassName="py-3 z-10"
       />
       <View style={{ ...shadowCard }} className="bg-white rounded-b-xl -top-3">
-        <Animated.View style={[heightStyle, { overflow: 'hidden' }]}>
+        <Animated.View testID="accordion-content" style={[heightStyle, { overflow: 'hidden' }]}>
           <View className="px-3 pt-12 -mt-6">
             <Text body>{description}</Text>
           </View>
@@ -67,7 +67,7 @@ const AccordionItem: FC<AccordionItemProps> = ({
 
         {!isMeasured && (
           <View className="px-3 pt-12 -mt-6 absolute top-full" onLayout={calculateHeight}>
-            <Text body>{description}</Text>
+            <Text body>{description}.</Text>
           </View>
         )}
       </View>
