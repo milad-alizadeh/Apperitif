@@ -96,6 +96,7 @@
     "@expo/webpack-config": "^19.0.0",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/client-preset": "^4.1.0",
+    "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^12.3.2",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/aes-js": "^3.1.2",
@@ -133,6 +134,7 @@
   },
   "jest": {
     "preset": "jest-expo",
+    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"],
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
     ],

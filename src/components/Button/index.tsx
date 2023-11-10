@@ -32,6 +32,7 @@ export const Button = forwardRef(function Button(
   return (
     <TouchableOpacity
       ref={ref}
+      testID="button"
       onPress={() => {
         if (enableHaptics) {
           outline ? hapticWarning() : hapticSuccess()

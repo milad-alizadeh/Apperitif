@@ -13,6 +13,11 @@ describe('Button', () => {
     expect(getByTestId('loading-indicator')).toBeTruthy()
   })
 
+  it('renders large button when large is true', () => {
+    const { getByText } = render(<Button label="Click me" large />)
+    expect(getByText('Click me')).toHaveStyle({ height: 48 })
+  })
+
   it('calls onPress function when button is pressed', () => {
     const onPress = jest.fn()
     const { getByText } = render(<Button label="Click me" onPress={onPress} />)
