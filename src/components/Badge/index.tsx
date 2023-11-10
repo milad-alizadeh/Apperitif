@@ -12,6 +12,7 @@ export interface BadgeProps {
 export function Badge({ label, styleClassName }: BadgeProps) {
   return (
     <View
+      testID="badge"
       className={`w-6 h-6 bg-primary rounded-full items-center justify-center ${styleClassName}`}
     >
       <Text className="text-white text-sm font-bold">{label}</Text>
