@@ -3,7 +3,7 @@ import { router } from 'expo-router'
 import React, { useEffect, useRef, useState } from 'react'
 import { Alert, View } from 'react-native'
 import { Button, Header, Prompt, PromptRef, Screen, Text, TextField } from '~/components'
-import { useHaptic } from '~/hooks/useHaptics'
+import { useHaptics } from '~/hooks/useHaptics'
 import { useSession } from '~/hooks/useSession'
 import { api } from '~/services'
 

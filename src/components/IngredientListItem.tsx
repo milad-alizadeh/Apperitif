@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
-import { useHaptic } from '~/hooks/useHaptics'
+import { useHaptics } from '~/hooks/useHaptics'
 import { colors } from '~/theme'
 import { shadowCard } from '~/theme/shadows'
 import { Icon } from './Icon'

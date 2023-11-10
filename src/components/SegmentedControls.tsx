@@ -7,7 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
-import { useHaptic } from '~/hooks/useHaptics'
+import { useHaptics } from '~/hooks/useHaptics'
 import { shadowCard } from '~/theme/shadows'
 import { Text } from './Text'
 

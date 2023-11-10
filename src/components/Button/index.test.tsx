@@ -1,10 +1,10 @@
 import { fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-import { useHaptic } from '~/hooks/useHaptics'
+import { useHaptics } from '~/hooks/useHaptics'
 import { Button, ButtonProps } from './index'
 
-jest.mock('~/hooks/useHaptic', () => ({
-  useHaptic: () => jest.fn(),
+jest.mock('../../hooks/useHaptics', () => ({
+  useHaptics: () => jest.fn(),
 }))
 
 describe('Button', () => {

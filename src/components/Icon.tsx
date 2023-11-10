@@ -2,7 +2,7 @@ import { Image } from 'expo-image'
 import * as React from 'react'
 import { ComponentType } from 'react'
 import { ImageStyle, StyleProp, TouchableOpacity, TouchableOpacityProps, View } from 'react-native'
-import { useHaptic } from '../hooks/useHaptics'
+import { useHaptics } from '../hooks/useHaptics'
 
 export type IconTypes = keyof typeof iconRegistry
 

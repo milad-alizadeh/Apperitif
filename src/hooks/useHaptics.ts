@@ -4,7 +4,7 @@ import { Platform } from 'react-native'
 
 type FeedbackType = 'light' | 'medium' | 'heavy' | 'selection' | 'success' | 'warning' | 'error'
 
-export const useHaptic = (feedbackType: FeedbackType = 'selection') => {
+export const useHaptics = (feedbackType: FeedbackType = 'selection') => {
   const createHapticHandler = useCallback((type: Haptics.ImpactFeedbackStyle) => {
     return Platform.OS === 'web' ? undefined : () => Haptics.impactAsync(type)
   }, [])
