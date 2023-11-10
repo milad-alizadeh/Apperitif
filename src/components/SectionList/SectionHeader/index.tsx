@@ -2,7 +2,7 @@ import React, { RefObject, createRef, useEffect, useMemo, useRef, useState } fro
 import { FlatList, View, useWindowDimensions } from 'react-native'
 import Biglist from 'react-native-big-list'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import { SectionHeaderItem } from './SectionHeaderItem'
+import { SectionHeaderItem } from '../SectionHeaderItem'
 
 export interface SectionHeaderProps {
   sectionTitles: string[]
@@ -100,7 +100,12 @@ export const SectionHeader = function SectionHeader({
   })
 
   return (
-    <View ref={containerRef} onLayout={onContainerLayout} className={styleClassName}>
+    <View
+      ref={containerRef}
+      onLayout={onContainerLayout}
+      className={styleClassName}
+      testID="section-header"
+    >
       <FlatList
         horizontal
         data={sectionTitles}

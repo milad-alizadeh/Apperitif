@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react'
 import { TouchableOpacity, View, ViewStyle } from 'react-native'
-import { Text } from '../Text'
+import { Text } from '../../Text'
 
 export interface SectionHeaderItemProps {
   label: string
-  active: boolean
-  onPress: () => void
+  active?: boolean
+  onPress?: () => void
   onLayout?: (event: any) => void
   style?: ViewStyle
 }
@@ -22,9 +22,9 @@ export const SectionHeaderItem = forwardRef<View, SectionHeaderItemProps>(
       <View ref={ref} className="ml-6" onLayout={onLayout} style={style}>
         <TouchableOpacity className="py-2" onPress={onPress}>
           <Text
-            styleClassName={`${
-              active ? 'text-primary' : 'text-neutral-[400]'
-            } text-base font-medium `}
+            styleClassName={`
+            ${active ? 'text-primary' : 'text-neutral-[400]'} 
+            text-base font-medium `}
           >
             {label}
           </Text>
