@@ -6,6 +6,7 @@ import { Text } from '~/components/Text'
 import { shadowCard } from '~/theme/shadows'
 
 interface AccordionProps {
+  /** The content of the accordion */
   content: {
     title: string
     description: string
@@ -13,9 +14,13 @@ interface AccordionProps {
 }
 
 interface AccordionItemProps {
+  /** The title of the accordion item */
   title: string
+  /** The description of the accordion item */
   description: string
+  /** Whether the accordion item is expanded */
   isExpanded: boolean
+  /** Callback to toggle the accordion item */
   toggleExpand: (title: string) => void
 }
 

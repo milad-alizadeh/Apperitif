@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { FC, useCallback, useRef, useState } from 'react'
 import { View, ViewStyle, ViewToken, useWindowDimensions } from 'react-native'
 import BigList from 'react-native-big-list'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
@@ -47,7 +47,7 @@ const ITEM_HEIGHT = 60
 /**
  *  A component used to show a list of items with sections.
  */
-export const SectionList = function SectionList({
+export const SectionList: FC<SectionListProps> = ({
   sectionsData,
   sectionsHeader,
   onSearch,
@@ -62,7 +62,7 @@ export const SectionList = function SectionList({
   headerHeight,
   contentContainerStyle,
   onRefresh,
-}: SectionListProps) {
+}) => {
   const inset = useSafeAreaInsets()
   const [activeIndex, setActiveIndex] = useState(-1)
   const defaultHeaderHeight = useWindowDimensions().width - FIXED_HEADER_HEIGHT

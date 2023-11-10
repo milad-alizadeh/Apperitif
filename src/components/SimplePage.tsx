@@ -5,8 +5,11 @@ import { Markdown } from './Markdown'
 import { Screen } from './Screen'
 
 interface SimplePageProps {
+  /** The title of the page */
   title: string
+  /** The content of the page */
   content: string
+  /** Whether the page is loading */
   loading?: boolean
 }
 

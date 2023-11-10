@@ -1,15 +1,17 @@
-import * as React from 'react'
+import React, { FC } from 'react'
 import { Text, View } from 'react-native'
 
 export interface BadgeProps {
+  /** Label to show */
   label: string
+  /** Custom style class name */
   styleClassName?: string
 }
 
 /**
- * Describe your component here
+ * Badge component
  */
-export function Badge({ label, styleClassName }: BadgeProps) {
+export const Badge: FC<BadgeProps> = ({ label, styleClassName }) => {
   return (
     <View
       testID="badge"
