@@ -77,7 +77,6 @@ const AccordionItem: FC<AccordionItemProps> = ({
 
 export const Accordion: FC<AccordionProps> = ({ content }) => {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
-  const [measurements, setMeasurements] = useState<number[]>(Array(content.length).fill(0))
 
   const toggleExpand = useCallback((title: string) => {
     setExpanded((prev) => ({ ...prev, [title]: !prev[title] }))
