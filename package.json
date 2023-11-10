@@ -10,7 +10,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web --https",
-    "test": "jest --watchAll",
+    "test": "jest --watch",
     "format": "prettier --write \"./**/*.{js,jsx,json,md,ts,tsx}\"",
     "compile": "tsc --noEmit -p . --pretty",
     "add:test-device": "eas device:create",
@@ -133,14 +133,20 @@
     "importOrderSortSpecifiers": true
   },
   "jest": {
+    "moduleNameMapper": {
+      "moduleNameMapper": {
+        "^~/(.*)$": "<rootDir>/src/$1",
+        "^~assets/(.*)$": "<rootDir>/assets/$1"
+      }
+    },
     "preset": "jest-expo",
-    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"],
+    "setupFilesAfterEnv": ["<rootDir>/jest.setupFilesAfterEnv.ts"],
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
     ],
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "**/*.{js,jsx}",
+      "src/**/*.{ts,tsx}",
       "!**/coverage/**",
       "!**/node_modules/**",
       "!**/babel.config.js",
