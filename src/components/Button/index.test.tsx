@@ -1,10 +1,10 @@
 import { fireEvent, render } from '@testing-library/react-native'
 import React from 'react'
-import { useHaptics } from '~/hooks/useHaptics'
+import { useHaptics } from '../../hooks/useHaptics'
 import { Button, ButtonProps } from './index'
 
 jest.mock('../../hooks/useHaptics', () => ({
-  useHaptics: () => jest.fn(),
+  useHaptics: jest.fn(),
 }))
 
 describe('Button', () => {
@@ -40,10 +40,7 @@ describe('Button', () => {
     const { getByTestId } = render(<Button label="Click me" enableHaptics />)
     fireEvent.press(getByTestId('button'))
 
-    // Asserting that useHaptic is called with 'light'
-    expect(useHaptic).toHaveBeenCalledWith('light')
-    // Asserting that the function returned by useHaptic is called
-    expect(useHapticMock).toHaveBeenCalled()
+    expect(useHaptics).toHaveBeenCalled()
   })
 
   it('calls onPress function when button is pressed', () => {

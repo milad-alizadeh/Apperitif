@@ -31,7 +31,7 @@ export const Button = forwardRef(function Button(
       ref={ref}
       testID="button"
       onPress={() => {
-        if (enableHaptics) useHaptic('light')
+        if (enableHaptics) useHaptics('light')
         onPress && !loading && onPress()
       }}
       className={`rounded-xl border-2 border-primary justify-center items-center bg-blue-400

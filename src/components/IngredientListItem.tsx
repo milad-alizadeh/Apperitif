@@ -22,7 +22,7 @@ export const IngredientListItem = memo(function IngredientListItem({
   checked,
   onPress,
 }: IngredientListItemProps) {
-  const haptic = useHaptic('medium')
+  const haptic = useHaptics('medium')
   return (
     <TouchableOpacity
       onPress={() => {

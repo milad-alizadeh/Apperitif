@@ -26,7 +26,7 @@ export const SegmentedControl = <T,>({ segments, onValueChange, selectedValue }:
   const [containerWidth, setContainerWidth] = useState(0)
   const [activeIndex, setActiveIndex] = useState(-1) // React state to keep track of active index
   const translateX = useSharedValue(0)
-  const haptics = useHaptic('light')
+  const haptics = useHaptics('light')
 
   useEffect(() => {
     const newIndex = segments.findIndex((segment) => segment.value === selectedValue)

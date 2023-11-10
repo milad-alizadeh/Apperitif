@@ -25,7 +25,7 @@ export interface ChipProps {
  * Describe your component here
  */
 export const Chip = function Chip({ label, onDismiss, styleClassName }: ChipProps) {
-  const haptic = useHaptic('light')
+  const haptic = useHaptics('light')
   return (
     <View className={`flex-row rounded-lg bg-primary items-center px-2 h-8 ${styleClassName}`}>
       <Text className="mr-2 text-white font-medium text-sm">{label}</Text>

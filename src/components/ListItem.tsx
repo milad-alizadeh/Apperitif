@@ -82,7 +82,7 @@ export const ListItem = memo(function ListItem({
   disableCheckbox,
 }: ListItemProps) {
   const shadow = card ? shadowCard : {}
-  const haptic = useHaptic('medium')
+  const haptic = useHaptics('medium')
 
   return (
     <TouchableOpacity

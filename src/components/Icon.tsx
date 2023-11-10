@@ -61,7 +61,7 @@ export function Icon(props: IconProps) {
     ...WrapperProps
   } = props
 
-  const haptic = useHaptic('medium')
+  const haptic = useHaptics('medium')
 
   const styleClassNameBySize = {
     xsmall: 'w-5 h-5',
