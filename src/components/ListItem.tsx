@@ -55,6 +55,8 @@ export interface ListItemProps {
   outline?: boolean
   /** Whether to display a loading skeleton */
   loading?: boolean
+  /** Test ID for the component */
+  testID?: string
 }
 
 /**
@@ -79,6 +81,7 @@ export const ListItem = memo(function ListItem({
   outline,
   checked,
   loading,
+  testID,
   disableCheckbox,
 }: ListItemProps) {
   const shadow = card ? shadowCard : {}
@@ -87,6 +90,7 @@ export const ListItem = memo(function ListItem({
   return (
     <TouchableOpacity
       activeOpacity={0.5}
+      testID={testID}
       onPress={() => {
         if (enableHaptics) haptic()
         onPress && onPress()

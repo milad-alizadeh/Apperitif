@@ -41,19 +41,16 @@ describe('AccordionItem', () => {
     expect(getByText('Test Description 2')).toBeTruthy()
   })
 
-  // it('expands/collapses on press', () => {
-  //   const { getByText, getByTestId } = render(
-  //     <AccordionItem
-  //       title={title}
-  //       description={description}
-  //       isExpanded={false}
-  //       toggleExpand={mockToggleExpand}
-  //     />,
-  //   )
-
-  //   // Simulate press to expand
-  //   fireEvent.press(getByText(title))
-  //   expect(mockToggleExpand).toHaveBeenCalledWith(title)
-  //   expect(getByTestId('accordion-content')).toHaveStyle({ height: 0 })
-  // })
+  it('it fires toggleExpand when clicked', () => {
+    const { getByTestId } = render(
+      <AccordionItem
+        title={title}
+        description={description}
+        isExpanded={false}
+        toggleExpand={mockToggleExpand}
+      />,
+    )
+    fireEvent.press(getByTestId(`accordion-content-${title}`))
+    expect(mockToggleExpand).toHaveBeenCalled()
+  })
 })

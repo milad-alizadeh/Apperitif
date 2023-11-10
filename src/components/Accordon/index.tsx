@@ -57,6 +57,7 @@ export const AccordionItem: FC<AccordionItemProps> = ({
         rightIcon={!isExpanded ? 'chevronDown' : 'chevronUp'}
         onPress={() => toggleExpand(title)}
         styleClassName="py-3 z-10"
+        testID={`accordion-content-${title}`}
       />
       <View style={{ ...shadowCard }} className="bg-white rounded-b-xl -top-3">
         <Animated.View testID="accordion-content" style={[heightStyle, { overflow: 'hidden' }]}>
