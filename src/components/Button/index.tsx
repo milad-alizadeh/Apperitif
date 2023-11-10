@@ -47,7 +47,11 @@ export const Button = forwardRef(function Button(
         ${outline ? 'text-primary' : 'text-white'} 
         ${large ? 'text-xl' : ''}`}
       >
-        {loading ? <ActivityIndicator color="white" size="small" /> : label}
+        {loading ? (
+          <ActivityIndicator testID="loading-indicator" color="white" size="small" />
+        ) : (
+          label
+        )}
       </Text>
     </TouchableOpacity>
   )

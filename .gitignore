@@ -45,3 +45,5 @@ artifacts/*
 
 expo-env.d.ts
 # @end expo-cli
+# coverage
+coverage/*
