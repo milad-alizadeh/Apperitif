@@ -1,19 +1,26 @@
 import React, { forwardRef } from 'react'
 import { ActivityIndicator, Text, TouchableOpacity } from 'react-native'
-import { useHaptic } from '../hooks/useHaptics'
+import { useHaptic } from '../../hooks/useHaptics'
 
 export interface ButtonProps {
+  /** label of the button */
   label: string
+  /** onPress event */
   onPress?: () => void
+  /** display button as outline */
   outline?: boolean
+  /** custom style class name */
   styleClassName?: string
+  /** display button as large */
   large?: boolean
+  /** enable haptics when button is pressed */
   enableHaptics?: boolean
+  /** display loading indicator */
   loading?: boolean
 }
 
 /**
- * Describe your component here
+ * Button component
  */
 export const Button = forwardRef(function Button(
   { label, onPress, outline, styleClassName, large = true, enableHaptics, loading }: ButtonProps,
@@ -21,6 +28,7 @@ export const Button = forwardRef(function Button(
 ) {
   const hapticSuccess = useHaptic('success')
   const hapticWarning = useHaptic('warning')
+
   return (
     <TouchableOpacity
       ref={ref}
