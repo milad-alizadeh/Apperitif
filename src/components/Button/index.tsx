@@ -36,7 +36,9 @@ export const Button = forwardRef(function Button(
       }}
       className={`rounded-xl border-2 border-primary justify-center items-center bg-blue-400
         ${outline ? 'bg-transparent' : 'bg-primary'}
-        ${large ? 'h-12 px-4 py-2' : 'px-3 py-1'} ${styleClassName}`}
+        ${large ? 'h-12 px-4 py-2' : 'px-3 py-1'} 
+        ${styleClassName}
+      `}
     >
       <Text
         className={`text-base font-medium 
