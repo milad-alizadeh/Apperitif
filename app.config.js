@@ -12,6 +12,7 @@ export default () => {
     orientation: 'portrait',
     icon: './assets/images/app-icon-all.png',
     scheme: BUNDLE_ID,
+    owner: 'bubblewrap',
     userInterfaceStyle: 'automatic',
     splash: {
       image: './assets/images/splash-logo-all.png',
