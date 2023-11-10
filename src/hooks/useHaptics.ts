@@ -8,6 +8,7 @@ export const useHaptics = (feedbackType: FeedbackType = 'selection') => {
   const createHapticHandler = useCallback((type: Haptics.ImpactFeedbackStyle) => {
     return Platform.OS === 'web' ? undefined : () => Haptics.impactAsync(type)
   }, [])
+
   const createNotificationFeedback = useCallback((type: Haptics.NotificationFeedbackType) => {
     return Platform.OS === 'web' ? undefined : () => Haptics.notificationAsync(type)
   }, [])
