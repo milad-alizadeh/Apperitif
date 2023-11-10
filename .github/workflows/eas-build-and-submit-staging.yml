@@ -32,7 +32,7 @@ jobs:
         env:
           APP_VARIANT: staging
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}-staging
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           EXPO_APPLE_PASSWORD: ${{ secrets.EXPO_APPLE_PASSWORD }}
           EXPO_PUBLIC_ANDROID_CLIENT_ID: ${{ vars.STAGING_EXPO_PUBLIC_ANDROID_CLIENT_ID }}
