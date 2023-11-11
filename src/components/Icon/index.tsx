@@ -1,56 +1,37 @@
 import { Image } from 'expo-image'
-import * as React from 'react'
+import React, { FC } from 'react'
 import { ComponentType } from 'react'
 import { ImageStyle, StyleProp, TouchableOpacity, TouchableOpacityProps, View } from 'react-native'
-import { useHaptics } from '../hooks/useHaptics'
+import { useHaptics } from '../../hooks/useHaptics'
 
 export type IconTypes = keyof typeof iconRegistry
 
 interface IconProps extends TouchableOpacityProps {
-  /**
-   * The name of the icon
-   */
+  /** The name of the icon */
   icon: IconTypes
-
-  /**
-   * An optional tint color for the icon
-   */
+  /** An optional tint color for the icon */
   color?: string
-
-  /**
-   * An optional size for the icon. If not provided, the icon will be sized to the icon's resolution.
-   */
+  /** An optional size for the icon. If not provided, the icon will be sized to the icon's resolution. */
   size?: 'xsmall' | 'small' | 'medium' | 'large'
-
-  /**
-   * Style overrides for the icon image
-   */
+  /** Style overrides for the icon image */
   style?: StyleProp<ImageStyle>
-
+  /** Style overrides for the icon container */
   styleClassName?: string
-
-  /**
-   * Style overrides for the icon container
-   */
+  /** Style overrides for the icon container */
   containerClassName?: string
-
-  /**
-   * An optional function to be called when the icon is pressed
-   */
+  /** An optional function to be called when the icon is pressed */
   onPress?: TouchableOpacityProps['onPress']
-
+  /** An optional function to be called when the icon is long pressed */
   activeOpacity?: TouchableOpacityProps['activeOpacity']
-
+  /** Whether to enable haptics when the icon is pressed */
   enableHaptics?: boolean
 }
 
 /**
  * A component to render a registered icon.
  * It is wrapped in a <TouchableOpacity /> if `onPress` is provided, otherwise a <View />.
- *
- * - [Documentation and Examples](https://github.com/infinitered/ignite/blob/master/docs/Components-Icon.md)
  */
-export function Icon(props: IconProps) {
+export const Icon: FC<IconProps> = (props) => {
   const {
     icon,
     color,
@@ -90,6 +71,7 @@ export function Icon(props: IconProps) {
         style={[$imageStyle, color && { tintColor: color }, $imageStyleOverride]}
         source={iconRegistry[icon]}
         contentFit="contain"
+        testID="icon-image"
       />
     </Wrapper>
   )
