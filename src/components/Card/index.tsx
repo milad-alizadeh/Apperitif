@@ -51,7 +51,6 @@ export const Card = memo(function Card({
           testID="card-image"
         />
       </View>
-      <Text styleClassName="text-sm font-medium mt-2">{name}</Text>
       <Text styleClassName={`text-sm font-medium mt-2 ${center ? 'text-center' : ''}`}>{name}</Text>
     </TouchableOpacity>
   )

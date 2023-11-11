@@ -25,6 +25,8 @@ interface IconProps extends TouchableOpacityProps {
   activeOpacity?: TouchableOpacityProps['activeOpacity']
   /** Whether to enable haptics when the icon is pressed */
   enableHaptics?: boolean
+  /** An optional testID for the icon */
+  testID?: string
 }
 
 /**
@@ -65,6 +67,7 @@ export const Icon: FC<IconProps> = (props) => {
         if (WrapperProps.enableHaptics) haptic()
         WrapperProps.onPress && WrapperProps.onPress(e)
       }}
+      testID={WrapperProps.testID || 'icon-container'}
     >
       <Image
         className={`w-full h-full items-center justify-center ${styleClassName}`}
