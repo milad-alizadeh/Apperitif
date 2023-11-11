@@ -2,19 +2,28 @@ import { Image } from 'expo-image'
 import React, { memo } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
-import { Text } from './Text'
+import { Text } from '../Text'
 
 export interface CardProps {
+  /** The image url to display */
   imageUrl: string
+  /** The name of the card */
   name: string
-  id: string
+  /** The id of the card */
+  id?: string
+  /** The function to call when the card is pressed */
   onPress?: () => void
+  /** The style class name to apply to the card */
   styleClassName?: string
+  /** Whether the card should be wide */
   wide?: boolean
-  half?: boolean
+  /** Whether the name should be centered */
   center?: boolean
 }
 
+/**
+ * A card component to display a card with an image and name
+ */
 export const Card = memo(function Card({
   imageUrl,
   name,
@@ -27,6 +36,7 @@ export const Card = memo(function Card({
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
+      testID="card"
       className={`${wide ? 'w-40' : 'w-32'} ${styleClassName}`}
     >
       <View
@@ -38,8 +48,10 @@ export const Card = memo(function Card({
           source={{ uri: getImageUrl(imageUrl, imageSizes.THUMBNAIL) }}
           className="w-full h-full"
           transition={500}
+          testID="card-image"
         />
       </View>
+      <Text styleClassName="text-sm font-medium mt-2">{name}</Text>
       <Text styleClassName={`text-sm font-medium mt-2 ${center ? 'text-center' : ''}`}>{name}</Text>
     </TouchableOpacity>
   )
