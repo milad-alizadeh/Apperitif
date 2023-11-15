@@ -32,6 +32,8 @@ export default function FavouritesScreen() {
           rightIcon="trash"
           name={item.name}
           styleClassName="mx-6 mb-3"
+          testID="favourite-recipe"
+          testIDIconRight="favourite-recipe-delete"
           card
           onPress={() =>
             router.push({ pathname: '/recipe/[recipeId]', params: { recipeId: item.id } })
@@ -56,7 +58,10 @@ export default function FavouritesScreen() {
     <Screen safeAreaEdges={['top']} contentContainerStyle={$containerStyle}>
       {/* Empty state if there are no recipes in the bar */}
       {!data?.profilesRecipesCollection?.edges.length && !loading ? (
-        <View className="w-full px-20 flex-1 justify-center items-center m-auto">
+        <View
+          testID="empty-favourites"
+          className="w-full px-20 flex-1 justify-center items-center m-auto"
+        >
           <Text h3 styleClassName="text-center mb-3">
             Your favorites list is on a detox!
           </Text>

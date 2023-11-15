@@ -83,6 +83,7 @@ export function FixedHeader({
         containerClassName="rounded-full justify-center items-center bg-white "
         styleClassName="w-full h-full"
         onPress={() => onGoBack()}
+        testID="back-button"
       />
 
       <Animated.View className="mx-auto" style={alwaysShow ? {} : animatedStyle}>

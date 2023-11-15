@@ -1,12 +1,7 @@
 appId: ''
 ---
 - runFlow: ../prep/launch-app.yml
-- copyTextFrom:
-    id: 'card'
-    index: 0
-- tapOn:
-    id: 'card'
-    index: 0
+- runFlow: ../prep/go-to-recipe.yml
 - assertVisible:
     id: recipe-name
     text: ${ maestro.copiedText }

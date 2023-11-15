@@ -59,6 +59,7 @@ export const RecipeFavourite = function RecipeFavourite({
   return (
     <Animated.View style={animatedStyle}>
       <Icon
+        testID="favourite-button"
         icon={localIsFavourite ? 'bookmarkFilled' : 'bookmark'}
         containerClassName="rounded-full bg-white"
         size="large"

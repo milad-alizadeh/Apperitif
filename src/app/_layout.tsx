@@ -2,11 +2,15 @@ import { ApolloProvider } from '@apollo/client'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { useEffect } from 'react'
+import { LogBox } from 'react-native'
 import { EasUpdate } from '~/components/EasUpdate'
 import { useSentry } from '~/hooks/useSentry'
 import { SessionProvider } from '~/providers/SessionProvider'
 import { api } from '~/services/api'
 import { customFontsToLoad } from '../theme/typography'
+
+LogBox.ignoreLogs(['Warning: ...']) // Ignore log notification by message
+LogBox.ignoreAllLogs() //Ignore all log notifications
 
 export {
   // Catch any errors thrown by the Layout component.
