@@ -45,6 +45,7 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
         <Icon
           icon="settings"
           size="large"
+          testID="filter-icon"
           containerClassName="bg-neutral-100 rounded-r-lg"
           color={colors.neutral[500]}
           onPress={() => {

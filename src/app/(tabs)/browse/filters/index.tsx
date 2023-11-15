@@ -32,6 +32,7 @@ export default function AllFiltersScreen() {
             name={item.name}
             styleClassName="mb-4"
             card
+            testID="filter-list-item"
             badgeNumber={badgeNumbers[item.id] || 0}
             rightIcon="chevronRight"
             onPress={() =>

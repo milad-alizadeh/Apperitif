@@ -1,0 +1,10 @@
+appId: ''
+---
+- tapOn:
+    id: 'browse-tab'
+- copyTextFrom:
+    id: 'category-card'
+    index: 1
+- tapOn:
+    id: 'category-card'
+    index: 1

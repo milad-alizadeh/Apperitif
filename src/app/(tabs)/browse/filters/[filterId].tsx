@@ -38,6 +38,7 @@ export default function FilterDetailsScreen() {
           name={`${item.name}`}
           styleClassName="mb-3"
           showCheckbox
+          testID="sub-filter-list-item"
           checked={item.checked}
           card
           onPress={item.onPress}

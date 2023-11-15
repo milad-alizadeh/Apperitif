@@ -1,14 +1,7 @@
 appId: ''
 ---
 - runFlow: ../prep/launch-app.yml
-- tapOn:
-    id: 'browse-tab'
-- copyTextFrom:
-    id: 'category-card'
-    index: 1
-- tapOn:
-    id: 'category-card'
-    index: 1
+- runFlow: ../prep/go-to-category.yml
 - assertVisible:
     id: filter-chip
     text: ${ maestro.copiedText }

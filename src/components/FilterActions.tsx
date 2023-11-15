@@ -14,6 +14,7 @@ export const FilterActions = function FilterActions() {
         <Button
           label="Clear all"
           outline
+          testID="clear-all-filters-button"
           enableHaptics
           onPress={() => {
             clearFilters(false)
@@ -25,6 +26,7 @@ export const FilterActions = function FilterActions() {
         <Button
           label="Apply Filters"
           enableHaptics
+          testID="apply-filters-button"
           onPress={() => {
             applyFilters()
             router.push({ pathname: '/browse/recipes', params: { categoryIds: [] } })
