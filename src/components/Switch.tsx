@@ -5,9 +5,10 @@ import { colors } from '~/theme'
 interface SwitchProps {
   value: boolean
   onValueChange: (value: boolean) => void
+  testID: string
 }
 
-export const Switch: FC<SwitchProps> = ({ value, onValueChange }) => {
+export const Switch: FC<SwitchProps> = ({ value, onValueChange, testID }) => {
   const [localValue, setLocalValue] = useState(false)
 
   useEffect(() => {
@@ -16,6 +17,7 @@ export const Switch: FC<SwitchProps> = ({ value, onValueChange }) => {
 
   return (
     <RNSwitch
+      testID={testID}
       trackColor={{ false: colors.neutral[200], true: colors.primary }}
       thumbColor={colors.white}
       onValueChange={onValueChange}

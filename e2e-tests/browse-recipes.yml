@@ -26,11 +26,13 @@ appId: ai.bubblewrap.apperitif.development
 - assertVisible:
     id: 'recipe-ingredient'
     index: 0
+- tapOn:
+    id: 'double-recipe'
 - tapOn: 'Method'
 - assertVisible:
     id: 'recipe-step'
     index: 0
 - tapOn: 'Equipment'
 - assertVisible:
-    id: 'recipe-step'
+    id: 'recipe-equipment'
     index: 0

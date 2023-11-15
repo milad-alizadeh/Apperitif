@@ -74,6 +74,8 @@ export const RecipeTabs = function RecipeTabs({
           checked={inMyBar}
           outline
           testID="recipe-ingredient"
+          testIDTextLeft="recipe-ingredient-quantity"
+          testIDTextMiddle="recipe-ingredient-name"
           loading={loading}
           onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
         />

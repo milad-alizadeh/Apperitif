@@ -36,6 +36,7 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
         <SegmentedControl
           selectedValue={data?.selectedUnitSystem as UnitSystems}
           segments={unitSystems}
+          testID="unit-system"
           onValueChange={(value) => {
             updateCache(GET_MEASUREMENTS, {
               selectedUnitSystem: value,
@@ -49,6 +50,7 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
           Jigger Size
         </Text>
         <SegmentedControl
+          testID="jigger-size"
           selectedValue={data?.selectedJiggerSize}
           segments={currentJiggerSizes(data?.selectedUnitSystem as UnitSystems)}
           onValueChange={(value) => updateCache(GET_MEASUREMENTS, { selectedJiggerSize: value })}
@@ -59,6 +61,7 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
           2x
         </Text>
         <Switch
+          testID="double-recipe"
           value={data?.doubleRecipe}
           onValueChange={(value) => updateCache(GET_MEASUREMENTS, { doubleRecipe: value })}
         />

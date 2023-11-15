@@ -20,9 +20,15 @@ type Props<T> = {
   segments: Segment<T>[]
   selectedValue?: Segment<T>['value']
   onValueChange: (value: Segment<T>['value']) => void
+  testID: string
 }
 
-export const SegmentedControl = <T,>({ segments, onValueChange, selectedValue }: Props<T>) => {
+export const SegmentedControl = <T,>({
+  segments,
+  onValueChange,
+  selectedValue,
+  testID,
+}: Props<T>) => {
   const [containerWidth, setContainerWidth] = useState(0)
   const [activeIndex, setActiveIndex] = useState(-1) // React state to keep track of active index
   const translateX = useSharedValue(0)
@@ -63,7 +69,7 @@ export const SegmentedControl = <T,>({ segments, onValueChange, selectedValue }:
   })
 
   return (
-    <View onLayout={handleLayout} className="rounded-lg bg-neutral-200">
+    <View testID={testID} onLayout={handleLayout} className="rounded-lg bg-neutral-200">
       <Animated.View
         className="h-full bg-primary absolute rounded-lg"
         style={[{ width: `${100 / segments.length}%` }, animatedStyle, { ...shadowCard }]}
