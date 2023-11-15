@@ -99,6 +99,7 @@ export default function RecipeDetailsScreen() {
     },
     onCompleted: () => {
       refetch()
+      client.refetchQueries({ include: ['getFavourites'] })
     },
   })
 
@@ -109,6 +110,7 @@ export default function RecipeDetailsScreen() {
     },
     onCompleted: () => {
       refetch()
+      client.refetchQueries({ include: ['getFavourites'] })
     },
   })
 
