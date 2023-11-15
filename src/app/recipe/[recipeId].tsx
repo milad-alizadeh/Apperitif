@@ -59,9 +59,10 @@ export default function RecipeDetailsScreen() {
   const attributeCategoriesParsed = attributeCategories
     ? JSON.parse(attributeCategories)?.categoryIds
     : []
-  const attributes = attributeCategoriesParsed.map((id: string) =>
-    categories.find((c) => c.parentId === id),
-  ) ?? [{ id: '1' }, { id: '2' }, { id: '3' }]
+  const attributes =
+    attributeCategoriesParsed.map(
+      (id: string) => categories.find((c) => c.parentId === id) ?? { id },
+    ) ?? []
 
   const myBar =
     barIngredients?.profilesIngredientsCollection.edges.map((e) => e.node.ingredient.id) ?? []
