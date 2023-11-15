@@ -9,7 +9,9 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "APP_VARIANT": "development"
+        "APP_VARIANT": "development",
+        "EXPO_PUBLIC_IOS_CLIENT_ID": "387765460024-2s3u3uvbn0aojjk34h1no81dsquv5saa.apps.googleusercontent.com",
+        "EXPO_PUBLIC_ANDROID_CLIENT_ID": "387765460024-17r8negv0lecu3vbubce39l7jkd3lepu.apps.googleusercontent.com"
       },
       "android": {
         "buildType": "apk"
@@ -22,7 +24,9 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "APP_VARIANT": "development"
+        "APP_VARIANT": "development",
+        "EXPO_PUBLIC_IOS_CLIENT_ID": "387765460024-2s3u3uvbn0aojjk34h1no81dsquv5saa.apps.googleusercontent.com",
+        "EXPO_PUBLIC_ANDROID_CLIENT_ID": "387765460024-17r8negv0lecu3vbubce39l7jkd3lepu.apps.googleusercontent.com"
       },
       "android": {
         "buildType": "apk"

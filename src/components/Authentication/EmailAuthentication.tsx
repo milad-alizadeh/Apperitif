@@ -34,17 +34,6 @@ export const EmailAuthentication = function EmailAuthentication({
     setLoading(false)
   }
 
-  async function signUpWithEmail() {
-    setLoading(true)
-    const { error } = await api.supabase.auth.signUp({
-      email,
-      password,
-    })
-
-    if (error) Alert.alert(error.message)
-    setLoading(false)
-  }
-
   return (
     <View>
       <View className="mb-4">
@@ -67,7 +56,7 @@ export const EmailAuthentication = function EmailAuthentication({
         />
       </View>
       <View>
-        <Button label="Sign in" loading={loading} onPress={() => signInWithEmail()} />
+        <Button label="Sign in" loading={loading} onPress={signInWithEmail} />
       </View>
     </View>
   )

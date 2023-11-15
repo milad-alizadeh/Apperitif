@@ -1,8 +1,9 @@
-appId: ai.bubblewrap.apperitif.development
+appId: ai.bubblewrap.apperitif.staging
+# appId: ai.bubblewrap.apperitif.development
 ---
 - launchApp
-- tapOn: 'Fetch development servers'
-- tapOn: 'http://localhost:8081'
+# - tapOn: 'Fetch development servers'
+# - tapOn: 'http://localhost:8081'
 - copyTextFrom:
     id: 'card'
     index: 0
@@ -26,8 +27,6 @@ appId: ai.bubblewrap.apperitif.development
 - assertVisible:
     id: 'recipe-ingredient'
     index: 0
-- tapOn:
-    id: 'double-recipe'
 - tapOn: 'Method'
 - assertVisible:
     id: 'recipe-step'

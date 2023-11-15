@@ -1,5 +1,4 @@
 import { router, useLocalSearchParams } from 'expo-router'
-import { set } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { Alert, View } from 'react-native'
 import { Button, Header, Screen, TextField } from '~/components'
