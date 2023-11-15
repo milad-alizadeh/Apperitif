@@ -16,6 +16,7 @@ interface TextProps {
   skeletonWidth?: number
   children: React.ReactNode
   weight?: 'bold' | 'normal' | 'light' | 'medium'
+  testID?: string
 }
 
 export function Text({
@@ -30,6 +31,7 @@ export function Text({
   children,
   styleClassName,
   weight,
+  testID,
 }: TextProps) {
   const sizes = {
     h1: { fontSize: 26, fontFamily: typography?.primary?.bold, lineHeight: 32 },
@@ -93,7 +95,11 @@ export function Text({
           />
         ))
       ) : (
-        <RNText style={combinedStyle} className={`${defaultClassName} ${styleClassName}`}>
+        <RNText
+          testID={testID}
+          style={combinedStyle}
+          className={`${defaultClassName} ${styleClassName}`}
+        >
           {children}
         </RNText>
       )}

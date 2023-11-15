@@ -149,13 +149,20 @@ export default function RecipeDetailsScreen() {
         <View className="flex-1 -mt-16 py-8 bg-white rounded-t-[50px] px-6">
           <View>
             <View className="justify-between flex-row">
-              <Text loading={firstTimeLoading} skeletonWidth={200} h1 styleClassName="mb-3">
+              <Text
+                testID="recipe-name"
+                loading={firstTimeLoading}
+                skeletonWidth={200}
+                h1
+                styleClassName="mb-3"
+              >
                 {recipe?.name}
               </Text>
               <RecipeShare recipe={recipe} loading={firstTimeLoading} />
             </View>
             <View className="-mb-3">
               <Markdown
+                testID="recipe-description"
                 loading={firstTimeLoading}
                 skeletonLinesNumber={4}
                 text={recipe?.description}

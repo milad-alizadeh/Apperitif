@@ -1,0 +1,36 @@
+appId: ai.bubblewrap.apperitif.development
+---
+- launchApp
+- tapOn: 'Fetch development servers'
+- tapOn: 'http://localhost:8081'
+- copyTextFrom:
+    id: 'card'
+    index: 0
+- tapOn:
+    id: 'card'
+    index: 0
+- assertVisible:
+    id: recipe-name
+    text: ${ maestro.copiedText }
+- assertVisible:
+    id: 'recipe-description'
+- assertVisible:
+    id: 'recipe-attribute-name'
+    index: 0
+- assertVisible:
+    id: 'recipe-attribute-name'
+    index: 1
+- assertVisible:
+    id: 'recipe-attribute-name'
+    index: 2
+- assertVisible:
+    id: 'recipe-ingredient'
+    index: 0
+- tapOn: 'Method'
+- assertVisible:
+    id: 'recipe-step'
+    index: 0
+- tapOn: 'Equipment'
+- assertVisible:
+    id: 'recipe-step'
+    index: 0

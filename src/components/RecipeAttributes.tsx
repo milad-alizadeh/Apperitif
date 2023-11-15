@@ -44,6 +44,7 @@ export const RecipeAttributes: FC<RecipeAttributesProps> = ({
               <Text
                 loading={loading}
                 skeletonWidth={48}
+                testID="recipe-attribute-name"
                 styleClassName="text-sm font-medium max-w-[100px]"
               >
                 {attribute?.name}

@@ -16,9 +16,13 @@ interface TabProps {
 }
 
 interface TabPageProps {
+  /** The content to render inside the TabPage. */
   children: ReactNode
+  /** The width of the Tabs container. */
   containerWidth?: number
+  /** The title of the TabPage used to create Tab Navigation */
   title?: string
+  /** The style class name to apply to the TabPage. */
   styleClassName?: string
 }
 
@@ -44,30 +48,35 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
     setContainerWidth(event.nativeEvent.layout.width)
   }
 
+  // Scroll to the correct tab when the user clicks on a section header
   const onSectionClick = (index: number) => {
     setActiveIndex(index)
     scrollViewRef.current?.scrollTo({ x: index * containerWidth, animated: true })
   }
 
+  // Scroll to the correct tab when the user swipes
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       scrollX.value = event.contentOffset.x
     },
   })
 
+  // Round the scrollX value to the nearest tab index
   const activeIndexDerived = useDerivedValue(() => {
     return Math.round(scrollX.value / containerWidth)
   })
 
+  // When the activeIndexDerived value changes, update the activeIndex state
   useAnimatedReaction(
     () => activeIndexDerived.value,
     (newActiveIndex) => {
       if (newActiveIndex !== activeIndex && !Number.isNaN(newActiveIndex) && activeIndex >= 0) {
-        runOnJS(setActiveIndex)(newActiveIndex) // Use runOnJS to safely update state
+        runOnJS(setActiveIndex)(newActiveIndex)
       }
     },
   )
 
+  // Extract the section titles from the TabPage children
   const sectionTitles = React.Children.map(children, (child) => {
     if (React.isValidElement(child) && child.type === TabPage) return child.props.title
     return null

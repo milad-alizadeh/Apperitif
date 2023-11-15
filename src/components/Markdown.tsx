@@ -10,9 +10,10 @@ interface Props {
   text: string
   loading?: boolean
   skeletonLinesNumber?: number
+  testID?: string
 }
 
-export const Markdown: FC<Props> = ({ text, loading, skeletonLinesNumber = 3 }) => {
+export const Markdown: FC<Props> = ({ text, loading, skeletonLinesNumber = 3, testID }) => {
   const [skeletonWidth, setSkeletonWidth] = React.useState(200)
 
   const handleLink = async (url: string) => {
@@ -43,9 +44,11 @@ export const Markdown: FC<Props> = ({ text, loading, skeletonLinesNumber = 3 }) 
             />
           ))
         : text && (
-            <MarkdownRenderer style={$styles} onLinkPress={(url) => handleLink(url)}>
-              {text}
-            </MarkdownRenderer>
+            <View testID={testID}>
+              <MarkdownRenderer style={$styles} onLinkPress={(url) => handleLink(url)}>
+                {text}
+              </MarkdownRenderer>
+            </View>
           )}
     </View>
   )

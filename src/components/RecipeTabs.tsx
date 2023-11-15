@@ -73,6 +73,7 @@ export const RecipeTabs = function RecipeTabs({
           showCheckbox={isLoggedIn}
           checked={inMyBar}
           outline
+          testID="recipe-ingredient"
           loading={loading}
           onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
         />
@@ -89,6 +90,7 @@ export const RecipeTabs = function RecipeTabs({
           name={name}
           leftImage={imageUrl}
           rightIcon="text"
+          testID="recipe-equipment"
           onPress={() => onEquipmentPress && onEquipmentPress(id)}
           styleClassName="mb-2"
         />
@@ -100,7 +102,7 @@ export const RecipeTabs = function RecipeTabs({
   const renderStepItem = useCallback(
     ({ number, description, id }: Step) => {
       return (
-        <View key={id} className="mb-4 flex-row">
+        <View testID="recipe-step" key={id} className="mb-4 flex-row">
           <Text weight="bold" styleClassName="mr-2" body>{`${number}.`}</Text>
           <Text body styleClassName="flex-1">
             {description}
