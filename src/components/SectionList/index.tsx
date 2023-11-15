@@ -133,6 +133,7 @@ export const SectionList: FC<SectionListProps> = ({
         >
           <SearchBar
             onChange={onSearch}
+            testId="search-bar"
             onFocus={() => {
               navOpacity.value = withTiming(0, { duration: 200 })
               sectionListRef.current?.scrollToOffset({

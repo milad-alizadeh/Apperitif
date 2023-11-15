@@ -2,10 +2,15 @@ appId: ''
 ---
 - runFlow: ../prep/launch-app.yml
 - runFlow: ../prep/login.yml
+# Go to the My Bar tab
 - tapOn:
     id: 'my-bar-tab'
+
+# Check that the bar is empty
 - assertVisible:
     id: 'empty-bar'
+
+# Add ingredients to the bar
 - tapOn:
     id: 'add-ingredients-button'
 - tapOn:
@@ -17,12 +22,38 @@ appId: ''
 - copyTextFrom:
     id: 'ingredient-list-item'
     index: 0
+
+# Search for ingredients name and add it to the bar
+- tapOn:
+    id: 'search-bar'
+- copyTextFrom:
+    id: 'ingredient-list-item'
+    index: 3
+- inputText: ${ maestro.copiedText }
+- tapOn:
+    id: 'ingredient-list-item'
+    index: 0
 - tapOn:
     id: 'save-selection-button'
+
+# Check that the ingredients are added to the bar
+- assertVisible:
+    id: 'bar-ingredient-list-item'
+    text: '${ maestro.copiedText }'
 - assertVisible:
     id: 'bar-ingredient-list-item'
     index: 0
-    text: '${ maestro.copiedText }'
+- assertVisible:
+    id: 'bar-ingredient-list-item'
+    index: 1
+- assertVisible:
+    id: 'bar-ingredient-list-item'
+    index: 2
+
+# Delete the ingredients from the bar
+- tapOn:
+    id: bar-ingredient-list-item-delete
+    index: 0
 - tapOn:
     id: bar-ingredient-list-item-delete
     index: 0

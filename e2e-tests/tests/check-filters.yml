@@ -18,3 +18,10 @@ appId: ''
 - assertVisible:
     id: filter-chip
     text: ${ maestro.copiedText }
+- tapOn:
+    id: 'filter-icon'
+- tapOn:
+    id: 'clear-all-filters-button'
+- assertNotVisible:
+    id: filter-chip
+    text: ${ maestro.copiedText }

@@ -40,7 +40,11 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
       <View className="flex-row bg-white rounded-lg mx-6" style={{ ...shadowCard }}>
         <Text>{error?.message}</Text>
 
-        <SearchBar onChange={(value) => searchQueryVar(value)} autofocus={autofocus} />
+        <SearchBar
+          testId="search-bar"
+          onChange={(value) => searchQueryVar(value)}
+          autofocus={autofocus}
+        />
 
         <Icon
           icon="settings"

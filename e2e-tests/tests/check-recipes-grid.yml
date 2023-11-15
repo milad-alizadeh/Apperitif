@@ -2,9 +2,12 @@ appId: ''
 ---
 - runFlow: ../prep/launch-app.yml
 - runFlow: ../prep/go-to-category.yml
+# Check that the recipes grid is loaded with correct filter
 - assertVisible:
     id: filter-chip
     text: ${ maestro.copiedText }
+
+# Check that the recipes grid is loaded with correct recipes
 - assertVisible:
     id: 'recipe-card'
     index: 0
@@ -20,3 +23,17 @@ appId: ''
 - assertVisible:
     id: recipe-name
     text: ${ maestro.copiedText }
+- tapOn:
+    id: back-button
+
+# Search for a single recipe
+- tapOn:
+    id: 'search-bar'
+- inputText: ${ maestro.copiedText }
+- assertVisible:
+    id: 'recipe-card'
+    index: 0
+    text: ${ maestro.copiedText }
+- assertNotVisible:
+    id: 'recipe-card'
+    index: 1

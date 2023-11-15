@@ -9,6 +9,8 @@ export interface SearchBarProps {
   onChange?: (value: string) => void
   onFocus?: () => void
   onBlur?: () => void
+  testId?: string
+  testIdClear?: string
 }
 
 /**
@@ -20,6 +22,8 @@ export const SearchBar = function SearchBar({
   onFocus,
   onBlur,
   autofocus,
+  testId,
+  testIdClear = 'search-bar-clear',
 }: SearchBarProps) {
   const inputRef = useRef(null)
   const [searchQuery, setSearchQuery] = useState('')
@@ -44,6 +48,7 @@ export const SearchBar = function SearchBar({
         color={colors.neutral[500]}
       />
       <TextInput
+        testID={testId}
         ref={inputRef}
         placeholder="Search"
         placeholderTextColor={colors.neutral[500]}
@@ -58,6 +63,7 @@ export const SearchBar = function SearchBar({
       />
       {!!searchQuery && (
         <Icon
+          testID={testIdClear}
           icon="closeFilled"
           containerClassName="z-10 mr-2 absolute right-0"
           color={colors.neutral[400]}
