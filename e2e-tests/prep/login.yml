@@ -1,0 +1,13 @@
+appId: ''
+---
+- runFlow: launch-app.yml
+- tapOn: Profile, tab, 4 of 4
+- tapOn: Log in or create an account
+- tapOn: Continue with Email & Password
+- tapOn:
+    id: 'email'
+- inputText: 'milaadd+test@gmail.com'
+- tapOn:
+    id: 'password'
+- inputText: 'FJEtYkKfrOJSQEnT0mMZ'
+- tapOn: Sign in

@@ -1,0 +1,18 @@
+appId: ai.bubblewrap.apperitif.development
+---
+- launchApp:
+    clearState: true
+    clearKeychain: true
+- tapOn: 'Fetch development servers'
+- tapOn: 'http://localhost:8081'
+- tapOn:
+    text: 'Continue'
+    optional: true
+- tapOn:
+    point: '94%,43%'
+    optional: true
+# appId: ai.bubblewrap.apperitif.staging
+# ---
+# - launchApp:
+#     clearState: true
+#     clearKeychain: true

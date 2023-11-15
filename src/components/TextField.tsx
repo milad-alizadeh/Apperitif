@@ -16,6 +16,7 @@ export interface TextFieldProps {
   onChange: (value: string) => void
   onBlur?: () => void
   keyboardType?: TextInputProps['keyboardType']
+  testID?: string
 }
 
 /**
@@ -31,6 +32,7 @@ export const TextField = function TextField({
   label,
   autoCapitalize,
   keyboardType,
+  testID,
 }: TextFieldProps) {
   const [localValue, setLocalValue] = useState('')
 
@@ -42,6 +44,7 @@ export const TextField = function TextField({
     <View>
       {label && <Text styleClassName="mb-2 text-base font-medium">{label}</Text>}
       <TextInput
+        testID={testID}
         placeholder={placeholder}
         className={`${styleClassName} text-base border-[1px] border-neutral-300 rounded-lg p-3 leading-5`}
         secureTextEntry={password}

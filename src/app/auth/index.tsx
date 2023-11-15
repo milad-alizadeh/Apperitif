@@ -79,7 +79,7 @@ export default function AuthHomeScreen() {
               }
             >
               <Text body styleClassName="text-neutral-800 font-bold underline underline-offset-3">
-                Continue Email & Password
+                Continue with Email & Password
               </Text>
             </TouchableOpacity>
           </View>

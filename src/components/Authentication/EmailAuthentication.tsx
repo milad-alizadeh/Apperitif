@@ -38,6 +38,7 @@ export const EmailAuthentication = function EmailAuthentication({
     <View>
       <View className="mb-4">
         <TextField
+          testID="email"
           label="Email"
           onChange={(text) => setEmail(text)}
           value={email}
@@ -47,10 +48,10 @@ export const EmailAuthentication = function EmailAuthentication({
       </View>
       <View className="mb-4">
         <TextField
+          testID="password"
           label="Password"
           onChange={(text) => setPassword(text)}
           value={password}
-          password
           placeholder="Password"
           autoCapitalize="none"
         />

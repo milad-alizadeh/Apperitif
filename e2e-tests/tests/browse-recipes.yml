@@ -1,9 +1,6 @@
-appId: ai.bubblewrap.apperitif.staging
-# appId: ai.bubblewrap.apperitif.development
+appId: ''
 ---
-- launchApp
-# - tapOn: 'Fetch development servers'
-# - tapOn: 'http://localhost:8081'
+- runFlow: ../prep/launch-app.yml
 - copyTextFrom:
     id: 'card'
     index: 0
