@@ -30,7 +30,7 @@ export const Checkbox = function Checkbox({
         />
       ) : disabled ? (
         <Icon
-          icon="slashCircle"
+          icon="infoCircle"
           size="small"
           containerClassName="rounded-full p-0"
           color={colors.neutral[400]}
