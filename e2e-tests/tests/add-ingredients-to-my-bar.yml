@@ -9,6 +9,9 @@ appId: ''
 - tapOn:
     id: 'ingredient-list-item'
     index: 0
+- tapOn:
+    id: 'ingredient-list-item'
+    index: 1
 - copyTextFrom:
     id: 'ingredient-list-item'
     index: 0
@@ -20,5 +23,9 @@ appId: ''
     text: '${ maestro.copiedText }'
 - tapOn:
     id: bar-ingredient-list-item-delete
+    index: 0
+- tapOn:
+    id: bar-ingredient-list-item-delete
+    index: 0
 - assertVisible:
     id: 'empty-bar'

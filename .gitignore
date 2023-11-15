@@ -45,5 +45,6 @@ artifacts/*
 
 expo-env.d.ts
 # @end expo-cli
-# coverage
+# test
 coverage/*
+report.xml
