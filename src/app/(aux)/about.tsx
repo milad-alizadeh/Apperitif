@@ -10,7 +10,7 @@ export default function FAQs() {
   const appName = Application.applicationName
 
   return (
-    <Screen preset="scroll" safeAreaEdges={['top']} contentContainerStyle={{ flex: 1 }}>
+    <Screen preset="fixed" safeAreaEdges={['top']} contentContainerStyle={{ flex: 1 }}>
       <Header title="About" backButton />
       <View className="px-6 justify-center items-center flex-1">
         <View className="-translate-y-28 items-center">
