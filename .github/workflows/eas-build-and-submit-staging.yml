@@ -28,7 +28,7 @@ jobs:
         run: yarn
 
       - name: Run Unit Tests
-        run: yarn test
+        run: yarn test:unit
 
       - name: 🍏 | 🤖 Build on EAS
         run: eas build --platform all --profile staging --non-interactive --auto-submit

@@ -35,7 +35,7 @@ jobs:
         run: yarn install
 
       - name: Run Unit Tests
-        run: yarn test
+        run: yarn test:unit
 
       - name: Publish update
         run: eas update --auto
