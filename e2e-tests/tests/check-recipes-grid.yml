@@ -1,0 +1,29 @@
+appId: ''
+---
+- runFlow: ../prep/launch-app.yml
+- tapOn:
+    id: 'browse-tab'
+- copyTextFrom:
+    id: 'category-card'
+    index: 1
+- tapOn:
+    id: 'category-card'
+    index: 1
+- assertVisible:
+    id: filter-chip
+    text: ${ maestro.copiedText }
+- assertVisible:
+    id: 'recipe-card'
+    index: 0
+- assertVisible:
+    id: 'recipe-card'
+    index: 1
+- copyTextFrom:
+    id: 'recipe-card'
+    index: 1
+- tapOn:
+    id: 'recipe-card'
+    index: 1
+- assertVisible:
+    id: recipe-name
+    text: ${ maestro.copiedText }

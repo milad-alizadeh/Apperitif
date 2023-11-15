@@ -20,6 +20,10 @@ export interface HorizontalListProps {
   showCount?: boolean
   /** Whether to center the text */
   center?: boolean
+  /** Whether to show the count of items in the list */
+  testID?: string
+  /** The testID to apply to each item in the list */
+  testIDItem?: string
 }
 
 /**
@@ -30,6 +34,8 @@ export const HorizontalList = function HorizontalList({
   title,
   styleClassName,
   wide,
+  testIDItem,
+  testID,
   emptyStateText,
   showCount = true,
   center,
@@ -45,6 +51,7 @@ export const HorizontalList = function HorizontalList({
       <Card
         {...item}
         center={center}
+        testID={testIDItem}
         styleClassName={`mr-4 ${index === 0 ? 'ml-6' : ''}`}
         wide={wide}
       />

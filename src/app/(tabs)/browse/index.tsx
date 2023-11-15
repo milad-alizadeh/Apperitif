@@ -119,6 +119,7 @@ export default function BrowseHomeScreen() {
             key={id}
             listItems={listItems}
             title={title}
+            testIDItem={index === 0 ? 'recipe-card' : 'category-card'}
             wide={index === 1}
             center={index === 2}
             showCount={false}

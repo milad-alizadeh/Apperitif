@@ -13,19 +13,32 @@ export interface ChipProps {
   onDismiss?: () => void
   /** Whether to enable haptics */
   enableHaptics?: boolean
+  /** The testID to apply to the chip */
+  testID?: string
+  /** The testID to apply to the close icon */
+  testIDText?: string
 }
 
 /**
  * A chip component to display a chip with a label and close icon
  */
-export const Chip: FC<ChipProps> = ({ label, onDismiss, styleClassName, enableHaptics }) => {
+export const Chip: FC<ChipProps> = ({
+  label,
+  onDismiss,
+  styleClassName,
+  enableHaptics,
+  testID = 'chip',
+  testIDText,
+}) => {
   const haptic = useHaptics('light')
   return (
     <View
-      testID="chip"
+      testID={testID}
       className={`flex-row rounded-lg bg-primary items-center px-2 h-8 ${styleClassName}`}
     >
-      <Text className="mr-2 text-white font-medium text-sm">{label}</Text>
+      <Text testID={testIDText} className="mr-2 text-white font-medium text-sm">
+        {label}
+      </Text>
       <Icon
         icon="closeFilled"
         color={colors.white}

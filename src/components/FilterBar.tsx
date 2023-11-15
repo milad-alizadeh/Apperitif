@@ -61,6 +61,7 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
         <FilterChips
           styleClassName={`mt-3 -mb-3 pl-6 pr-12 min-h-[32px]`}
           categories={chips}
+          testIDItem="filter-chip"
           onDismiss={(id) => removeFilter(id, false)}
         />
       )}

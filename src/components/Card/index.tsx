@@ -19,6 +19,8 @@ export interface CardProps {
   wide?: boolean
   /** Whether the name should be centered */
   center?: boolean
+  /** The testID to apply to the card */
+  testID?: string
 }
 
 /**
@@ -31,12 +33,13 @@ export const Card = memo(function Card({
   wide,
   onPress,
   center,
+  testID = 'card',
 }: CardProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      testID="card"
+      testID={testID}
       className={`${wide ? 'w-40' : 'w-32'} ${styleClassName}`}
     >
       <View

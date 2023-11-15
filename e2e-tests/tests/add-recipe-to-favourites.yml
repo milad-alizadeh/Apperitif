@@ -8,7 +8,7 @@ appId: ''
 - tapOn:
     id: 'back-button'
 - assertVisible:
-    id: 'card'
+    id: 'recipe-card'
     index: 0
 - tapOn:
     id: 'favourites-tab'

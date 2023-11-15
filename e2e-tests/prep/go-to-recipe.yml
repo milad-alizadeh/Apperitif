@@ -3,8 +3,8 @@ appId: ''
 - tapOn:
     id: 'browse-tab'
 - copyTextFrom:
-    id: 'card'
+    id: 'recipe-card'
     index: 0
 - tapOn:
-    id: 'card'
+    id: 'recipe-card'
     index: 0
