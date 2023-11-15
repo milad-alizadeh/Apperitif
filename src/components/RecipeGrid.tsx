@@ -8,7 +8,7 @@ interface RecipeGridProps {
   ListEmptyComponent?: JSX.Element
   ListFooterComponent?: JSX.Element
   ListHeaderComponent?: JSX.Element
-  onEndReach?: () => void
+  onEndReached?: () => void
   onRefresh?: () => void
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
   recipes: CardProps[]

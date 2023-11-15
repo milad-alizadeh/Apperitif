@@ -10,7 +10,9 @@ import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 
 export default function FavouritesScreen() {
   const { user } = useSession()
-  const { data, loading, error, refetch } = useQuery(GET_FAVOURITES)
+  const { data, loading, error, refetch } = useQuery(GET_FAVOURITES, {
+    fetchPolicy: 'cache-and-network',
+  })
 
   const flatListData = data?.profilesRecipesCollection.edges.map((e) => e.node.recipe)
 

@@ -39,6 +39,7 @@ export default function RecipeDetailsScreen() {
 
   const { data, error, loading, refetch } = useQuery(GET_RECIPE_DETAILS, {
     variables: { recipeId },
+    fetchPolicy: 'cache-and-network',
   })
 
   const { data: barIngredients } = useQuery(GET_MY_BAR)
@@ -50,7 +51,11 @@ export default function RecipeDetailsScreen() {
     fetchPolicy: 'cache-and-network',
   })
 
+  const firstTimeLoading = loading && !data && !error
+
   const recipe = data?.recipesCollection?.edges[0]?.node
+  const isFavourite = recipe?.profilesRecipesCollection.edges.length > 0
+
   const equipment = recipe?.recipesEquipmentCollection?.edges.map((e) => e.node.equipment) ?? []
   const recipeIngredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
   const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
@@ -93,9 +98,7 @@ export default function RecipeDetailsScreen() {
       refetch()
     },
     onCompleted: () => {
-      client.refetchQueries({
-        include: [GET_FAVOURITES], // The name of the query you want to refetch
-      })
+      refetch()
     },
   })
 
@@ -105,9 +108,7 @@ export default function RecipeDetailsScreen() {
       refetch()
     },
     onCompleted: () => {
-      client.refetchQueries({
-        include: [GET_FAVOURITES], // The name of the query you want to refetch
-      })
+      refetch()
     },
   })
 
@@ -126,7 +127,7 @@ export default function RecipeDetailsScreen() {
             <RecipeFavourite
               onDelete={() => deleteFromFavourites()}
               onAdd={() => addToFavourites()}
-              isFavourite={recipe?.profilesRecipesCollection.edges.length > 0}
+              isFavourite={isFavourite}
             />
           )
         }
@@ -146,22 +147,26 @@ export default function RecipeDetailsScreen() {
         <View className="flex-1 -mt-16 py-8 bg-white rounded-t-[50px] px-6">
           <View>
             <View className="justify-between flex-row">
-              <Text loading={loading} skeletonWidth={200} h1 styleClassName="mb-3">
+              <Text loading={firstTimeLoading} skeletonWidth={200} h1 styleClassName="mb-3">
                 {recipe?.name}
               </Text>
-              <RecipeShare recipe={recipe} loading={loading} />
+              <RecipeShare recipe={recipe} loading={firstTimeLoading} />
             </View>
             <View className="-mb-3">
-              <Markdown loading={loading} skeletonLinesNumber={4} text={recipe?.description} />
+              <Markdown
+                loading={firstTimeLoading}
+                skeletonLinesNumber={4}
+                text={recipe?.description}
+              />
             </View>
             <View className="py-6">
-              <RecipeAttributes loading={loading} attributes={attributes} />
+              <RecipeAttributes loading={firstTimeLoading} attributes={attributes} />
             </View>
           </View>
 
           <View className="bg-white rounded-2xl" style={shadowLarge}>
             <RecipeTabs
-              loading={loading}
+              loading={firstTimeLoading}
               steps={steps}
               ingredients={mergedRecipeIngredients}
               equipment={equipment}

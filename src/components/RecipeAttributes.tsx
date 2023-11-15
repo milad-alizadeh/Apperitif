@@ -28,21 +28,27 @@ export const RecipeAttributes: FC<RecipeAttributesProps> = ({
   loading,
 }: RecipeAttributesProps) => {
   return (
-    <View className="flex-row w-full justify-between">
+    <View className="flex-row w-full">
       {attributes.map((attribute) => {
         return (
-          <View key={attribute?.id} className="flex-row items-center">
-            {!loading && (
-              <Image
-                className="w-10 h-10 mr-1"
-                contentFit="contain"
-                source={{ uri: attribute?.imageUrl }}
-              />
-            )}
+          <View key={attribute?.id} className="w-1/3">
+            <View className="flex-row items-center  justify-center">
+              {!loading && (
+                <Image
+                  className="w-10 h-10 mr-1"
+                  contentFit="contain"
+                  source={{ uri: attribute?.imageUrl }}
+                />
+              )}
 
-            <Text loading={loading} skeletonWidth={48} styleClassName="text-sm font-medium">
-              {attribute?.name}
-            </Text>
+              <Text
+                loading={loading}
+                skeletonWidth={48}
+                styleClassName="text-sm font-medium max-w-[100px]"
+              >
+                {attribute?.name}
+              </Text>
+            </View>
           </View>
         )
       })}
