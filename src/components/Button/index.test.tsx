@@ -4,7 +4,7 @@ import { useHaptics } from '../../hooks/useHaptics'
 import { Button, ButtonProps } from './index'
 
 jest.mock('../../hooks/useHaptics', () => ({
-  useHaptics: jest.fn(),
+  useHaptics: jest.fn(() => jest.fn()),
 }))
 
 describe('Button', () => {

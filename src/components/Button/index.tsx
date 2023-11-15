@@ -26,12 +26,14 @@ export const Button = forwardRef(function Button(
   { label, onPress, outline, styleClassName, large = true, enableHaptics, loading }: ButtonProps,
   ref: any,
 ) {
+  const haptics = useHaptics('light')
+
   return (
     <TouchableOpacity
       ref={ref}
       testID="button"
       onPress={() => {
-        if (enableHaptics) useHaptics('light')
+        if (enableHaptics) haptics()
         onPress && !loading && onPress()
       }}
       className={`rounded-xl border-2 border-primary justify-center items-center bg-blue-400
