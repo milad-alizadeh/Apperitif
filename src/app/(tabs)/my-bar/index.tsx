@@ -59,6 +59,8 @@ export default function MyBarHomeScreen() {
           name={item.name}
           styleClassName="mx-6"
           card
+          testID="bar-ingredient-list-item"
+          testIDIconRight="bar-ingredient-list-item-delete"
           onPress={() => handleIngredientPress(item.id)}
           onRightIconPress={() => {
             deleteFromMyBar({
@@ -83,6 +85,7 @@ export default function MyBarHomeScreen() {
         title="My Bar"
         rightElement={
           <Button
+            testID="add-ingredients-button"
             large={false}
             label="Add Ingredients"
             onPress={() => router.push('/add-ingredients')}
@@ -104,7 +107,7 @@ export default function MyBarHomeScreen() {
                 {ingredientLoading ? (
                   <ActivityIndicator />
                 ) : (
-                  <View className="w-full justify-center items-center mt-8">
+                  <View testID="empty-bar" className="w-full justify-center items-center mt-8">
                     <Text h3 styleClassName="text-center max-w-[220px] mb-3">
                       Uh-oh, your bar is drier than a Martini!
                     </Text>

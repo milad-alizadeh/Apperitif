@@ -1,0 +1,24 @@
+appId: ''
+---
+- runFlow: ../prep/login.yml
+- tapOn: 'My Bar, tab, 2 of 4'
+- assertVisible:
+    id: 'empty-bar'
+- tapOn:
+    id: 'add-ingredients-button'
+- tapOn:
+    id: 'ingredient-list-item'
+    index: 0
+- copyTextFrom:
+    id: 'ingredient-list-item'
+    index: 0
+- tapOn:
+    id: 'save-selection-button'
+- assertVisible:
+    id: 'bar-ingredient-list-item'
+    index: 0
+    text: '${ maestro.copiedText }'
+- tapOn:
+    id: bar-ingredient-list-item-delete
+- assertVisible:
+    id: 'empty-bar'

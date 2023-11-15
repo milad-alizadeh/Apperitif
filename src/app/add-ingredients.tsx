@@ -39,6 +39,7 @@ export default function AddIngredientsScreen() {
         <View className="px-6 py-2 bg-white">
           <IngredientListItem
             name={item.name}
+            testID="ingredient-list-item"
             checked={isChecked}
             onPress={() => {
               handleSelect(item.id)

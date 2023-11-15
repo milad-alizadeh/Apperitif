@@ -61,6 +61,10 @@ export interface ListItemProps {
   testIDTextLeft?: string
   /** Test ID for the middle text */
   testIDTextMiddle?: string
+  /** Test ID for the right icon */
+  testIDIconRight?: string
+  /** Test ID for the left icon */
+  testIDIconLeft?: string
 }
 
 /**
@@ -87,6 +91,8 @@ export const ListItem = memo(function ListItem({
   testID,
   testIDTextLeft,
   testIDTextMiddle,
+  testIDIconRight,
+  testIDIconLeft,
   disableCheckbox,
 }: ListItemProps) {
   const shadow = card ? shadowCard : {}
@@ -141,6 +147,7 @@ export const ListItem = memo(function ListItem({
       )}
       {leftIcon && (
         <Icon
+          testID={testIDIconLeft}
           containerClassName="mr-3"
           icon={leftIcon}
           color={colors.neutral[800]}
@@ -160,6 +167,7 @@ export const ListItem = memo(function ListItem({
 
       {rightIcon && (
         <Icon
+          testID={testIDIconRight}
           icon={rightIcon}
           color={colors.neutral[400]}
           onPress={

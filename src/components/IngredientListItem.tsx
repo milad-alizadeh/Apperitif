@@ -12,6 +12,7 @@ export interface IngredientListItemProps {
   name: string
   checked?: boolean
   onPress?: () => void
+  testID?: string
 }
 
 /**
@@ -21,10 +22,12 @@ export const IngredientListItem = memo(function IngredientListItem({
   name,
   checked,
   onPress,
+  testID,
 }: IngredientListItemProps) {
   const haptic = useHaptics('medium')
   return (
     <TouchableOpacity
+      testID={testID}
       onPress={() => {
         haptic()
         onPress()

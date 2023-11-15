@@ -17,13 +17,24 @@ export interface ButtonProps {
   enableHaptics?: boolean
   /** display loading indicator */
   loading?: boolean
+  /** testID for testing */
+  testID?: string
 }
 
 /**
  * Button component
  */
 export const Button = forwardRef(function Button(
-  { label, onPress, outline, styleClassName, large = true, enableHaptics, loading }: ButtonProps,
+  {
+    label,
+    onPress,
+    outline,
+    styleClassName,
+    large = true,
+    enableHaptics,
+    loading,
+    testID = 'button',
+  }: ButtonProps,
   ref: any,
 ) {
   const haptics = useHaptics('light')
@@ -31,7 +42,7 @@ export const Button = forwardRef(function Button(
   return (
     <TouchableOpacity
       ref={ref}
-      testID="button"
+      testID={testID}
       onPress={() => {
         if (enableHaptics) haptics()
         onPress && !loading && onPress()

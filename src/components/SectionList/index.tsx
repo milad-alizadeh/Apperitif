@@ -174,6 +174,7 @@ export const SectionList: FC<SectionListProps> = ({
           className="absolute bottom-0 w-full z-20 px-6"
         >
           <Button
+            testID="save-selection-button"
             label="Save Selection"
             large
             enableHaptics
