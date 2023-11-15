@@ -10,7 +10,8 @@ appId: ''
 - assertVisible:
     id: 'card'
     index: 0
-- tapOn: 'Favourites, tab, 3 of 4'
+- tapOn:
+    id: 'favourites-tab'
 - assertVisible:
     id: 'favourite-recipe'
     text: ${ maestro.copiedText }

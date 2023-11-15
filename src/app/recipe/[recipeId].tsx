@@ -18,7 +18,7 @@ import {
 import { RecipeAttributes } from '~/components/RecipeAttributes'
 import { RecipeShare } from '~/components/RecipeShare'
 import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
-import { GET_CONTENT, GET_FAVOURITES, GET_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
+import { GET_CONTENT, GET_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useSession } from '~/hooks/useSession'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'

@@ -1,6 +1,7 @@
 appId: ''
 ---
-- tapOn: 'Browse, tab, 1 of 4'
+- tapOn:
+    id: 'browse-tab'
 - copyTextFrom:
     id: 'card'
     index: 0

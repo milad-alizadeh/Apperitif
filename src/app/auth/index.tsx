@@ -31,7 +31,7 @@ export default function AuthHomeScreen() {
         onPress={() => router.back()}
       />
 
-      <View>
+      <View testID="auth-screen">
         <View className="items-center my-8">
           <Image className="w-56 h-56" source={require('~assets/images/logo.png')} />
           <Text styleClassName="text-xl font-bold mb-2">Sign up or login to continue.</Text>

@@ -1,0 +1,7 @@
+appId: ''
+---
+- runFlow: ../prep/launch-app.yml
+- tapOn:
+    id: my-bar-tab
+- assertVisible:
+    id: auth-screen

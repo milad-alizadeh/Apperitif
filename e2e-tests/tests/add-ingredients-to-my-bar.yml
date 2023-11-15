@@ -1,7 +1,9 @@
 appId: ''
 ---
+- runFlow: ../prep/launch-app.yml
 - runFlow: ../prep/login.yml
-- tapOn: 'My Bar, tab, 2 of 4'
+- tapOn:
+    id: 'my-bar-tab'
 - assertVisible:
     id: 'empty-bar'
 - tapOn:

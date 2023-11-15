@@ -41,6 +41,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="browse"
         options={{
+          tabBarTestID: 'browse-tab',
           tabBarLabel: 'Browse',
           tabBarIcon: ({ color }) => <Icon icon="cocktail" color={color} />,
         }}
@@ -50,6 +51,7 @@ export default function TabLayout() {
         name="my-bar"
         listeners={protectedRoute}
         options={{
+          tabBarTestID: 'my-bar-tab',
           tabBarLabel: 'My Bar',
           tabBarIcon: ({ color }) => <Icon icon="bar" color={color} />,
         }}
@@ -59,6 +61,7 @@ export default function TabLayout() {
         name="favourites"
         listeners={protectedRoute}
         options={{
+          tabBarTestID: 'favourites-tab',
           tabBarLabel: 'Favourites',
           tabBarIcon: ({ color }) => <Icon icon="bookmark" color={color} />,
         }}
@@ -67,6 +70,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
+          tabBarTestID: 'profile-tab',
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => <Icon icon="user" color={color} />,
         }}
