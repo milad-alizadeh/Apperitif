@@ -23,9 +23,9 @@ cd Apperitif
 yarn
 ```
 
-### Running on an iOS Simulator
+### Running on iOS Simulator
 
-To run the project on an iOS simulator, follow these steps:
+To run the project on iOS simulator, follow these steps:
 
 1. [Create a Development Build](#create-a-development-build)
 2. [Set up the iOS Simulator (First Time Setup)](#setup-ios-simulator-first-time-setup)
