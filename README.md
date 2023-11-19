@@ -149,7 +149,7 @@ For ease of testing, there are separate environments: `staging` and `production`
 4. Once merged, builds are triggered for both platforms using EAS Build and submitted for testing.
 5. After staging tests, create a PR from `staging-build` to `production-build`.
 6. Once approved, the same process repeats for the production app.
-7. Submit the app for review on Android & iOS.
+7. Manually Submit the app for review on Android & iOS store.
 
 **Note:** The production environment is separate from staging and uses a different backend.
 
