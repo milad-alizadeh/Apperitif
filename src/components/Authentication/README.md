@@ -30,7 +30,7 @@ In order to run the project on an iOS simulator we need to follow a few steps.
 1. [Create a development build](#create-a-development-build)
 2. [Setup iOS Simulator (first time setup)](#setup-ios-simulator-first-time-setup)
 3. [Install the Development Build](#install-the-development-build)
-4. [Run Expo Dev Server](#)
+4. [Run Expo Dev Server](#run-expo-dev-server)
 
 #### Create a Development Build
 
@@ -55,3 +55,15 @@ Once you have the simulator ready we can now install our Development Build on it
 ```
 yarn build:run:dev:ios-simulator
 ```
+
+If susccessful you should now see the app icon in the simulator. If you open the app you should see a page that instructs you to start a local development server.
+
+#### Run Expo Dev Server
+
+The final step is to connect our installed app to the Expo Dev Server. This allows us to view any changes we make in the code in real time in the simulator/phydical device. To run the dev server run the command:
+
+```
+yarn run start
+```
+
+Now open the simulator app and you should see an item in the list `http://localhost:8081`. Click and the app should work as expected now!
