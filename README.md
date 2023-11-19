@@ -99,9 +99,9 @@ To install:
 
 For Android, the same development build works for both emulators and physical devices:
 
-1. [Create a Development Build (Android)](#
-
-create-a-development-build-android) 2. [Set up Android Emulator (AKA Virtual Device)](#set-up-android-emulator-aka-virtual-device) 3. [Install the Development Build (Android)](#install-the-development-build-android)
+1. [Create a Development Build (Android)](#create-a-development-build-android)
+2. [Set up Android Emulator (AKA Virtual Device)](#set-up-android-emulator-aka-virtual-device)
+3. [Install the Development Build (Android)](#install-the-development-build-android)
 
 ### Create a Development Build (Android)
 
