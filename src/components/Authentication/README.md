@@ -29,15 +29,17 @@ In order to run the project on an iOS simulator we need to follow a few steps.
 
 1. [Create a development build](#create-a-development-build)
 2. [Setup iOS Simulator (first time setup)](#setup-ios-simulator-first-time-setup)
+3. [Install the Development Build](#install-the-development-build)
+4. [Run Expo Dev Server](#)
 
-#### Create a development build
+#### Create a Development Build
 
 To run the project on we first need to create an [EAS Development build](https://docs.expo.dev/develop/development-builds/create-a-build/)
 . This is basically a binary bundle that can be installed like a regular iOS app on your iOS simulator. The development bundle can then communicate with the [Expo Dev Server](https://docs.expo.dev/more/expo-cli/#develop) which allows any changes to the code to reflect immediately in the Simulator.
 To create a development build run the command:
 
 ```
-yarn run build:run:dev:simulator
+yarn run build:dev:ios-simulator
 ```
 
 This can take between 5-15 min depending on how fast your machine is. If successful you will see a new file `development-simulator.tar.gz` in `./artifact` folder.
@@ -46,25 +48,10 @@ This can take between 5-15 min depending on how fast your machine is. If success
 
 Now let's get our iOS Simulator ready. Open Xcode if you have haven't already and accept the terms. You can now access the simulator by clicking on the Xcode Menu on the top left of the screen `Xcode -> Open Developer Tool -> Simulator`. You have the option of selecting a specific device simulator (e.g iPhone 15 pro). This is can be found in `File -> Open Simulator -> iPhone 15 pro` (or any other device you want to test this on).
 
-Once you have the simulator ready we can now install our
+#### Install the Development Build
 
-## expo-apple-authentication for native signin
-
-```
-npx expo install expo-apple-authentication
-```
-
-##
-
-To enable the Sign In with Apple capability in your app, set the ios.usesAppleSignIn property to true in your project's app config:
+Once you have the simulator ready we can now install our Development Build on it. To do so run the following command:
 
 ```
-{
-  "ios": {
-    "usesAppleSignIn": true
-  },
-  "expo": {
-    "plugins": ["expo-apple-authentication"]
-  }
-}
+yarn build:run:dev:ios-simulator
 ```
