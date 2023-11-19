@@ -1,21 +1,21 @@
-# Installation
+# Setup instructions
 
 ## Dependencies
 
 - [Xcode - iOS Simulators](https://apps.apple.com/us/app/xcode/id497799835?mt=12)
 - [Android Studio - Android Emulator](https://developer.android.com/studio)
-- [Node.js > 18 - Running Expo Dev Server](https://formulae.brew.sh/formula/node)
-- [Git - Version control](https://formulae.brew.sh/formula/git)
-- [EAS CLI - Building the project on local machine)](https://docs.expo.dev/eas-update/getting-started/)
-- [Yarn - JavaScript package manager](https://formulae.brew.sh/formula/yarn)
+- [Node.js > 18 - Running the Expo Dev Server](https://formulae.brew.sh/formula/node)
+- [Git - Version Control](https://formulae.brew.sh/formula/git)
+- [EAS CLI - Building the Project Locally](https://docs.expo.dev/eas-update/getting-started/)
+- [Yarn - JavaScript Package Manager](https://formulae.brew.sh/formula/yarn)
 
-## Running the project on local machine
+## Running the Project Locally
 
-This project is written in [Expo](https://expo.dev/home) which is an eco system around creating and developing native apps based on [React Native](https://reactnative.dev/).
+This project is developed with [Expo](https://expo.dev/home), an ecosystem for creating and developing native apps based on [React Native](https://reactnative.dev/).
 
-### Installing the project and its packages
+### Installing the Project and Its Packages
 
-After installing all the tools in the dependencies section you need to clone the project from Github using Git and install the necessary packages. To do this run the following commands (one at a time) in the terminal.
+After installing all the tools listed in the dependencies section, you will need to clone the project from GitHub using Git and install the necessary packages. Execute the following commands in your terminal, one at a time:
 
 ```
 git clone https://github.com/milad-alizadeh/Apperitif.git
@@ -23,47 +23,45 @@ cd Apperitif
 yarn
 ```
 
-### Running on iOS Simulator
+### Running on an iOS Simulator
 
-In order to run the project on an iOS simulator we need to follow a few steps.
+To run the project on an iOS simulator, follow these steps:
 
-1. [Create a development build](#create-a-development-build)
-2. [Setup iOS Simulator (first time setup)](#setup-ios-simulator-first-time-setup)
+1. [Create a Development Build](#create-a-development-build)
+2. [Set up the iOS Simulator (First Time Setup)](#setup-ios-simulator-first-time-setup)
 3. [Install the Development Build](#install-the-development-build)
-4. [Run Expo Dev Server](#run-expo-dev-server)
+4. [Run the Expo Dev Server](#run-expo-dev-server)
 
 #### Create a Development Build
 
-To run the project on we first need to create an [EAS Development build](https://docs.expo.dev/develop/development-builds/create-a-build/)
-. This is basically a binary bundle that can be installed like a regular iOS app on your iOS simulator. The development bundle can then communicate with the [Expo Dev Server](https://docs.expo.dev/more/expo-cli/#develop) which allows any changes to the code to reflect immediately in the Simulator.
-To create a development build run the command:
+First, create an [EAS Development Build](https://docs.expo.dev/develop/development-builds/create-a-build/). This is essentially a binary bundle that can be installed like a regular iOS app on your iOS simulator. The development bundle communicates with the [Expo Dev Server](https://docs.expo.dev/more/expo-cli/#develop), allowing immediate reflection of code changes in the Simulator. Run the following command to create a development build:
 
 ```
 yarn run build:dev:ios-simulator
 ```
 
-This can take between 5-15 min depending on how fast your machine is. If successful you will see a new file `development-simulator.tar.gz` in `./artifact` folder.
+This process may take 5-15 minutes, depending on your machine's speed. If successful, you will find a new file `development-simulator.tar.gz` in the `./artifact` folder.
 
-#### Setup iOS Simulator (first time setup)
+#### Set up the iOS Simulator (First Time Setup)
 
-Now let's get our iOS Simulator ready. Open Xcode if you have haven't already and accept the terms. You can now access the simulator by clicking on the Xcode Menu on the top left of the screen `Xcode -> Open Developer Tool -> Simulator`. You have the option of selecting a specific device simulator (e.g iPhone 15 pro). This is can be found in `File -> Open Simulator -> iPhone 15 pro` (or any other device you want to test this on).
+Open Xcode (if you haven't already) and accept the terms. Access the simulator by selecting `Xcode -> Open Developer Tool -> Simulator` from the Xcode Menu. Choose a specific device simulator (e.g., iPhone 15 Pro) by navigating to `File -> Open Simulator -> iPhone 15 Pro` (or another device of your choice).
 
 #### Install the Development Build
 
-Once you have the simulator ready we can now install our Development Build on it. To do so run the following command:
+With the simulator ready, install the Development Build on it by running the following command:
 
 ```
 yarn build:run:dev:ios-simulator
 ```
 
-If susccessful you should now see the app icon in the simulator. If you open the app you should see a page that instructs you to start a local development server.
+Upon successful installation, you should see the app icon in the simulator. Opening the app will display a page with instructions to start a local development server.
 
-#### Run Expo Dev Server
+#### Run the Expo Dev Server
 
-The final step is to connect our installed app to the Expo Dev Server. This allows us to view any changes we make in the code in real time in the simulator/phydical device. To run the dev server run the command:
+Finally, connect the installed app to the Expo Dev Server, enabling real-time reflection of code changes in the simulator or a physical device. Start the dev server with the command:
 
 ```
 yarn run start
 ```
 
-Now open the simulator app and you should see an item in the list `http://localhost:8081`. Click and the app should work as expected now!
+Now, open the simulator app and select `http://localhost:8081`. And Voilà!
