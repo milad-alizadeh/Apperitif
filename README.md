@@ -170,4 +170,71 @@ The process for using EAS Update is:
 
 Use EAS Build for major changes, particularly those involving native code or significant feature additions. EAS Update is ideal for minor changes and bug fixes that don't require a full build process. This ensures users always have access to the latest version of the app, even for small updates. EAS updates only trigger upon app launch.
 
-# Project Structure (WIP)
+Here's the revised section of your markdown file, focusing on project structure and tools. Corrections for typos, grammar, and style have been made to enhance clarity and coherence:
+
+---
+
+# Project Structure and Tools
+
+This project follows a standard [Expo](https://docs.expo.dev/get-started/create-a-project/) structure, resulting in opinionated code that facilitates consistency and ease of understanding throughout the development process.
+
+- [Navigation](#navigation)
+- [State Management & APIs](#state-management-and-apis)
+- [Authentication](#authentication)
+- [Styling](#styling)
+- [Logging and Monitoring](#logging-and-monitoring)
+
+## Navigation
+
+We use [Expo Router](https://docs.expo.dev/routing/introduction/) for navigation and routing. This offers a Next.js-like folder-based structure, simplifying navigation significantly. All main routes are located in the `src/app` folder. Our setup closely follows Expo's standard conventions. For more details on using Expo Router, refer to their [guide](https://docs.expo.dev/routing/introduction/).
+
+## Testing
+
+Our project incorporates two types of testing:
+
+- Unit tests with [Jest](https://jestjs.io/)
+- End-to-End (E2E) tests with [Maestro](https://maestro.mobile.dev/).
+
+Unit tests are conducted for each component. These tests run automatically whenever code is pushed to the `staging`, `staging-build`, `production`, and `production-build` branches. The build process halts if any unit test fails. To run unit tests locally, execute:
+
+```
+yarn test:unit
+```
+
+E2E tests, currently not integrated into the CI/CD pipeline (WIP), can be run locally using:
+
+```
+yarn test:e2e
+```
+
+**Note:** Ensure Maestro is installed before running E2E tests. Follow the [Maestro installation guide](https://maestro.mobile.dev/getting-started/installing-maestro) for setup instructions.
+
+## State Management and APIs (WIP)
+
+For network communication with the server, we use [Apollo Client](https://www.apollographql.com/docs/react/) and [Supabase JavaScript Client](https://supabase.com/docs/reference/javascript/introduction). Queries and mutations are managed in the `src/graphql` folder. As we use TypeScript, it's necessary to regenerate types whenever a query or mutation is added, changed, or deleted. Type checking is facilitated by [Codegen](https://www.apollographql.com/tutorials/lift-off-part1/09-codegen), allowing for end-to-end type safety with minimal effort. To generate types after any changes, run:
+
+```
+yarn run generate:gql
+```
+
+To automatically watch for changes and generate types, use:
+
+```
+yarn run generate:gql:watch
+```
+
+---
+
+This revised section ensures that the instructions and descriptions are clear, consistent, and easy to understand, aligning with the overall structure and tone of the document.
+
+## Authentication (WIP)
+
+Supabase auth.
+
+## Styling (WIP)
+
+Nativewind
+
+## Logging and monitoring (WIP)
+
+Sentry

@@ -13,7 +13,7 @@
     "test:unit": "jest",
     "test:unit:coverage": "jest --coverage",
     "test:unit:watch": "jest --watch",
-    "test:e2e:all": "maestro test e2e-tests/tests",
+    "test:e2e": "maestro test e2e-tests/tests",
     "test:e2e:record": "maestro record e2e-tests/tests",
     "format": "prettier --write \"./**/*.{js,jsx,json,md,ts,tsx}\"",
     "compile": "tsc --noEmit -p . --pretty",
@@ -46,7 +46,7 @@
     "expo:fix": "npx expo install --fix",
     "generate:types": " npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > src/types/supabase.ts",
     "generate:gql": "graphql-codegen",
-    "generate:gqlwatch": "graphql-codegen -w"
+    "generate:gql:watch": "graphql-codegen -w"
   },
   "dependencies": {
     "@apollo/client": "^3.8.4",
