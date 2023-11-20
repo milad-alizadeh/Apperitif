@@ -68,7 +68,7 @@ Install the Development Build on the simulator with:
 yarn build:run:dev:ios-simulator
 ```
 
-Upon successful installation, the app icon should appear in the simulator. Open the app and select `http://localhost:8081` to start.
+Upon successful installation, the app icon should appear in the simulator. Open the app and select `http://localhost:8081` to start. If you are using a physical device, chances are the dev server might be automatically detected. In that case you need to click enter manually and replace the `localhost` with the IP of your Mac on the network. `e.g https://192.168.0.64:8081`
 
 ## Setup on iPhone
 
@@ -104,13 +104,7 @@ Choose to login to the Apple Account and choose the first option `Website - gene
 
 ### Install the Development Build using Xcode
 
-Install the build on an iPhone using Xcode. Ensure the iPhone is connected to your Mac and both are signed in with the same Apple ID. Enable developer mode on your iPhone as per [Expo's guide](https://docs.expo.dev/guides/ios-developer-mode/).
-
-To install:
-
-1. In Xcode, go to `Window -> Devices and Simulators`.
-2. Select your iPhone on the left pane (optionally enable "Connect via network").
-3. Click `+`, navigate to `development.ipa`, and install. The app should now appear on your iPhone.
+Once the build is finished you should recieve a QR code in the terminal. Scan it with your Phone and you're asked to install the app. Confirm and the build should install on your phone
 
 ## Setup on Android (Physical & Emulator)
 
@@ -147,10 +141,12 @@ For a physical device:
 Install the build on Android with:
 
 ```
-yarn run build:run:android
+yarn run build:run:android-emulator
 ```
 
 For virtual devices, drag and drop `development.apk` into the running emulator.
+
+Once the build is finished you should recieve a QR code in the terminal. Scan it with your Phone and you're asked to install the app. Confirm and the build should install on your phone
 
 # Deployments (CI/CD)
 
