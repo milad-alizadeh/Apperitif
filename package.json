@@ -21,6 +21,7 @@
     "build:run:dev:ios-simulator": "eas build:run -p ios --latest",
     "build:run:dev:android-emulator": "eas build:run -p android --latest",
     "build:dev:ios": "eas build --profile development --non-interactive --platform ios",
+    "build:dev:ios-simulator": "eas build --profile development-simulator --non-interactive --platform ios",
     "build:dev:android": "eas build --profile development --non-interactive --platform android",
     "build:local:run:dev:ios-simulator": "eas build:run -p ios --path ./artifacts/development-simulator.tar.gz",
     "build:local:run:staging:ios-simulator": "eas build:run -p ios --path ./artifacts/staging-simulator.tar.gz",
