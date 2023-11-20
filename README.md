@@ -11,8 +11,10 @@
 - [Android Studio - Android Emulator](https://developer.android.com/studio)
 - [Node.js > 18 - Running the Expo Dev Server](https://formulae.brew.sh/formula/node)
 - [Git - Version Control](https://formulae.brew.sh/formula/git)
-- [EAS CLI - Building the Project Locally](https://docs.expo.dev/eas-update/getting-started/)
+- [EAS CLI - Expo build tool](https://docs.expo.dev/eas-update/getting-started/)
 - [Yarn - JavaScript Package Manager](https://formulae.brew.sh/formula/yarn)
+- [Fast Lane - Build & Releasing Apps](https://formulae.brew.sh/formula/fastlane)
+- [Cocoa Pods - Dependency manager for Swift](https://formulae.brew.sh/formula/cocoapods)
 
 # Setting Up the Project Locally
 
@@ -73,7 +75,8 @@ Upon successful installation, the app icon should appear in the simulator. Open 
 Running the build on an iPhone requires creating a separate development build. The steps are similar to the simulator setup:
 
 1. [Create a Development Build for iPhone](#create-a-development-build-iphone)
-2. [Install the Development Build using Xcode](#install-the-development-build-using-xcode)
+2. [Install EAS profile on your device](#install-eas-profile-on-your-device)
+3. [Install the Development Build using Xcode](#install-the-development-build-using-xcode)
 
 ### Create a Development Build (iPhone)
 
@@ -84,6 +87,20 @@ yarn run build:dev:ios
 ```
 
 This also takes 5-15 minutes. Upon success, `development.ipa` will be in the `./artifact` folder.
+
+**Note:** During the process you might face an error. `Error: Distribution certificate with fingerprint *************** hasn't been imported successfully`. This is to do with your machine missing the new ""Apple Worldwide Developer Relations Certification Authority". To install download it [here](https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer) and install this certificate. Once done you should no longer get this error
+
+**Note:** Make sure you have iOS Simulators in Xcode before runnning the build command as it will fail without.
+
+### Install EAS profile on your device
+
+In order for development build to work on an iPhone it needs to be signed by Expo to install EAS profile run:
+
+```
+yarn add:test-device
+```
+
+Choose to login to the Apple Account and choose the first option `Website - generates a registration URL to be opened on your devices`. You then will recieve a QR code which you can scan with your phone and install the profile. Once the profile is installed you should a confirmation message and then move to the next section
 
 ### Install the Development Build using Xcode
 
@@ -178,7 +195,6 @@ This project follows a standard [Expo](https://docs.expo.dev/get-started/create-
 - [State Management & APIs](#state-management-and-apis)
 - [Authentication](#authentication)
 - [Styling](#styling)
-- [Logging and Monitoring](#logging-and-monitoring)
 
 ## Navigation
 
@@ -205,7 +221,7 @@ yarn test:e2e
 
 **Note:** Ensure Maestro is installed before running E2E tests. Follow the [Maestro installation guide](https://maestro.mobile.dev/getting-started/installing-maestro) for setup instructions.
 
-## State Management and APIs (WIP)
+## State Management and APIs
 
 For network communication with the server, we use [Apollo Client](https://www.apollographql.com/docs/react/) and [Supabase JavaScript Client](https://supabase.com/docs/reference/javascript/introduction). Queries and mutations are managed in the `src/graphql` folder. As we use TypeScript, it's necessary to regenerate types whenever a query or mutation is added, changed, or deleted. Type checking is facilitated by [Codegen](https://www.apollographql.com/tutorials/lift-off-part1/09-codegen), allowing for end-to-end type safety with minimal effort. To generate types after any changes, run:
 
@@ -219,18 +235,43 @@ To automatically watch for changes and generate types, use:
 yarn run generate:gql:watch
 ```
 
----
+Local state management is also done using Apollo client to remove the need of using another state management library such as Redux or Mobx.
 
-This revised section ensures that the instructions and descriptions are clear, consistent, and easy to understand, aligning with the overall structure and tone of the document.
+The store files are found in `src/store`. For more information on how to use local state management with Apollo please refer to this [guide](https://www.apollographql.com/docs/react/local-state/local-state-management/).
 
-## Authentication (WIP)
+In certain cases where there is limitation with the graphQL database we are using Supabase client to fetch data
 
-Supabase auth.
+## Authentication
 
-## Styling (WIP)
+This app uses [Supabase Auth](https://supabase.com/docs/guides/auth) to handle user authentications. There are several ways to authenticate the user:
 
-Nativewind
+- [Login with Apple](https://supabase.com/docs/guides/auth/social-login/auth-apple)
+- [Login with Google](https://supabase.com/docs/guides/auth/social-login/auth-google)
+- [One-time using email](https://supabase.com/docs/guides/auth/passwordless-login/auth-email-otp)
 
-## Logging and monitoring (WIP)
+Each of these are handled by components are located in `src/components/Authentication`. The necessary setup and keys are located in Supabase Auth dashboard.
 
-Sentry
+There's also a `SessionProvider` component in `src/providers/SessionProvider`. This allows supabase to check whether a user is logged in already and if so fetch the current session (not asking the user to login again). If the session is expired then the user will be redirected.
+
+The user token is saved in [Expo SecureStore](https://docs.expo.dev/versions/latest/sdk/securestore/) and the setup can be found in `src/sevices/api`.
+
+## Styling
+
+The styling in the entier application leverages [Nativewind](https://www.nativewind.dev/). NativeWind uses [Tailwind CSS](https://tailwindcss.com/) as scripting language to create a universal style system for React Native.
+The scope of why to use Tailwind is outside of this guide but you can read through why [utility-based styling](https://tailwindcss.com/docs/utility-first) is a good idea and much less verbose than traditional CSS/StyleSheet.
+
+A simple example of how to use this in a component is
+
+```
+import { Text, View } from "react-native";
+
+const App = () => {
+  return (
+    <View className="flex-1 items-center justify-center">
+      <Text className="text-slate-800">Styling just works! 🎉</Text>
+    </View>
+  );
+};
+```
+
+Please refer [NativeWind guide](https://www.nativewind.dev/overview/) on how to use it within the project.
