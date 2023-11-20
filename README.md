@@ -46,7 +46,7 @@ To run the project on an iOS simulator, follow these steps:
 
 ### Create a Development Build
 
-Create an [EAS Development Build](https://docs.expo.dev/develop/development-builds/create-a-build/), a binary bundle for installation on your iOS simulator. The development bundle communicates with the [Expo Dev Server](https://docs.expo.dev/more/expo-cli/#develop) for real-time code reflection. To create a development build, run:
+Create an [EAS Development Build](https://docs.expo.dev/develop/development-builds/create-a-build/), a binary bundle for installation on your iOS simulator. In simpler terms every app on any phone is a single file (binary) that can be installed on the device (or simulator). The development bundle communicates with the [Expo Dev Server](https://docs.expo.dev/more/expo-cli/#develop) for real-time code reflection. To create a development build, run:
 
 ```
 yarn run build:dev:ios-simulator
@@ -155,7 +155,7 @@ For ease of testing, there are separate environments: `staging` and `production`
 
 ## EAS Update (JavaScript Updates)
 
-EAS Update, also part of Expo Application Services, allows for expedited updates of non-native code changes. It's a powerful tool for pushing quick updates directly to users' devices without going through the standard app store review process. This feature is particularly useful for bug fixes, performance improvements, and small feature enhancements that don't involve native code changes.
+EAS Update, also part of Expo Application Services, allows for expedited updates of non-native code changes. It's a powerful tool for pushing quick updates directly to users' devices without going through the standard app store review process. This mean the user does not need to download a new version of the from app store. This feature is particularly useful for bug fixes, performance improvements, and small feature enhancements that don't involve native code changes.
 
 The process for using EAS Update is:
 
@@ -169,10 +169,6 @@ The process for using EAS Update is:
 ### When to Use EAS Build vs EAS Update
 
 Use EAS Build for major changes, particularly those involving native code or significant feature additions. EAS Update is ideal for minor changes and bug fixes that don't require a full build process. This ensures users always have access to the latest version of the app, even for small updates. EAS updates only trigger upon app launch.
-
-Here's the revised section of your markdown file, focusing on project structure and tools. Corrections for typos, grammar, and style have been made to enhance clarity and coherence:
-
----
 
 # Project Structure and Tools
 
