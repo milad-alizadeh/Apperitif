@@ -10,6 +10,7 @@ import * as React from 'react'
 import { StyleProp, View, ViewStyle } from 'react-native'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
+import { captureError } from '~/utils/captureError'
 
 export interface AppleAuthenticationProps {
   attemptedRoute: string | string[]
@@ -49,17 +50,16 @@ export const AppleAuthentication = function AppleAuthentication({
                   handleSuccessfulAuth()
                 } else {
                   // handle errors
-                  console.log('error', error)
+                  captureError(error)
                 }
               } else {
-                throw new Error('No identityToken.')
+                captureError('No identityToken.')
               }
             } catch (e) {
               if (e.code === 'ERR_REQUEST_CANCELED') {
-                console.log('User canceled Apple Sign in.')
-                // handle that the user canceled the sign-in flow
+                captureError('User canceled Apple Sign in.')
               } else {
-                console.log('Apple Signin Error', e)
+                captureError(`Apple Signin Error ${e}`)
               }
             }
           }}
