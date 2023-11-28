@@ -8,7 +8,7 @@ export default () => {
   return {
     name: APP_NAME,
     slug: 'apperitif',
-    version: '1.2.0',
+    version: '1.3.0',
     orientation: 'portrait',
     icon: './assets/images/app-icon-all.png',
     scheme: BUNDLE_ID,
@@ -64,6 +64,7 @@ export default () => {
     plugins: [
       'expo-router',
       'expo-apple-authentication',
+      'expo-localization',
       'sentry-expo',
       [
         'expo-updates',

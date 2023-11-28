@@ -1,6 +1,7 @@
 import { ApolloProvider } from '@apollo/client'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
+import { PostHogProvider } from 'posthog-react-native'
 import { useEffect } from 'react'
 import { LogBox } from 'react-native'
 import { EasUpdate } from '~/components/EasUpdate'
@@ -9,6 +10,8 @@ import { SessionProvider } from '~/providers/SessionProvider'
 import { api } from '~/services/api'
 import { customFontsToLoad } from '../theme/typography'
 
+const posthogApiKey = process.env.EXPO_PUBLIC_POSTHOG_API_KEY
+console.log('posthogApiKey', posthogApiKey)
 LogBox.ignoreLogs(['Warning: ...']) // Ignore log notification by message
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -49,17 +52,19 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <SessionProvider>
-      <ApolloProvider client={api?.apolloClient}>
-        <EasUpdate />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="welcome" />
-          <Stack.Screen name="recipe/[recipeId]" getId={({ params }) => params.recipeId} />
-          <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
-          <Stack.Screen name="add-ingredients" />
-        </Stack>
-      </ApolloProvider>
+      <PostHogProvider apiKey={posthogApiKey} autocapture>
+        <ApolloProvider client={api?.apolloClient}>
+          <EasUpdate />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="welcome" />
+            <Stack.Screen name="recipe/[recipeId]" getId={({ params }) => params.recipeId} />
+            <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
+            <Stack.Screen name="add-ingredients" />
+          </Stack>
+        </ApolloProvider>
+      </PostHogProvider>
     </SessionProvider>
   )
 }
