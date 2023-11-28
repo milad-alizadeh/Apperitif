@@ -6,6 +6,7 @@ import { GET_CONTENT } from '~/graphql/queries'
 export default function FAQs() {
   const { data } = useQuery(GET_CONTENT, {
     variables: { name: 'faqs' },
+    fetchPolicy: 'cache-and-network',
   })
 
   const pageContent = data?.appContentCollection?.edges?.[0]?.node.content

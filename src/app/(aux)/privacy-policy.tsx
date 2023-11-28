@@ -5,6 +5,7 @@ import { GET_CONTENT } from '~/graphql/queries'
 export default function PrivacyPolicy() {
   const { data, loading } = useQuery(GET_CONTENT, {
     variables: { name: 'privacy-policy' },
+    fetchPolicy: 'cache-and-network',
   })
 
   const pageContent = data?.appContentCollection?.edges?.[0]?.node.content

@@ -21,6 +21,7 @@ export default function BrowseHomeScreen() {
   // Fetch browser content
   const { data: browseData, error: browseError } = useQuery(GET_CONTENT, {
     variables: { name: 'home' },
+    fetchPolicy: 'cache-and-network',
   })
 
   let categoryIds: string[] = []
