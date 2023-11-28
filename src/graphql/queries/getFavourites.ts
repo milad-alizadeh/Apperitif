@@ -1,6 +1,6 @@
 import { gql } from '~/__generated__/gql'
 
-export const GET_FAVOURITES = gql(/* GraphQL */ `
+export const GET_FAVOURITES = gql(`
   query getFavourites {
     profilesRecipesCollection {
       edges {

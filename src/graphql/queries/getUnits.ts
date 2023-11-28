@@ -1,6 +1,6 @@
 import { gql } from '~/__generated__/gql'
 
-export const GET_UNITS = gql(/* GraphQL */ `
+export const GET_UNITS = gql(`
   query getUnits {
     unitsCollection {
       edges {

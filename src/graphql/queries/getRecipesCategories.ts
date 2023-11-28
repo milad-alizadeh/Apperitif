@@ -1,6 +1,6 @@
 import { gql } from '~/__generated__'
 
-export const GET_RECIPES_CATEGORIES = gql(/* GraphQL */ `
+export const GET_RECIPES_CATEGORIES = gql(`
   query getRecipesCategories(
     $first: Int
     $last: Int

@@ -1,6 +1,6 @@
 import { gql } from '~/__generated__/gql'
 
-export const GET_CATEGORIES = gql(/* GraphQL */ `
+export const GET_CATEGORIES = gql(`
   query getCategories($ids: [UUID!]) {
     categoriesCollection(filter: { id: { in: $ids } }, orderBy: { name: DescNullsFirst }) {
       edges {

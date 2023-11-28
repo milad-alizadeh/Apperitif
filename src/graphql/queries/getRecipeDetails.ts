@@ -1,6 +1,6 @@
 import { gql } from '~/__generated__/gql'
 
-export const GET_RECIPE_DETAILS = gql(/* GraphQL */ `
+export const GET_RECIPE_DETAILS = gql(`
   query getRecipeDetails($recipeId: UUID!) {
     recipesCollection(filter: { id: { eq: $recipeId } }) {
       edges {

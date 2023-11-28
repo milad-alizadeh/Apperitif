@@ -1,6 +1,6 @@
 import { gql } from '~/__generated__/gql'
 
-export const GET_TOTAL_MATCH_RECIPES = gql(/* GraphQL */ `
+export const GET_TOTAL_MATCH_RECIPES = gql(`
   query getTotalmatchRecipes {
     availableRecipesForProfilesCollection(filter: { isTotalMatch: { eq: true } }) {
       edges {

@@ -1,6 +1,6 @@
 import { gql } from '~/__generated__/gql'
 
-export const GET_FILTER_DETAILS = gql(/* GraphQL */ `
+export const GET_FILTER_DETAILS = gql(`
   query getFilterDetails($filterId: UUID!) {
     categoriesCollection(filter: { id: { eq: $filterId } }) {
       edges {

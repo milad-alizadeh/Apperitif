@@ -1,6 +1,6 @@
 import { gql } from '~/__generated__/gql'
 
-export const GET_MY_BAR = gql(/* GraphQL */ `
+export const GET_MY_BAR = gql(`
   query getMyBar {
     profilesIngredientsCollection(first: 1000) {
       edges {
