@@ -19,11 +19,13 @@ import { RecipeAttributes } from '~/components/RecipeAttributes'
 import { RecipeShare } from '~/components/RecipeShare'
 import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
 import { GET_CONTENT, GET_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
+import { useAnalytics } from '~/hooks/useAnalytics'
 import { useSession } from '~/hooks/useSession'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
 
 export default function RecipeDetailsScreen() {
+  const { capture } = useAnalytics()
   const bottomOffset = useSafeAreaInsetsStyle(['bottom'])
   const [ingredientId, setIngredientId] = useState<string>('')
   const [equipmentId, setEquipmentId] = useState<string>('')
@@ -98,6 +100,7 @@ export default function RecipeDetailsScreen() {
       refetch()
     },
     onCompleted: () => {
+      capture('recipe:favourite_added', { recipe_name: recipeName })
       refetch()
       client.refetchQueries({ include: ['getFavourites'] })
     },
@@ -109,6 +112,7 @@ export default function RecipeDetailsScreen() {
       refetch()
     },
     onCompleted: () => {
+      capture('recipe:favourite_remove', { recipe_name: recipeName })
       refetch()
       client.refetchQueries({ include: ['getFavourites'] })
     },

@@ -3,6 +3,7 @@ import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { GetRecipeDetailsQuery, Units } from '~/__generated__/graphql'
 import { GET_MEASUREMENTS, GET_UNITS } from '~/graphql/queries'
+import { useAnalytics } from '~/hooks/useAnalytics'
 import { useSession } from '~/hooks/useSession'
 import { UnitSystems, convertUnitToOtherSystem, defaultJiggerSize } from '~/store'
 import { ListItem } from './ListItem'
@@ -45,6 +46,7 @@ export const RecipeTabs = function RecipeTabs({
   onEquipmentPress,
   loading,
 }: RecipeTabsProps) {
+  const { capture } = useAnalytics()
   const { data } = useQuery(GET_UNITS)
   const { data: measurements } = useQuery(GET_MEASUREMENTS)
   const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
@@ -116,7 +118,12 @@ export const RecipeTabs = function RecipeTabs({
   )
 
   return (
-    <Tabs initialIndex={0}>
+    <Tabs
+      initialIndex={0}
+      onTabChange={(title) => {
+        capture('recipe:tab_change', { tab_name: title })
+      }}
+    >
       <Tabs.TabPage title="Ingredients">
         <RecipeMeasurements styleClassName="pb-6 mb-3 border-b-[1px] border-neutral-200" />
 

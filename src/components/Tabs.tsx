@@ -13,6 +13,7 @@ interface TabProps {
   children: ReactNode
   initialIndex?: number
   styleClassName?: string
+  onTabChange?: (title: string) => void
 }
 
 interface TabPageProps {
@@ -38,6 +39,7 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
   children,
   initialIndex = 0,
   styleClassName,
+  onTabChange,
 }) => {
   const [containerWidth, setContainerWidth] = useState(0)
   const [activeIndex, setActiveIndex] = useState(-1)
@@ -47,6 +49,11 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
   const onContainerLayout = (event: LayoutChangeEvent) => {
     setContainerWidth(event.nativeEvent.layout.width)
   }
+  // Extract the section titles from the TabPage children
+  const sectionTitles = React.Children.map(children, (child) => {
+    if (React.isValidElement(child) && child.type === TabPage) return child.props.title
+    return null
+  })
 
   // Scroll to the correct tab when the user clicks on a section header
   const onSectionClick = (index: number) => {
@@ -76,10 +83,11 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
     },
   )
 
-  // Extract the section titles from the TabPage children
-  const sectionTitles = React.Children.map(children, (child) => {
-    if (React.isValidElement(child) && child.type === TabPage) return child.props.title
-    return null
+  // fire onTabChange when the animation is finished
+  const onScrollEnd = useAnimatedScrollHandler({
+    onMomentumEnd: (event) => {
+      runOnJS(onTabChange && onTabChange)(sectionTitles[activeIndex])
+    },
   })
 
   return (
@@ -99,6 +107,7 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
         showsHorizontalScrollIndicator={false}
         onScroll={scrollHandler}
         scrollEventThrottle={16}
+        onMomentumScrollEnd={onScrollEnd}
       >
         {React.Children.map(children, (child) => {
           if (React.isValidElement<TabPageProps>(child) && child.type === TabPage) {
