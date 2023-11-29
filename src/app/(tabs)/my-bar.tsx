@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { router } from 'expo-router'
-import React, { useCallback, useRef, useState } from 'react'
+import flatten from 'lodash/flatten'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ActivityIndicator, View, ViewStyle } from 'react-native'
 import {
   BottomSheet,
@@ -17,14 +18,16 @@ import {
   Text,
 } from '~/components'
 import { GET_MEASUREMENTS } from '~/graphql/queries'
+import { useAnalytics } from '~/hooks/useAnalytics'
 import { useMatchedRecipes } from '~/hooks/useMatchedRecipes'
 import { useSession } from '~/hooks/useSession'
 import { useUpdateCache } from '~/hooks/useUpdateCache'
 
-export default function MyBarHomeScreen() {
+export default function MyBarScreen() {
   const { user } = useSession()
   const modalRef = useRef<BottomSheetRef>(null)
   const [ingredientId, setIngredientId] = useState<string>('')
+  const { capture } = useAnalytics()
 
   const { data, loading, error } = useQuery(GET_MEASUREMENTS)
   const updateCache = useUpdateCache()
@@ -121,7 +124,7 @@ export default function MyBarHomeScreen() {
           />
         </Tabs.TabPage>
 
-        <Tabs.TabPage title="From My Bar" styleClassName="p-0">
+        <Tabs.TabPage title="Recipes" styleClassName="p-0">
           <RecipeGrid
             styleClassName="px-6"
             recipes={getRecipeMatch(totalMatchData)}
@@ -131,7 +134,7 @@ export default function MyBarHomeScreen() {
               !data?.totalMatchInfoBoxDismissed ? (
                 <InfoBox
                   styleClassName="m-3"
-                  description="These cocktails use only ingredients in your bar."
+                  description="Explore cocktail recipes you can make with your current ingredients."
                   onClose={() =>
                     updateCache(GET_MEASUREMENTS, { totalMatchInfoBoxDismissed: true })
                   }
@@ -152,7 +155,7 @@ export default function MyBarHomeScreen() {
           />
         </Tabs.TabPage>
 
-        <Tabs.TabPage title="Closest Match" styleClassName="p-0">
+        <Tabs.TabPage title="Near-Ready Recipes" styleClassName="p-0">
           <RecipeGrid
             styleClassName="px-6"
             recipes={getRecipeMatch(partialMatchData)}
@@ -162,7 +165,7 @@ export default function MyBarHomeScreen() {
               !data?.partialMatchInfoBoxDismissed ? (
                 <InfoBox
                   styleClassName="m-3"
-                  description="These cocktails use ingredients in your bar and one or more ingredients you don't have."
+                  description="See which cocktails you're close to making with just 1-2 more ingredients."
                   onClose={() =>
                     updateCache(GET_MEASUREMENTS, { partialMatchInfoBoxDismissed: true })
                   }
