@@ -46,7 +46,10 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
           key={item.id}
           testID="recipe-card"
           onPress={() =>
-            router.push({ pathname: '/recipe/[recipeId]', params: { recipeId: item.id } })
+            router.push({
+              pathname: '/recipe/[recipeId]/[recipeName]',
+              params: { recipeId: item.id, recipeName: item.name },
+            })
           }
           styleClassName="w-1/2 px-3 mb-6"
         />

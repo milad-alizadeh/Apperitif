@@ -49,6 +49,8 @@ export type AppContentConnection = {
   __typename?: 'AppContentConnection';
   edges: Array<AppContentEdge>;
   pageInfo: PageInfo;
+  /** The total number of records matching the `filter` criteria */
+  totalCount: Scalars['Int']['output'];
 };
 
 export type AppContentDeleteResponse = {
@@ -66,10 +68,16 @@ export type AppContentEdge = {
 };
 
 export type AppContentFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<AppContentFilter>>;
   createdAt?: InputMaybe<DatetimeFilter>;
   id?: InputMaybe<UuidFilter>;
   name?: InputMaybe<StringFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<AppContentFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<AppContentFilter>>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
 
@@ -148,10 +156,16 @@ export type AvailableRecipesForProfilesEdge = {
 };
 
 export type AvailableRecipesForProfilesFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<AvailableRecipesForProfilesFilter>>;
   canAlmostMake?: InputMaybe<BooleanFilter>;
   isTotalMatch?: InputMaybe<BooleanFilter>;
   matchedIngredientsCount?: InputMaybe<BigIntFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<AvailableRecipesForProfilesFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<AvailableRecipesForProfilesFilter>>;
   profileId?: InputMaybe<UuidFilter>;
   recipeId?: InputMaybe<UuidFilter>;
   recipeImageUrl?: InputMaybe<StringFilter>;
@@ -290,6 +304,8 @@ export type CategoriesConnection = {
   __typename?: 'CategoriesConnection';
   edges: Array<CategoriesEdge>;
   pageInfo: PageInfo;
+  /** The total number of records matching the `filter` criteria */
+  totalCount: Scalars['Int']['output'];
 };
 
 export type CategoriesDeleteResponse = {
@@ -307,11 +323,17 @@ export type CategoriesEdge = {
 };
 
 export type CategoriesFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<CategoriesFilter>>;
   createdAt?: InputMaybe<DatetimeFilter>;
   id?: InputMaybe<UuidFilter>;
   imageUrl?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<CategoriesFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<CategoriesFilter>>;
   parentId?: InputMaybe<UuidFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
@@ -410,6 +432,8 @@ export type EquipmentConnection = {
   __typename?: 'EquipmentConnection';
   edges: Array<EquipmentEdge>;
   pageInfo: PageInfo;
+  /** The total number of records matching the `filter` criteria */
+  totalCount: Scalars['Int']['output'];
 };
 
 export type EquipmentDeleteResponse = {
@@ -427,12 +451,18 @@ export type EquipmentEdge = {
 };
 
 export type EquipmentFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<EquipmentFilter>>;
   createdAt?: InputMaybe<DatetimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
   imageUrl?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<EquipmentFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<EquipmentFilter>>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
 
@@ -576,9 +606,15 @@ export type IngredientsByCategoriesEdge = {
 };
 
 export type IngredientsByCategoriesFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<IngredientsByCategoriesFilter>>;
   count?: InputMaybe<BigIntFilter>;
   id?: InputMaybe<UuidFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<IngredientsByCategoriesFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<IngredientsByCategoriesFilter>>;
   title?: InputMaybe<StringFilter>;
 };
 
@@ -653,10 +689,16 @@ export type IngredientsCategoriesEdge = {
 };
 
 export type IngredientsCategoriesFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<IngredientsCategoriesFilter>>;
   categoryId?: InputMaybe<UuidFilter>;
   createdAt?: InputMaybe<DatetimeFilter>;
   ingredientId?: InputMaybe<UuidFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<IngredientsCategoriesFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<IngredientsCategoriesFilter>>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
 
@@ -701,6 +743,8 @@ export type IngredientsConnection = {
   __typename?: 'IngredientsConnection';
   edges: Array<IngredientsEdge>;
   pageInfo: PageInfo;
+  /** The total number of records matching the `filter` criteria */
+  totalCount: Scalars['Int']['output'];
 };
 
 export type IngredientsDeleteResponse = {
@@ -718,11 +762,17 @@ export type IngredientsEdge = {
 };
 
 export type IngredientsFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<IngredientsFilter>>;
   createdAt?: InputMaybe<DatetimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
   name?: InputMaybe<StringFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<IngredientsFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<IngredientsFilter>>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
 
@@ -781,6 +831,12 @@ export type IntFilter = {
 /** The root type for creating and mutating data */
 export type Mutation = {
   __typename?: 'Mutation';
+  createOrUpdateAppContent?: Maybe<Scalars['UUID']['output']>;
+  createOrUpdateCategory?: Maybe<Scalars['UUID']['output']>;
+  createOrUpdateEquipment?: Maybe<Scalars['UUID']['output']>;
+  createOrUpdateIngredient?: Maybe<Scalars['UUID']['output']>;
+  createOrUpdateRecipe?: Maybe<Scalars['UUID']['output']>;
+  createTriggerForTable?: Maybe<Scalars['Opaque']['output']>;
   /** Deletes zero or more records from the `AppContent` collection */
   deleteFromAppContentCollection: AppContentDeleteResponse;
   /** Deletes zero or more records from the `AvailableRecipesForProfiles` collection */
@@ -813,6 +869,7 @@ export type Mutation = {
   deleteFromStepsCollection: StepsDeleteResponse;
   /** Deletes zero or more records from the `Units` collection */
   deleteFromUnitsCollection: UnitsDeleteResponse;
+  deleteUser?: Maybe<Scalars['Boolean']['output']>;
   /** Adds one or more `AppContent` records to the collection */
   insertIntoAppContentCollection?: Maybe<AppContentInsertResponse>;
   /** Adds one or more `AvailableRecipesForProfiles` records to the collection */
@@ -877,6 +934,42 @@ export type Mutation = {
   updateStepsCollection: StepsUpdateResponse;
   /** Updates zero or more records in the `Units` collection */
   updateUnitsCollection: UnitsUpdateResponse;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationCreateOrUpdateAppContentArgs = {
+  payload?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationCreateOrUpdateCategoryArgs = {
+  payload?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationCreateOrUpdateEquipmentArgs = {
+  payload?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationCreateOrUpdateIngredientArgs = {
+  payload?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationCreateOrUpdateRecipeArgs = {
+  payload?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationCreateTriggerForTableArgs = {
+  tableName?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -1254,6 +1347,7 @@ export type Profiles = Node & {
   nodeId: Scalars['ID']['output'];
   profilesIngredientsCollection?: Maybe<ProfilesIngredientsConnection>;
   profilesRecipesCollection?: Maybe<ProfilesRecipesConnection>;
+  role: Scalars['String']['output'];
   updatedAt: Scalars['Datetime']['output'];
 };
 
@@ -1298,9 +1392,16 @@ export type ProfilesEdge = {
 };
 
 export type ProfilesFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<ProfilesFilter>>;
   createdAt?: InputMaybe<DatetimeFilter>;
   id?: InputMaybe<UuidFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<ProfilesFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<ProfilesFilter>>;
+  role?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
 
@@ -1337,9 +1438,15 @@ export type ProfilesIngredientsEdge = {
 };
 
 export type ProfilesIngredientsFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<ProfilesIngredientsFilter>>;
   createdAt?: InputMaybe<DatetimeFilter>;
   ingredientId?: InputMaybe<UuidFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<ProfilesIngredientsFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<ProfilesIngredientsFilter>>;
   profileId?: InputMaybe<UuidFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
@@ -1384,6 +1491,7 @@ export type ProfilesIngredientsUpdateResponse = {
 export type ProfilesInsertInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
+  role?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
 
@@ -1398,6 +1506,7 @@ export type ProfilesInsertResponse = {
 export type ProfilesOrderBy = {
   createdAt?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
+  role?: InputMaybe<OrderByDirection>;
   updatedAt?: InputMaybe<OrderByDirection>;
 };
 
@@ -1434,8 +1543,14 @@ export type ProfilesRecipesEdge = {
 };
 
 export type ProfilesRecipesFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<ProfilesRecipesFilter>>;
   createdAt?: InputMaybe<DatetimeFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<ProfilesRecipesFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<ProfilesRecipesFilter>>;
   profileId?: InputMaybe<UuidFilter>;
   recipeId?: InputMaybe<UuidFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
@@ -1481,6 +1596,7 @@ export type ProfilesRecipesUpdateResponse = {
 export type ProfilesUpdateInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
+  role?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
 
@@ -1501,6 +1617,7 @@ export type Query = {
   availableRecipesForProfilesCollection?: Maybe<AvailableRecipesForProfilesConnection>;
   /** A pagable collection of type `Categories` */
   categoriesCollection?: Maybe<CategoriesConnection>;
+  doesEmailExist?: Maybe<Scalars['Boolean']['output']>;
   doubleRecipe?: Maybe<Scalars['Boolean']['output']>;
   /** A pagable collection of type `Equipment` */
   equipmentCollection?: Maybe<EquipmentConnection>;
@@ -1529,6 +1646,7 @@ export type Query = {
   recipesIngredientsCollection?: Maybe<RecipesIngredientsConnection>;
   selectedJiggerSize?: Maybe<Scalars['Int']['output']>;
   selectedUnitSystem?: Maybe<Scalars['String']['output']>;
+  showLimit?: Maybe<Scalars['Float']['output']>;
   /** A pagable collection of type `Steps` */
   stepsCollection?: Maybe<StepsConnection>;
   totalMatchInfoBoxDismissed?: Maybe<Scalars['Boolean']['output']>;
@@ -1567,6 +1685,12 @@ export type QueryCategoriesCollectionArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<CategoriesOrderBy>>;
+};
+
+
+/** The root type for querying data */
+export type QueryDoesEmailExistArgs = {
+  email?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -1819,9 +1943,15 @@ export type RecipesCategoriesEdge = {
 };
 
 export type RecipesCategoriesFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<RecipesCategoriesFilter>>;
   categoryId?: InputMaybe<UuidFilter>;
   createdAt?: InputMaybe<DatetimeFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<RecipesCategoriesFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<RecipesCategoriesFilter>>;
   recipeId?: InputMaybe<UuidFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
@@ -1867,6 +1997,8 @@ export type RecipesConnection = {
   __typename?: 'RecipesConnection';
   edges: Array<RecipesEdge>;
   pageInfo: PageInfo;
+  /** The total number of records matching the `filter` criteria */
+  totalCount: Scalars['Int']['output'];
 };
 
 export type RecipesDeleteResponse = {
@@ -1916,9 +2048,15 @@ export type RecipesEquipmentEdge = {
 };
 
 export type RecipesEquipmentFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<RecipesEquipmentFilter>>;
   createdAt?: InputMaybe<DatetimeFilter>;
   equipmentId?: InputMaybe<UuidFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<RecipesEquipmentFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<RecipesEquipmentFilter>>;
   recipeId?: InputMaybe<UuidFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
@@ -1961,6 +2099,8 @@ export type RecipesEquipmentUpdateResponse = {
 };
 
 export type RecipesFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<RecipesFilter>>;
   createdAt?: InputMaybe<DatetimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
@@ -1968,6 +2108,10 @@ export type RecipesFilter = {
   isDraft?: InputMaybe<BooleanFilter>;
   name?: InputMaybe<StringFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<RecipesFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<RecipesFilter>>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
 
@@ -2008,10 +2152,16 @@ export type RecipesIngredientsEdge = {
 };
 
 export type RecipesIngredientsFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<RecipesIngredientsFilter>>;
   createdAt?: InputMaybe<DatetimeFilter>;
   ingredientId?: InputMaybe<UuidFilter>;
   isOptional?: InputMaybe<BooleanFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<RecipesIngredientsFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<RecipesIngredientsFilter>>;
   quantity?: InputMaybe<BigFloatFilter>;
   recipeId?: InputMaybe<UuidFilter>;
   unitId?: InputMaybe<UuidFilter>;
@@ -2144,11 +2294,17 @@ export type StepsEdge = {
 };
 
 export type StepsFilter = {
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<StepsFilter>>;
   createdAt?: InputMaybe<DatetimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<StepsFilter>;
   number?: InputMaybe<IntFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<StepsFilter>>;
   recipeId?: InputMaybe<UuidFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
 };
@@ -2296,6 +2452,8 @@ export type UnitsEdge = {
 
 export type UnitsFilter = {
   abbreviation?: InputMaybe<StringFilter>;
+  /** Returns true only if all its inner filters are true, otherwise returns false */
+  and?: InputMaybe<Array<UnitsFilter>>;
   baseConversionFactor?: InputMaybe<BigFloatFilter>;
   baseUnitId?: InputMaybe<UuidFilter>;
   createdAt?: InputMaybe<DatetimeFilter>;
@@ -2303,6 +2461,10 @@ export type UnitsFilter = {
   isConvertable?: InputMaybe<BooleanFilter>;
   name?: InputMaybe<StringFilter>;
   nodeId?: InputMaybe<IdFilter>;
+  /** Negates a filter */
+  not?: InputMaybe<UnitsFilter>;
+  /** Returns true if at least one of its inner filters is true, otherwise returns false */
+  or?: InputMaybe<Array<UnitsFilter>>;
   plural?: InputMaybe<StringFilter>;
   system?: InputMaybe<StringFilter>;
   systemToSystemConversionFactor?: InputMaybe<BigFloatFilter>;

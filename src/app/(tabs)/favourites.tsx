@@ -36,7 +36,10 @@ export default function FavouritesScreen() {
           testIDIconRight="favourite-recipe-delete"
           card
           onPress={() =>
-            router.push({ pathname: '/recipe/[recipeId]', params: { recipeId: item.id } })
+            router.push({
+              pathname: '/recipe/[recipeId]/[recipeName]',
+              params: { recipeId: item.id, recipeName: item.name },
+            })
           }
           onRightIconPress={() =>
             deleteFromFavourites({

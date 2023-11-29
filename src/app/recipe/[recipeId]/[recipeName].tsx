@@ -32,10 +32,12 @@ export default function RecipeDetailsScreen() {
   const scrollY = useScrollViewOffset(aref)
   const { user, isLoggedIn } = useSession()
   const client = useApolloClient()
-  const { recipeId } = useLocalSearchParams()
+  const { recipeId, recipeName } = useLocalSearchParams()
 
   const headerHeight = useWindowDimensions().width
   const fixedHeaderOffset = headerHeight - 110
+
+  console.log('recipeId', recipeId, recipeName)
 
   const { data, error, loading, refetch } = useQuery(GET_RECIPE_DETAILS, {
     variables: { recipeId },

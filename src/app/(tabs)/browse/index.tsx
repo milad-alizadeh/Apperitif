@@ -67,8 +67,8 @@ export default function BrowseHomeScreen() {
         imageUrl,
         onPress: () => {
           router.push({
-            pathname: '/recipe/[recipeId]',
-            params: { recipeId: id },
+            pathname: '/recipe/[recipeId]/[recipeName]',
+            params: { recipeId: id, recipeName: encodeURIComponent(name) },
           })
         },
       }),
