@@ -37,8 +37,8 @@ export default function AllFiltersScreen() {
             rightIcon="chevronRight"
             onPress={() =>
               router.push({
-                pathname: '/(tabs)/browse/filters/[filterId]',
-                params: { filterId: item.id },
+                pathname: '/(tabs)/browse/filters/subfilter',
+                params: { filterId: item.id, filterName: item.name },
               })
             }
           />
