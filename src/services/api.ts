@@ -80,7 +80,6 @@ class Api {
     this.setDefaults(cache)
 
     if (process.env.NODE_ENV !== 'development') {
-      console.log('persisting cache')
       await persistCache({
         cache,
         storage: new AsyncStorageWrapper(AsyncStorage),

@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { GetPartialMatchRecipesQuery, GetTotalmatchRecipesQuery } from '~/__generated__/graphql'
 import { CardProps, SectionDataType, SectionHeaderType } from '~/components'
 import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
