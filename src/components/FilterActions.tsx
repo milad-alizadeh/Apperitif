@@ -18,7 +18,10 @@ export const FilterActions = function FilterActions() {
           enableHaptics
           onPress={() => {
             clearFilters(false)
-            router.push({ pathname: '/browse/recipes', params: { categoryIds: [] } })
+            router.push({
+              pathname: '/browse/recipes',
+              params: { categoryIds: [], categoryName: '' },
+            })
           }}
         />
       </View>
@@ -29,7 +32,10 @@ export const FilterActions = function FilterActions() {
           testID="apply-filters-button"
           onPress={() => {
             applyFilters()
-            router.push({ pathname: '/browse/recipes', params: { categoryIds: [] } })
+            router.push({
+              pathname: '/browse/recipes',
+              params: { categoryIds: [], categgoryName: '' },
+            })
           }}
         />
       </View>

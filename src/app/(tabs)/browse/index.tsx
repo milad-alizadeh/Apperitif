@@ -81,7 +81,7 @@ export default function BrowseHomeScreen() {
         onPress: () =>
           router.push({
             pathname: '/browse/recipes',
-            params: { categoryIds: [id] },
+            params: { categoryIds: [id], categoryName: name },
           }),
         imageUrl,
       }),
@@ -112,7 +112,10 @@ export default function BrowseHomeScreen() {
           <Icon
             icon="search"
             onPress={() =>
-              router.push({ pathname: '/browse/recipes', params: { categoryIds: [''] } })
+              router.push({
+                pathname: '/browse/recipes',
+                params: { categoryIds: [''], categoryName: '' },
+              })
             }
             size="large"
             color={colors.neutral[800]}

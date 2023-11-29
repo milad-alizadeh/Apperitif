@@ -22,7 +22,7 @@ export default function ProfileHomeScreen() {
       ? {
           name: 'Account',
           icon: 'user',
-          route: `/${user?.id}/account`,
+          route: `/account`,
         }
       : undefined,
     {
