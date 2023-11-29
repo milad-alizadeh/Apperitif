@@ -1,7 +1,10 @@
+import { useReactiveVar } from '@apollo/client'
 import { router } from 'expo-router'
 import React, { FC, forwardRef, useCallback, useImperativeHandle, useRef } from 'react'
 import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native'
 import Animated from 'react-native-reanimated'
+import { useAnalytics } from '~/hooks/useAnalytics'
+import { searchQueryVar } from '~/store'
 import { Card, CardProps } from './Card'
 
 interface RecipeGridProps {
@@ -31,6 +34,9 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
     },
     ref,
   ) => {
+    const { capture } = useAnalytics()
+    const search_term = useReactiveVar(searchQueryVar)
+
     useImperativeHandle(ref, () => ({
       scrollToTop: () => {
         listRef?.current?.scrollToOffset({ animated: true, offset: 0 })
@@ -39,22 +45,39 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
 
     const listRef = useRef(null)
 
-    const renderItem = useCallback(({ item }: { item; index: number }) => {
-      return (
-        <Card
-          {...item}
-          key={item.id}
-          testID="recipe-card"
-          onPress={() =>
-            router.push({
-              pathname: '/recipe',
-              params: { recipeId: item.id, recipeName: item.name },
-            })
-          }
-          styleClassName="w-1/2 px-3 mb-6"
-        />
-      )
-    }, [])
+    const renderItem = useCallback(
+      ({ item }: { item; index: number }) => {
+        return (
+          <Card
+            {...item}
+            key={item.id}
+            testID="recipe-card"
+            onPress={() => {
+              router.push({
+                pathname: '/recipe',
+                params: { recipeId: item.id, recipeName: item.name },
+              })
+
+              if (search_term.length > 0) {
+                // Capture the search result event
+                capture('browse:search_result_press', {
+                  search_term,
+                  characte_count: search_term.length,
+                  selected_result: item.name,
+                })
+              } else {
+                // Capture the recipe press event
+                capture('browse:category_recipe_press', {
+                  recipe_name: item.name,
+                })
+              }
+            }}
+            styleClassName="w-1/2 px-3 mb-6"
+          />
+        )
+      },
+      [search_term],
+    )
 
     return (
       <Animated.FlatList

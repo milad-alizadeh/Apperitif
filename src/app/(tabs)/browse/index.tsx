@@ -67,7 +67,7 @@ export default function BrowseHomeScreen() {
             params: { recipeId: id, recipeName: name },
           })
 
-          capture('browse:recipe_press', { recipe_name: name })
+          capture('browse:home_recipe_press', { recipe_name: name })
         },
       }),
     )

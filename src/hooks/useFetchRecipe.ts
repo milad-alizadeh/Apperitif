@@ -34,12 +34,6 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
 
       const search_term = searchQueryVar()
 
-      // Capture the search type event
-      capture('browse:search_type', {
-        search_term,
-        characte_count: search_term.length,
-      })
-
       // Make the API call
       const { data, error } = await api.supabase.rpc('get_recipes_by_category_ids', {
         search_term: searchQueryVar(),
@@ -59,7 +53,7 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
         // Capture the search result event
         capture('browse:search_result', {
           search_term,
-          characte_count: search_term.length,
+          character_count: search_term.length,
           result_count: totalCount,
         })
       }
