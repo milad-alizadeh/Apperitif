@@ -8,6 +8,7 @@ import { FilterChips } from '~/components/FilterChips'
 import { Icon } from '~/components/Icon'
 import { SearchBar } from '~/components/SearchBar'
 import { Text } from '~/components/Text'
+import { useAnalytics } from '~/hooks/useAnalytics'
 import { removeFilter, searchQueryVar, selectedFiltersVar, setupDraftFilters } from '~/store'
 import { colors, shadowCard } from '~/theme'
 import { useFetchFilters } from '../hooks/useFetchFilters'
@@ -21,6 +22,7 @@ export interface FIlterBarProps {
  * Describe your component here
  */
 export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
+  const { capture } = useAnalytics()
   const { data, error, loading } = useFetchFilters()
 
   const selectedFilters = useReactiveVar(selectedFiltersVar)
@@ -55,6 +57,7 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
           onPress={() => {
             router.push('/browse/filters')
             setupDraftFilters()
+            capture('browse:filters_icon_press')
           }}
         />
         {!!selectedFilters.length && (
@@ -67,7 +70,10 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
           styleClassName={`mt-3 -mb-3 pl-6 pr-12 min-h-[32px]`}
           categories={chips}
           testIDItem="filter-chip"
-          onDismiss={(id) => removeFilter(id, false)}
+          onDismiss={(id, name) => {
+            removeFilter(id, false)
+            capture('browse:filter_remove', { filter_name: name })
+          }}
         />
       )}
     </View>
