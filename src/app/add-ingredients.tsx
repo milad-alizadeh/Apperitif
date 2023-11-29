@@ -5,10 +5,12 @@ import { View, ViewStyle } from 'react-native'
 import { FixedHeader, IngredientListItem, Screen, SectionList } from '~/components'
 import { ADD_TO_MY_BAR } from '~/graphql/mutations/addToMyBar'
 import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
+import { useAnalytics } from '~/hooks/useAnalytics'
 import { useIngredients } from '~/hooks/useIngredients'
 import { useSession } from '~/hooks/useSession'
 
 export default function AddIngredientsScreen() {
+  const { capture } = useAnalytics()
   const {
     initialSelectedItems,
     searchQuery,

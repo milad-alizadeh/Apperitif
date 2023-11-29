@@ -5,7 +5,7 @@ import { useSession } from '../hooks/useSession'
 export const useProtectedListener = () => {
   const { isLoggedIn } = useSession()
 
-  const protectedRoute = ({ navigation, route }) => ({
+  const protectedRoute = ({ route }) => ({
     tabPress: (e: EventArg<'tabPress', true, undefined>) => {
       if (!isLoggedIn) {
         e.preventDefault()

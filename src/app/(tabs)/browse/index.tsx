@@ -2,10 +2,11 @@ import { useQuery } from '@apollo/client'
 import { router } from 'expo-router'
 import groupBy from 'lodash/groupBy'
 import values from 'lodash/values'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { GetCategoriesQuery } from '~/__generated__/graphql'
 import { CardProps, Header, HorizontalList, Icon, Screen, Text, VerticalList } from '~/components'
 import { GET_CATEGORIES, GET_CONTENT } from '~/graphql/queries'
+import { useAnalytics } from '~/hooks/useAnalytics'
 import { colors } from '~/theme/colors'
 import { captureError } from '~/utils/captureError'
 
@@ -18,11 +19,17 @@ interface ListType {
  * BrowseHomeScreen component displays a list of categories and subcategories.
  */
 export default function BrowseHomeScreen() {
+  const { capture } = useAnalytics()
+
   // Fetch browser content
   const { data: browseData, error: browseError } = useQuery(GET_CONTENT, {
     variables: { name: 'home' },
     fetchPolicy: 'cache-and-network',
   })
+
+  // useEffect(() => {
+  //   capture('browse_home_screen_view')
+  // }, [])
 
   let categoryIds: string[] = []
 

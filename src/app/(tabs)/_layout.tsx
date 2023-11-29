@@ -2,11 +2,13 @@ import { Tabs } from 'expo-router'
 import React from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Icon } from '~/components/Icon'
+import { useAnalytics } from '~/hooks/useAnalytics'
 import { useProtectedListener } from '~/hooks/useProtectedRouteListener'
 import { colors } from '~/theme/colors'
 import { shadowLarge } from '~/theme/shadows'
 
 export default function TabLayout() {
+  const { screen } = useAnalytics()
   const insets = useSafeAreaInsets()
 
   const { protectedRoute } = useProtectedListener()
@@ -40,6 +42,9 @@ export default function TabLayout() {
     >
       <Tabs.Screen
         name="browse"
+        listeners={{
+          tabPress: () => screen('browse:home_screen_view'),
+        }}
         options={{
           tabBarTestID: 'browse-tab',
           tabBarLabel: 'Browse',
@@ -69,6 +74,9 @@ export default function TabLayout() {
 
       <Tabs.Screen
         name="profile"
+        listeners={{
+          tabPress: () => screen('profile:profile_screen_view'),
+        }}
         options={{
           tabBarTestID: 'profile-tab',
           tabBarLabel: 'Profile',

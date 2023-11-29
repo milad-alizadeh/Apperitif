@@ -7,8 +7,8 @@ export const useAnalytics = () => {
     posthog?.capture(event, properties)
   }
 
-  const screen = (screenName: string) => {
-    posthog?.screen(screenName)
+  const screen = (screenName: string, properties?: Record<string, any>) => {
+    posthog?.screen(screenName, properties)
   }
 
   return {

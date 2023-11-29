@@ -11,7 +11,7 @@ import { api } from '~/services/api'
 import { customFontsToLoad } from '../theme/typography'
 
 const posthogApiKey = process.env.EXPO_PUBLIC_POSTHOG_API_KEY
-console.log('posthogApiKey', posthogApiKey)
+
 LogBox.ignoreLogs(['Warning: ...']) // Ignore log notification by message
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
@@ -55,7 +55,14 @@ function RootLayoutNav() {
       <PostHogProvider
         apiKey={posthogApiKey}
         autocapture={{
-          captureScreens: false,
+          navigation: {
+            routeToName(name) {
+              return name
+            },
+            routeToProperties(_name, params) {
+              return params
+            },
+          },
         }}
         options={{ host: 'https://eu.posthog.com' }}
       >
