@@ -1,5 +1,5 @@
 import { useReactiveVar } from '@apollo/client'
-import { router, useFocusEffect } from 'expo-router'
+import { router } from 'expo-router'
 import React, { useCallback, useMemo } from 'react'
 import { FlatList, View, ViewStyle } from 'react-native'
 import { FilterActions, Header, ListItem, Screen } from '~/components'
@@ -24,15 +24,6 @@ export default function AllFiltersScreen() {
       return acc
     }, {})
   }, [filterCategories, draftFilters])
-
-  // Capture when the modal is dismissed
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        capture('browse:filters_modal_dismiss')
-      }
-    }, []),
-  )
 
   const renderItem = useCallback(
     ({ item }: { item; index: number }) => {
@@ -69,6 +60,7 @@ export default function AllFiltersScreen() {
         verticalPadding
         title="Filters"
         onClose={() => {
+          capture('browse:filters_modal_close')
           router.back()
         }}
       />
