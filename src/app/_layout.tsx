@@ -65,7 +65,6 @@ const AppWrapper = ({ children }) => {
         return acc
       }, {})
 
-      console.log('screen', pathname, snakeCaseParams)
       screen(pathname, snakeCaseParams)
     }
   }, [pathname, params])
@@ -91,7 +90,7 @@ function RootLayoutNav() {
               <Stack.Screen name="index" />
               <Stack.Screen name="(tabs)" />
               <Stack.Screen name="welcome" />
-              <Stack.Screen name="recipe/[recipeName]" getId={({ params }) => params.recipeName} />
+              <Stack.Screen name="recipe" getId={({ params }) => params.recipeName} />
               <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
               <Stack.Screen name="add-ingredients" />
             </Stack>

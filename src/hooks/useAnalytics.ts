@@ -4,6 +4,7 @@ export const useAnalytics = () => {
   const posthog = usePostHog()
 
   const capture = (event: string, properties?: Record<string, any>) => {
+    console.log('capture', event, properties)
     posthog?.capture(event, properties)
   }
 

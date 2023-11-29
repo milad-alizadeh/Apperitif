@@ -27,10 +27,6 @@ export default function BrowseHomeScreen() {
     fetchPolicy: 'cache-and-network',
   })
 
-  // useEffect(() => {
-  //   capture('browse_home_screen_view')
-  // }, [])
-
   let categoryIds: string[] = []
 
   try {
@@ -68,8 +64,10 @@ export default function BrowseHomeScreen() {
         onPress: () => {
           router.push({
             pathname: '/recipe',
-            params: { recipeId: id, recipeName: encodeURIComponent(name) },
+            params: { recipeId: id, recipeName: name },
           })
+
+          capture('browse:recipe_press', { recipe_name: name })
         },
       }),
     )
@@ -78,11 +76,14 @@ export default function BrowseHomeScreen() {
       ({ node: { name, id, imageUrl } }) => ({
         name,
         id,
-        onPress: () =>
+        onPress: () => {
           router.push({
             pathname: '/browse/recipes',
             params: { categoryIds: [id], categoryName: name },
-          }),
+          })
+
+          capture('browse:category_press', { category_name: name })
+        },
         imageUrl,
       }),
     )
@@ -111,12 +112,14 @@ export default function BrowseHomeScreen() {
         rightElement={
           <Icon
             icon="search"
-            onPress={() =>
+            onPress={() => {
               router.push({
                 pathname: '/browse/recipes',
                 params: { categoryIds: [''], categoryName: '' },
               })
-            }
+
+              capture('browse:search_press')
+            }}
             size="large"
             color={colors.neutral[800]}
           />
