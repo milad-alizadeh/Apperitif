@@ -59,6 +59,7 @@ const AppWrapper = ({ children }) => {
   // Track the location in your analytics provider here.
   useEffect(() => {
     if (screen) {
+      console.log('screen', pathname, params)
       screen(pathname, params)
     }
   }, [pathname, params])

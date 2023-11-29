@@ -37,8 +37,6 @@ export default function RecipeDetailsScreen() {
   const headerHeight = useWindowDimensions().width
   const fixedHeaderOffset = headerHeight - 110
 
-  console.log('recipeId', recipeId, recipeName)
-
   const { data, error, loading, refetch } = useQuery(GET_RECIPE_DETAILS, {
     variables: { recipeId },
     fetchPolicy: 'cache-and-network',

@@ -37,7 +37,7 @@ export default function FavouritesScreen() {
           card
           onPress={() =>
             router.push({
-              pathname: '/recipe/[recipeId]/[recipeName]',
+              pathname: '/recipe',
               params: { recipeId: item.id, recipeName: item.name },
             })
           }
