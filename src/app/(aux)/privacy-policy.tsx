@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import { SimplePage } from '~/components'
 import { GET_CONTENT } from '~/graphql/queries'
 
-export default function PrivacyPolicy() {
+export default function PrivacyPolicyScreen() {
   const { data, loading } = useQuery(GET_CONTENT, {
     variables: { name: 'privacy-policy' },
     fetchPolicy: 'cache-and-network',

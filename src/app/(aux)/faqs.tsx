@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { Accordion, Header, Screen } from '~/components'
 import { GET_CONTENT } from '~/graphql/queries'
 
-export default function FAQs() {
+export default function FAQsScreen() {
   const { data } = useQuery(GET_CONTENT, {
     variables: { name: 'faqs' },
     fetchPolicy: 'cache-and-network',

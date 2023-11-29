@@ -4,7 +4,7 @@ import * as Updates from 'expo-updates'
 import { View } from 'react-native'
 import { Header, Screen, Text } from '~/components'
 
-export default function FAQs() {
+export default function AboutScreen() {
   const version = Application.nativeApplicationVersion
   const buildNumber = Application.nativeBuildVersion
   const appName = Application.applicationName

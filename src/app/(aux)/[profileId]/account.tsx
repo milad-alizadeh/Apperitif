@@ -7,7 +7,7 @@ import { useHaptics } from '~/hooks/useHaptics'
 import { useSession } from '~/hooks/useSession'
 import { api } from '~/services'
 
-export default function FAQs() {
+export default function Account() {
   const client = useApolloClient()
   const deletPromptRef = useRef<PromptRef>(null)
   const emailPromptRef = useRef<PromptRef>(null)
