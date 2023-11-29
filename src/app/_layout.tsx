@@ -52,7 +52,13 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <SessionProvider>
-      <PostHogProvider apiKey={posthogApiKey} autocapture>
+      <PostHogProvider
+        apiKey={posthogApiKey}
+        autocapture={{
+          captureScreens: false,
+        }}
+        options={{ host: 'https://eu.posthog.com' }}
+      >
         <ApolloProvider client={api?.apolloClient}>
           <EasUpdate />
           <Stack screenOptions={{ headerShown: false }}>
