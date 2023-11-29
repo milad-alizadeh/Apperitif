@@ -3,7 +3,9 @@ import humps from 'lodash-humps'
 import debounce from 'lodash/debounce'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { addFilter, clearFilters, searchQueryVar, selectedFiltersVar } from '~/store'
+import { captureError } from '~/utils/captureError'
 import { api } from '../services/api'
+import { useAnalytics } from './useAnalytics'
 
 /**
  * Custom hook to fetch recipes based on the provided category ID.
@@ -11,6 +13,7 @@ import { api } from '../services/api'
  * @returns {Object} - Contains recipes, pageInfo, loading state, error, refreshing state, and functions for manual refresh and loading more recipes.
  */
 export const useFetchRecipes = (initialCategoryId: string | string[]) => {
+  const { capture } = useAnalytics()
   const [recipes, setRecipes] = useState([])
   const [pageInfo, setPageInfo] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -29,6 +32,14 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
       setLoading(true)
       const currentSelectedFilters = selectedFiltersVar()
 
+      const search_term = searchQueryVar()
+
+      // Capture the search type event
+      capture('browse:search_type', {
+        search_term,
+        characte_count: search_term.length,
+      })
+
       // Make the API call
       const { data, error } = await api.supabase.rpc('get_recipes_by_category_ids', {
         search_term: searchQueryVar(),
@@ -38,18 +49,27 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
       })
 
       if (error) {
-        console.error(error)
+        captureError(error.message)
       }
 
       // Convert snake_case keys to camelCase
-      const { hasNextPage, totalCount, recipes: fetchedRecipes } = humps(data)
+      const { hasNextPage, totalCount, recipes } = humps(data)
+
+      if (search_term.length > 0) {
+        // Capture the search result event
+        capture('browse:search_result', {
+          search_term,
+          characte_count: search_term.length,
+          result_count: totalCount,
+        })
+      }
 
       setError(error)
       setLoading(false)
       setPageInfo({ hasNextPage, totalCount })
 
       // Merge results if required, else set new results
-      if (!fetchedRecipes) return
+      const fetchedRecipes = recipes ?? []
       if (mergeResults) {
         setRecipes((prev) => [...prev, ...fetchedRecipes])
       } else {
@@ -60,7 +80,7 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
   )
 
   // Create a debounced version of fetchRecipes for the search query
-  const debouncedFetchRecipes = useRef(debounce(fetchRecipes, 200)).current
+  const debouncedFetchRecipes = useRef(debounce(fetchRecipes, 300)).current
 
   // On mount, clear any existing filters and set the initial category filter
   useEffect(() => {
