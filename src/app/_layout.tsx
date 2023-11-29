@@ -2,6 +2,7 @@ import { ApolloProvider } from '@apollo/client'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import { useGlobalSearchParams, usePathname } from 'expo-router'
+import snakeCase from 'lodash/snakeCase'
 import { PostHogProvider } from 'posthog-react-native'
 import { useEffect } from 'react'
 import { LogBox } from 'react-native'
@@ -59,8 +60,13 @@ const AppWrapper = ({ children }) => {
   // Track the location in your analytics provider here.
   useEffect(() => {
     if (screen) {
-      console.log('screen', pathname, params)
-      screen(pathname, params)
+      const snakeCaseParams = Object.keys(params).reduce((acc, key) => {
+        acc[snakeCase(key)] = params[key]
+        return acc
+      }, {})
+
+      console.log('screen', pathname, snakeCaseParams)
+      screen(pathname, snakeCaseParams)
     }
   }, [pathname, params])
 
