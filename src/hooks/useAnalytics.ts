@@ -6,6 +6,8 @@ export const useAnalytics = () => {
     return {
       capture: () => {},
       screen: () => {},
+      identify: () => {},
+      reset: () => {},
     }
   }
 
