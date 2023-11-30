@@ -47,12 +47,15 @@ export const IngredientDetails = function IngredientDetails({
   const isInMyBar = myBar.includes(ingredientId)
   const ingredient = data?.ingredientsCollection.edges[0]?.node
   const availableRecipes =
-    relatedRecipes?.recipesIngredientsCollection.edges.map((e) => ({
-      name: e.node.recipe.name,
-      id: e.node.recipe.id,
-      imageUrl: e.node.recipe.imageUrl,
+    relatedRecipes?.recipesIngredientsCollection.edges.map(({ node: { recipe } }) => ({
+      name: recipe.name,
+      id: recipe.id,
+      imageUrl: recipe.imageUrl,
       onPress: () => {
-        router.push(`/recipe/${e.node.recipe.id}`)
+        router.push({
+          pathname: '/recipe',
+          params: { recipeId: recipe.id, recipeName: recipe.name },
+        })
         onClosed && onClosed()
       },
     })) ?? []

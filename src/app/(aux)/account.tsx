@@ -99,7 +99,7 @@ export default function Account() {
           router.push({
             pathname: '/auth/otp-verify',
             params: {
-              attemptedRoute: `/${user.id}/account`,
+              attemptedRoute: `/account`,
               email,
               verificationType: 'email_change',
             },

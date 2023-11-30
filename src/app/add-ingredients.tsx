@@ -89,9 +89,7 @@ export default function AddIngredientsScreen() {
       })
 
       for (const item of addedItems) {
-        setTimeout(() => {
-          capture('add_ingredients:ingredient_add', { ingredientId: item.id })
-        }, 0)
+        capture('add_ingredients:ingredient_add', { ingredientId: item.name })
       }
     }
 
@@ -104,9 +102,7 @@ export default function AddIngredientsScreen() {
       })
 
       for (const item of deletedItems) {
-        setTimeout(() => {
-          capture('add_ingredients:ingredient_remove', { ingredientId: item.id })
-        }, 0)
+        capture('add_ingredients:ingredient_remove', { ingredientId: item.name })
       }
     }
 

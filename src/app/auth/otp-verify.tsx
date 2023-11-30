@@ -21,7 +21,7 @@ export default function AuthOtpVerifyScreen({ route }) {
     email: string
     verificationType: EmailOtpType
   }
-  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute, 'email')
+  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
   const [loading, setLoading] = useState(false)
   const [resendLoading, setResendLoading] = useState(false)
   const [otp, setOtp] = useState('')
@@ -75,7 +75,7 @@ export default function AuthOtpVerifyScreen({ route }) {
   const verifyOtp = async () => {
     setLoading(true)
 
-    const { error } = await api.supabase.auth.verifyOtp({
+    const { data, error } = await api.supabase.auth.verifyOtp({
       email,
       token: otp,
       type: verificationType,

@@ -19,7 +19,7 @@ export interface AppleAuthenticationProps {
 
 export const GoogleAuthentication = function GoogleAuthentication({ attemptedRoute }) {
   const { capture } = useAnalytics()
-  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute, 'google')
+  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
 
   useEffect(() => {
     const handleDeepLink = ({ url }) => {

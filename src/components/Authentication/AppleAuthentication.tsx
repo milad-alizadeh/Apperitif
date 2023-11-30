@@ -20,7 +20,7 @@ export interface AppleAuthenticationProps {
 export const AppleAuthentication = function AppleAuthentication({
   attemptedRoute,
 }: AppleAuthenticationProps) {
-  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute, 'apple')
+  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
   const { capture } = useAnalytics()
 
   return (
