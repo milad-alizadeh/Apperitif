@@ -64,7 +64,7 @@ export default function AuthHomeScreen() {
           <TouchableOpacity
             className="p-1"
             onPress={() => {
-              capture('auth:log_in_press', { provider: 'email-otp' })
+              capture('auth:log_in_press', { provider: 'email' })
               router.push({ pathname: '/auth/otp-email', params: { attemptedRoute } })
             }}
           >

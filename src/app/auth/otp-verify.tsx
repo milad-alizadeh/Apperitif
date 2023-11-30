@@ -21,7 +21,7 @@ export default function AuthOtpVerifyScreen({ route }) {
     email: string
     verificationType: EmailOtpType
   }
-  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute, 'email-otp')
+  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute, 'email')
   const [loading, setLoading] = useState(false)
   const [resendLoading, setResendLoading] = useState(false)
   const [otp, setOtp] = useState('')
@@ -43,7 +43,7 @@ export default function AuthOtpVerifyScreen({ route }) {
 
       if (error) {
         captureError(error)
-        capture('auth:log_in_error', { provider: 'email-otp', error: error.message })
+        capture('auth:log_in_error', { provider: 'email', error: error.message })
         Alert.alert(error.message)
       } else {
         Alert.alert('A verification code sent!')
