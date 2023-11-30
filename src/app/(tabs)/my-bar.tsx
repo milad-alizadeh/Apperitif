@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client'
+import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
-import flatten from 'lodash/flatten'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ActivityIndicator, View, ViewStyle } from 'react-native'
 import {
@@ -24,6 +24,7 @@ import { useSession } from '~/hooks/useSession'
 import { useUpdateCache } from '~/hooks/useUpdateCache'
 
 export default function MyBarScreen() {
+  const isFocused = useIsFocused()
   const { user } = useSession()
   const modalRef = useRef<BottomSheetRef>(null)
   const [ingredientId, setIngredientId] = useState<string>('')
@@ -64,11 +65,15 @@ export default function MyBarScreen() {
           card
           testID="bar-ingredient-list-item"
           testIDIconRight="bar-ingredient-list-item-delete"
-          onPress={() => handleIngredientPress(item.id)}
+          onPress={() => {
+            capture('my_bar:ingredient_info_press', { ingredient_name: item.name })
+            handleIngredientPress(item.id)
+          }}
           onRightIconPress={() => {
             deleteFromMyBar({
               variables: { ingredientIds: [item.id], profileIds: [user?.id] },
               onCompleted: () => {
+                capture('my_bar:ingredient_remove', { ingredient_name: item.name })
                 ingredientRefetch()
                 totalMatchRefetch()
                 partialMatchRefetch()
@@ -91,12 +96,21 @@ export default function MyBarScreen() {
             testID="add-ingredients-button"
             large={false}
             label="Add Ingredients"
-            onPress={() => router.push('/add-ingredients')}
+            onPress={() => {
+              capture('my_bar:add_ingredients_press')
+              router.push('/add-ingredients')
+            }}
           />
         }
       />
 
-      <Tabs styleClassName="flex-1">
+      <Tabs
+        styleClassName="flex-1"
+        onTabChange={(title) => {
+          if (!isFocused) return
+          capture('my_bar:tab_change', { tab_name: title })
+        }}
+      >
         <Tabs.TabPage title="Ingredients" styleClassName="p-0">
           <SectionList
             sectionsData={sectionsData}
