@@ -2,6 +2,7 @@ import { useQuery, useReactiveVar } from '@apollo/client'
 import React, { FC, useEffect } from 'react'
 import { View } from 'react-native'
 import { GET_MEASUREMENTS } from '~/graphql/queries'
+import { useAnalytics } from '~/hooks/useAnalytics'
 import { useUpdateCache } from '~/hooks/useUpdateCache'
 import { jiggerSizesImperialVar, jiggerSizesMetricVar, unitSystemsVar } from '~/store'
 import { UnitSystems } from '~/store'
@@ -13,6 +14,7 @@ import { Text } from './Text'
  * A component that displays the recipe measurements and conversions.
  */
 export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClassName }) => {
+  const { capture } = useAnalytics()
   const unitSystems = useReactiveVar(unitSystemsVar)
   const jiggerSizesMetric = useReactiveVar(jiggerSizesMetricVar)
   const jiggerSizesImperial = useReactiveVar(jiggerSizesImperialVar)
@@ -38,6 +40,7 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
           segments={unitSystems}
           testID="unit-system"
           onValueChange={(value) => {
+            capture('recipe:unit_press', { unit_type: value })
             updateCache(GET_MEASUREMENTS, {
               selectedUnitSystem: value,
               selectedJiggerSize: currentJiggerSizes(value)[0].value,
@@ -53,7 +56,10 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
           testID="jigger-size"
           selectedValue={data?.selectedJiggerSize}
           segments={currentJiggerSizes(data?.selectedUnitSystem as UnitSystems)}
-          onValueChange={(value) => updateCache(GET_MEASUREMENTS, { selectedJiggerSize: value })}
+          onValueChange={(value) => {
+            capture('recipe:jigger_size_press', { jigger_size: value })
+            updateCache(GET_MEASUREMENTS, { selectedJiggerSize: value })
+          }}
         />
       </View>
       <View className="items-center">
@@ -63,7 +69,10 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
         <Switch
           testID="double-recipe"
           value={data?.doubleRecipe}
-          onValueChange={(value) => updateCache(GET_MEASUREMENTS, { doubleRecipe: value })}
+          onValueChange={(value) => {
+            capture('recipe:double_toggle', { toggle: value })
+            updateCache(GET_MEASUREMENTS, { doubleRecipe: value })
+          }}
         />
       </View>
     </View>

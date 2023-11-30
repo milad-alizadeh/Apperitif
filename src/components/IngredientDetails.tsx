@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { router } from 'expo-router'
-import React from 'react'
-import { ActivityIndicator, ScrollView, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { ActivityIndicator, View } from 'react-native'
 import { ADD_TO_MY_BAR } from '~/graphql/mutations'
 import { GET_MY_BAR, GET_RECIPES_BY_INGREDIENT } from '~/graphql/queries'
 import { GET_INGREDIENT_DETAILS } from '~/graphql/queries/getIngredientDetails'
+import { useAnalytics } from '~/hooks/useAnalytics'
 import { useSession } from '~/hooks/useSession'
 import { Button } from './Button'
 import { Checkbox } from './Checkbox'
@@ -28,6 +29,7 @@ export const IngredientDetails = function IngredientDetails({
   ingredientId,
   onClosed,
 }: IngredientDetailsProps) {
+  const { screen, capture } = useAnalytics()
   const { user, isLoggedIn } = useSession()
   const { data, loading } = useQuery(GET_INGREDIENT_DETAILS, {
     variables: { ingredientId },
@@ -36,6 +38,7 @@ export const IngredientDetails = function IngredientDetails({
   const { data: relatedRecipes } = useQuery(GET_RECIPES_BY_INGREDIENT, {
     variables: { ingredientId },
   })
+
   const [addToMyBar, { loading: addLoading }] = useMutation(ADD_TO_MY_BAR)
   const myBar = barIngredients.profilesIngredientsCollection.edges.map((e) => e.node.ingredient.id)
   const isInMyBar = myBar.includes(ingredientId)
@@ -69,6 +72,10 @@ export const IngredientDetails = function IngredientDetails({
       },
     })
   }
+
+  useEffect(() => {
+    screen('ingredient_details', { ingredinet_name: ingredient?.name })
+  }, [ingredient])
 
   return (
     <View className="min-h-[500px] p-6 flex-">
@@ -116,7 +123,10 @@ export const IngredientDetails = function IngredientDetails({
                     large
                     label="Add To My Bar"
                     enableHaptics
-                    onPress={() => handleAddToMyBar(ingredientId)}
+                    onPress={() => {
+                      capture('ingredient:add_to_bar_press', { ingredient_name: ingredient?.name })
+                      handleAddToMyBar(ingredientId)
+                    }}
                   />
                 )}
               </View>

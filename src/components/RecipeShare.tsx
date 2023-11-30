@@ -3,6 +3,7 @@ import React, { FC } from 'react'
 import { Share } from 'react-native'
 import { Units } from '~/__generated__/graphql'
 import { GET_MEASUREMENTS, GET_UNITS } from '~/graphql/queries'
+import { useAnalytics } from '~/hooks/useAnalytics'
 import { UnitSystems, convertUnitToOtherSystem, defaultJiggerSize } from '~/store'
 import { captureError } from '~/utils/captureError'
 import { Icon } from './Icon'
@@ -14,6 +15,7 @@ interface RecipeShareProps {
 }
 
 export const RecipeShare: FC<RecipeShareProps> = ({ recipe, loading }) => {
+  const { capture } = useAnalytics()
   const { data: unitsData } = useQuery(GET_UNITS)
   const { data: measurements } = useQuery(GET_MEASUREMENTS)
 
@@ -64,6 +66,8 @@ ${recipe?.recipesEquipmentCollection?.edges
         title: recipe?.name,
         message: recipeText,
       })
+
+      capture('recipe:share_press', { recipe_name: recipe?.name })
     } catch (error: any) {
       captureError(error)
     }
