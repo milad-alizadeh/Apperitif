@@ -3,6 +3,7 @@ import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 import React, { useEffect } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
+import { useAnalytics } from '~/hooks'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
 import { loadingVar } from '~/store/auth'
@@ -16,6 +17,7 @@ export interface AppleAuthenticationProps {
 }
 
 export const GoogleAuthentication = function GoogleAuthentication({ attemptedRoute }) {
+  const { capture } = useAnalytics()
   const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
 
   useEffect(() => {
@@ -66,7 +68,10 @@ export const GoogleAuthentication = function GoogleAuthentication({ attemptedRou
   return (
     <View>
       <TouchableOpacity
-        onPress={() => promptAsync()}
+        onPress={() => {
+          capture('auth:log_in_press', { provider: 'google' })
+          promptAsync()
+        }}
         className="bg-white flex-row w-64 h-12 items-center justify-center rounded-xl px-2"
         style={{ ...shadowCard }}
       >

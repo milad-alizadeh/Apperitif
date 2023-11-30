@@ -8,10 +8,12 @@ import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
 import { Platform } from 'react-native'
 import { AppleAuthentication, Icon, Screen, Text } from '~/components'
 import { GoogleAuthentication } from '~/components/Authentication/GoogleAuthentication'
+import { useAnalytics } from '~/hooks'
 import { loadingVar } from '~/store/auth'
 import { colors } from '~/theme'
 
 export default function AuthHomeScreen() {
+  const { capture } = useAnalytics()
   const { attemptedRoute } = useLocalSearchParams()
   const loading = useReactiveVar(loadingVar)
 
@@ -61,7 +63,10 @@ export default function AuthHomeScreen() {
         <View className="items-center">
           <TouchableOpacity
             className="p-1"
-            onPress={() => router.push({ pathname: '/auth/otp-email', params: { attemptedRoute } })}
+            onPress={() => {
+              capture('auth:log_in_press', { provider: 'email' })
+              router.push({ pathname: '/auth/otp-email', params: { attemptedRoute } })
+            }}
           >
             <Text body styleClassName="text-neutral-800 font-bold underline underline-offset-3">
               Continue with Email
@@ -74,9 +79,9 @@ export default function AuthHomeScreen() {
           <View className="items-center">
             <TouchableOpacity
               className="p-1"
-              onPress={() =>
+              onPress={() => {
                 router.push({ pathname: '/auth/email-and-password', params: { attemptedRoute } })
-              }
+              }}
             >
               <Text body styleClassName="text-neutral-800 font-bold underline underline-offset-3">
                 Continue with Email & Password

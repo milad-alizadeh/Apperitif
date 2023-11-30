@@ -8,6 +8,7 @@ import {
 } from 'expo-apple-authentication'
 import * as React from 'react'
 import { StyleProp, View, ViewStyle } from 'react-native'
+import { useAnalytics } from '~/hooks'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
 import { captureError } from '~/utils/captureError'
@@ -20,6 +21,7 @@ export const AppleAuthentication = function AppleAuthentication({
   attemptedRoute,
 }: AppleAuthenticationProps) {
   const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
+  const { capture } = useAnalytics()
 
   return (
     <View>
@@ -30,6 +32,7 @@ export const AppleAuthentication = function AppleAuthentication({
           cornerRadius={12}
           style={$buttonStyle}
           onPress={async () => {
+            capture('auth:log_in_press', { provider: 'apple' })
             try {
               const credential = await signInAsync({
                 requestedScopes: [
