@@ -8,7 +8,7 @@ export default function FilterStack() {
       }}
     >
       <Stack.Screen name="index" />
-      <Stack.Screen name="subfilter" />
+      <Stack.Screen name="details" />
     </Stack>
   )
 }

@@ -70,7 +70,7 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
           testID="double-recipe"
           value={data?.doubleRecipe}
           onValueChange={(value) => {
-            capture('recipe:double_toggle', { toggle: value })
+            capture('recipe:double_toggle_press', { toggle: value })
             updateCache(GET_MEASUREMENTS, { doubleRecipe: value })
           }}
         />

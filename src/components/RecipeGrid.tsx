@@ -67,7 +67,7 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
                 })
               } else {
                 // Capture the recipe press event
-                capture('browse:category_recipe_press', {
+                capture('browse:filter_recipe_press', {
                   recipe_name: item.name,
                 })
               }

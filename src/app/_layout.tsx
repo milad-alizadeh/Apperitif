@@ -65,6 +65,11 @@ const AppWrapper = ({ children }) => {
         return acc
       }, {})
 
+      if (pathname === '/browse/recipes') {
+        screen(pathname)
+        return
+      }
+
       screen(pathname, snakeCaseParams)
     }
   }, [pathname, params])
@@ -81,7 +86,7 @@ function RootLayoutNav() {
           captureTouches: false,
           captureScreens: false,
         }}
-        options={{ host: 'https://eu.posthog.com', flushInterval: 1000, flushAt: 1 }}
+        options={{ host: 'https://eu.posthog.com' }}
       >
         <AppWrapper>
           <ApolloProvider client={api?.apolloClient}>

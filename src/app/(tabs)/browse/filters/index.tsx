@@ -39,11 +39,11 @@ export default function AllFiltersScreen() {
             rightIcon="chevronRight"
             onPress={() => {
               router.push({
-                pathname: '/(tabs)/browse/filters/subfilter',
+                pathname: '/(tabs)/browse/filters/details',
                 params: { filterId: item.id, filterName: item.name },
               })
 
-              capture('browse:subfilter_press', {
+              capture('browse:filter_details_press', {
                 filter_name: item.name,
               })
             }}

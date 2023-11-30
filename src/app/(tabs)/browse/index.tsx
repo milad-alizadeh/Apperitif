@@ -82,7 +82,7 @@ export default function BrowseHomeScreen() {
             params: { categoryIds: [id], categoryName: name },
           })
 
-          capture('browse:category_press', { category_name: name })
+          capture('browse:home_filter_press', { filter_name: name })
         },
         imageUrl,
       }),

@@ -2,7 +2,8 @@ import { useMutation, useQuery } from '@apollo/client'
 import { router } from 'expo-router'
 import React, { useEffect } from 'react'
 import { ActivityIndicator, View } from 'react-native'
-import { ADD_TO_MY_BAR } from '~/graphql/mutations'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { ADD_TO_MY_BAR, DELETE_FROM_MY_BAR } from '~/graphql/mutations'
 import { GET_MY_BAR, GET_RECIPES_BY_INGREDIENT } from '~/graphql/queries'
 import { GET_INGREDIENT_DETAILS } from '~/graphql/queries/getIngredientDetails'
 import { useAnalytics } from '~/hooks/useAnalytics'
@@ -40,6 +41,8 @@ export const IngredientDetails = function IngredientDetails({
   })
 
   const [addToMyBar, { loading: addLoading }] = useMutation(ADD_TO_MY_BAR)
+  const [deleteFromMyBar, { loading: deleteLoading }] = useMutation(DELETE_FROM_MY_BAR)
+
   const myBar = barIngredients.profilesIngredientsCollection.edges.map((e) => e.node.ingredient.id)
   const isInMyBar = myBar.includes(ingredientId)
   const ingredient = data?.ingredientsCollection.edges[0]?.node
@@ -73,9 +76,24 @@ export const IngredientDetails = function IngredientDetails({
     })
   }
 
+  const handleDeleteFromMyBar = (ingredientId: string) => {
+    deleteFromMyBar({
+      variables: {
+        profileIds: [user?.id],
+        ingredientIds: [ingredientId],
+      },
+      onCompleted: () => {
+        myBarRefetch()
+      },
+      onError: (error) => {
+        console.log(error)
+      },
+    })
+  }
+
   useEffect(() => {
     if (!ingredient) return
-    screen('ingredient_details', { ingredinet_name: ingredient?.name })
+    screen('/ingredient', { ingredient_name: ingredient?.name })
   }, [ingredient])
 
   return (
@@ -112,12 +130,20 @@ export const IngredientDetails = function IngredientDetails({
             {isLoggedIn && (
               <View>
                 {/* Stock information */}
-                <View className="flex-row items-center mr-2 rounded-xl mt-6">
+                <TouchableOpacity
+                  onPress={() => {
+                    capture('ingredient:ingredient_remove', {
+                      ingredient_name: ingredient?.name,
+                    })
+                    handleDeleteFromMyBar(ingredientId)
+                  }}
+                  className="flex-row items-center mr-2 rounded-xl mt-6"
+                >
                   <Checkbox checked={isInMyBar} disabled styleClassName="mr-3" />
                   <Text body weight="bold">
                     {isInMyBar ? 'In My Bar' : 'You don’t have this ingredient in your bar'}
                   </Text>
-                </View>
+                </TouchableOpacity>
 
                 {/* Add to my bar */}
                 {!isInMyBar && (
@@ -128,7 +154,9 @@ export const IngredientDetails = function IngredientDetails({
                     label="Add To My Bar"
                     enableHaptics
                     onPress={() => {
-                      capture('ingredient:add_to_bar_press', { ingredient_name: ingredient?.name })
+                      capture('ingredient:ingredient_add', {
+                        ingredient_name: ingredient?.name,
+                      })
                       handleAddToMyBar(ingredientId)
                     }}
                   />

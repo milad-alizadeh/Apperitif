@@ -100,7 +100,7 @@ export default function RecipeDetailsScreen() {
       refetch()
     },
     onCompleted: () => {
-      capture('recipe:favourite_added', { recipe_name: recipeName })
+      capture('recipe:favourite_add', { recipe_name: recipeName })
       refetch()
       client.refetchQueries({ include: ['getFavourites'] })
     },

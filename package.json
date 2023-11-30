@@ -3,7 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --dev-client",
     "start:offline": "expo start --offline",
     "start:https": "expo start --https",
     "start:clear": "expo start --clear",
