@@ -18,7 +18,7 @@ interface ProfileItem {
 
 export default function ProfileHomeScreen() {
   const { user, isLoggedIn } = useSession()
-  const { capture } = useAnalytics()
+  const { capture, reset } = useAnalytics()
 
   const profileItems: ProfileItem[] | null[] = [
     isLoggedIn
@@ -74,6 +74,7 @@ export default function ProfileHomeScreen() {
 
   const singOut = async () => {
     await api.supabase.auth.signOut()
+    reset()
     router.push('/browse')
   }
 

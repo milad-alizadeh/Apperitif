@@ -7,7 +7,7 @@ import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 
 export default function AuthOtpEmailScreen({ route }) {
   const { attemptedRoute } = useLocalSearchParams()
-  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
+  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute, 'email-and-password')
 
   return (
     <Screen preset="fixed">

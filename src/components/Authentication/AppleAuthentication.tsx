@@ -20,7 +20,7 @@ export interface AppleAuthenticationProps {
 export const AppleAuthentication = function AppleAuthentication({
   attemptedRoute,
 }: AppleAuthenticationProps) {
-  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
+  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute, 'apple')
   const { capture } = useAnalytics()
 
   return (
@@ -40,6 +40,7 @@ export const AppleAuthentication = function AppleAuthentication({
                   AppleAuthenticationScope.EMAIL,
                 ],
               })
+
               // Sign in via Supabase Auth.
               if (credential.identityToken) {
                 const {
@@ -49,10 +50,11 @@ export const AppleAuthentication = function AppleAuthentication({
                   provider: 'apple',
                   token: credential.identityToken,
                 })
+
                 if (!error) {
                   handleSuccessfulAuth()
                 } else {
-                  // handle errors
+                  capture('auth:log_in_error', { provider: 'apple', error: error.message })
                   captureError(error)
                 }
               } else {
@@ -60,7 +62,7 @@ export const AppleAuthentication = function AppleAuthentication({
               }
             } catch (e) {
               if (e.code === 'ERR_REQUEST_CANCELED') {
-                captureError('User canceled Apple Sign in.')
+                console.log('User canceled Apple Sign in.')
               } else {
                 captureError(`Apple Signin Error ${e}`)
               }

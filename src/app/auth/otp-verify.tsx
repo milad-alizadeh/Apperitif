@@ -3,8 +3,10 @@ import { useLocalSearchParams } from 'expo-router'
 import React, { useState } from 'react'
 import { ActivityIndicator, Alert, TouchableOpacity, View } from 'react-native'
 import { Button, Header, Screen, Text, TextField } from '~/components'
+import { useAnalytics } from '~/hooks'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
+import { captureError } from '~/utils/captureError'
 
 /**
  * Component for verifying OTP (One-Time Password) during authentication.
@@ -13,12 +15,13 @@ import { api } from '~/services/api'
  * @returns {JSX.Element} - The OTP verification screen.
  */
 export default function AuthOtpVerifyScreen({ route }) {
+  const { capture } = useAnalytics()
   const { attemptedRoute, email, verificationType } = useLocalSearchParams() as {
     attemptedRoute: string
     email: string
     verificationType: EmailOtpType
   }
-  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
+  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute, 'email-otp')
   const [loading, setLoading] = useState(false)
   const [resendLoading, setResendLoading] = useState(false)
   const [otp, setOtp] = useState('')
@@ -39,6 +42,8 @@ export default function AuthOtpVerifyScreen({ route }) {
       })
 
       if (error) {
+        captureError(error)
+        capture('auth:log_in_error', { provider: 'email-otp', error: error.message })
         Alert.alert(error.message)
       } else {
         Alert.alert('A verification code sent!')
@@ -51,6 +56,7 @@ export default function AuthOtpVerifyScreen({ route }) {
       })
 
       if (error) {
+        captureError(error)
         Alert.alert(error.message)
       } else {
         Alert.alert('A verification code sent!')

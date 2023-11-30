@@ -8,7 +8,7 @@ import { useSession } from '~/hooks/useSession'
 import { api } from '~/services'
 
 export default function Account() {
-  const { capture } = useAnalytics()
+  const { capture, reset } = useAnalytics()
   const deletPromptRef = useRef<PromptRef>(null)
   const emailPromptRef = useRef<PromptRef>(null)
   const successHaptics = useHaptics('success')
@@ -39,6 +39,7 @@ export default function Account() {
       if (data) {
         successHaptics()
         await api.supabase.auth.signOut()
+        reset()
         Alert.alert('Account deleted')
         router.push('/browse')
         capture('account:delete_success')

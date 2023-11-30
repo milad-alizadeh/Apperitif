@@ -21,8 +21,20 @@ export const useAnalytics = () => {
     posthog?.screen(screenName, properties)
   }
 
+  const identify = (distinctId: string, properties?: Record<string, any>) => {
+    console.log('identify', distinctId, properties)
+    posthog?.identify(distinctId, properties)
+  }
+
+  const reset = () => {
+    console.log('reset')
+    posthog?.reset()
+  }
+
   return {
     capture,
     screen,
+    identify,
+    reset,
   }
 }

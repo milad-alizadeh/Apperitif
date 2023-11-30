@@ -8,6 +8,7 @@ import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
 import { loadingVar } from '~/store/auth'
 import { shadowCard } from '~/theme'
+import { captureError } from '~/utils/captureError'
 import { Icon } from '../Icon'
 
 WebBrowser.maybeCompleteAuthSession()
@@ -18,7 +19,7 @@ export interface AppleAuthenticationProps {
 
 export const GoogleAuthentication = function GoogleAuthentication({ attemptedRoute }) {
   const { capture } = useAnalytics()
-  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
+  const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute, 'google')
 
   useEffect(() => {
     const handleDeepLink = ({ url }) => {
@@ -50,7 +51,8 @@ export const GoogleAuthentication = function GoogleAuthentication({ attemptedRou
       handleSuccessfulAuth()
     } else {
       // handle errors
-      console.log('error', error)
+      captureError(error)
+      capture('auth:log_in_error', { provider: 'google', error: error.message })
     }
 
     loadingVar(false)

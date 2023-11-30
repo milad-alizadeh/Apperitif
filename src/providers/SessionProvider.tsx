@@ -1,5 +1,6 @@
 import { Session } from '@supabase/supabase-js'
 import React, { ReactNode, createContext, useEffect, useState } from 'react'
+import { useAnalytics } from '../hooks/useAnalytics'
 import { api } from '../services/api'
 
 export const SessionContext = createContext<Session | null>(null)
@@ -10,6 +11,7 @@ interface SessionProviderProps {
 
 export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null)
+  const { capture, identify } = useAnalytics()
 
   useEffect(() => {
     const { data: subscription } = api.supabase.auth.onAuthStateChange(async (event) => {
@@ -30,10 +32,19 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
 
   useEffect(() => {
     api.supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (session) {
+        identify(session?.user.id)
+      }
       setSession(session)
     })
 
-    api.supabase.auth.onAuthStateChange((_event, session) => {
+    api.supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN') {
+        console.log('SIGNED_IN')
+        capture('auth:authentication_success', { provider: session?.user.identities[0].provider })
+        identify(session?.user.id)
+      }
+
       setSession(session)
     })
   }, [])
