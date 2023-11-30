@@ -4,25 +4,31 @@ import * as React from 'react'
 import { View } from 'react-native'
 import { GET_FILTERS } from '~/graphql/queries'
 import { useAnalytics } from '~/hooks/useAnalytics'
-import { applyFilters, clearFilters, draftSelectedFiltersVar } from '~/store'
+import { useFetchFilters } from '~/hooks/useFetchFilters'
+import { applyFilters, clearFilters, draftSelectedFiltersVar, selectedFiltersVar } from '~/store'
 import { Button } from './Button'
 
 /**
  * Actions for applying or clearing filters
  */
 export const FilterActions = function FilterActions() {
+  const { data: allFilters } = useFetchFilters()
   const { capture } = useAnalytics()
-  const selectedFilterIds = useReactiveVar(draftSelectedFiltersVar)
-  const {
-    data: selectedFiltersData,
-    loading,
-    error,
-  } = useQuery(GET_FILTERS, {
-    variables: { ids: selectedFilterIds },
-    skip: !selectedFilterIds?.length,
-  })
+  const selectedFilterIds = useReactiveVar(selectedFiltersVar)
+  const draftSelectedFilterIds = useReactiveVar(draftSelectedFiltersVar)
 
-  const selectedFilters = selectedFiltersData?.categoriesCollection.edges.map((e) => e.node.name)
+  const subfilters: { id: string; name: string }[] = []
+
+  for (const filter of allFilters?.categoriesCollection.edges) {
+    for (const subFilter of filter.node.categoriesCollection.edges) {
+      subfilters.push({ id: subFilter.node.id, name: subFilter.node.name })
+    }
+  }
+
+  const selectedFilters = subfilters.filter((filter) => selectedFilterIds.includes(filter.id))
+  const draftSelectedFilters = subfilters.filter((filter) =>
+    draftSelectedFilterIds.includes(filter.id),
+  )
 
   return (
     <View className="fle flex-row justify-between items-center px-4 mt-auto py-6">
@@ -40,11 +46,6 @@ export const FilterActions = function FilterActions() {
               })
             }
 
-            // Capture the event that the user pressed the clear all button
-            capture('browse:filters_clear_press', {
-              filter_count: selectedFilters.length,
-            })
-
             clearFilters(false)
 
             router.push({
@@ -60,17 +61,26 @@ export const FilterActions = function FilterActions() {
           enableHaptics
           testID="apply-filters-button"
           onPress={() => {
+            const itemsAdded = draftSelectedFilters.filter(
+              (item) => !selectedFilters.find((filter) => filter.id === item.id),
+            )
+            const itemsRemoved = selectedFilters.filter(
+              (item) => !draftSelectedFilters.find((filter) => filter.id === item.id),
+            )
+
             // Capture the event that the user added each filter
-            for (const filter of selectedFilters) {
+            for (const filter of itemsAdded) {
               capture('browse:filter_add', {
-                filter_name: filter,
+                filter_name: filter.name,
               })
             }
 
-            // Capture the event that the user pressed the apply filters button
-            capture('browse:filters_apply_press', {
-              filter_count: selectedFilters.length,
-            })
+            // Capture the event that the user removed each filter
+            for (const filter of itemsRemoved) {
+              capture('browse:filter_remove', {
+                filter_name: filter.name,
+              })
+            }
 
             applyFilters()
             router.push({

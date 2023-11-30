@@ -74,6 +74,7 @@ export const IngredientDetails = function IngredientDetails({
   }
 
   useEffect(() => {
+    if (!ingredient) return
     screen('ingredient_details', { ingredinet_name: ingredient?.name })
   }, [ingredient])
 
