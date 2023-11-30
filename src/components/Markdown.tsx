@@ -3,6 +3,7 @@ import * as WebBrowser from 'expo-web-browser'
 import React, { FC } from 'react'
 import { LayoutChangeEvent, View } from 'react-native'
 import MarkdownRenderer, { MarkdownProps } from 'react-native-markdown-display'
+import { useAnalytics } from '~/hooks/useAnalytics'
 import { colors } from '~/theme'
 import { SkeletonView } from './SkeletonView'
 
@@ -11,13 +12,22 @@ interface Props {
   loading?: boolean
   skeletonLinesNumber?: number
   testID?: string
+  externalLinkEventLabel?: string
 }
 
-export const Markdown: FC<Props> = ({ text, loading, skeletonLinesNumber = 3, testID }) => {
+export const Markdown: FC<Props> = ({
+  text,
+  loading,
+  externalLinkEventLabel,
+  skeletonLinesNumber = 3,
+  testID,
+}) => {
+  const { capture } = useAnalytics()
   const [skeletonWidth, setSkeletonWidth] = React.useState(200)
 
   const handleLink = async (url: string) => {
     if (url.startsWith('http')) {
+      externalLinkEventLabel && capture(externalLinkEventLabel, { url })
       await WebBrowser.openBrowserAsync(url)
     } else if (url.startsWith('/')) {
       router.push(url as any)

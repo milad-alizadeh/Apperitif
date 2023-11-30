@@ -93,7 +93,10 @@ export const IngredientDetails = function IngredientDetails({
 
             {/* Description */}
             <View className="flex-1">
-              <Markdown text={ingredient?.description} />
+              <Markdown
+                externalLinkEventLabel="ingredient:external_link_press"
+                text={ingredient?.description}
+              />
             </View>
 
             {/* Related Recipes */}
