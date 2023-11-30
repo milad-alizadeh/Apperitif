@@ -1,14 +1,14 @@
-import { useApolloClient } from '@apollo/client'
 import { router } from 'expo-router'
 import React, { useEffect, useRef, useState } from 'react'
 import { Alert, View } from 'react-native'
 import { Button, Header, Prompt, PromptRef, Screen, Text, TextField } from '~/components'
+import { useAnalytics } from '~/hooks'
 import { useHaptics } from '~/hooks/useHaptics'
 import { useSession } from '~/hooks/useSession'
 import { api } from '~/services'
 
 export default function Account() {
-  const client = useApolloClient()
+  const { capture } = useAnalytics()
   const deletPromptRef = useRef<PromptRef>(null)
   const emailPromptRef = useRef<PromptRef>(null)
   const successHaptics = useHaptics('success')
@@ -41,6 +41,7 @@ export default function Account() {
         await api.supabase.auth.signOut()
         Alert.alert('Account deleted')
         router.push('/browse')
+        capture('account:delete_success')
       } else {
         errorHaptics()
         Alert.alert('Could not delete account. Please try again or contact support.')
@@ -176,7 +177,10 @@ export default function Account() {
             <Button
               loading={deleteLoading}
               label="Delete Account"
-              onPress={() => deletPromptRef?.current?.show()}
+              onPress={() => {
+                capture('account:delete_account_press')
+                deletPromptRef?.current?.show()
+              }}
             />
           </View>
         </View>
@@ -187,7 +191,9 @@ export default function Account() {
           cancelText="Cancel"
           confirmText="Update"
           description="Are you sure you want to change your email? "
-          onCancel={emailPromptRef?.current?.hide}
+          onCancel={() => {
+            emailPromptRef?.current?.hide()
+          }}
           onConfirm={changeAccountDetails}
         />
 
@@ -197,8 +203,14 @@ export default function Account() {
           cancelText="Cancel"
           confirmText="Delete"
           description="Are you sure you want to delete your account? This action cannot be undone."
-          onCancel={deletPromptRef?.current?.hide}
-          onConfirm={deleteUser}
+          onCancel={() => {
+            capture('account:delete_cancel_press')
+            deletPromptRef?.current?.hide()
+          }}
+          onConfirm={() => {
+            capture('account:delete_confirm_press')
+            deleteUser()
+          }}
         />
       </Screen>
     )

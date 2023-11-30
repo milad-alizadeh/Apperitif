@@ -1,8 +1,10 @@
 import { useApolloClient } from '@apollo/client'
 import { router } from 'expo-router'
+import { set } from 'lodash'
 import React from 'react'
 import { FlatList, Linking, View } from 'react-native'
 import { Header, IconTypes, ListItem, Screen, Text } from '~/components'
+import { useAnalytics } from '~/hooks'
 import { useSession } from '~/hooks/useSession'
 import { api } from '~/services/api'
 
@@ -10,12 +12,13 @@ interface ProfileItem {
   name: string
   icon: IconTypes
   route?: string
+  slug: string
   onPress?: () => void
 }
 
 export default function ProfileHomeScreen() {
   const { user, isLoggedIn } = useSession()
-  const client = useApolloClient()
+  const { capture } = useAnalytics()
 
   const profileItems: ProfileItem[] | null[] = [
     isLoggedIn
@@ -23,39 +26,49 @@ export default function ProfileHomeScreen() {
           name: 'Account',
           icon: 'user',
           route: `/account`,
+          slug: 'account',
         }
       : undefined,
     {
       name: 'FAQs',
       icon: 'chat',
       route: '/faqs',
+      slug: 'faqs',
     },
     {
       name: 'About',
       icon: 'infoCircle',
       route: '/about',
+      slug: 'about',
     },
     null,
     {
       name: 'Privacy Policy',
       icon: 'file',
       route: '/privacy-policy',
+      slug: 'privacy_policy',
     },
     {
       name: 'Terms & Conditions',
       icon: 'file',
       route: '/terms-and-conditions',
+      slug: 'terms_and_conditions',
     },
     null,
     {
       name: 'Contact',
       icon: 'mail',
       route: 'mailto:contact@bubblewrap.ai',
+      slug: 'contact',
     },
     {
       name: isLoggedIn ? 'Sign Out' : 'Log in or create an account',
       icon: 'logOut',
-      onPress: () => (isLoggedIn ? singOut() : router.push('/auth')),
+      slug: isLoggedIn ? 'sign_out' : 'log_in',
+      onPress: () => {
+        capture(`profile:${isLoggedIn ? 'sign_out' : 'log_in'}_press`)
+        isLoggedIn ? singOut() : router.push('/auth')
+      },
     },
   ]
 
@@ -69,8 +82,19 @@ export default function ProfileHomeScreen() {
     const { name, icon, route } = item
     const mailLink = route?.indexOf('mailto') > -1
 
-    let onPress = item.onPress || (() => router.push(route as any))
-    if (mailLink) onPress = () => Linking.openURL(route as any)
+    let onPress =
+      item.onPress ||
+      (() => {
+        capture(`profile:${item.slug}_press`)
+        router.push(route as any)
+      })
+    if (mailLink) {
+      onPress = () => {
+        capture(`profile:${item.slug}_press`)
+        Linking.openURL(route as any)
+      }
+    }
+
     return (
       <ListItem
         name={name}

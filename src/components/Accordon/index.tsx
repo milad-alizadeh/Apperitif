@@ -95,7 +95,7 @@ export const Accordion: FC<AccordionProps> = ({ content }) => {
     <View>
       {content.map(({ title, description }, index) => (
         <AccordionItem
-          key={title}
+          key={index}
           title={title}
           description={description}
           isExpanded={!!expanded[title]}
