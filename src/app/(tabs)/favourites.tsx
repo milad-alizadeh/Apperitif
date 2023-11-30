@@ -3,12 +3,13 @@ import { Link, router } from 'expo-router'
 import React, { useCallback } from 'react'
 import { FlatList, View, ViewStyle } from 'react-native'
 import { Header, ListItem, Screen, Text } from '~/components'
-import { DELETE_FROM_FAVOURITES } from '~/graphql/mutations/deleteFromFavourites'
-import { GET_FAVOURITES } from '~/graphql/queries/getFavourites'
-import { useSession } from '~/hooks/useSession'
+import { DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
+import { GET_FAVOURITES } from '~/graphql/queries'
+import { useAnalytics, useSession } from '~/hooks'
 import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 
 export default function FavouritesScreen() {
+  const { capture } = useAnalytics()
   const { user } = useSession()
   const { data, loading, error, refetch } = useQuery(GET_FAVOURITES)
 
@@ -35,18 +36,24 @@ export default function FavouritesScreen() {
           testID="favourite-recipe"
           testIDIconRight="favourite-recipe-delete"
           card
-          onPress={() =>
+          onPress={() => {
+            capture('favourites:recipe_press', {
+              recipe_name: item.name,
+            })
             router.push({
               pathname: '/recipe',
               params: { recipeId: item.id, recipeName: item.name },
             })
-          }
-          onRightIconPress={() =>
+          }}
+          onRightIconPress={() => {
+            capture('favourites:recipe_remove', {
+              recipe_name: item.name,
+            })
             deleteFromFavourites({
               variables: { recipeId: item.id, profileId: user?.id },
               onError: () => refetch(),
             })
-          }
+          }}
         />
       )
     },
@@ -68,7 +75,13 @@ export default function FavouritesScreen() {
           <Text h3 styleClassName="text-center mb-3">
             Your favorites list is on a detox!
           </Text>
-          <Link href="/browse" className="text-primary underline text-base font-bold">
+          <Link
+            href="/browse"
+            onPress={() => {
+              capture('favourites:add_recipes_press')
+            }}
+            className="text-primary underline text-base font-bold"
+          >
             Add some recipes
           </Link>
         </View>
