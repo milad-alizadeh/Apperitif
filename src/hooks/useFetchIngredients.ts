@@ -5,10 +5,13 @@ import { SectionDataType, SectionHeaderType } from '~/components'
 import { GET_MY_BAR } from '~/graphql/queries'
 import { GET_INGREDIENTS_BY_CATEGORIES } from '~/graphql/queries/getIngtedientsByCategories'
 import { api } from '../services/api'
+import { useAnalytics } from './useAnalytics'
 
 export type SelectedItems = Record<string, { name: string; selected: boolean }>
 
-export function useIngredients() {
+export function useFetchIngredients() {
+  const { capture } = useAnalytics()
+
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<{
     sectionsData: SectionDataType[][]
@@ -34,6 +37,15 @@ export function useIngredients() {
     const { data } = await api.supabase.rpc('search_ingredients', {
       search_term: searchQuery,
     })
+
+    if (searchQuery.length > 0) {
+      // Capture the search result event
+      capture('browse:search_result', {
+        search_term: searchQuery,
+        character_count: searchQuery.length,
+        result_count: data.length,
+      })
+    }
 
     const sectionsHeader = data.length
       ? [{ title: 'Results', id: 'results-id', count: data.length }]

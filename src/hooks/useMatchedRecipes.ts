@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
+import orderBy from 'lodash/orderBy'
 import { useEffect } from 'react'
 import { GetPartialMatchRecipesQuery, GetTotalmatchRecipesQuery } from '~/__generated__/graphql'
 import { CardProps, SectionDataType, SectionHeaderType } from '~/components'
@@ -63,7 +64,7 @@ export const useMatchedRecipes = () => {
   let sectionsHeader: SectionHeaderType[] = []
 
   // Reduces an array of ingredients into an array of categories with their respective ingredients.
-  const categoriesdIngredients =
+  let categoriesdIngredients =
     ingredientsInBar?.reduce((acc, item) => {
       const existingSection = acc.find((section) => section.title === item.category)
       if (existingSection) {
@@ -78,6 +79,8 @@ export const useMatchedRecipes = () => {
       }
       return acc
     }, []) ?? []
+
+  categoriesdIngredients = orderBy(categoriesdIngredients, ['title'], ['asc'])
 
   sectionsData = categoriesdIngredients.map((section) => section.data)
   sectionsHeader = categoriesdIngredients.map((section) => ({

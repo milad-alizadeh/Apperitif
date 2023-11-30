@@ -1,12 +1,13 @@
 import { useMutation } from '@apollo/client'
 import { router } from 'expo-router'
+import debounce from 'lodash/debounce'
 import React, { useCallback, useState } from 'react'
 import { View, ViewStyle } from 'react-native'
 import { FixedHeader, IngredientListItem, Screen, SectionList } from '~/components'
 import { ADD_TO_MY_BAR } from '~/graphql/mutations/addToMyBar'
 import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
 import { useAnalytics } from '~/hooks/useAnalytics'
-import { useIngredients } from '~/hooks/useIngredients'
+import { useFetchIngredients } from '~/hooks/useFetchIngredients'
 import { useSession } from '~/hooks/useSession'
 import { captureError } from '~/utils/captureError'
 
@@ -22,7 +23,7 @@ export default function AddIngredientsScreen() {
     setSearchQuery,
     setSelectedItems,
     setInitialSelectedItems,
-  } = useIngredients()
+  } = useFetchIngredients()
 
   const [loading, setLoading] = useState(false)
   const { user } = useSession()
@@ -138,9 +139,7 @@ export default function AddIngredientsScreen() {
           searchQuery={searchQuery}
           showHeader
           loading={loading}
-          onSearch={(value) => {
-            setSearchQuery(value)
-          }}
+          onSearch={debounce(setSearchQuery, 500)}
           renderItem={renderItem}
           onSave={onSave}
         />

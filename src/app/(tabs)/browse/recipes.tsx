@@ -4,7 +4,7 @@ import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
 import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
 import { FilterBar, FixedHeader, Screen, Text } from '~/components'
 import { RecipeGrid } from '~/components/RecipeGrid'
-import { useFetchRecipes } from '~/hooks/useFetchRecipe'
+import { useFetchRecipes } from '~/hooks/useFetchRecipes'
 
 export default function RecipesScreen() {
   const { categoryIds } = useLocalSearchParams()
@@ -21,7 +21,7 @@ export default function RecipesScreen() {
     <Screen
       preset="fixed"
       safeAreaEdges={['top']}
-      KeyboardAvoidingViewProps={{ enabled: false }}
+      KeyboardAvoidingViewProps={{ enabled: true }}
       contentContainerStyle={{ flex: 1 }}
     >
       <TouchableOpacity

@@ -74,7 +74,7 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
   )
 
   // Create a debounced version of fetchRecipes for the search query
-  const debouncedFetchRecipes = useRef(debounce(fetchRecipes, 300)).current
+  const debouncedFetchRecipes = useRef(debounce(fetchRecipes, 500)).current
 
   // On mount, clear any existing filters and set the initial category filter
   useEffect(() => {

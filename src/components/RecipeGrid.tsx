@@ -84,6 +84,7 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
         ref={listRef}
         data={recipes}
         numColumns={2}
+        keyboardShouldPersistTaps="handled"
         windowSize={10}
         nestedScrollEnabled
         className={`-mx-3 ${styleClassName}`}

@@ -3,7 +3,8 @@ import { View, ViewStyle, ViewToken, useWindowDimensions } from 'react-native'
 import BigList from 'react-native-big-list'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { SelectedItems } from '~/hooks/useIngredients'
+import { useAnalytics } from '~/hooks/useAnalytics'
+import { SelectedItems } from '~/hooks/useFetchIngredients'
 import { shadowCard, shadowHeader } from '~/theme/shadows'
 import { BouncyImage } from '../BouncyImage'
 import { Button } from '../Button'
@@ -64,6 +65,7 @@ export const SectionList: FC<SectionListProps> = ({
   contentContainerStyle,
   onRefresh,
 }) => {
+  const { capture } = useAnalytics()
   const inset = useSafeAreaInsets()
   const [activeIndex, setActiveIndex] = useState(-1)
   const defaultHeaderHeight = useWindowDimensions().width - FIXED_HEADER_HEIGHT
@@ -136,6 +138,7 @@ export const SectionList: FC<SectionListProps> = ({
             onChange={onSearch}
             testId="search-bar"
             onFocus={() => {
+              capture('add_ingredients:search_press')
               navOpacity.value = withTiming(0, { duration: 200 })
               sectionListRef.current?.scrollToOffset({
                 offset: SEARCH_SCROLL_OFFSET,
