@@ -51,7 +51,7 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
 
       if (search_term.length > 0) {
         // Capture the search result event
-        capture('browse:search_result', {
+        capture('browse:search_result_load', {
           search_term,
           character_count: search_term.length,
           result_count: totalCount,

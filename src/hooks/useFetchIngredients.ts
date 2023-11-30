@@ -40,7 +40,7 @@ export function useFetchIngredients() {
 
     if (searchQuery.length > 0) {
       // Capture the search result event
-      capture('browse:search_result', {
+      capture('browse:search_result_load', {
         search_term: searchQuery,
         character_count: searchQuery.length,
         result_count: data.length,
