@@ -19,6 +19,30 @@ appId: ''
 - assertVisible:
     id: 'recipe-ingredient'
     index: 0
+
+# Check ingredient details
+- copyTextFrom:
+    id: 'recipe-ingredient-name'
+    index: 0
+- tapOn:
+    id: 'recipe-ingredient-name'
+    index: 0
+- assertVisible:
+    id: ingredient-name
+    text: ${ maestro.copiedText }
+- assertVisible:
+    id: ingredient-description
+
+# Check similar recipes link
+- copyTextFrom:
+    id: 'card'
+    index: 0
+- tapOn:
+    id: 'card'
+- assertVisible:
+    id: recipe-name
+    text: ${ maestro.copiedText }
+
 - tapOn: 'Method'
 - assertVisible:
     id: 'recipe-step'
