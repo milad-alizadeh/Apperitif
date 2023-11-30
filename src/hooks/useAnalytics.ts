@@ -9,6 +9,7 @@ export const useAnalytics = () => {
   }
 
   const screen = (screenName: string, properties?: Record<string, any>) => {
+    console.log('screenName', screenName, properties)
     posthog?.screen(screenName, properties)
   }
 

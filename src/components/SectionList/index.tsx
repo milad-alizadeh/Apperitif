@@ -3,6 +3,7 @@ import { View, ViewStyle, ViewToken, useWindowDimensions } from 'react-native'
 import BigList from 'react-native-big-list'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { SelectedItems } from '~/hooks/useIngredients'
 import { shadowCard, shadowHeader } from '~/theme/shadows'
 import { BouncyImage } from '../BouncyImage'
 import { Button } from '../Button'
@@ -28,13 +29,13 @@ export interface SectionListProps {
   ListFooterComponent?: JSX.Element
   ListHeaderComponent?: JSX.Element
   loading?: boolean
-  onSave?: (selectedItems: { [key: string]: boolean }) => void
+  onSave?: (selectedItems: SelectedItems) => void
   onSearch?: (value: string) => void
   renderItem: (item: any) => JSX.Element
   searchQuery?: string
   sectionsData: SectionDataType[][]
   sectionsHeader: SectionHeaderType[]
-  selectedItems?: { [key: string]: boolean }
+  selectedItems?: SelectedItems
   showHeader?: boolean
   onRefresh?: () => void
 }

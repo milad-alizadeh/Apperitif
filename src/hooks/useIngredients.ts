@@ -6,16 +6,18 @@ import { GET_MY_BAR } from '~/graphql/queries'
 import { GET_INGREDIENTS_BY_CATEGORIES } from '~/graphql/queries/getIngtedientsByCategories'
 import { api } from '../services/api'
 
+export type SelectedItems = Record<string, { name: string; selected: boolean }>
+
 export function useIngredients() {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<{
     sectionsData: SectionDataType[][]
     sectionsHeader: SectionHeaderType[]
   }>()
-  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({})
+  const [selectedItems, setSelectedItems] = useState<SelectedItems>({})
   const [sectionsData, setSectionsData] = useState<SectionDataType[][]>([])
   const [sectionsHeader, setSectionsHeader] = useState<SectionHeaderType[]>([])
-  const [initialSelectedItems, setInitialSelectedItems] = useState<Record<string, boolean>>({})
+  const [initialSelectedItems, setInitialSelectedItems] = useState<SelectedItems>({})
 
   /**
    * Search for ingredients that match the given search query.
@@ -61,7 +63,7 @@ export function useIngredients() {
   ) => {
     const sectionsData: SectionDataType[][] = []
     const sectionsHeader: SectionHeaderType[] = []
-    const initialSelectedItems: Record<string, boolean> = {}
+    const initialSelectedItems: SelectedItems = {}
 
     categories.ingredientsByCategoriesCollection.edges.forEach(
       ({ node: { title, id, data, count } }) => {
@@ -73,10 +75,13 @@ export function useIngredients() {
     selectedIngredients.profilesIngredientsCollection.edges.forEach(
       ({
         node: {
-          ingredient: { id },
+          ingredient: { id, name },
         },
       }) => {
-        initialSelectedItems[id] = true
+        initialSelectedItems[id] = {
+          name,
+          selected: true,
+        }
       },
     )
 

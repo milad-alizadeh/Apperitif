@@ -8,6 +8,7 @@ import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useIngredients } from '~/hooks/useIngredients'
 import { useSession } from '~/hooks/useSession'
+import { captureError } from '~/utils/captureError'
 
 export default function AddIngredientsScreen() {
   const { capture } = useAnalytics()
@@ -29,14 +30,24 @@ export default function AddIngredientsScreen() {
   const [deleteFromMyBar, { error: deleteError }] = useMutation(DELETE_FROM_MY_BAR)
   const sections = searchQuery ? searchResults : { sectionsData, sectionsHeader }
 
-  const handleSelect = useCallback((itemId: string) => {
-    setSelectedItems((prev) => ({ ...prev, [itemId]: !prev[itemId] }))
-  }, [])
+  const handleSelect = useCallback(
+    (id: string, name: string) => {
+      const newSelectedItems = {
+        ...selectedItems,
+        [id]: {
+          name,
+          selected: !selectedItems[id]?.selected ?? true,
+        },
+      }
+      setSelectedItems(newSelectedItems)
+    },
+    [selectedItems],
+  )
 
   const renderItem = useCallback(
     ({ item }) => {
       if (!item.name) return <View className="w-full h-64 bg-white" />
-      const isChecked = !!selectedItems[item.id]
+      const isChecked = !!selectedItems[item.id]?.selected
       return (
         <View className="px-6 py-2 bg-white">
           <IngredientListItem
@@ -44,7 +55,7 @@ export default function AddIngredientsScreen() {
             testID="ingredient-list-item"
             checked={isChecked}
             onPress={() => {
-              handleSelect(item.id)
+              handleSelect(item.id, item.name)
             }}
           />
         </View>
@@ -59,35 +70,47 @@ export default function AddIngredientsScreen() {
     const addedItems = []
     const deletedItems = []
 
-    Object.keys(selectedItems).forEach((key) => {
-      if (selectedItems[key] && !initialSelectedItems[key]) {
+    for (const id in selectedItems) {
+      if (selectedItems[id].selected && !initialSelectedItems[id]?.selected) {
         // Item is present in selectedItems but not in initialSelectedItems, so it's added
-        addedItems.push(key)
-      } else if (!selectedItems[key] && initialSelectedItems[key]) {
+        addedItems.push({ id, ...selectedItems[id] })
+      } else if (!selectedItems[id].selected && !!initialSelectedItems[id]?.selected) {
         // Item is not present in selectedItems but is in initialSelectedItems, so it's deleted
-        deletedItems.push(key)
+        deletedItems.push({ id, ...selectedItems[id] })
       }
-    })
+    }
 
     if (addedItems.length > 0) {
       await addToMyBar({
         variables: {
-          records: addedItems.map((id) => ({ ingredientId: id, profileId: user?.id })),
+          records: addedItems.map(({ id }) => ({ ingredientId: id, profileId: user?.id })),
         },
       })
+
+      for (const item of addedItems) {
+        setTimeout(() => {
+          capture('add_ingredients:ingredient_add', { ingredientId: item.id })
+        }, 0)
+      }
     }
 
     if (deletedItems.length > 0) {
       await deleteFromMyBar({
         variables: {
-          ingredientIds: deletedItems,
-          profileIds: deletedItems.map(() => user?.id),
+          ingredientIds: deletedItems.map(({ id }) => id),
+          profileIds: user?.id,
         },
       })
+
+      for (const item of deletedItems) {
+        setTimeout(() => {
+          capture('add_ingredients:ingredient_remove', { ingredientId: item.id })
+        }, 0)
+      }
     }
 
     if (addError || deleteError) {
-      console.error('Add Error:', addError, 'Delete Error:', deleteError)
+      captureError(addError || deleteError)
       setLoading(false) // Set loading to false if an error occurs
       return // Exit the function if an error occurs
     }
