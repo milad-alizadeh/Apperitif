@@ -79,7 +79,10 @@ export const RecipeTabs = function RecipeTabs({
           testIDTextLeft="recipe-ingredient-quantity"
           testIDTextMiddle="recipe-ingredient-name"
           loading={loading}
-          onPress={() => onIngredientPress && onIngredientPress(ingredient.id)}
+          onPress={() => {
+            onIngredientPress && onIngredientPress(ingredient.id)
+            capture('recipe:ingredient_info_press', { ingredient_name: ingredient.name })
+          }}
         />
       )
     },
@@ -95,7 +98,10 @@ export const RecipeTabs = function RecipeTabs({
           leftImage={imageUrl}
           rightIcon="text"
           testID="recipe-equipment"
-          onPress={() => onEquipmentPress && onEquipmentPress(id)}
+          onPress={() => {
+            capture('recipe:equipment_info_press', { equipment_name: name })
+            onEquipmentPress && onEquipmentPress(id)
+          }}
           styleClassName="mb-2"
         />
       )
