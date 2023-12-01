@@ -148,7 +148,7 @@ export default function AddIngredientsScreen() {
           ingredientId={ingredientId}
           showCta={false}
           onClosed={() => modalRef.current.hide()}
-       \ />
+        />
       </BottomSheet>
 
       {!!sections?.sectionsData.length && (
