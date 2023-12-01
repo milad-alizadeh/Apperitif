@@ -41,11 +41,19 @@ export const GoogleAuthentication = function GoogleAuthentication({ attemptedRou
     const token = response.params.id_token
     const access_token = response.params.access_token
 
-    const { error } = await api.supabase.auth.signInWithIdToken({
+    const {
+      data: { user },
+      error,
+    } = await api.supabase.auth.signInWithIdToken({
       provider: 'google',
       token,
       access_token,
     })
+
+    // First time user sign up. Check if usser has been created in the last 30 seconds
+    if (user?.created_at && new Date(user?.created_at).getTime() > Date.now() - 30000) {
+      capture('auth:sign_up_success', { provider: 'google' })
+    }
 
     if (!error) {
       handleSuccessfulAuth()

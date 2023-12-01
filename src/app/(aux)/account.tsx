@@ -21,8 +21,10 @@ export default function Account() {
   const [name, setName] = useState(user?.user_metadata.name)
 
   useEffect(() => {
-    user?.app_metadata.provider === 'email' && setEnableEmailChange(true)
-  }, [user?.app_metadata.provider])
+    user?.app_metadata?.provider === 'email' && setEnableEmailChange(true)
+
+    console.log(user)
+  }, [user?.app_metadata?.provider])
 
   /**
    * Deletes the user's account.
@@ -158,10 +160,14 @@ export default function Account() {
                 {user?.app_metadata?.provider}
               </Text>
 
-              <Text h3 styleClassName="mb-3 mt-6">
-                Name
-              </Text>
-              <Text body>{user?.user_metadata?.name}</Text>
+              {user?.user_metadata?.name && (
+                <>
+                  <Text h3 styleClassName="mb-3 mt-6">
+                    Name
+                  </Text>
+                  <Text body>{user?.user_metadata?.name}</Text>
+                </>
+              )}
 
               <Text h3 styleClassName="mb-3 mt-6">
                 Email

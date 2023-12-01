@@ -36,7 +36,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
     api.supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session) {
         identify(session?.user.id, {
-          provider: session?.user.identities[0].provider,
+          provider: session?.user?.app_metadata?.provider,
         })
       }
       setSession(session)
@@ -44,9 +44,9 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
 
     api.supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN') {
-        capture('auth:authentication_success', { provider: session?.user.identities[0].provider })
+        capture('auth:log_in_success', { provider: session?.user?.app_metadata?.provider })
         identify(session?.user.id, {
-          provider: session?.user.identities[0].provider,
+          provider: session?.user?.app_metadata?.provider,
         })
       }
 

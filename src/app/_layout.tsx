@@ -93,7 +93,7 @@ function RootLayoutNav() {
             <EasUpdate />
             <Stack screenOptions={{ headerShown: false }}>
               <Stack.Screen name="index" />
-              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="(tabs)" options={{ animation: 'none' }} />
               <Stack.Screen name="welcome" />
               <Stack.Screen name="recipe" getId={({ params }) => params.recipeName} />
               <Stack.Screen name="auth" options={{ presentation: 'modal' }} />

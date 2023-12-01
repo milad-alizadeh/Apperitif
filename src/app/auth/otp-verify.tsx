@@ -84,6 +84,9 @@ export default function AuthOtpVerifyScreen({ route }) {
     if (error) {
       Alert.alert(error.message)
     } else {
+      if (verificationType === 'signup') {
+        capture('auth:sign_up_success', { provider: 'email' })
+      }
       handleSuccessfulAuth()
     }
 

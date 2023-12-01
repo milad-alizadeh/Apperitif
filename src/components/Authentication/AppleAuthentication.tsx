@@ -44,12 +44,18 @@ export const AppleAuthentication = function AppleAuthentication({
               // Sign in via Supabase Auth.
               if (credential.identityToken) {
                 const {
+                  data: { session },
                   error,
-                  data: { user },
                 } = await api.supabase.auth.signInWithIdToken({
                   provider: 'apple',
                   token: credential.identityToken,
                 })
+
+                // First time user sign up
+                if (credential.email && credential.fullName) {
+                  capture('auth:sign_up_success', { provider: 'apple' })
+                  handleSuccessfulAuth()
+                }
 
                 if (!error) {
                   handleSuccessfulAuth()
