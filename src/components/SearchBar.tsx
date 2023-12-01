@@ -66,7 +66,7 @@ export const SearchBar = function SearchBar({
           testID={testIdClear}
           icon="closeFilled"
           containerClassName="z-10 mr-2 absolute right-0"
-          color={colors.neutral[400]}
+          color={colors.neutral[500]}
           onPress={() => {
             setSearchQuery('')
             onChange?.('')

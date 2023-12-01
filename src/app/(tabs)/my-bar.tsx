@@ -69,6 +69,7 @@ export default function MyBarScreen() {
             capture('my_bar:ingredient_details_press', { ingredient_name: item.name })
             handleIngredientPress(item.id)
           }}
+          leftIcon="text"
           onRightIconPress={() => {
             deleteFromMyBar({
               variables: { ingredientIds: [item.id], profileIds: [user?.id] },
@@ -203,7 +204,11 @@ export default function MyBarScreen() {
 
       {/* Ingredient details Modal */}
       <BottomSheet ref={modalRef}>
-        <IngredientDetails ingredientId={ingredientId} />
+        <IngredientDetails
+          ingredientId={ingredientId}
+          showCta={false}
+          onClosed={() => modalRef.current.hide()}
+        />
       </BottomSheet>
     </Screen>
   )

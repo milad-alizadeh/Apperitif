@@ -47,7 +47,7 @@ export const Button = forwardRef(function Button(
         if (enableHaptics) haptics()
         onPress && !loading && onPress()
       }}
-      className={`rounded-xl border-2 border-primary justify-center items-center bg-blue-400
+      className={`rounded-xl border-2 border-primary justify-center items-center bg-blue-500
         ${outline ? 'bg-transparent' : 'bg-primary'}
         ${large ? 'h-12 px-4 py-2' : 'px-3 py-1'} 
         ${styleClassName}

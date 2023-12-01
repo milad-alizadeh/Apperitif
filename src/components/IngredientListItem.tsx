@@ -45,7 +45,7 @@ export const IngredientListItem = memo(function IngredientListItem({
           color={colors.white}
         />
       ) : (
-        <View className="rounded-full w-6 h-6 p-1 border-2 border-neutral-400" />
+        <View className="rounded-full w-6 h-6 p-1 border-2 border-neutral-500" />
       )}
       <Text className={`mr-auto ml-4 font-medium text-base`}>{name}</Text>
 

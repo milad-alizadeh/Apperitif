@@ -23,7 +23,7 @@ export const SectionHeaderItem = forwardRef<View, SectionHeaderItemProps>(
         <TouchableOpacity className="py-2" onPress={onPress}>
           <Text
             styleClassName={`
-            ${active ? 'text-primary' : 'text-neutral-[400]'} 
+            ${active ? 'text-primary' : 'text-neutral-[500]'} 
             text-base font-medium `}
           >
             {label}

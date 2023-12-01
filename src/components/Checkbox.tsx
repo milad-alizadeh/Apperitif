@@ -33,10 +33,10 @@ export const Checkbox = function Checkbox({
           icon="infoCircle"
           size="small"
           containerClassName="rounded-full p-0"
-          color={colors.neutral[400]}
+          color={colors.neutral[500]}
         />
       ) : (
-        <View className="rounded-full w-6 h-6 p-1 border-2 border-neutral-400" />
+        <View className="rounded-full w-6 h-6 p-1 border-2 border-neutral-500" />
       )}
     </TouchableOpacity>
   )

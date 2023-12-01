@@ -131,7 +131,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
           className="absolute bg-white w-screen top-full rounded-t-[50px] overflow-hidden"
         >
           <ScrollView>
-            <View onLayout={onContentLayout} className="min-h-[360px]">
+            <View onLayout={onContentLayout} className="min-h-[240px]">
               <Animated.View
                 style={closeStyle}
                 className="z-10 justify-center items-center rounded-full absolute right-6 top-5"

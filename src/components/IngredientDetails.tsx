@@ -39,12 +39,12 @@ export const IngredientDetails = function IngredientDetails({
     variables: { ingredientId },
   })
   const { data: barIngredients, refetch: myBarRefetch } = useQuery(GET_MY_BAR)
-  const { data: relatedRecipes } = useQuery(GET_RECIPES_BY_INGREDIENT, {
+  const { data: relatedRecipes, loading: recipesLoading } = useQuery(GET_RECIPES_BY_INGREDIENT, {
     variables: { ingredientId },
   })
 
   const [addToMyBar, { loading: addLoading }] = useMutation(ADD_TO_MY_BAR)
-  const [deleteFromMyBar, { loading: deleteLoading }] = useMutation(DELETE_FROM_MY_BAR)
+  const [deleteFromMyBar] = useMutation(DELETE_FROM_MY_BAR)
 
   const myBar = barIngredients.profilesIngredientsCollection.edges.map((e) => e.node.ingredient.id)
   const isInMyBar = myBar.includes(ingredientId)
@@ -103,80 +103,85 @@ export const IngredientDetails = function IngredientDetails({
   }, [ingredient])
 
   return (
-    <View className={`${availableRecipes.length ? 'min-h-[500px' : ''} p-6 flex-`}>
-      <View className={`${loading ? 'flex-1 justify-center' : 'justify-start'}`}>
-        {loading ? (
-          <ActivityIndicator />
-        ) : (
-          <View className="flex-1">
-            {/* Name */}
-            <View className="mb-3 flex-1">
-              {ingredient?.name && (
-                <Text h2 weight="bold" testID="ingredient-name">
-                  {ingredient?.name}
-                </Text>
-              )}
-            </View>
-
-            {/* Description */}
-            <View className="flex-1">
-              <Markdown
-                testID="ingredient-description"
-                externalLinkEventLabel="ingredient:external_link_press"
-                text={ingredient?.description}
-              />
-            </View>
-
-            {/* Related Recipes */}
-            {!!availableRecipes.length && (
-              <View className="-mx-6 mt-6 min-h-[200px]">
-                <HorizontalList
-                  listItems={availableRecipes as any}
-                  title="Recipes"
-                  showCount={false}
-                />
-              </View>
-            )}
-
-            {isLoggedIn && showCta && (
-              <View>
-                {/* Stock information */}
-                <TouchableOpacity
-                  onPress={() => {
-                    capture('ingredient:ingredient_remove', {
-                      ingredient_name: ingredient?.name,
-                    })
-                    handleDeleteFromMyBar(ingredientId)
-                  }}
-                  className="flex-row items-center mr-2 rounded-xl mt-6"
-                >
-                  <Checkbox checked={isInMyBar} disabled styleClassName="mr-3" />
-                  <Text body weight="bold">
-                    {isInMyBar ? 'In My Bar' : 'You don’t have this ingredient in your bar'}
-                  </Text>
-                </TouchableOpacity>
-
-                {/* Add to my bar */}
-                {!isInMyBar && (
-                  <Button
-                    styleClassName="mt-6"
-                    loading={addLoading}
-                    large
-                    label="Add To My Bar"
-                    enableHaptics
-                    onPress={() => {
-                      capture('ingredient:ingredient_add', {
-                        ingredient_name: ingredient?.name,
-                      })
-                      handleAddToMyBar(ingredientId)
-                    }}
-                  />
-                )}
-              </View>
+    <>
+      {loading || recipesLoading ? (
+        <View className="flex-1 justify-center items-center min-h-[300px]">
+          <ActivityIndicator size="small" />
+        </View>
+      ) : (
+        <View
+          className={`
+          ${loading ? 'flex-1 justify-center' : 'justify-start flex-1 p-6'}
+          ${availableRecipes.length ? 'min-h-[440px]' : 'min-h-[300px]'}
+        `}
+        >
+          {/* Name */}
+          <View className="mb-3">
+            {ingredient?.name && (
+              <Text h2 weight="bold" testID="ingredient-name">
+                {ingredient?.name}
+              </Text>
             )}
           </View>
-        )}
-      </View>
-    </View>
+
+          {/* Description */}
+          <View className="mb-3">
+            <Markdown
+              testID="ingredient-description"
+              externalLinkEventLabel="ingredient:external_link_press"
+              text={ingredient?.description}
+            />
+          </View>
+
+          {/* Related Recipes */}
+          {!!availableRecipes.length && (
+            <View className="-mx-6 min-h-[200px]">
+              <HorizontalList
+                listItems={availableRecipes as any}
+                title="Recipes"
+                showCount={false}
+              />
+            </View>
+          )}
+
+          {isLoggedIn && showCta && (
+            <View className="mt-auto">
+              {/* Stock information */}
+              <TouchableOpacity
+                onPress={() => {
+                  capture('ingredient:ingredient_remove', {
+                    ingredient_name: ingredient?.name,
+                  })
+                  handleDeleteFromMyBar(ingredientId)
+                }}
+                className="flex-row items-center mr-2 rounded-xl mt-6"
+              >
+                <Checkbox checked={isInMyBar} disabled styleClassName="mr-3" />
+                <Text body weight="bold">
+                  {isInMyBar ? 'In My Bar' : 'You don’t have this ingredient in your bar'}
+                </Text>
+              </TouchableOpacity>
+
+              {/* Add to my bar */}
+              {!isInMyBar && (
+                <Button
+                  styleClassName="mt-6"
+                  loading={addLoading}
+                  large
+                  label="Add To My Bar"
+                  enableHaptics
+                  onPress={() => {
+                    capture('ingredient:ingredient_add', {
+                      ingredient_name: ingredient?.name,
+                    })
+                    handleAddToMyBar(ingredientId)
+                  }}
+                />
+              )}
+            </View>
+          )}
+        </View>
+      )}
+    </>
   )
 }
