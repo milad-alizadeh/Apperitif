@@ -79,16 +79,16 @@ const AppWrapper = ({ children }) => {
 
 function RootLayoutNav() {
   return (
-    <SessionProvider>
-      <PostHogProvider
-        apiKey={posthogApiKey}
-        autocapture={{
-          captureTouches: false,
-          captureScreens: false,
-        }}
-        options={{ host: 'https://eu.posthog.com' }}
-      >
-        <AppWrapper>
+    <PostHogProvider
+      apiKey={posthogApiKey}
+      autocapture={{
+        captureTouches: false,
+        captureScreens: false,
+      }}
+      options={{ host: 'https://eu.posthog.com' }}
+    >
+      <AppWrapper>
+        <SessionProvider>
           <ApolloProvider client={api?.apolloClient}>
             <EasUpdate />
             <Stack screenOptions={{ headerShown: false }}>
@@ -100,8 +100,8 @@ function RootLayoutNav() {
               <Stack.Screen name="add-ingredients" />
             </Stack>
           </ApolloProvider>
-        </AppWrapper>
-      </PostHogProvider>
-    </SessionProvider>
+        </SessionProvider>
+      </AppWrapper>
+    </PostHogProvider>
   )
 }

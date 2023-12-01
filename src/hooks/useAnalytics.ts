@@ -8,6 +8,7 @@ export const useAnalytics = () => {
       screen: () => {},
       identify: () => {},
       reset: () => {},
+      loaded: true,
     }
   }
 
@@ -38,5 +39,6 @@ export const useAnalytics = () => {
     screen,
     identify,
     reset,
+    loaded: typeof posthog !== 'undefined',
   }
 }

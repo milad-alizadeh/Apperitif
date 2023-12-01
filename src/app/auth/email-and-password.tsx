@@ -1,5 +1,5 @@
-import { router, useLocalSearchParams } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import { useLocalSearchParams } from 'expo-router'
+import React from 'react'
 import { View } from 'react-native'
 import { Screen } from '~/components'
 import { EmailAuthentication } from '~/components'
