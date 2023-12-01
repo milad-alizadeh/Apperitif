@@ -11,6 +11,7 @@ interface AccordionProps {
     title: string
     description: string
   }[]
+  onTitlePress?: (title: string) => void
 }
 
 interface AccordionItemProps {
@@ -63,7 +64,9 @@ export const AccordionItem: FC<AccordionItemProps> = ({
         name={title}
         card
         rightIcon={!isExpanded ? 'chevronDown' : 'chevronUp'}
-        onPress={() => toggleExpand(title)}
+        onPress={() => {
+          toggleExpand(title)
+        }}
         styleClassName="py-3 z-10"
         testID={`accordion-content-${title}`}
       />
@@ -84,12 +87,20 @@ export const AccordionItem: FC<AccordionItemProps> = ({
   )
 }
 
-export const Accordion: FC<AccordionProps> = ({ content }) => {
+export const Accordion: FC<AccordionProps> = ({ content, onTitlePress }) => {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
 
-  const toggleExpand = useCallback((title: string) => {
-    setExpanded((prev) => ({ ...prev, [title]: !prev[title] }))
-  }, [])
+  const toggleExpand = useCallback(
+    (title: string) => {
+      setExpanded((prev) => {
+        if (!prev[title]) {
+          onTitlePress?.(title)
+        }
+        return { ...prev, [title]: !prev[title] }
+      })
+    },
+    [expanded],
+  )
 
   return (
     <View>

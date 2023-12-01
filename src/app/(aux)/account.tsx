@@ -81,6 +81,10 @@ export default function Account() {
 
       const data = await response.json()
 
+      if (user?.user_metadata?.name !== name) {
+        capture('account:name_change')
+      }
+
       // If email is changed then send OTP
       if (user?.email !== email) {
         // Check if new email exist and if not add an email

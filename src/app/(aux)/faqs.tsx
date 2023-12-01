@@ -2,8 +2,10 @@ import { useQuery } from '@apollo/client'
 import { View } from 'react-native'
 import { Accordion, Header, Screen } from '~/components'
 import { GET_CONTENT } from '~/graphql/queries'
+import { useAnalytics } from '~/hooks'
 
 export default function FAQsScreen() {
+  const { capture } = useAnalytics()
   const { data } = useQuery(GET_CONTENT, {
     variables: { name: 'faqs' },
     fetchPolicy: 'cache-and-network',
@@ -17,7 +19,12 @@ export default function FAQsScreen() {
       <Screen preset="scroll" safeAreaEdges={['top', 'bottom']}>
         <Header title={pageContentParsed.title} styleClassName="mb-6" backButton />
         <View className="px-6">
-          <Accordion content={pageContentParsed.faqs} />
+          <Accordion
+            content={pageContentParsed.faqs}
+            onTitlePress={(question) => {
+              capture('faqs:faqs_question_press', { question })
+            }}
+          />
         </View>
       </Screen>
     )

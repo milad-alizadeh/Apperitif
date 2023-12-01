@@ -81,6 +81,10 @@ export default function AuthOtpVerifyScreen({ route }) {
       type: verificationType,
     })
 
+    if (verificationType === 'email_change') {
+      capture('account:email_change')
+    }
+
     if (error) {
       Alert.alert(error.message)
     } else {
