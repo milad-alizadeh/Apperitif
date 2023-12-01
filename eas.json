@@ -44,7 +44,7 @@
         "EXPO_PUBLIC_ANDROID_CLIENT_ID": "387765460024-s1t0op27cenve9qerh7dqbj7837o12gk.apps.googleusercontent.com",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhnZHNobW1pbmh1enFmY2V2emZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDA4NDQyODksImV4cCI6MjAxNjQyMDI4OX0.M4BUPdlgv8d1aXCtPOUSzW29Iz4TV2tSA-PDV-NdC6M",
         "EXPO_PUBLIC_SUPABASE_URL": "https://hgdshmminhuzqfcevzfi.supabase.co",
-        "EXPO_PUBLIC_POSTHOG_API_KEY": "phc_CwlQCyGqyxQAZG2BecGe7ryiNoZBsAqCeWwKgFqmMLX"
+        "EXPO_PUBLIC_POSTHOG_API_KEY": "phc_5Ii4FvZcoMw7PTesxSeHs3F1XxWTOdncdYzOWw5kx0W"
       }
     },
     "staging-simulator": {
@@ -60,7 +60,7 @@
         "EXPO_PUBLIC_ANDROID_CLIENT_ID": "387765460024-s1t0op27cenve9qerh7dqbj7837o12gk.apps.googleusercontent.com",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhnZHNobW1pbmh1enFmY2V2emZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDA4NDQyODksImV4cCI6MjAxNjQyMDI4OX0.M4BUPdlgv8d1aXCtPOUSzW29Iz4TV2tSA-PDV-NdC6M",
         "EXPO_PUBLIC_SUPABASE_URL": "https://hgdshmminhuzqfcevzfi.supabase.co",
-        "EXPO_PUBLIC_POSTHOG_API_KEY": "phc_CwlQCyGqyxQAZG2BecGe7ryiNoZBsAqCeWwKgFqmMLX"
+        "EXPO_PUBLIC_POSTHOG_API_KEY": "phc_5Ii4FvZcoMw7PTesxSeHs3F1XxWTOdncdYzOWw5kx0W"
       },
       "android": {
         "buildType": "apk"
@@ -79,7 +79,8 @@
         "EXPO_PUBLIC_IOS_CLIENT_ID": "387765460024-u00ludqbbapijlebphm3a36c4kpsq2a8.apps.googleusercontent.com",
         "EXPO_PUBLIC_ANDROID_CLIENT_ID": "387765460024-cffpkqkda7vh56hbd72k8j2ce8bjna7v.apps.googleusercontent.com",
         "EXPO_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2dGZzcHltenFzeWhtdmt6Z2VqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTUwNjQ2MzksImV4cCI6MjAxMDY0MDYzOX0.2L62sBDhHRNDbNWGcWsT91EFoqyM6oXIbh_L8JupACk",
-        "EXPO_PUBLIC_SUPABASE_URL": "https://kvtfspymzqsyhmvkzgej.supabase.co"
+        "EXPO_PUBLIC_SUPABASE_URL": "https://kvtfspymzqsyhmvkzgej.supabase.co",
+        "EXPO_PUBLIC_POSTHOG_API_KEY": "phc_NoH4C00YmvhUxsXsb2GsnmMtapQroMlK103tWYSdLYU"
       }
     }
   },
