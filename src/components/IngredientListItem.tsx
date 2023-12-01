@@ -13,6 +13,7 @@ export interface IngredientListItemProps {
   checked?: boolean
   onPress?: () => void
   testID?: string
+  onInfoPress?: () => void
 }
 
 /**
@@ -23,6 +24,7 @@ export const IngredientListItem = memo(function IngredientListItem({
   checked,
   onPress,
   testID,
+  onInfoPress,
 }: IngredientListItemProps) {
   const haptic = useHaptics('medium')
   return (
@@ -46,6 +48,8 @@ export const IngredientListItem = memo(function IngredientListItem({
         <View className="rounded-full w-6 h-6 p-1 border-2 border-neutral-400" />
       )}
       <Text className={`mr-auto ml-4 font-medium text-base`}>{name}</Text>
+
+      <Icon icon="text" size="large" color={colors.neutral[500]} onPress={() => onInfoPress?.()} />
     </TouchableOpacity>
   )
 })

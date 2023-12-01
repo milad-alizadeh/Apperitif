@@ -21,16 +21,6 @@ export const GoogleAuthentication = function GoogleAuthentication({ attemptedRou
   const { capture } = useAnalytics()
   const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
 
-  useEffect(() => {
-    const handleDeepLink = ({ url }) => {
-      // Process the URL here
-      console.log('url', url)
-    }
-
-    // Add a listener for incoming URLs
-    Linking.addEventListener('url', handleDeepLink)
-  }, [])
-
   const [_request, response, promptAsync] = Google.useAuthRequest({
     iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
     androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,

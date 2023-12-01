@@ -66,7 +66,7 @@ export default function MyBarScreen() {
           testID="bar-ingredient-list-item"
           testIDIconRight="bar-ingredient-list-item-delete"
           onPress={() => {
-            capture('my_bar:ingredient_info_press', { ingredient_name: item.name })
+            capture('my_bar:ingredient_details_press', { ingredient_name: item.name })
             handleIngredientPress(item.id)
           }}
           onRightIconPress={() => {

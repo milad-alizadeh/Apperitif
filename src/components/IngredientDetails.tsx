@@ -8,6 +8,7 @@ import { GET_MY_BAR, GET_RECIPES_BY_INGREDIENT } from '~/graphql/queries'
 import { GET_INGREDIENT_DETAILS } from '~/graphql/queries/getIngredientDetails'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useSession } from '~/hooks/useSession'
+import { captureError } from '~/utils/captureError'
 import { Button } from './Button'
 import { Checkbox } from './Checkbox'
 import { HorizontalList } from './HorizontalList'
@@ -21,6 +22,7 @@ export interface IngredientDetailsProps {
   /** The ID of the ingredient to display details for */
   ingredientId: string
   onClosed?: () => void
+  showCta?: boolean
 }
 
 /**
@@ -28,6 +30,7 @@ export interface IngredientDetailsProps {
  */
 export const IngredientDetails = function IngredientDetails({
   ingredientId,
+  showCta = true,
   onClosed,
 }: IngredientDetailsProps) {
   const { screen, capture } = useAnalytics()
@@ -74,7 +77,7 @@ export const IngredientDetails = function IngredientDetails({
         myBarRefetch()
       },
       onError: (error) => {
-        console.log(error)
+        captureError(error)
       },
     })
   }
@@ -89,7 +92,7 @@ export const IngredientDetails = function IngredientDetails({
         myBarRefetch()
       },
       onError: (error) => {
-        console.log(error)
+        captureError(error)
       },
     })
   }
@@ -100,7 +103,7 @@ export const IngredientDetails = function IngredientDetails({
   }, [ingredient])
 
   return (
-    <View className="min-h-[500px] p-6 flex-">
+    <View className={`${availableRecipes.length ? 'min-h-[500px' : ''} p-6 flex-`}>
       <View className={`${loading ? 'flex-1 justify-center' : 'justify-start'}`}>
         {loading ? (
           <ActivityIndicator />
@@ -125,15 +128,17 @@ export const IngredientDetails = function IngredientDetails({
             </View>
 
             {/* Related Recipes */}
-            <View className="-mx-6 mt-6 min-h-[200px]">
-              <HorizontalList
-                listItems={availableRecipes as any}
-                title="Recipes"
-                showCount={false}
-              />
-            </View>
+            {!!availableRecipes.length && (
+              <View className="-mx-6 mt-6 min-h-[200px]">
+                <HorizontalList
+                  listItems={availableRecipes as any}
+                  title="Recipes"
+                  showCount={false}
+                />
+              </View>
+            )}
 
-            {isLoggedIn && (
+            {isLoggedIn && showCta && (
               <View>
                 {/* Stock information */}
                 <TouchableOpacity

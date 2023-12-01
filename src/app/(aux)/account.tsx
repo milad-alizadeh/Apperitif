@@ -6,6 +6,7 @@ import { useAnalytics } from '~/hooks'
 import { useHaptics } from '~/hooks/useHaptics'
 import { useSession } from '~/hooks/useSession'
 import { api } from '~/services'
+import { captureError } from '~/utils/captureError'
 
 export default function Account() {
   const { capture, reset } = useAnalytics()
@@ -22,8 +23,6 @@ export default function Account() {
 
   useEffect(() => {
     user?.app_metadata?.provider === 'email' && setEnableEmailChange(true)
-
-    console.log(user)
   }, [user?.app_metadata?.provider])
 
   /**
@@ -113,7 +112,7 @@ export default function Account() {
         Alert.alert('Details updated')
       }
     } catch (error) {
-      console.log(error)
+      captureError(error)
     } finally {
       setEmailLoading(false)
     }

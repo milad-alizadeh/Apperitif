@@ -1,9 +1,17 @@
 import { useMutation } from '@apollo/client'
 import { router } from 'expo-router'
 import debounce from 'lodash/debounce'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { View, ViewStyle } from 'react-native'
-import { FixedHeader, IngredientListItem, Screen, SectionList } from '~/components'
+import {
+  BottomSheet,
+  BottomSheetRef,
+  FixedHeader,
+  IngredientDetails,
+  IngredientListItem,
+  Screen,
+  SectionList,
+} from '~/components'
 import { ADD_TO_MY_BAR } from '~/graphql/mutations/addToMyBar'
 import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
 import { useAnalytics } from '~/hooks/useAnalytics'
@@ -30,6 +38,8 @@ export default function AddIngredientsScreen() {
   const [addToMyBar, { error: addError }] = useMutation(ADD_TO_MY_BAR)
   const [deleteFromMyBar, { error: deleteError }] = useMutation(DELETE_FROM_MY_BAR)
   const sections = searchQuery ? searchResults : { sectionsData, sectionsHeader }
+  const modalRef = useRef<BottomSheetRef>(null)
+  const [ingredientId, setIngredientId] = useState<string>('')
 
   const handleSelect = useCallback(
     (id: string, name: string) => {
@@ -57,6 +67,11 @@ export default function AddIngredientsScreen() {
             checked={isChecked}
             onPress={() => {
               handleSelect(item.id, item.name)
+            }}
+            onInfoPress={() => {
+              capture('add_ingredients:ingredient_details_press', { ingredient_name: item.name })
+              setIngredientId(item.id)
+              modalRef.current.show()
             }}
           />
         </View>
@@ -126,6 +141,11 @@ export default function AddIngredientsScreen() {
         showShadow={false}
         offset={0}
       />
+
+      {/* Ingredient details Modal */}
+      <BottomSheet ref={modalRef}>
+        <IngredientDetails ingredientId={ingredientId} showCta={false} />
+      </BottomSheet>
 
       {!!sections?.sectionsData.length && (
         <SectionList
