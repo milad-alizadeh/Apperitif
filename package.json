@@ -27,7 +27,7 @@
     "build:local:run:staging:ios-simulator": "eas build:run -p ios --path ./artifacts/staging-simulator.tar.gz",
     "build:local:run:android": "adb -d install ./artifacts/development.apk",
     "build:local:dev:ios": "eas build --profile development --non-interactive --platform ios --local --output ./artifacts/development.ipa",
-    "build:local:dev:android": "eas build --profile development --non-interactive --platform android --local ./artifacts/development.apk",
+    "build:local:dev:android": "eas build --profile development --non-interactive --platform android --local --output ./artifacts/development.apk",
     "build:local:dev:ios-simulator": "eas build --profile development-simulator --non-interactive --platform ios --local --output ./artifacts/development-simulator.tar.gz",
     "build:local:staging:ios-simulator": "eas build --profile staging-simulator --non-interactive --platform ios --local --output ./artifacts/staging-simulator.tar.gz",
     "update": "eas update --auto",
