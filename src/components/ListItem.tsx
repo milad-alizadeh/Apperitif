@@ -94,7 +94,7 @@ export const ListItem = memo(function ListItem({
   testIDIconRight,
   testIDIconLeft,
   disableCheckbox,
-  loading,
+  loading = false,
 }: ListItemProps) {
   const shadow = card ? shadowCard : {}
   const haptic = useHaptics('medium')
