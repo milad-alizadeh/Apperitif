@@ -13,10 +13,6 @@ import { Icon } from '../Icon'
 
 WebBrowser.maybeCompleteAuthSession()
 
-export interface AppleAuthenticationProps {
-  attemptedRoute: string | string[]
-}
-
 export const GoogleAuthentication = function GoogleAuthentication({ attemptedRoute }) {
   const { capture } = useAnalytics()
   const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)

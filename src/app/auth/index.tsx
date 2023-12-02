@@ -1,13 +1,11 @@
 import { useReactiveVar } from '@apollo/client'
-import * as Device from 'expo-device'
+import { isDevice } from 'expo-device'
 import { Image } from 'expo-image'
-import { router } from 'expo-router'
-import { useLocalSearchParams } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import React from 'react'
-import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
-import { Platform } from 'react-native'
-import { AppleAuthentication, Icon, Screen, Text } from '~/components'
-import { GoogleAuthentication } from '~/components/Authentication/GoogleAuthentication'
+import { ActivityIndicator, Platform, TouchableOpacity, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { AppleAuthentication, GoogleAuthentication, Icon, Screen, Text } from '~/components'
 import { useAnalytics } from '~/hooks'
 import { loadingVar } from '~/store/auth'
 import { colors } from '~/theme'
@@ -16,8 +14,9 @@ export default function AuthHomeScreen() {
   const { capture } = useAnalytics()
   const { attemptedRoute } = useLocalSearchParams()
   const loading = useReactiveVar(loadingVar)
-
-  const isSimulator = !Device.isDevice
+  const topOffset = useSafeAreaInsets().top
+  const isAnroid = Platform.OS === 'android'
+  const iconTop = isAnroid ? topOffset + 24 : 24
 
   return (
     <Screen
@@ -27,12 +26,16 @@ export default function AuthHomeScreen() {
         flex: 1,
       }}
     >
-      <Icon
-        icon="close"
-        size="large"
-        containerClassName="absolute top-6 right-6 z-20"
-        onPress={() => router.back()}
-      />
+      <View className="absolute right-6 z-20 " style={{ top: iconTop }}>
+        <Icon
+          icon="close"
+          size="large"
+          onPress={() => {
+            console.log('back')
+            router.back()
+          }}
+        />
+      </View>
 
       <View testID="auth-screen">
         <View className="items-center my-8">
@@ -76,7 +79,7 @@ export default function AuthHomeScreen() {
         </View>
 
         {/* One time password with email */}
-        {isSimulator && (
+        {!isDevice && (
           <View className="items-center">
             <TouchableOpacity
               className="p-1"

@@ -13,7 +13,7 @@ import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
 import { captureError } from '~/utils/captureError'
 
-export interface AppleAuthenticationProps {
+interface AppleAuthenticationProps {
   attemptedRoute: string | string[]
 }
 
