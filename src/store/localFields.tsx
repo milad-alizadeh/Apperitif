@@ -48,7 +48,7 @@ export const partialMatchInfoBoxDismissedVar = makeVar(false)
 export const totalMatchInfoBoxDismissedVar = makeVar(false)
 export const myBarPopoverDismissedVar = makeVar(false)
 
-export const measurementFields = {
+export const localFields = {
   selectedJiggerSize: createFieldPolicy(selectedJiggerSizeVar),
   selectedUnitSystem: createFieldPolicy(selectedUnitSystemVar),
   doubleRecipe: createFieldPolicy(doubleRecipeVar),
@@ -58,7 +58,7 @@ export const measurementFields = {
 }
 
 // Set default values
-export const measurementsDefaults = {
+export const localDefaults = {
   selectedJiggerSize: selectedJiggerSizeVar(),
   selectedUnitSystem: selectedUnitSystemVar(),
   doubleRecipe: doubleRecipeVar(),

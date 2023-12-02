@@ -56,7 +56,9 @@ export default function MyBarScreen() {
   } = usePopover()
 
   useEffect(() => {
-    openFirstPopover()
+    if (!data?.myBarPopoverDismissed) {
+      openFirstPopover()
+    }
   }, [])
 
   const {
@@ -136,6 +138,8 @@ export default function MyBarScreen() {
               placement="bottom"
               onDismiss={() => {
                 openSecondPopover()
+                updateCache(GET_LOCAL_STATE, { myBarPopoverDismissed: true })
+                capture('my_bar:popover_dismiss')
               }}
             >
               <Text body styleClassName="flex-wrap">

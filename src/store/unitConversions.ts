@@ -1,5 +1,5 @@
 import { Units } from '~/__generated__/graphql'
-import { UnitSystems } from './measurements'
+import { UnitSystems } from './localFields'
 
 type Fraction = '¼' | '⅓' | '½' | '⅔' | '¾' | ''
 
