@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { Chip } from './Chip'
 
 export interface FilterChipsProps {
@@ -38,6 +38,7 @@ export const FilterChips = function FilterChips({
           />
         )
       })}
+      <View className="w-8" />
     </ScrollView>
   )
 }

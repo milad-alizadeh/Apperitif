@@ -39,7 +39,7 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
 
   return (
     <View className={styleClassName}>
-      <View className="flex-row bg-white rounded-lg mx-6" style={{ ...shadowCard }}>
+      <View className="flex-row bg-white rounded-lg mx-6 my-3" style={{ ...shadowCard }}>
         <Text>{error?.message}</Text>
 
         <SearchBar
@@ -67,7 +67,7 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
 
       {!!chips?.length && !loading && (
         <FilterChips
-          styleClassName={`mt-3 -mb-3 pl-6 pr-12 min-h-[32px]`}
+          styleClassName="px-6"
           categories={chips}
           testIDItem="filter-chip"
           onDismiss={(id, name) => {

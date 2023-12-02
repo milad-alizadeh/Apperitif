@@ -40,7 +40,7 @@ export default function RecipesScreen() {
       <RecipeGrid
         ref={listRef}
         recipes={recipes}
-        styleClassName="pt-12 px-6 flex-1 -mx-3"
+        styleClassName="flex-1 pt-9"
         onScroll={scrollHandler}
         refreshing={refreshing}
         onRefresh={manualRefresh}
@@ -49,7 +49,7 @@ export default function RecipesScreen() {
             <ActivityIndicator animating={loading} />
           </View>
         }
-        ListHeaderComponent={<FilterBar autofocus={!categoryIds} styleClassName="-mx-3 mb-6" />}
+        ListHeaderComponent={<FilterBar autofocus={!categoryIds} styleClassName="mb-3" />}
         ListEmptyComponent={<View>{!!error && <Text>{error?.message}</Text>}</View>}
         onEndReached={loadMore}
       />
