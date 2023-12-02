@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { GetRecipeDetailsQuery, Units } from '~/__generated__/graphql'
-import { GET_MEASUREMENTS, GET_UNITS } from '~/graphql/queries'
+import { GET_LOCAL_STATE, GET_UNITS } from '~/graphql/queries'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useSession } from '~/hooks/useSession'
 import { UnitSystems, convertUnitToOtherSystem, defaultJiggerSize } from '~/store'
@@ -48,7 +48,7 @@ export const RecipeTabs = function RecipeTabs({
 }: RecipeTabsProps) {
   const { capture } = useAnalytics()
   const { data } = useQuery(GET_UNITS)
-  const { data: measurements } = useQuery(GET_MEASUREMENTS)
+  const { data: measurements } = useQuery(GET_LOCAL_STATE)
   const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
   const { isLoggedIn } = useSession()
   const multiplier =

@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import React, { FC } from 'react'
 import { Share } from 'react-native'
 import { Units } from '~/__generated__/graphql'
-import { GET_MEASUREMENTS, GET_UNITS } from '~/graphql/queries'
+import { GET_LOCAL_STATE, GET_UNITS } from '~/graphql/queries'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { UnitSystems, convertUnitToOtherSystem, defaultJiggerSize } from '~/store'
 import { captureError } from '~/utils/captureError'
@@ -17,7 +17,7 @@ interface RecipeShareProps {
 export const RecipeShare: FC<RecipeShareProps> = ({ recipe, loading }) => {
   const { capture } = useAnalytics()
   const { data: unitsData } = useQuery(GET_UNITS)
-  const { data: measurements } = useQuery(GET_MEASUREMENTS)
+  const { data: measurements } = useQuery(GET_LOCAL_STATE)
 
   const multiplier =
     (measurements?.selectedJiggerSize / defaultJiggerSize) * (measurements?.doubleRecipe ? 2 : 1)

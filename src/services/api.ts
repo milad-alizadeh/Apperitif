@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SupabaseClient, createClient } from '@supabase/supabase-js'
 import { AsyncStorageWrapper, persistCache } from 'apollo3-cache-persist'
 import 'react-native-url-polyfill/auto'
-import { GET_MEASUREMENTS } from '~/graphql/queries'
+import { GET_LOCAL_STATE } from '~/graphql/queries'
 import { measurementFields, measurementsDefaults } from '~/store'
 import { captureError } from '~/utils/captureError'
 import { Database } from '../types/supabase'
@@ -45,7 +45,7 @@ class Api {
 
   setDefaults(cache: InMemoryCache) {
     cache.writeQuery({
-      query: GET_MEASUREMENTS,
+      query: GET_LOCAL_STATE,
       data: measurementsDefaults,
     })
   }

@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client'
 import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
-import { set } from 'lodash'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ActivityIndicator, View, ViewStyle } from 'react-native'
+import { Popover, usePopover } from 'react-native-modal-popover'
 import {
   BottomSheet,
   BottomSheetRef,
@@ -18,7 +18,7 @@ import {
   Tabs,
   Text,
 } from '~/components'
-import { GET_MEASUREMENTS } from '~/graphql/queries'
+import { GET_LOCAL_STATE } from '~/graphql/queries'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useMatchedRecipes } from '~/hooks/useMatchedRecipes'
 import { useSession } from '~/hooks/useSession'
@@ -32,12 +32,31 @@ export default function MyBarScreen() {
   const { capture } = useAnalytics()
   const [deleteingItemId, setDeleteingItemId] = useState<string>('')
 
-  const { data, loading, error } = useQuery(GET_MEASUREMENTS)
+  const { data } = useQuery(GET_LOCAL_STATE)
   const updateCache = useUpdateCache()
 
   const handleIngredientPress = useCallback((ingredientId: string) => {
     setIngredientId(ingredientId)
     modalRef.current.show()
+  }, [])
+
+  const {
+    openPopover: openFirstPopover,
+    closePopover: closeFirstPopover,
+    popoverVisible: firstPopoverVisible,
+    touchableRef: firstTouchableRef,
+    popoverAnchorRect: firstPopoverAnchorRect,
+  } = usePopover()
+  const {
+    openPopover: openSecondPopover,
+    closePopover: closeSecondPopover,
+    popoverVisible: secondPopoverVisible,
+    touchableRef: secondTouchableRef,
+    popoverAnchorRect: secondPopoverAnchorRect,
+  } = usePopover()
+
+  useEffect(() => {
+    openFirstPopover()
   }, [])
 
   const {
@@ -98,112 +117,145 @@ export default function MyBarScreen() {
       <Header
         title="My Bar"
         rightElement={
-          <Button
-            testID="add-ingredients-button"
-            large={false}
-            label="Add Ingredients"
-            onPress={() => {
-              capture('my_bar:add_ingredients_press')
-              router.push('/add-ingredients')
-            }}
-          />
+          <>
+            <Button
+              ref={firstTouchableRef}
+              testID="add-ingredients-button"
+              large={false}
+              label="Add Ingredients"
+              onPress={() => {
+                capture('my_bar:add_ingredients_press')
+                router.push('/add-ingredients')
+              }}
+            />
+            <Popover
+              visible={firstPopoverVisible}
+              onClose={closeFirstPopover}
+              fromRect={firstPopoverAnchorRect}
+              contentStyle={{ padding: 12, borderRadius: 12 }}
+              placement="bottom"
+              onDismiss={() => {
+                openSecondPopover()
+              }}
+            >
+              <Text body styleClassName="flex-wrap">
+                Add ingredients to your bar
+              </Text>
+            </Popover>
+          </>
         }
       />
+      <View ref={secondTouchableRef} className="flex-1">
+        <Tabs
+          styleClassName="flex-1"
+          onTabChange={(title) => {
+            if (!isFocused) return
+            capture('my_bar:tab_change', { tab_name: title })
+          }}
+        >
+          <Tabs.TabPage title="Ingredients" styleClassName="p-0">
+            <SectionList
+              sectionsData={sectionsData}
+              sectionsHeader={sectionsHeader}
+              renderItem={renderIngredientItem}
+              headerHeight={200}
+              ListFooterComponent={<View />}
+              contentContainerStyle={{ marginTop: -16 }}
+              ListEmptyComponent={
+                <View className="flex-1 justify-center w-full">
+                  {ingredientLoading ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <View
+                      testID="empty-bar"
+                      className="w-full flex-1 justify-center items-center mt-8 min-h-[400px]"
+                    >
+                      <Text h3 styleClassName="text-center max-w-[220px] mb-3">
+                        Uh-oh, your bar is drier than a Martini!
+                      </Text>
+                      <Text styleClassName="text-center" body>
+                        Add some ingredients to get shaking.
+                      </Text>
+                    </View>
+                  )}
+                </View>
+              }
+            />
+          </Tabs.TabPage>
 
-      <Tabs
-        styleClassName="flex-1"
-        onTabChange={(title) => {
-          if (!isFocused) return
-          capture('my_bar:tab_change', { tab_name: title })
-        }}
-      >
-        <Tabs.TabPage title="Ingredients" styleClassName="p-0">
-          <SectionList
-            sectionsData={sectionsData}
-            sectionsHeader={sectionsHeader}
-            renderItem={renderIngredientItem}
-            headerHeight={200}
-            ListFooterComponent={<View />}
-            contentContainerStyle={{ marginTop: -16 }}
-            ListEmptyComponent={
-              <View className="flex-1 justify-center w-full">
-                {ingredientLoading ? (
-                  <ActivityIndicator />
+          <Tabs.TabPage title="Recipes" styleClassName="p-0">
+            <RecipeGrid
+              recipes={getRecipeMatch(totalMatchData)}
+              onRefresh={() => totalMatchRefetch()}
+              refreshing={totalMatchLoading}
+              ListHeaderComponent={
+                !data?.totalMatchInfoBoxDismissed ? (
+                  <InfoBox
+                    styleClassName="my-3 mx-6"
+                    description="Explore cocktail recipes you can make with your current ingredients."
+                    onClose={() =>
+                      updateCache(GET_LOCAL_STATE, { totalMatchInfoBoxDismissed: true })
+                    }
+                  />
                 ) : (
-                  <View testID="empty-bar" className="w-full justify-center items-center mt-8">
-                    <Text h3 styleClassName="text-center max-w-[220px] mb-3">
-                      Uh-oh, your bar is drier than a Martini!
-                    </Text>
-                    <Text styleClassName="text-center" body>
-                      Add some ingredients to get shaking.
+                  <View className="h-6"></View>
+                )
+              }
+              ListEmptyComponent={
+                !totalMatchLoading && (
+                  <View className="w-full flex-1 justify-center items-center mt-8">
+                    <Text h3 styleClassName="text-center max-w-[280px] mb-3">
+                      Add more ingredients to get recipe suggestions.
                     </Text>
                   </View>
-                )}
-              </View>
-            }
-          />
-        </Tabs.TabPage>
+                )
+              }
+            />
+          </Tabs.TabPage>
 
-        <Tabs.TabPage title="Recipes" styleClassName="p-0">
-          <RecipeGrid
-            recipes={getRecipeMatch(totalMatchData)}
-            onRefresh={() => totalMatchRefetch()}
-            refreshing={totalMatchLoading}
-            ListHeaderComponent={
-              !data?.totalMatchInfoBoxDismissed ? (
-                <InfoBox
-                  styleClassName="my-3 mx-6"
-                  description="Explore cocktail recipes you can make with your current ingredients."
-                  onClose={() =>
-                    updateCache(GET_MEASUREMENTS, { totalMatchInfoBoxDismissed: true })
-                  }
-                />
-              ) : (
-                <View className="h-6"></View>
-              )
-            }
-            ListEmptyComponent={
-              !totalMatchLoading && (
-                <View className="w-full flex-1 justify-center items-center mt-8">
-                  <Text h3 styleClassName="text-center max-w-[280px] mb-3">
-                    Add more ingredients to get recipe suggestions.
-                  </Text>
-                </View>
-              )
-            }
-          />
-        </Tabs.TabPage>
+          <Tabs.TabPage title="Almost there" styleClassName="p-0">
+            <RecipeGrid
+              recipes={getRecipeMatch(partialMatchData)}
+              onRefresh={() => partialMatchRefetch()}
+              refreshing={partialMatchLoading}
+              ListHeaderComponent={
+                !data?.partialMatchInfoBoxDismissed ? (
+                  <InfoBox
+                    styleClassName="my-3 mx-6"
+                    description="See which cocktails you're close to making with just 1-2 more ingredients."
+                    onClose={() =>
+                      updateCache(GET_LOCAL_STATE, { partialMatchInfoBoxDismissed: true })
+                    }
+                  />
+                ) : (
+                  <View className="h-6"></View>
+                )
+              }
+              ListEmptyComponent={
+                !partialMatchLoading && (
+                  <View className="w-full justify-center items-center mt-8">
+                    <Text h3 styleClassName="text-center max-w-[280px] mb-3">
+                      Add more ingredients to get recipe suggestions.
+                    </Text>
+                  </View>
+                )
+              }
+            />
+          </Tabs.TabPage>
+        </Tabs>
+      </View>
 
-        <Tabs.TabPage title="Near-Ready Recipes" styleClassName="p-0">
-          <RecipeGrid
-            recipes={getRecipeMatch(partialMatchData)}
-            onRefresh={() => partialMatchRefetch()}
-            refreshing={partialMatchLoading}
-            ListHeaderComponent={
-              !data?.partialMatchInfoBoxDismissed ? (
-                <InfoBox
-                  styleClassName="my-3 mx-6"
-                  description="See which cocktails you're close to making with just 1-2 more ingredients."
-                  onClose={() =>
-                    updateCache(GET_MEASUREMENTS, { partialMatchInfoBoxDismissed: true })
-                  }
-                />
-              ) : (
-                <View className="h-6"></View>
-              )
-            }
-            ListEmptyComponent={
-              !partialMatchLoading && (
-                <View className="w-full justify-center items-center mt-8">
-                  <Text h3 styleClassName="text-center max-w-[280px] mb-3">
-                    Add more ingredients to get recipe suggestions.
-                  </Text>
-                </View>
-              )
-            }
-          />
-        </Tabs.TabPage>
-      </Tabs>
+      <Popover
+        visible={secondPopoverVisible}
+        onClose={closeSecondPopover}
+        fromRect={secondPopoverAnchorRect}
+        contentStyle={{ padding: 12, borderRadius: 12 }}
+        placement="auto"
+      >
+        <Text body styleClassName="flex-wrap w-72">
+          Check what cocktail recipes you can make with these ingredients
+        </Text>
+      </Popover>
 
       {/* Ingredient details Modal */}
       <BottomSheet ref={modalRef}>

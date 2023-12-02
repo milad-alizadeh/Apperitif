@@ -6,4 +6,5 @@ extend type Query {
   doubleRecipe: Boolean
   totalMatchInfoBoxDismissed: Boolean
   partialMatchInfoBoxDismissed: Boolean
+  myBarPopoverDismissed: Boolean
 }

@@ -46,6 +46,7 @@ export const selectedJiggerSizeVar = makeVar(JiggerSizes['50ml'])
 export const doubleRecipeVar = makeVar<boolean>(false)
 export const partialMatchInfoBoxDismissedVar = makeVar(false)
 export const totalMatchInfoBoxDismissedVar = makeVar(false)
+export const myBarPopoverDismissedVar = makeVar(false)
 
 export const measurementFields = {
   selectedJiggerSize: createFieldPolicy(selectedJiggerSizeVar),
@@ -53,6 +54,7 @@ export const measurementFields = {
   doubleRecipe: createFieldPolicy(doubleRecipeVar),
   partialMatchInfoBoxDismissed: createFieldPolicy(partialMatchInfoBoxDismissedVar),
   totalMatchInfoBoxDismissed: createFieldPolicy(totalMatchInfoBoxDismissedVar),
+  myBarPopoverDismissed: createFieldPolicy(myBarPopoverDismissedVar),
 }
 
 // Set default values
@@ -62,4 +64,5 @@ export const measurementsDefaults = {
   doubleRecipe: doubleRecipeVar(),
   partialMatchInfoBoxDismissed: partialMatchInfoBoxDismissedVar(),
   totalMatchInfoBoxDismissed: totalMatchInfoBoxDismissedVar(),
+  myBarPopoverDismissed: myBarPopoverDismissedVar(),
 }
