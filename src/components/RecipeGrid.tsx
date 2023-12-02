@@ -17,6 +17,7 @@ interface RecipeGridProps {
   recipes: CardProps[]
   refreshing?: boolean
   styleClassName?: string
+  loading?: boolean
 }
 
 export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
@@ -31,6 +32,7 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
       recipes,
       refreshing,
       styleClassName,
+      loading,
     },
     ref,
   ) => {

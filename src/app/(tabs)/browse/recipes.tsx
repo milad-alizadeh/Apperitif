@@ -44,13 +44,13 @@ export default function RecipesScreen() {
         onScroll={scrollHandler}
         refreshing={refreshing}
         onRefresh={manualRefresh}
-        ListHeaderComponent={<FilterBar autofocus={!categoryIds} styleClassName="-mx-3 mb-6" />}
-        ListEmptyComponent={
-          <View>
-            {!!error && <Text>{error?.message}</Text>}
+        ListFooterComponent={
+          <View className="h-20 justify-center items-center mb-12">
             <ActivityIndicator animating={loading} />
           </View>
         }
+        ListHeaderComponent={<FilterBar autofocus={!categoryIds} styleClassName="-mx-3 mb-6" />}
+        ListEmptyComponent={<View>{!!error && <Text>{error?.message}</Text>}</View>}
         onEndReached={loadMore}
       />
     </Screen>

@@ -59,7 +59,6 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
       }
 
       setError(error)
-      setLoading(false)
       setPageInfo({ hasNextPage, totalCount })
 
       // Merge results if required, else set new results
@@ -69,6 +68,8 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
       } else {
         setRecipes(fetchedRecipes)
       }
+
+      setLoading(false)
     },
     [searchQuery, selectedFiltersVar().join(','), pageNumber],
   )
