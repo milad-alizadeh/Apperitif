@@ -187,7 +187,7 @@ export default function MyBarScreen() {
             />
           </Tabs.TabPage>
 
-          <Tabs.TabPage title="Recipes" styleClassName="p-0">
+          <Tabs.TabPage title="My Recipes" styleClassName="p-0">
             <RecipeGrid
               recipes={getRecipeMatch(totalMatchData)}
               onRefresh={() => totalMatchRefetch()}
@@ -217,7 +217,7 @@ export default function MyBarScreen() {
             />
           </Tabs.TabPage>
 
-          <Tabs.TabPage title="Almost there" styleClassName="p-0">
+          <Tabs.TabPage title="Almost can make" styleClassName="p-0">
             <RecipeGrid
               recipes={getRecipeMatch(partialMatchData)}
               onRefresh={() => partialMatchRefetch()}
