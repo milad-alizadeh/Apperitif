@@ -28,7 +28,7 @@ export default function AllFiltersScreen() {
   const renderItem = useCallback(
     ({ item }: { item; index: number }) => {
       return (
-        <View className="px-6">
+        <View className="px-5">
           <ListItem
             key={item.id}
             name={item.name}
@@ -56,14 +56,6 @@ export default function AllFiltersScreen() {
 
   return (
     <Screen preset="fixed" safeAreaEdges={['bottom']} contentContainerStyle={$containerStyle}>
-      <Header
-        verticalPadding
-        title="Filters"
-        onClose={() => {
-          capture('browse:filters_modal_close')
-          router.back()
-        }}
-      />
       <FlatList data={filterCategories} renderItem={renderItem} className="py-3" />
       <FilterActions />
     </Screen>

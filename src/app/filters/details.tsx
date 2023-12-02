@@ -1,8 +1,8 @@
 import { useQuery, useReactiveVar } from '@apollo/client'
 import { useLocalSearchParams } from 'expo-router'
 import React, { useCallback, useMemo } from 'react'
-import { FlatList, ViewStyle } from 'react-native'
-import { FilterActions, Header, ListItem, Screen } from '~/components'
+import { FlatList, View, ViewStyle } from 'react-native'
+import { FilterActions, ListItem, Screen } from '~/components'
 import { GET_FILTER_DETAILS } from '~/graphql/queries/getFilterDetails'
 import { draftSelectedFiltersVar, toggleFilter } from '~/store'
 
@@ -33,16 +33,18 @@ export default function FilterDetailsScreen() {
   const renderItem = useCallback(
     ({ item }: { item; index: number }) => {
       return (
-        <ListItem
-          key={item.id}
-          name={`${item.name}`}
-          styleClassName="mb-3"
-          showCheckbox
-          testID="sub-filter-list-item"
-          checked={item.checked}
-          card
-          onPress={item.onPress}
-        />
+        <View className="px-5">
+          <ListItem
+            key={item.id}
+            name={`${item.name}`}
+            styleClassName="mb-3"
+            showCheckbox
+            testID="sub-filter-list-item"
+            checked={item.checked}
+            card
+            onPress={item.onPress}
+          />
+        </View>
       )
     },
     [filtersList],
@@ -50,9 +52,7 @@ export default function FilterDetailsScreen() {
 
   return (
     <Screen preset="fixed" safeAreaEdges={['bottom']} contentContainerStyle={$containerStyle}>
-      <Header verticalPadding title={filterCategory?.name} backButton />
-
-      <FlatList className="px-6" data={filtersList} renderItem={renderItem} />
+      <FlatList className="py-3" data={filtersList} renderItem={renderItem} />
       <FilterActions />
     </Screen>
   )

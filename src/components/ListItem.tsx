@@ -130,7 +130,7 @@ export const ListItem = memo(function ListItem({
           }}
           disabled={disableCheckbox}
           checked={checked}
-          styleClassName="mr-3"
+          styleClassName="mr-[14px]"
         />
       )}
       {leftText && (
