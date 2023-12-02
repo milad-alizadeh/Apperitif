@@ -47,10 +47,10 @@ jobs:
           EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.STAGING_EXPO_PUBLIC_SUPABASE_ANON_KEY }}
           EXPO_PUBLIC_SUPABASE_URL: ${{ vars.STAGING_EXPO_PUBLIC_SUPABASE_URL }}
 
-      - name: Upload sourcemaps to Sentry
-        run: yarn upload-sourcemap -p ${{ github.ref_name }}
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          APP_VARIANT: ${{ github.ref_name }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}-staging
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+      # - name: Upload sourcemaps to Sentry
+      #   run: yarn upload-sourcemap -p ${{ github.ref_name }}
+      #   env:
+      #     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      #     APP_VARIANT: ${{ github.ref_name }}
+      #     SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}-staging
+      #     SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
