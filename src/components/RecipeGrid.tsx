@@ -18,7 +18,7 @@ interface RecipeGridProps {
   refreshing?: boolean
   styleClassName?: string
   loading?: boolean
-  ref: Ref<any>
+  ref?: Ref<any>
 }
 
 export const RecipeGrid: FC<RecipeGridProps> = forwardRef(

@@ -1,12 +1,11 @@
 import React, { RefObject, createRef, useEffect, useMemo, useRef, useState } from 'react'
 import { FlatList, View, useWindowDimensions } from 'react-native'
-import Biglist from 'react-native-big-list'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { SectionHeaderItem } from '../SectionHeaderItem'
 
 export interface SectionHeaderProps {
   sectionTitles: string[]
-  sectionListRef?: RefObject<Biglist>
+  sectionListRef?: RefObject<any>
   activeIndex: number
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>
   setIsNavScroll?: (v: boolean) => void

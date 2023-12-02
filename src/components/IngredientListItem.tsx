@@ -49,7 +49,13 @@ export const IngredientListItem = memo(function IngredientListItem({
       )}
       <Text className={`mr-auto ml-4 font-medium text-base`}>{name}</Text>
 
-      <Icon icon="text" size="large" color={colors.neutral[500]} onPress={() => onInfoPress?.()} />
+      <Icon
+        icon="text"
+        size="large"
+        containerClassName="-mr-2"
+        color={colors.neutral[500]}
+        onPress={() => onInfoPress?.()}
+      />
     </TouchableOpacity>
   )
 })

@@ -1,6 +1,6 @@
 import { Image } from 'expo-image'
 import React, { memo } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
 import { useHaptics } from '~/hooks/useHaptics'
 import { colors } from '~/theme'
 import { shadowCard } from '~/theme/shadows'
@@ -94,6 +94,7 @@ export const ListItem = memo(function ListItem({
   testIDIconRight,
   testIDIconLeft,
   disableCheckbox,
+  loading,
 }: ListItemProps) {
   const shadow = card ? shadowCard : {}
   const haptic = useHaptics('medium')
@@ -166,19 +167,24 @@ export const ListItem = memo(function ListItem({
       </Text>
 
       {rightIcon && (
-        <Icon
-          testID={testIDIconRight}
-          icon={rightIcon}
-          color={colors.neutral[500]}
-          onPress={
-            onRightIconPress
-              ? () => {
-                  if (enableHaptics) haptic()
-                  onRightIconPress()
-                }
-              : undefined
-          }
-        />
+        <View>
+          <ActivityIndicator className="absolute left-[10px] top-[10px]" animating={loading} />
+          <Icon
+            testID={testIDIconRight}
+            icon={rightIcon}
+            size="large"
+            color={colors.neutral[500]}
+            containerClassName={`${loading ? 'opacity-0' : ''} -mr-2`}
+            onPress={
+              onRightIconPress
+                ? () => {
+                    if (enableHaptics) haptic()
+                    onRightIconPress()
+                  }
+                : undefined
+            }
+          />
+        </View>
       )}
 
       {!!badgeNumber && (

@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
+import { set } from 'lodash'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ActivityIndicator, View, ViewStyle } from 'react-native'
 import {
@@ -29,6 +30,7 @@ export default function MyBarScreen() {
   const modalRef = useRef<BottomSheetRef>(null)
   const [ingredientId, setIngredientId] = useState<string>('')
   const { capture } = useAnalytics()
+  const [deleteingItemId, setDeleteingItemId] = useState<string>('')
 
   const { data, loading, error } = useQuery(GET_MEASUREMENTS)
   const updateCache = useUpdateCache()
@@ -70,7 +72,9 @@ export default function MyBarScreen() {
             handleIngredientPress(item.id)
           }}
           leftIcon="text"
+          loading={deleteingItemId === item.id}
           onRightIconPress={() => {
+            deleteingItemId === item.id ? setDeleteingItemId('') : setDeleteingItemId(item.id)
             deleteFromMyBar({
               variables: { ingredientIds: [item.id], profileIds: [user?.id] },
               onCompleted: () => {
@@ -78,13 +82,14 @@ export default function MyBarScreen() {
                 ingredientRefetch()
                 totalMatchRefetch()
                 partialMatchRefetch()
+                setDeleteingItemId('')
               },
             })
           }}
         />
       )
     },
-    [sectionsData],
+    [sectionsData, deleteingItemId],
   )
 
   return (
@@ -141,14 +146,13 @@ export default function MyBarScreen() {
 
         <Tabs.TabPage title="Recipes" styleClassName="p-0">
           <RecipeGrid
-            styleClassName="px-6"
             recipes={getRecipeMatch(totalMatchData)}
             onRefresh={() => totalMatchRefetch()}
             refreshing={totalMatchLoading}
             ListHeaderComponent={
               !data?.totalMatchInfoBoxDismissed ? (
                 <InfoBox
-                  styleClassName="m-3"
+                  styleClassName="my-3 mx-6"
                   description="Explore cocktail recipes you can make with your current ingredients."
                   onClose={() =>
                     updateCache(GET_MEASUREMENTS, { totalMatchInfoBoxDismissed: true })
@@ -172,14 +176,13 @@ export default function MyBarScreen() {
 
         <Tabs.TabPage title="Near-Ready Recipes" styleClassName="p-0">
           <RecipeGrid
-            styleClassName="px-6"
             recipes={getRecipeMatch(partialMatchData)}
             onRefresh={() => partialMatchRefetch()}
             refreshing={partialMatchLoading}
             ListHeaderComponent={
               !data?.partialMatchInfoBoxDismissed ? (
                 <InfoBox
-                  styleClassName="m-3"
+                  styleClassName="my-3 mx-6"
                   description="See which cocktails you're close to making with just 1-2 more ingredients."
                   onClose={() =>
                     updateCache(GET_MEASUREMENTS, { partialMatchInfoBoxDismissed: true })

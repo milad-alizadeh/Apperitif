@@ -1,5 +1,5 @@
 import { BlurView } from 'expo-blur'
-import React, { FC, forwardRef, useImperativeHandle, useState } from 'react'
+import React, { FC, Ref, forwardRef, useImperativeHandle, useState } from 'react'
 import { Modal, View, useWindowDimensions } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
@@ -26,6 +26,7 @@ export interface PromptProps {
   description?: string
   confirmText?: string
   cancelText?: string
+  ref: Ref<PromptRef>
 }
 
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)

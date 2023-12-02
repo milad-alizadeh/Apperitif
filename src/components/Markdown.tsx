@@ -1,11 +1,14 @@
 import { router } from 'expo-router'
 import * as WebBrowser from 'expo-web-browser'
-import React, { FC } from 'react'
+import React, { ComponentType, FC, PropsWithChildren } from 'react'
 import { LayoutChangeEvent, View } from 'react-native'
-import MarkdownRenderer, { MarkdownProps } from 'react-native-markdown-display'
+import _MarkdownRenderer, { MarkdownProps } from 'react-native-markdown-display'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { colors } from '~/theme'
 import { SkeletonView } from './SkeletonView'
+
+type MarkdownWithChildrenT = ComponentType<PropsWithChildren<MarkdownProps>>
+const MarkdownRenderer = _MarkdownRenderer as MarkdownWithChildrenT
 
 interface Props {
   text: string
@@ -25,13 +28,14 @@ export const Markdown: FC<Props> = ({
   const { capture } = useAnalytics()
   const [skeletonWidth, setSkeletonWidth] = React.useState(200)
 
-  const handleLink = async (url: string) => {
+  const handleLink = (url: string) => {
     if (url.startsWith('http')) {
       externalLinkEventLabel && capture(externalLinkEventLabel, { url })
-      await WebBrowser.openBrowserAsync(url)
+      WebBrowser.openBrowserAsync(url)
     } else if (url.startsWith('/')) {
       router.push(url as any)
     }
+    return false
   }
 
   return (
