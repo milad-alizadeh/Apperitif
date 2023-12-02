@@ -8,7 +8,7 @@ export default () => {
   return {
     name: APP_NAME,
     slug: 'apperitif',
-    version: '1.3.0',
+    version: '1.4.0',
     orientation: 'portrait',
     icon: './assets/images/app-icon-all.png',
     scheme: BUNDLE_ID,
