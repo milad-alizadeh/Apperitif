@@ -29,7 +29,8 @@ export default function AuthHomeScreen() {
     >
       <Icon
         icon="close"
-        containerClassName="absolute top-6 right-6"
+        size="large"
+        containerClassName="absolute top-6 right-6 z-20"
         onPress={() => router.back()}
       />
 

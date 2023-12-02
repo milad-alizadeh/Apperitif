@@ -1,17 +1,15 @@
 import { ApolloProvider } from '@apollo/client'
 import { useFonts } from 'expo-font'
-import { SplashScreen, Stack } from 'expo-router'
-import { useGlobalSearchParams, usePathname } from 'expo-router'
+import { SplashScreen, Stack, useGlobalSearchParams, usePathname } from 'expo-router'
 import snakeCase from 'lodash/snakeCase'
 import { PostHogProvider } from 'posthog-react-native'
 import { useEffect } from 'react'
 import { LogBox } from 'react-native'
 import { EasUpdate } from '~/components/EasUpdate'
-import { useAnalytics } from '~/hooks/useAnalytics'
-import { useSentry } from '~/hooks/useSentry'
+import { useAnalytics, useSentry } from '~/hooks'
 import { SessionProvider } from '~/providers/SessionProvider'
 import { api } from '~/services/api'
-import { customFontsToLoad } from '../theme/typography'
+import { customFontsToLoad } from '~/theme/typography'
 
 const posthogApiKey = process.env.EXPO_PUBLIC_POSTHOG_API_KEY
 
@@ -96,7 +94,14 @@ function RootLayoutNav() {
               <Stack.Screen name="(tabs)" options={{ animation: 'none' }} />
               <Stack.Screen name="welcome" />
               <Stack.Screen name="recipe" getId={({ params }) => params.recipeName} />
-              <Stack.Screen name="auth" options={{ presentation: 'modal' }} />
+              <Stack.Screen
+                name="filters"
+                options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+              />
+              <Stack.Screen
+                name="auth"
+                options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+              />
               <Stack.Screen name="add-ingredients" />
             </Stack>
           </ApolloProvider>

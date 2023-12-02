@@ -55,7 +55,7 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
           containerClassName="bg-neutral-100 rounded-r-lg"
           color={colors.neutral[500]}
           onPress={() => {
-            router.push('/browse/filters')
+            router.push('/filters')
             setupDraftFilters()
             capture('browse:filters_icon_press')
           }}

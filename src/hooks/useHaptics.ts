@@ -26,5 +26,9 @@ export const useHaptics = (feedbackType: FeedbackType = 'selection') => {
     [createHapticHandler, createNotificationFeedback],
   )
 
+  if (Platform.OS === 'android') {
+    return () => {}
+  }
+
   return hapticHandlers[feedbackType] || (() => {})
 }

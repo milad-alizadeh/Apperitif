@@ -5,7 +5,6 @@ export default function Browse() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="recipes" />
-      <Stack.Screen name="filters" options={{ presentation: 'modal' }} />
     </Stack>
   )
 }
