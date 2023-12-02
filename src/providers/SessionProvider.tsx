@@ -1,5 +1,4 @@
 import { Session } from '@supabase/supabase-js'
-import { usePostHog } from 'posthog-react-native'
 import React, { ReactNode, createContext, useEffect, useState } from 'react'
 import { useAnalytics } from '../hooks/useAnalytics'
 import { api } from '../services/api'
@@ -35,7 +34,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
     if (!loaded) return
     api.supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session) {
-        identify(session?.user.id, {
+        identify(session?.user?.id, {
           provider: session?.user?.app_metadata?.provider,
         })
       }
@@ -45,7 +44,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
     api.supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN') {
         capture('auth:log_in_success', { provider: session?.user?.app_metadata?.provider })
-        identify(session?.user.id, {
+        identify(session?.user?.id, {
           provider: session?.user?.app_metadata?.provider,
         })
       }
