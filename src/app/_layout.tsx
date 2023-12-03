@@ -5,8 +5,8 @@ import snakeCase from 'lodash/snakeCase'
 import { PostHogProvider } from 'posthog-react-native'
 import { useEffect } from 'react'
 import { LogBox } from 'react-native'
-import { EasUpdate } from '~/components/EasUpdate'
 import { useAnalytics, useSentry } from '~/hooks'
+import { StoreProvider } from '~/providers'
 import { SessionProvider } from '~/providers/SessionProvider'
 import { api } from '~/services/api'
 import { customFontsToLoad } from '~/theme/typography'
@@ -88,22 +88,23 @@ function RootLayoutNav() {
       <AppWrapper>
         <SessionProvider>
           <ApolloProvider client={api?.apolloClient}>
-            <EasUpdate />
-            <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="index" />
-              <Stack.Screen name="(tabs)" options={{ animation: 'none' }} />
-              <Stack.Screen name="welcome" />
-              <Stack.Screen name="recipe" getId={({ params }) => params.recipeName} />
-              <Stack.Screen
-                name="filters"
-                options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
-              />
-              <Stack.Screen
-                name="auth"
-                options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
-              />
-              <Stack.Screen name="add-ingredients" />
-            </Stack>
+            <StoreProvider>
+              <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="index" />
+                <Stack.Screen name="(tabs)" options={{ animation: 'none' }} />
+                <Stack.Screen name="welcome" />
+                <Stack.Screen name="recipe" getId={({ params }) => params.recipeName} />
+                <Stack.Screen
+                  name="filters"
+                  options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+                />
+                <Stack.Screen
+                  name="auth"
+                  options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+                />
+                <Stack.Screen name="add-ingredients" />
+              </Stack>
+            </StoreProvider>
           </ApolloProvider>
         </SessionProvider>
       </AppWrapper>
