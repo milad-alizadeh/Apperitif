@@ -84,7 +84,7 @@ export default () => {
         projectId: '0fe189be-8677-4ba8-b1e9-c3b3e63b388f',
       },
     },
-    [APP_VARIANT === 'development' ? undefined : 'hooks']: {
+    hooks: {
       postPublish: [
         {
           file: 'sentry-expo/upload-sourcemaps',
