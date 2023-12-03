@@ -10,8 +10,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SupabaseClient, createClient } from '@supabase/supabase-js'
 import { AsyncStorageWrapper, persistCache } from 'apollo3-cache-persist'
 import 'react-native-url-polyfill/auto'
-import { GET_LOCAL_STATE } from '~/graphql/queries'
-// import { localDefaults, localFields } from '~/store'
 import { captureError } from '~/utils/captureError'
 import { Database } from '../types/supabase'
 import { LargeSecureStoreAdapter } from './storage'
@@ -42,13 +40,6 @@ class Api {
     this.createSupabaseClient()
     await this.initializeApolloClient()
   }
-
-  // setDefaults(cache: InMemoryCache) {
-  //   cache.writeQuery({
-  //     query: GET_LOCAL_STATE,
-  //     data: localDefaults,
-  //   })
-  // }
 
   async initializeApolloClient() {
     this.httpLink = createHttpLink({
