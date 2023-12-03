@@ -1,5 +1,4 @@
 import { Session } from '@supabase/supabase-js'
-import { usePostHog } from 'posthog-react-native'
 import React, { ReactNode, createContext, useEffect, useState } from 'react'
 import { useAnalytics } from '../hooks/useAnalytics'
 import { api } from '../services/api'
