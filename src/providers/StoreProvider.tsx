@@ -1,15 +1,21 @@
 import React, { Dispatch, FC, SetStateAction, createContext, useContext, useEffect } from 'react'
 import { defaultJiggerSize, defaultUnitSystem } from '~/constants'
-import { clearPersistedState, usePersistedState } from '~/hooks'
+import { usePersistedState } from '~/hooks'
 import { JiggerSize, UnitSystem } from '~/types'
 
 interface StoreContextType {
-  selectedUnitSystem: UnitSystem
-  selectedJiggerSize: JiggerSize
   doubleRecipe: boolean
-  setSelectedUnitSystem: Dispatch<SetStateAction<UnitSystem>>
-  setSelectedJiggerSize: Dispatch<SetStateAction<JiggerSize>>
+  partialMatchInfoBoxDismissed: boolean
+  selectedJiggerSize: JiggerSize
+  selectedUnitSystem: UnitSystem
+  totalMatchInfoBoxDismissed: boolean
+  myBarPopoverDismissed: boolean
   setDoubleRecipe: Dispatch<SetStateAction<boolean>>
+  setMyBarPopoverDismissed: Dispatch<SetStateAction<boolean>>
+  setPartialMatchInfoBoxDismissed: Dispatch<SetStateAction<boolean>>
+  setSelectedJiggerSize: Dispatch<SetStateAction<JiggerSize>>
+  setSelectedUnitSystem: Dispatch<SetStateAction<UnitSystem>>
+  setTotalMatchInfoBoxDismissed: Dispatch<SetStateAction<boolean>>
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined)
@@ -25,16 +31,35 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
   )
 
   const [doubleRecipe, setDoubleRecipe] = usePersistedState('doubleRecipe', false)
+  const [totalMatchInfoBoxDismissed, setTotalMatchInfoBoxDismissed] = usePersistedState(
+    'totalMatchInfoBoxDismissed',
+    false,
+  )
+  const [partialMatchInfoBoxDismissed, setPartialMatchInfoBoxDismissed] = usePersistedState(
+    'partialMatchInfoBoxDismissed',
+    false,
+  )
+
+  const [myBarPopoverDismissed, setMyBarPopoverDismissed] = usePersistedState(
+    'myBarPopoverDismissed',
+    false,
+  )
 
   return (
     <StoreContext.Provider
       value={{
-        selectedUnitSystem,
-        setSelectedUnitSystem,
-        selectedJiggerSize,
-        setSelectedJiggerSize,
         doubleRecipe,
+        myBarPopoverDismissed,
+        partialMatchInfoBoxDismissed,
+        selectedJiggerSize,
+        selectedUnitSystem,
+        totalMatchInfoBoxDismissed,
         setDoubleRecipe,
+        setMyBarPopoverDismissed,
+        setPartialMatchInfoBoxDismissed,
+        setSelectedJiggerSize,
+        setSelectedUnitSystem,
+        setTotalMatchInfoBoxDismissed,
       }}
     >
       {children}

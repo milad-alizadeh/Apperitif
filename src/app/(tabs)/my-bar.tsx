@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client'
 import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
@@ -18,22 +17,24 @@ import {
   Tabs,
   Text,
 } from '~/components'
-import { GET_LOCAL_STATE } from '~/graphql/queries'
-import { useAnalytics } from '~/hooks/useAnalytics'
-import { useMatchedRecipes } from '~/hooks/useMatchedRecipes'
-import { useSession } from '~/hooks/useSession'
-import { useUpdateCache } from '~/hooks/useUpdateCache'
+import { useAnalytics, useMatchedRecipes, useSession } from '~/hooks'
+import { useStore } from '~/providers'
 
 export default function MyBarScreen() {
+  const {
+    myBarPopoverDismissed,
+    totalMatchInfoBoxDismissed,
+    partialMatchInfoBoxDismissed,
+    setMyBarPopoverDismissed,
+    setPartialMatchInfoBoxDismissed,
+    setTotalMatchInfoBoxDismissed,
+  } = useStore()
   const isFocused = useIsFocused()
   const { user } = useSession()
   const modalRef = useRef<BottomSheetRef>(null)
   const [ingredientId, setIngredientId] = useState<string>('')
   const { capture } = useAnalytics()
   const [deleteingItemId, setDeleteingItemId] = useState<string>('')
-
-  const { data } = useQuery(GET_LOCAL_STATE)
-  const updateCache = useUpdateCache()
 
   const handleIngredientPress = useCallback((ingredientId: string) => {
     setIngredientId(ingredientId)
@@ -56,7 +57,7 @@ export default function MyBarScreen() {
   } = usePopover()
 
   useEffect(() => {
-    if (!data?.myBarPopoverDismissed) {
+    if (!myBarPopoverDismissed) {
       openFirstPopover()
     }
   }, [])
@@ -138,7 +139,7 @@ export default function MyBarScreen() {
               placement="bottom"
               onDismiss={() => {
                 openSecondPopover()
-                updateCache(GET_LOCAL_STATE, { myBarPopoverDismissed: true })
+                setMyBarPopoverDismissed(true)
                 capture('my_bar:popover_dismiss')
               }}
             >
@@ -193,13 +194,11 @@ export default function MyBarScreen() {
               onRefresh={() => totalMatchRefetch()}
               refreshing={totalMatchLoading}
               ListHeaderComponent={
-                !data?.totalMatchInfoBoxDismissed ? (
+                totalMatchInfoBoxDismissed ? (
                   <InfoBox
                     styleClassName="my-3 mx-6"
                     description="Explore cocktail recipes you can make with your current ingredients."
-                    onClose={() =>
-                      updateCache(GET_LOCAL_STATE, { totalMatchInfoBoxDismissed: true })
-                    }
+                    onClose={() => setTotalMatchInfoBoxDismissed(true)}
                   />
                 ) : (
                   <View className="h-6"></View>
@@ -223,13 +222,11 @@ export default function MyBarScreen() {
               onRefresh={() => partialMatchRefetch()}
               refreshing={partialMatchLoading}
               ListHeaderComponent={
-                !data?.partialMatchInfoBoxDismissed ? (
+                partialMatchInfoBoxDismissed ? (
                   <InfoBox
                     styleClassName="my-3 mx-6"
                     description="See which cocktails you're close to making with just 1-2 more ingredients."
-                    onClose={() =>
-                      updateCache(GET_LOCAL_STATE, { partialMatchInfoBoxDismissed: true })
-                    }
+                    onClose={() => setPartialMatchInfoBoxDismissed(true)}
                   />
                 ) : (
                   <View className="h-6"></View>

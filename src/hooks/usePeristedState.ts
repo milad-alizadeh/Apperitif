@@ -30,7 +30,6 @@ export const usePersistedState = <T extends persistable>(
   const [value, setValue] = useState<T>(readValue)
 
   useEffect(() => {
-    console.log(typeof value)
     switch (typeof value) {
       case 'string':
         storage.set(key, value as string)

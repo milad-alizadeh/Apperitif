@@ -2,9 +2,11 @@ import { useQuery } from '@apollo/client'
 import React, { FC } from 'react'
 import { Share } from 'react-native'
 import { Units } from '~/__generated__/graphql'
-import { GET_LOCAL_STATE, GET_UNITS } from '~/graphql/queries'
+import { defaultJiggerSize } from '~/constants'
+import { GET_UNITS } from '~/graphql/queries'
 import { useAnalytics } from '~/hooks/useAnalytics'
-import { UnitSystems, convertUnitToOtherSystem, defaultJiggerSize } from '~/store'
+import { useStore } from '~/providers'
+import { convertUnitToOtherSystem } from '~/store'
 import { captureError } from '~/utils/captureError'
 import { Icon } from './Icon'
 import { SkeletonView } from './SkeletonView'
@@ -15,12 +17,11 @@ interface RecipeShareProps {
 }
 
 export const RecipeShare: FC<RecipeShareProps> = ({ recipe, loading }) => {
+  const { selectedUnitSystem, selectedJiggerSize, doubleRecipe } = useStore()
   const { capture } = useAnalytics()
   const { data: unitsData } = useQuery(GET_UNITS)
-  const { data: measurements } = useQuery(GET_LOCAL_STATE)
 
-  const multiplier =
-    (measurements?.selectedJiggerSize / defaultJiggerSize) * (measurements?.doubleRecipe ? 2 : 1)
+  const multiplier = (selectedJiggerSize / defaultJiggerSize) * (doubleRecipe ? 2 : 1)
 
   const units = unitsData?.unitsCollection?.edges.map((e) => e.node) as Units[]
 
@@ -35,7 +36,7 @@ ${recipe?.recipesIngredientsCollection?.edges
     const { quantity, unit } = e.node
     const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem({
       unit: unit as Units,
-      toSystem: measurements?.selectedUnitSystem as UnitSystems,
+      toSystem: selectedUnitSystem,
       quantity,
       units,
       multiplier,
