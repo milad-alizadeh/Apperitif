@@ -142,7 +142,7 @@ export default function MyBarScreen() {
             setMyBarPopoverDismissed(true)
             capture('my_bar:popover_dismiss')
           }}
-          from={<View className="absolute h-6 w-6 left-1/2 -translate-x-3 top-0"></View>}
+          from={<View className="absolute h-6 w-6 left-1/2 -translate-x-3 top-6"></View>}
         >
           <Text body styleClassName="flex-wrap w-72">
             Check what cocktail recipes you can make with these ingredients
