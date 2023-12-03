@@ -1,6 +1,6 @@
 import React, { Dispatch, FC, SetStateAction, createContext, useContext, useEffect } from 'react'
 import { defaultJiggerSize, defaultUnitSystem } from '~/constants'
-import { usePersistedState } from '~/hooks'
+import { clearPersistedState, usePersistedState } from '~/hooks'
 import { JiggerSize, UnitSystem } from '~/types'
 
 interface StoreContextType {

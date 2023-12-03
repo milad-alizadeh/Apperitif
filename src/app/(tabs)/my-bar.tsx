@@ -2,7 +2,7 @@ import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ActivityIndicator, View, ViewStyle } from 'react-native'
-import { Popover, usePopover } from 'react-native-modal-popover'
+import Popover from 'react-native-popover-view'
 import {
   BottomSheet,
   BottomSheetRef,
@@ -29,6 +29,7 @@ export default function MyBarScreen() {
     setPartialMatchInfoBoxDismissed,
     setTotalMatchInfoBoxDismissed,
   } = useStore()
+  const touchable = useRef(null)
   const isFocused = useIsFocused()
   const { user } = useSession()
   const modalRef = useRef<BottomSheetRef>(null)
@@ -41,26 +42,13 @@ export default function MyBarScreen() {
     modalRef.current.show()
   }, [])
 
-  const {
-    openPopover: openFirstPopover,
-    closePopover: closeFirstPopover,
-    popoverVisible: firstPopoverVisible,
-    touchableRef: firstTouchableRef,
-    popoverAnchorRect: firstPopoverAnchorRect,
-  } = usePopover()
-  const {
-    openPopover: openSecondPopover,
-    closePopover: closeSecondPopover,
-    popoverVisible: secondPopoverVisible,
-    touchableRef: secondTouchableRef,
-    popoverAnchorRect: secondPopoverAnchorRect,
-  } = usePopover()
+  const [showPopover, setShowPopover] = useState<number | null>(null)
 
   useEffect(() => {
     if (!myBarPopoverDismissed) {
-      openFirstPopover()
+      setShowPopover(1)
     }
-  }, [])
+  }, [myBarPopoverDismissed])
 
   const {
     deleteFromMyBar,
@@ -116,41 +104,51 @@ export default function MyBarScreen() {
 
   return (
     <Screen preset="fixed" contentContainerStyle={$container} safeAreaEdges={['top']}>
-      {/* List of ingredients in the bar */}
       <Header
         title="My Bar"
         rightElement={
-          <>
-            <Button
-              ref={firstTouchableRef}
-              testID="add-ingredients-button"
-              large={false}
-              label="Add Ingredients"
-              onPress={() => {
-                capture('my_bar:add_ingredients_press')
-                router.push('/add-ingredients')
-              }}
-            />
-            <Popover
-              visible={firstPopoverVisible}
-              onClose={closeFirstPopover}
-              fromRect={firstPopoverAnchorRect}
-              contentStyle={{ padding: 12, borderRadius: 12 }}
-              placement="bottom"
-              onDismiss={() => {
-                openSecondPopover()
-                setMyBarPopoverDismissed(true)
-                capture('my_bar:popover_dismiss')
-              }}
-            >
-              <Text body styleClassName="flex-wrap">
-                Add ingredients to your bar
-              </Text>
-            </Popover>
-          </>
+          <Popover
+            popoverStyle={{ padding: 12, borderRadius: 12 }}
+            isVisible={showPopover === 1}
+            from={
+              <Button
+                testID="add-ingredients-button"
+                large={false}
+                label="Add Ingredients"
+                onPress={() => {
+                  capture('my_bar:add_ingredients_press')
+                  router.push('/add-ingredients')
+                }}
+              />
+            }
+            onRequestClose={() => setShowPopover(null)}
+            onCloseComplete={() => setShowPopover(2)}
+          >
+            <Text body styleClassName="flex-wrap">
+              Add ingredients to your bar
+            </Text>
+          </Popover>
         }
       />
-      <View ref={secondTouchableRef} className="flex-1">
+
+      <View className="flex-1">
+        <Popover
+          isVisible={showPopover === 2}
+          popoverStyle={{ padding: 12, borderRadius: 12 }}
+          onRequestClose={() => {
+            setShowPopover(null)
+          }}
+          onCloseComplete={() => {
+            setMyBarPopoverDismissed(true)
+            capture('my_bar:popover_dismiss')
+          }}
+          from={<View className="absolute h-6 w-6 left-1/2 -translate-x-3 top-0"></View>}
+        >
+          <Text body styleClassName="flex-wrap w-72">
+            Check what cocktail recipes you can make with these ingredients
+          </Text>
+        </Popover>
+
         <Tabs
           styleClassName="flex-1"
           onTabChange={(title) => {
@@ -194,7 +192,7 @@ export default function MyBarScreen() {
               onRefresh={() => totalMatchRefetch()}
               refreshing={totalMatchLoading}
               ListHeaderComponent={
-                totalMatchInfoBoxDismissed ? (
+                !totalMatchInfoBoxDismissed ? (
                   <InfoBox
                     styleClassName="my-3 mx-6"
                     description="Explore cocktail recipes you can make with your current ingredients."
@@ -222,7 +220,7 @@ export default function MyBarScreen() {
               onRefresh={() => partialMatchRefetch()}
               refreshing={partialMatchLoading}
               ListHeaderComponent={
-                partialMatchInfoBoxDismissed ? (
+                !partialMatchInfoBoxDismissed ? (
                   <InfoBox
                     styleClassName="my-3 mx-6"
                     description="See which cocktails you're close to making with just 1-2 more ingredients."
@@ -245,18 +243,6 @@ export default function MyBarScreen() {
           </Tabs.TabPage>
         </Tabs>
       </View>
-
-      <Popover
-        visible={secondPopoverVisible}
-        onClose={closeSecondPopover}
-        fromRect={secondPopoverAnchorRect}
-        contentStyle={{ padding: 12, borderRadius: 12 }}
-        placement="auto"
-      >
-        <Text body styleClassName="flex-wrap w-72">
-          Check what cocktail recipes you can make with these ingredients
-        </Text>
-      </Popover>
 
       {/* Ingredient details Modal */}
       <BottomSheet ref={modalRef}>
