@@ -1,5 +1,4 @@
 import * as StoreReview from 'expo-store-review'
-import { set } from 'lodash'
 import { FC, useEffect, useRef, useState } from 'react'
 import { useAnalytics } from '~/hooks'
 import { Prompt, PromptProps, PromptRef } from './Prompt'
