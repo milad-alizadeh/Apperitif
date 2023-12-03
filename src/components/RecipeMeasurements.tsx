@@ -1,13 +1,9 @@
-// import { useQuery, useReactiveVar } from '@apollo/client'
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 import { View } from 'react-native'
-import { unitSystemOptions } from '~/constants'
-// import { GET_LOCAL_STATE } from '~/graphql/queries'
+import { jiggerSizeImperialOptions, jiggerSizeMetricOptions, unitSystemOptions } from '~/constants'
 import { useAnalytics } from '~/hooks/useAnalytics'
-import { useLocalState } from '~/providers'
-// import { useUpdateCache } from '~/hooks/useUpdateCache'
-// import { jiggerSizesImperialVar, jiggerSizesMetricVar, unitSystemsVar } from '~/store'
-// import { UnitSystems } from '~/store'
+import { useStore } from '~/providers'
+import { UnitSystem } from '~/types'
 import { SegmentedControl } from './SegmentedControls'
 import { Switch } from './Switch'
 import { Text } from './Text'
@@ -16,22 +12,18 @@ import { Text } from './Text'
  * A component that displays the recipe measurements and conversions.
  */
 export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClassName }) => {
-  const { selectedUnitSystem, setSelectedUnitSystem } = useLocalState()
+  const {
+    selectedUnitSystem,
+    setSelectedUnitSystem,
+    setSelectedJiggerSize,
+    selectedJiggerSize,
+    doubleRecipe,
+    setDoubleRecipe,
+  } = useStore()
   const { capture } = useAnalytics()
-  // const unitSystems = useReactiveVar(unitSystemsVar)
 
-  // const jiggerSizesMetric = useReactiveVar(jiggerSizesMetricVar)
-  // const jiggerSizesImperial = useReactiveVar(jiggerSizesImperialVar)
-
-  // const { data } = useQuery(GET_LOCAL_STATE)
-  // const updateCache = useUpdateCache()
-
-  // useEffect(() => {
-  //   updateCache(GET_LOCAL_STATE, { doubleRecipe: false })
-  // }, [])
-
-  // const currentJiggerSizes = (unitSystem: UnitSystems) =>
-  //   unitSystem === UnitSystems.METRIC ? jiggerSizesMetric : jiggerSizesImperial
+  const currentJiggerSizeOptions = (unitSystem: UnitSystem) =>
+    unitSystem === UnitSystem.METRIC ? jiggerSizeMetricOptions : jiggerSizeImperialOptions
 
   return (
     <View className={`flex-row justify-between ${styleClassName}`}>
@@ -46,24 +38,21 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
           onValueChange={(value) => {
             capture('recipe:unit_press', { unit_type: value })
             setSelectedUnitSystem(value)
-            // updateCache(GET_LOCAL_STATE, {
-            //   selectedUnitSystem: value,
-            //   // selectedJiggerSize: currentJiggerSizes(value)[0].value,
-            // })
+            setSelectedJiggerSize(currentJiggerSizeOptions(value)[0].value)
           }}
         />
       </View>
-      {/* <View className="items-center">
+      <View className="items-center">
         <Text h4 styleClassName="text-primary mb-2">
           Jigger Size
         </Text>
         <SegmentedControl
           testID="jigger-size"
-          selectedValue={data?.selectedJiggerSize}
-          segments={currentJiggerSizes(data?.selectedUnitSystem as UnitSystems)}
+          selectedValue={selectedJiggerSize}
+          segments={currentJiggerSizeOptions(selectedUnitSystem)}
           onValueChange={(value) => {
             capture('recipe:jigger_size_press', { jigger_size: value })
-            updateCache(GET_LOCAL_STATE, { selectedJiggerSize: value })
+            setSelectedJiggerSize(value)
           }}
         />
       </View>
@@ -73,13 +62,13 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
         </Text>
         <Switch
           testID="double-recipe"
-          value={data?.doubleRecipe}
+          value={doubleRecipe}
           onValueChange={(value) => {
             capture('recipe:double_toggle_press', { toggle: value })
-            updateCache(GET_LOCAL_STATE, { doubleRecipe: value })
+            setDoubleRecipe(value)
           }}
         />
-      </View> */}
+      </View>
     </View>
   )
 }

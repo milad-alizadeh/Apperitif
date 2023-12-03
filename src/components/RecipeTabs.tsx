@@ -2,10 +2,12 @@ import { useQuery } from '@apollo/client'
 import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { GetRecipeDetailsQuery, Units } from '~/__generated__/graphql'
+import { defaultJiggerSize } from '~/constants'
 import { GET_LOCAL_STATE, GET_UNITS } from '~/graphql/queries'
-import { useAnalytics } from '~/hooks/useAnalytics'
-import { useSession } from '~/hooks/useSession'
-import { UnitSystems, convertUnitToOtherSystem, defaultJiggerSize } from '~/store'
+import { useAnalytics, useSession } from '~/hooks'
+import { useStore } from '~/providers'
+import { convertUnitToOtherSystem } from '~/store'
+import { UnitSystem } from '~/types'
 import { ListItem } from './ListItem'
 import { RecipeMeasurements } from './RecipeMeasurements'
 import { Tabs } from './Tabs'
@@ -46,23 +48,23 @@ export const RecipeTabs = function RecipeTabs({
   onEquipmentPress,
   loading,
 }: RecipeTabsProps) {
+  const { selectedJiggerSize, doubleRecipe, selectedUnitSystem } = useStore()
   const { capture } = useAnalytics()
-  const { data } = useQuery(GET_UNITS)
-  const { data: measurements } = useQuery(GET_LOCAL_STATE)
-  const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
   const { isLoggedIn } = useSession()
-  const multiplier =
-    (measurements?.selectedJiggerSize / defaultJiggerSize) * (measurements?.doubleRecipe ? 2 : 1)
+  const { data } = useQuery(GET_UNITS)
+
+  const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
+  const multiplier = (selectedJiggerSize / defaultJiggerSize) * (doubleRecipe ? 2 : 1)
 
   const missingIngredients = ingredients.filter((ingredient) => !ingredient.inMyBar)
   const inStockIngredients = ingredients.filter((ingredient) => ingredient.inMyBar)
 
   const renderIngredientItem = useCallback(
     ({ ingredient, quantity, unit, isOptional, inMyBar }: Ingredient & { inMyBar: boolean }) => {
-      if (!units || !measurements) return null
+      if (!units) return null
       const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem({
         unit: unit as Units,
-        toSystem: measurements?.selectedUnitSystem as UnitSystems,
+        toSystem: selectedUnitSystem,
         quantity,
         units,
         multiplier,
@@ -86,7 +88,7 @@ export const RecipeTabs = function RecipeTabs({
         />
       )
     },
-    [ingredients, units, measurements?.selectedUnitSystem, multiplier],
+    [ingredients, units, selectedUnitSystem, multiplier],
   )
 
   const renderEquipmentItem = useCallback(

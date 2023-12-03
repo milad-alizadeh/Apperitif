@@ -20,3 +20,6 @@ export const unitSystemOptions = [
     value: UnitSystem.IMPERIAL,
   },
 ]
+
+export const defaultJiggerSize = JiggerSize['60ml']
+export const defaultUnitSystem = UnitSystem.METRIC
