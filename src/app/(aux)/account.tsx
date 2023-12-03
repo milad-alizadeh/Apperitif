@@ -204,7 +204,10 @@ export default function Account() {
           onCancel={() => {
             emailPromptRef?.current?.hide()
           }}
-          onConfirm={changeAccountDetails}
+          onConfirm={() => {
+            emailPromptRef?.current?.hide()
+            changeAccountDetails()
+          }}
         />
 
         <Prompt
@@ -220,6 +223,7 @@ export default function Account() {
           onConfirm={() => {
             capture('account:delete_confirm_press')
             deleteUser()
+            deletPromptRef?.current?.hide()
           }}
         />
       </Screen>

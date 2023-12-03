@@ -1,10 +1,8 @@
 import { BlurView } from 'expo-blur'
-import React, { FC, Ref, forwardRef, useImperativeHandle, useState } from 'react'
-import { Modal, View, useWindowDimensions } from 'react-native'
-import { Gesture, GestureDetector } from 'react-native-gesture-handler'
+import React, { FC, ReactNode, Ref, forwardRef, useImperativeHandle, useState } from 'react'
+import { KeyboardAvoidingView, Modal, Pressable, View, useWindowDimensions } from 'react-native'
 import Animated, {
   Easing,
-  runOnJS,
   useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
@@ -26,14 +24,27 @@ export interface PromptProps {
   description?: string
   confirmText?: string
   cancelText?: string
-  ref: Ref<PromptRef>
+  ref?: Ref<PromptRef>
+  children?: ReactNode
+  onDismiss?: () => void
+  showCancel?: boolean
 }
 
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)
 
 export const Prompt: FC<PromptProps> = forwardRef(
   (
-    { cancelText = 'Cancel', confirmText = 'Confirm', title, description, onCancel, onConfirm },
+    {
+      cancelText = 'Cancel',
+      confirmText = 'Confirm',
+      title,
+      description,
+      onCancel,
+      onConfirm,
+      children,
+      onDismiss,
+      showCancel = true,
+    },
     ref,
   ) => {
     const [visible, setVisible] = useState(false)
@@ -90,15 +101,6 @@ export const Prompt: FC<PromptProps> = forwardRef(
       }
     })
 
-    const gesture = Gesture.Pan()
-      .onUpdate((event) => {})
-      .onEnd((event) => {
-        const threshold = 50
-        if (event.velocityY > threshold) {
-          runOnJS(hide)()
-        }
-      })
-
     return (
       <Modal transparent={true} visible={visible} onRequestClose={hide}>
         <AnimatedBlurView
@@ -106,46 +108,56 @@ export const Prompt: FC<PromptProps> = forwardRef(
           tint="dark"
           className="w-full h-full items-center justify-center"
         >
-          <Animated.View
-            className=" bg-white p-6 top-0 left-0 w-80 rounded-2xl"
-            style={[translateStyle, shadowLarge]}
+          <Pressable
+            onPress={() => {
+              hide()
+              onDismiss?.()
+            }}
           >
-            {/* Swip Area */}
-            <GestureDetector gesture={gesture}>
-              <View className="h-32 absolute top-0 left-0 w-full z-10"></View>
-            </GestureDetector>
+            <View className="left-0 top-0 h-screen w-screen absolute" />
+          </Pressable>
 
-            <View className="mb-6">
-              <Text h2 styleClassName="mb-3">
-                {title}
-              </Text>
-              <Text body>{description}</Text>
-            </View>
+          <KeyboardAvoidingView behavior={'padding'}>
+            <Animated.View
+              className=" bg-white p-6 top-0 left-0 w-80 rounded-2xl"
+              style={[translateStyle, shadowLarge]}
+            >
+              {children ? (
+                <View>{children}</View>
+              ) : (
+                <View className="mb-6">
+                  <Text h2 styleClassName="mb-3">
+                    {title}
+                  </Text>
+                  <Text body>{description}</Text>
+                </View>
+              )}
 
-            <View className="flex-row justify-between items-center mt-auto -mx-2">
-              <View className="px-2 flex-1">
-                <Button
-                  label={cancelText}
-                  outline
-                  large={false}
-                  onPress={() => {
-                    onCancel?.()
-                    hide()
-                  }}
-                />
+              <View className="flex-row justify-between items-center mt-auto -mx-2">
+                <View className="px-2 flex-1">
+                  <Button
+                    large={false}
+                    label={confirmText}
+                    onPress={() => {
+                      onConfirm?.()
+                    }}
+                  />
+                </View>
+                {showCancel && (
+                  <View className="px-2 flex-1">
+                    <Button
+                      label={cancelText}
+                      outline
+                      large={false}
+                      onPress={() => {
+                        onCancel?.()
+                      }}
+                    />
+                  </View>
+                )}
               </View>
-              <View className="px-2 flex-1">
-                <Button
-                  large={false}
-                  label={confirmText}
-                  onPress={() => {
-                    onConfirm?.()
-                    hide()
-                  }}
-                />
-              </View>
-            </View>
-          </Animated.View>
+            </Animated.View>
+          </KeyboardAvoidingView>
         </AnimatedBlurView>
 
         {/* <View className="w-full h-full items-center justify-center"></View> */}

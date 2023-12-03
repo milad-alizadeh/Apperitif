@@ -5,6 +5,7 @@ import snakeCase from 'lodash/snakeCase'
 import { PostHogProvider } from 'posthog-react-native'
 import { useEffect } from 'react'
 import { LogBox } from 'react-native'
+import { Feedback } from '~/components'
 import { useAnalytics, useSentry } from '~/hooks'
 import { StoreProvider } from '~/providers'
 import { SessionProvider } from '~/providers/SessionProvider'
@@ -89,6 +90,7 @@ function RootLayoutNav() {
         <SessionProvider>
           <ApolloProvider client={api?.apolloClient}>
             <StoreProvider>
+              <Feedback />
               <Stack screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="index" />
                 <Stack.Screen name="(tabs)" options={{ animation: 'none' }} />
