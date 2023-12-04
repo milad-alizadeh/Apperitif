@@ -10,20 +10,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SupabaseClient, createClient } from '@supabase/supabase-js'
 import { AsyncStorageWrapper, persistCache } from 'apollo3-cache-persist'
 import 'react-native-url-polyfill/auto'
-import { captureError } from '~/utils/captureError'
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from '~/config'
 import { Database } from '../types/supabase'
 import { LargeSecureStoreAdapter } from './storage'
 
-const ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY
-const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL
 const URI = `${SUPABASE_URL}/graphql/v1`
 
-if (!ANON_KEY) {
-  captureError('Missing Supabase anon key')
-}
-if (!SUPABASE_URL) {
-  captureError('Missing Supabase URL')
-}
+console.log('URI', URI)
 
 class Api {
   supabase: SupabaseClient<Database>
@@ -55,7 +48,7 @@ class Api {
         headers: {
           ...headers,
           authorization,
-          apikey: ANON_KEY,
+          apikey: SUPABASE_ANON_KEY,
         },
       }
     })
@@ -74,7 +67,7 @@ class Api {
   }
 
   createSupabaseClient() {
-    this.supabase = createClient<Database>(SUPABASE_URL, ANON_KEY, {
+    this.supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: {
         storage: LargeSecureStoreAdapter as any,
         autoRefreshToken: true,

@@ -3,6 +3,7 @@ import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 import React, { useEffect } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
+import { ANDROID_CLIENT_ID, IOS_CLIENT_ID } from '~/config'
 import { useAnalytics } from '~/hooks'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
@@ -18,8 +19,8 @@ export const GoogleAuthentication = function GoogleAuthentication({ attemptedRou
   const { handleSuccessfulAuth } = useSuccessfullAuthHandler(attemptedRoute)
 
   const [_request, response, promptAsync] = Google.useAuthRequest({
-    iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
-    androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
+    iosClientId: IOS_CLIENT_ID,
+    androidClientId: ANDROID_CLIENT_ID,
   })
 
   const singInWithOAuth = async (response) => {

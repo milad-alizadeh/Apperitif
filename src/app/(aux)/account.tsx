@@ -2,6 +2,7 @@ import { router } from 'expo-router'
 import React, { useEffect, useRef, useState } from 'react'
 import { Alert, View } from 'react-native'
 import { Button, Header, Prompt, PromptRef, Screen, Text, TextField } from '~/components'
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from '~/config'
 import { useAnalytics } from '~/hooks'
 import { useHaptics } from '~/hooks/useHaptics'
 import { useSession } from '~/hooks/useSession'
@@ -61,10 +62,10 @@ export default function Account() {
     setEmailLoading(true)
 
     try {
-      const response = await fetch(`${process.env.EXPO_PUBLIC_SUPABASE_URL}/auth/v1/user`, {
+      const response = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
         headers: {
           Authorization: `Bearer ${session?.access_token}`,
-          apikey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
+          apikey: SUPABASE_ANON_KEY,
           'content-type': 'application/json;charset=UTF-8',
           'x-client-info': 'supabase-js-react-native/2.38.0',
         },

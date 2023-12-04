@@ -5,14 +5,13 @@ import snakeCase from 'lodash/snakeCase'
 import { PostHogProvider } from 'posthog-react-native'
 import { useEffect } from 'react'
 import { LogBox } from 'react-native'
+import { POSTHOG_API_KEY } from '~/config'
 import { useAnalytics, useSentry } from '~/hooks'
 import { StoreProvider } from '~/providers'
 import { SessionProvider } from '~/providers/SessionProvider'
 import { api } from '~/services/api'
 import { customFontsToLoad } from '~/theme/typography'
 import { captureError } from '~/utils/captureError'
-
-const posthogApiKey = process.env.EXPO_PUBLIC_POSTHOG_API_KEY
 
 LogBox.ignoreLogs(['Warning: ...']) // Ignore log notification by message
 LogBox.ignoreAllLogs() //Ignore all log notifications
@@ -48,10 +47,6 @@ export default function RootLayout() {
     return null
   }
 
-  if (!posthogApiKey) {
-    captureError('Missing PostHog API key')
-  }
-
   return <RootLayoutNav />
 }
 
@@ -83,7 +78,7 @@ const AppWrapper = ({ children }) => {
 function RootLayoutNav() {
   return (
     <PostHogProvider
-      apiKey={posthogApiKey}
+      apiKey={POSTHOG_API_KEY}
       autocapture={{
         captureTouches: false,
         captureScreens: false,

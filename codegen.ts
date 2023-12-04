@@ -1,16 +1,12 @@
 import { CodegenConfig } from '@graphql-codegen/cli'
-import * as dotenv from 'dotenv'
-
-dotenv.config({ path: `.env.local` })
-const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL + '/graphql/v1'
-const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from '~/config'
 
 const config: CodegenConfig = {
   schema: [
     {
-      [supabaseUrl]: {
+      [`${SUPABASE_URL}/graphql/v1`]: {
         headers: {
-          apikey: supabaseAnonKey,
+          apikey: SUPABASE_ANON_KEY,
         },
       },
     },
