@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - production-build
-      - staging-build
+      - test-build
 
 jobs:
   eas-build-and-submit:
@@ -24,6 +24,8 @@ jobs:
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
+        env:
+          NODE_ENV: ${{ github.ref_name == 'production-build' && 'production' || 'test' }}
 
       - name: 🧶 Install Project Dependencies
         run: yarn
