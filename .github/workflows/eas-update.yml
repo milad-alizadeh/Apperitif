@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - production
-      - test
+      - staging
 
 jobs:
   eas-update:

@@ -1,4 +1,4 @@
-require('dotenv').config({ path: `.env.local` })
+const 
 
 module.exports = {
   client: {
