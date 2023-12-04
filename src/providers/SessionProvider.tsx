@@ -1,5 +1,6 @@
 import { Session } from '@supabase/supabase-js'
 import React, { ReactNode, createContext, useEffect, useState } from 'react'
+import { captureError } from '~/utils/captureError'
 import { useAnalytics } from '../hooks/useAnalytics'
 import { api } from '../services/api'
 
@@ -33,23 +34,30 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
   useEffect(() => {
     if (!loaded) return
     api.supabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (session) {
-        identify(session?.user?.id, {
-          provider: session?.user?.app_metadata?.provider,
-        })
+      try {
+        setSession(session)
+        if (session) {
+          identify(session?.user?.id, {
+            provider: session?.user?.app_metadata?.provider,
+          })
+        }
+      } catch (e) {
+        captureError(e)
       }
-      setSession(session)
     })
 
     api.supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN') {
-        capture('auth:log_in_success', { provider: session?.user?.app_metadata?.provider })
-        identify(session?.user?.id, {
-          provider: session?.user?.app_metadata?.provider,
-        })
+      try {
+        setSession(session)
+        if (event === 'SIGNED_IN') {
+          capture('auth:log_in_success', { provider: session?.user?.app_metadata?.provider })
+          identify(session?.user?.id, {
+            provider: session?.user?.app_metadata?.provider,
+          })
+        }
+      } catch (e) {
+        captureError(e)
       }
-
-      setSession(session)
     })
   }, [loaded])
 

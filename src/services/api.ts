@@ -71,9 +71,6 @@ class Api {
       link: this.authLink.concat(this.httpLink), // Chain it with the httpLink
       cache,
     })
-
-    // this.apolloClient.onResetStore(async () => this.setDefaults(cache))
-    // this.apolloClient.onClearStore(async () => this.setDefaults(cache))
   }
 
   createSupabaseClient() {
