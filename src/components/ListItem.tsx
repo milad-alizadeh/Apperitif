@@ -136,7 +136,7 @@ export const ListItem = memo(function ListItem({
         />
       )}
       {leftText && (
-        <View className="mr-3 min-w-[48px]">
+        <View className="mr-3 min-w-[60px]">
           <Text
             testID={testIDTextLeft}
             body
