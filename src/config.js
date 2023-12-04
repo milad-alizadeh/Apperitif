@@ -1,4 +1,4 @@
-import { channel } from 'expo-updates'
+import * as Updates from 'expo-updates'
 
 let APP_VARIANT = 'development'
 // let SUPABASE_URL = 'http://192.168.68.52:54321'
@@ -15,7 +15,7 @@ let SENTRY_ORG = 'bubblewrap'
 let POSTHOG_API_KEY = 'phc_CW2SHN4knN74Zpmzez96ffzp6XauAzzrxOG62mmyflJ'
 let SENTRY_DSN = ''
 
-if (channel === 'staging') {
+if (Updates.channel === 'staging') {
   APP_VARIANT = 'staging'
   ANDROID_CLIENT_ID = '387765460024-s1t0op27cenve9qerh7dqbj7837o12gk.apps.googleusercontent.com'
   IOS_CLIENT_ID = '387765460024-n1rej4c8npbr7jcijr3b7tq25a8m93ci.apps.googleusercontent.com'
@@ -29,7 +29,7 @@ if (channel === 'staging') {
   SUPABASE_URL = 'https://hgdshmminhuzqfcevzfi.supabase.co'
 }
 
-if (channel === 'production') {
+if (Updates.channel === 'production') {
   ANDROID_CLIENT_ID = '387765460024-cffpkqkda7vh56hbd72k8j2ce8bjna7v.apps.googleusercontent.com'
   IOS_CLIENT_ID = '387765460024-u00ludqbbapijlebphm3a36c4kpsq2a8.apps.googleusercontent.com'
   POSTHOG_API_KEY = 'phc_NoH4C00YmvhUxsXsb2GsnmMtapQroMlK103tWYSdLYU'

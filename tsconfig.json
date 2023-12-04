@@ -16,6 +16,7 @@
     "expo-env.d.ts",
     "src/app/(tabs)/profile/_layout.",
     "app.config.js",
-    "src/components/Accordon/index.test.tss"
+    "src/components/Accordon/index.test.tss",
+    "src/config.js"
   ]
 }

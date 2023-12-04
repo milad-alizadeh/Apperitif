@@ -41,7 +41,7 @@ jobs:
       - name: Publish update
         run: eas update --auto
         env:
-          NODE_ENV: ${{ github.ref_name }}
+          APP_VARIANT: ${{ github.ref_name == 'staging' && 'staging' || '' }}
 
       - name: Upload sourcemaps to Sentry
         run: yarn upload-sourcemap -p ${{ github.ref_name }}

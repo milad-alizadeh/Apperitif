@@ -13,6 +13,9 @@
       },
       "ios": {
         "simulator": true
+      },
+      "env": {
+        "APP_VARIANT": "development"
       }
     },
     "development": {
@@ -20,11 +23,17 @@
       "distribution": "internal",
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "APP_VARIANT": "development"
       }
     },
     "staging": {
       "autoIncrement": true,
-      "channel": "staging"
+      "channel": "staging",
+      "env": {
+        "APP_VARIANT": "staging"
+      }
     },
     "staging-simulator": {
       "autoIncrement": true,
@@ -35,6 +44,9 @@
       },
       "ios": {
         "simulator": true
+      },
+      "env": {
+        "APP_VARIANT": "staging"
       }
     },
     "production": {
