@@ -30,6 +30,7 @@
     "build:local:dev:android": "eas build --profile development --non-interactive --platform android --local --output ./artifacts/development.apk",
     "build:local:dev:ios-simulator": "eas build --profile development-simulator --non-interactive --platform ios --local --output ./artifacts/development-simulator.tar.gz",
     "build:local:staging:ios-simulator": "eas build --profile staging-simulator --non-interactive --platform ios --local --output ./artifacts/staging-simulator.tar.gz",
+    "upload-sourcemap": "ts-node sentry-sourcemap",
     "update": "eas update --auto",
     "update-with-sentry:production": "yarn update && ts-node sentry-sourcemap -p production",
     "update-with-sentry:staging": "yarn update && ts-node sentry-sourcemap -p staging",

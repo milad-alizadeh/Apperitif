@@ -45,6 +45,7 @@ jobs:
           EXPO_PUBLIC_SENTRY_DSN: ${{ vars.PROD_EXPO_PUBLIC_SENTRY_DSN }}
           EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.PROD_EXPO_PUBLIC_SUPABASE_ANON_KEY }}
           EXPO_PUBLIC_SUPABASE_URL: ${{ vars.PROD_EXPO_PUBLIC_SUPABASE_URL }}
+          EXPO_PUBLIC_POSTHOG_API_KEY: ${{ vars.PROD_EXPO_PUBLIC_POSTHOG_API_KEY }}
 
       - name: Upload sourcemaps to Sentry
         run: yarn upload-sourcemap -p ${{ github.ref_name }}
