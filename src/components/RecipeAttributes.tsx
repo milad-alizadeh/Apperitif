@@ -28,14 +28,14 @@ export const RecipeAttributes: FC<RecipeAttributesProps> = ({
   loading,
 }: RecipeAttributesProps) => {
   return (
-    <View className="flex-row w-full">
+    <View className="flex-row">
       {attributes.map((attribute) => {
         return (
-          <View key={attribute?.id} className="w-1/3">
-            <View className="flex-row items-center  justify-center">
+          <View key={attribute?.id} className="w-1/3 px-2">
+            <View className="flex-row items-center justify-center">
               {!loading && (
                 <Image
-                  className="w-10 h-10 mr-1"
+                  className="w-9 h-9 mr-1"
                   contentFit="contain"
                   source={{ uri: attribute?.imageUrl }}
                 />
@@ -43,9 +43,11 @@ export const RecipeAttributes: FC<RecipeAttributesProps> = ({
 
               <Text
                 loading={loading}
+                body
+                weight="medium"
                 skeletonWidth={48}
                 testID="recipe-attribute-name"
-                styleClassName="text-sm font-medium max-w-[100px]"
+                styleClassName="max-w-[100px]"
               >
                 {attribute?.name}
               </Text>

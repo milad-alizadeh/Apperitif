@@ -41,7 +41,6 @@ export function Text({
     h4: { fontSize: isAndroid ? 14 : 16, fontFamily: typography?.primary?.bold, lineHeight: 20 },
     body: {
       fontSize: isAndroid ? 14 : 16,
-      fontFamily: typography?.primary?.normal,
       lineHeight: isAndroid ? 18 : 20,
       letterSpacing: isAndroid ? -0.3 : 0,
     },
