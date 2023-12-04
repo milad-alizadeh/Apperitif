@@ -1,12 +1,13 @@
-name: EAS Update Staging
+name: EAS Update
 
 on:
   push:
     branches:
+      - production
       - staging
 
 jobs:
-  eas-update-staging:
+  eas-update:
     runs-on: ubuntu-latest
     steps:
       - name: Check for EXPO_TOKEN
@@ -22,7 +23,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 18.xf
           cache: yarn
 
       - name: Setup EAS
@@ -40,18 +41,11 @@ jobs:
       - name: Publish update
         run: eas update --auto
         env:
-          APP_VARIANT: ${{ github.ref_name }}
-          EXPO_PUBLIC_ANDROID_CLIENT_ID: ${{ vars.STAGING_EXPO_PUBLIC_ANDROID_CLIENT_ID }}
-          EXPO_PUBLIC_IOS_CLIENT_ID: ${{ vars.STAGING_EXPO_PUBLIC_IOS_CLIENT_ID }}
-          EXPO_PUBLIC_SENTRY_DSN: ${{ vars.STAGING_EXPO_PUBLIC_SENTRY_DSN }}
-          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.STAGING_EXPO_PUBLIC_SUPABASE_ANON_KEY }}
-          EXPO_PUBLIC_SUPABASE_URL: ${{ vars.STAGING_EXPO_PUBLIC_SUPABASE_URL }}
-          EXPO_PUBLIC_POSTHOG_API_KEY: ${{ vars.STAGING_EXPO_PUBLIC_POSTHOG_API_KEY }}
+          NODE_ENV: ${{ github.ref_name }}
 
       - name: Upload sourcemaps to Sentry
         run: yarn upload-sourcemap -p ${{ github.ref_name }}
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          APP_VARIANT: ${{ github.ref_name }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}-staging
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
