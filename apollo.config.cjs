@@ -1,8 +1,14 @@
+require('dotenv').config({ path: `.env.local` })
+
 module.exports = {
   client: {
     service: {
       name: 'apperitif-graphql',
-      url: 'http://127.0.0.1:54321/graphql/v1',
+      url: `${process.env.EXPO_PUBLIC_SUPABASE_URL}/graphql/v1`,
+      headers: {
+        apikey: `${process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY}`,
+      },
     },
+    includes: ['src/graphql/**/*.{ts,tsx,js,jsx,graphql}'],
   },
 }

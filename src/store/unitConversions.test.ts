@@ -1,5 +1,5 @@
 import { Units } from '~/__generated__/graphql'
-import { UnitSystems } from './localFields'
+import { UnitSystem } from '~/types'
 import { convertUnitToOtherSystem, toFractions } from './unitConversions'
 
 describe('Conversions', () => {
@@ -44,7 +44,7 @@ describe('Conversions', () => {
 const mockUnits: Units[] = [
   {
     id: '1',
-    system: UnitSystems.METRIC,
+    system: UnitSystem.METRIC,
     type: 'volume',
     abbreviation: 'ml',
     plural: 'ml',
@@ -61,7 +61,7 @@ const mockUnits: Units[] = [
   },
   {
     id: '2',
-    system: UnitSystems.IMPERIAL,
+    system: UnitSystem.IMPERIAL,
     type: 'volume',
     abbreviation: 'oz',
     plural: 'oz',
@@ -86,7 +86,7 @@ describe('convertUnitToOtherSystem', () => {
     }
     const result = convertUnitToOtherSystem({
       unit: nonConvertibleUnit,
-      toSystem: UnitSystems.IMPERIAL,
+      toSystem: UnitSystem.IMPERIAL,
       quantity: '100',
       units: mockUnits,
     })
@@ -99,7 +99,7 @@ describe('convertUnitToOtherSystem', () => {
   test('should return original quantity and unit name if quantity is null', () => {
     const result = convertUnitToOtherSystem({
       unit: mockUnits[0],
-      toSystem: UnitSystems.IMPERIAL,
+      toSystem: UnitSystem.IMPERIAL,
       quantity: null,
       units: mockUnits,
     })
@@ -113,7 +113,7 @@ describe('convertUnitToOtherSystem', () => {
     expect(() =>
       convertUnitToOtherSystem({
         unit: mockUnits[0],
-        toSystem: UnitSystems.IMPERIAL,
+        toSystem: UnitSystem.IMPERIAL,
         quantity: 'invalid',
         units: mockUnits,
       }),
@@ -123,7 +123,7 @@ describe('convertUnitToOtherSystem', () => {
   test('should convert unit to other system and return converted quantity and unit name', () => {
     const result = convertUnitToOtherSystem({
       unit: mockUnits[0],
-      toSystem: UnitSystems.IMPERIAL,
+      toSystem: UnitSystem.IMPERIAL,
       quantity: '1000',
       units: mockUnits,
     })
@@ -136,7 +136,7 @@ describe('convertUnitToOtherSystem', () => {
   test('should return original quantity and unit name if the unit is already in the desired system', () => {
     const result = convertUnitToOtherSystem({
       unit: mockUnits[1],
-      toSystem: UnitSystems.IMPERIAL,
+      toSystem: UnitSystem.IMPERIAL,
       quantity: '1000',
       units: mockUnits,
     })
@@ -149,7 +149,7 @@ describe('convertUnitToOtherSystem', () => {
   test('should correctly apply the multiplier to the quantity', () => {
     const result = convertUnitToOtherSystem({
       unit: mockUnits[0],
-      toSystem: UnitSystems.IMPERIAL,
+      toSystem: UnitSystem.IMPERIAL,
       quantity: '60',
       units: mockUnits,
       multiplier: 0.75,
@@ -163,7 +163,7 @@ describe('convertUnitToOtherSystem', () => {
   test('should correctly apply a different multiplier to the quantity', () => {
     const result = convertUnitToOtherSystem({
       unit: mockUnits[0],
-      toSystem: UnitSystems.IMPERIAL,
+      toSystem: UnitSystem.IMPERIAL,
       quantity: '60',
       units: mockUnits,
       multiplier: 0.83,
@@ -177,7 +177,7 @@ describe('convertUnitToOtherSystem', () => {
   test('should correctly apply a multiplier of 2 to the quantity', () => {
     const result = convertUnitToOtherSystem({
       unit: mockUnits[0],
-      toSystem: UnitSystems.IMPERIAL,
+      toSystem: UnitSystem.IMPERIAL,
       quantity: '1000',
       units: mockUnits,
       multiplier: 2,

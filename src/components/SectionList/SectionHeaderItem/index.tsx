@@ -22,9 +22,10 @@ export const SectionHeaderItem = forwardRef<View, SectionHeaderItemProps>(
       <View ref={ref} className="ml-6" onLayout={onLayout} style={style}>
         <TouchableOpacity className="py-2" onPress={onPress}>
           <Text
+            body
+            weight="medium"
             styleClassName={`
-            ${active ? 'text-primary' : 'text-neutral-[500]'} 
-            text-base font-medium `}
+            ${active ? 'text-primary' : 'text-neutral-[500]'}`}
           >
             {label}
           </Text>

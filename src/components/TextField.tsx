@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { TextInput, TextInputProps, View } from 'react-native'
+import { Keyboard } from 'react-native'
 import { colors } from '~/theme/colors'
 import { Text } from './Text'
 
@@ -9,7 +10,7 @@ export interface TextFieldProps {
    */
   styleClassName?: string
   password?: boolean
-  value: string
+  value?: string
   placeholder?: string
   label?: string
   autoCapitalize?: TextInputProps['autoCapitalize']
@@ -17,6 +18,9 @@ export interface TextFieldProps {
   onBlur?: () => void
   keyboardType?: TextInputProps['keyboardType']
   testID?: string
+  multiline?: boolean
+  numberOfLines?: number
+  returnKeyType?: TextInputProps['returnKeyType']
 }
 
 /**
@@ -33,6 +37,9 @@ export const TextField = function TextField({
   autoCapitalize,
   keyboardType,
   testID,
+  multiline,
+  numberOfLines = 2,
+  returnKeyType,
 }: TextFieldProps) {
   const [localValue, setLocalValue] = useState('')
 
@@ -54,6 +61,9 @@ export const TextField = function TextField({
         value={localValue}
         autoCapitalize={autoCapitalize}
         keyboardType={keyboardType}
+        multiline={multiline}
+        numberOfLines={numberOfLines}
+        returnKeyType={returnKeyType}
       />
     </View>
   )

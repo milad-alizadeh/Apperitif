@@ -1,10 +1,12 @@
 import { router } from 'expo-router'
 import * as WebBrowser from 'expo-web-browser'
 import React, { ComponentType, FC, PropsWithChildren } from 'react'
-import { LayoutChangeEvent, View } from 'react-native'
+import { LayoutChangeEvent, Platform, View } from 'react-native'
 import _MarkdownRenderer, { MarkdownProps } from 'react-native-markdown-display'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { colors } from '~/theme'
+import typography from '~/theme/typography'
+import { isAndroid } from '~/utils'
 import { SkeletonView } from './SkeletonView'
 
 type MarkdownWithChildrenT = ComponentType<PropsWithChildren<MarkdownProps>>
@@ -88,8 +90,9 @@ const $styles: MarkdownProps['style'] = {
     lineHeight: 24,
   },
   body: {
-    fontSize: 16,
-    lineHeight: 20,
+    fontSize: isAndroid ? 14 : 16,
+    fontFamily: isAndroid ? typography?.primary?.medium : typography?.primary?.normal,
+    lineHeight: isAndroid ? 18 : 20,
   },
   hr: {
     backgroundColor: colors.neutral[300],

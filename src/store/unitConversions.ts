@@ -1,5 +1,5 @@
 import { Units } from '~/__generated__/graphql'
-import { UnitSystems } from './localFields'
+import { UnitSystem } from '~/types'
 
 type Fraction = '¼' | '⅓' | '½' | '⅔' | '¾' | ''
 
@@ -111,7 +111,7 @@ export const convertUnitToOtherSystem = ({
   multiplier = 1,
 }: {
   unit: Units
-  toSystem: UnitSystems
+  toSystem: UnitSystem
   quantity: string | null
   units: Units[] | null
   multiplier?: number
@@ -157,7 +157,7 @@ export const convertUnitToOtherSystem = ({
 
   // Convert to nearest fraction if the unit system is imperial
   const outputQuantity =
-    toSystem === UnitSystems.IMPERIAL
+    toSystem === UnitSystem.IMPERIAL
       ? toFractions(convertedQuantity)
       : formatQuantity(convertedQuantity.toString())
 
