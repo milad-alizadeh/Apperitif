@@ -13,6 +13,10 @@ import { customFontsToLoad } from '~/theme/typography'
 
 const posthogApiKey = process.env.EXPO_PUBLIC_POSTHOG_API_KEY
 
+if (!posthogApiKey) {
+  throw new Error('Missing PostHog API key')
+}
+
 LogBox.ignoreLogs(['Warning: ...']) // Ignore log notification by message
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
