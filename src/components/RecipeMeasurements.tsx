@@ -28,7 +28,7 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
   return (
     <View className={`flex-row justify-between ${styleClassName}`}>
       <View className="items-center">
-        <Text h4 styleClassName="text-primary mb-2">
+        <Text body weight="medium" styleClassName="text-primary mb-2">
           Unit
         </Text>
         <SegmentedControl
@@ -43,7 +43,7 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
         />
       </View>
       <View className="items-center">
-        <Text h4 styleClassName="text-primary mb-2">
+        <Text body weight="medium" styleClassName="text-primary mb-2">
           Jigger Size
         </Text>
         <SegmentedControl
@@ -57,7 +57,7 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
         />
       </View>
       <View className="items-center">
-        <Text h4 styleClassName="text-primary mb-2">
+        <Text body weight="medium" styleClassName="text-primary mb-2">
           2x
         </Text>
         <Switch

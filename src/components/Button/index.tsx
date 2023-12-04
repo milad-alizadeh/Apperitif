@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react'
-import { ActivityIndicator, Text, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, TouchableOpacity } from 'react-native'
 import { useHaptics } from '~/hooks/useHaptics'
+import { Text } from '../Text'
 
 export interface ButtonProps {
   /** label of the button */
@@ -54,7 +55,9 @@ export const Button = forwardRef(function Button(
       `}
     >
       <Text
-        className={`text-base font-medium 
+        body
+        weight="medium"
+        styleClassName={`
         ${outline ? 'text-primary' : 'text-white'} 
         ${large ? 'text-xl' : ''}`}
       >

@@ -75,11 +75,11 @@ export const RecipeTabs = function RecipeTabs({
           leftText={`${outputQuantity} ${outputUnit}`}
           showCheckbox={isLoggedIn}
           checked={inMyBar}
-          outline
           testID="recipe-ingredient"
           testIDTextLeft="recipe-ingredient-quantity"
           testIDTextMiddle="recipe-ingredient-name"
           loading={loading}
+          rightIcon="text"
           onPress={() => {
             onIngredientPress && onIngredientPress(ingredient.id)
             capture('recipe:ingredient_details_press', { ingredient_name: ingredient.name })
