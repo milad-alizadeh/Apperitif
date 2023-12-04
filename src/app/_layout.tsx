@@ -10,12 +10,9 @@ import { StoreProvider } from '~/providers'
 import { SessionProvider } from '~/providers/SessionProvider'
 import { api } from '~/services/api'
 import { customFontsToLoad } from '~/theme/typography'
+import { captureError } from '~/utils/captureError'
 
 const posthogApiKey = process.env.EXPO_PUBLIC_POSTHOG_API_KEY
-
-if (!posthogApiKey) {
-  throw new Error('Missing PostHog API key')
-}
 
 LogBox.ignoreLogs(['Warning: ...']) // Ignore log notification by message
 LogBox.ignoreAllLogs() //Ignore all log notifications
@@ -49,6 +46,10 @@ export default function RootLayout() {
 
   if (!loaded) {
     return null
+  }
+
+  if (!posthogApiKey) {
+    captureError('Missing PostHog API key')
   }
 
   return <RootLayoutNav />
