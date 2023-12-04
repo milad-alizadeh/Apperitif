@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { router } from 'expo-router'
 import groupBy from 'lodash/groupBy'
+import orderBy from 'lodash/orderBy'
 import values from 'lodash/values'
 import React, { useEffect } from 'react'
 import { GetCategoriesQuery } from '~/__generated__/graphql'
@@ -47,33 +48,37 @@ export default function BrowseHomeScreen() {
   const { data: categoriesData, error } = useQuery(GET_CATEGORIES, {
     variables: { ids: categoryIds },
     skip: !categoryIds.length,
+    fetchPolicy: 'cache-and-network',
   })
 
   const getListProps = (
     edge: GetCategoriesQuery['categoriesCollection']['edges'][number],
   ): ListType => {
-    const recipes = edge.node.recipesCategoriesCollection.edges.map(
-      ({
-        node: {
-          recipe: { name, id, imageUrl },
-        },
-      }) => ({
-        name,
-        id,
-        imageUrl,
-        onPress: () => {
-          router.push({
-            pathname: '/recipe',
-            params: { recipeId: id, recipeName: name },
-          })
+    const recipes = orderBy(
+      edge.node.recipesCategoriesCollection.edges.map(
+        ({
+          node: {
+            recipe: { name, id, imageUrl },
+          },
+        }) => ({
+          name,
+          id,
+          imageUrl,
+          onPress: () => {
+            router.push({
+              pathname: '/recipe',
+              params: { recipeId: id, recipeName: name },
+            })
 
-          capture('browse:home_recipe_press', { recipe_name: name })
-        },
-      }),
+            capture('browse:home_recipe_press', { recipe_name: name })
+          },
+        }),
+      ),
+      ['name', 'asc'],
     )
 
-    const subCategories = edge.node.categoriesCollection.edges.map(
-      ({ node: { name, id, imageUrl } }) => ({
+    const subCategories = orderBy(
+      edge.node.categoriesCollection.edges.map(({ node: { name, id, imageUrl } }) => ({
         name,
         id,
         onPress: () => {
@@ -85,7 +90,8 @@ export default function BrowseHomeScreen() {
           capture('browse:filter_press', { filter_name: name })
         },
         imageUrl,
-      }),
+      })),
+      ['name', 'asc'],
     )
     const title = edge.node.name
     const listItems = subCategories.length ? subCategories : recipes

@@ -2,7 +2,7 @@ import { gql } from '~/__generated__/gql'
 
 export const GET_CATEGORIES = gql(`
   query getCategories($ids: [UUID!]) {
-    categoriesCollection(filter: { id: { in: $ids } }, orderBy: { name: DescNullsFirst }) {
+    categoriesCollection(filter: { id: { in: $ids } }, orderBy: { name: AscNullsLast }) {
       edges {
         node {
           id
