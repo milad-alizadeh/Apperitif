@@ -43,8 +43,8 @@ jobs:
         env:
           APP_VARIANT: ${{ github.ref_name == 'staging' && 'staging' || '' }}
 
-      - name: Upload sourcemaps to Sentry
-        run: yarn upload-sourcemap -p ${{ github.ref_name }}
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          APP_VARIANT: ${{ github.ref_name == 'staging' && 'staging' || '' }}
+      # - name: Upload sourcemaps to Sentry
+      #   run: yarn upload-sourcemap -p ${{ github.ref_name }}
+      #   env:
+      #     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      #     APP_VARIANT: ${{ github.ref_name == 'staging' && 'staging' || '' }}
