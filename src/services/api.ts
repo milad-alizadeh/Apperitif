@@ -16,8 +16,6 @@ import { LargeSecureStoreAdapter } from './storage'
 
 const URI = `${SUPABASE_URL}/graphql/v1`
 
-console.log('URI', URI)
-
 class Api {
   supabase: SupabaseClient<Database>
   storage: SupabaseClient<Database>['storage']

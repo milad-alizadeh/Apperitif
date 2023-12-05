@@ -7,7 +7,7 @@ import {
   signInAsync,
 } from 'expo-apple-authentication'
 import * as React from 'react'
-import { StyleProp, View, ViewStyle } from 'react-native'
+import { Alert, StyleProp, View, ViewStyle } from 'react-native'
 import { useAnalytics } from '~/hooks'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
@@ -62,6 +62,7 @@ export const AppleAuthentication = function AppleAuthentication({
                 } else {
                   capture('auth:log_in_error', { provider: 'apple', error: error.message })
                   captureError(error)
+                  Alert.alert('Error', error.message)
                 }
               } else {
                 captureError('No identityToken.')
