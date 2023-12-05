@@ -35,5 +35,3 @@ jobs:
         run: eas build --platform all --profile ${{ github.ref_name == 'production-build' && 'production' || 'staging' }} --non-interactive --auto-submit
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
