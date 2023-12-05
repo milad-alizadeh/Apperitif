@@ -11,6 +11,7 @@ import { StoreProvider } from '~/providers'
 import { SessionProvider } from '~/providers/SessionProvider'
 import { api } from '~/services/api'
 import { customFontsToLoad } from '~/theme/typography'
+import { captureError } from '~/utils/captureError'
 
 LogBox.ignoreLogs(['Warning: ...']) // Ignore log notification by message
 LogBox.ignoreAllLogs() //Ignore all log notifications
@@ -30,6 +31,8 @@ SplashScreen.preventAutoHideAsync()
 export default function RootLayout() {
   useSentry()
   const [loaded, error] = useFonts(customFontsToLoad)
+
+  captureError('Test Error')
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
