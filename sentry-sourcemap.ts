@@ -24,7 +24,7 @@ console.log('SENTRY_AUTH_TOKEN', SENTRY_AUTH_TOKEN)
 
 const promisifiedExec = util.promisify(exec)
 const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCode: string) => {
-  const appVersion = app().version
+  const appVersion = app.version
 
   console.log('androidUpdateId', androidUpdateId)
   console.log('androidVersionCode', androidVersionCode)
@@ -53,7 +53,7 @@ const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCod
 }
 
 const uploadIosSourceMap = async (iosUpdateId: string, iosBuildNumber: string) => {
-  const appVersion = app().version
+  const appVersion = app.version
 
   console.log('iosUpdateId', iosUpdateId)
   console.log('iosBuildNumber', iosBuildNumber)

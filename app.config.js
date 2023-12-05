@@ -84,15 +84,17 @@ const config = {
 }
 
 if (APP_VARIANT !== 'development') {
-  config.postPublish = [
-    {
-      file: 'sentry-expo/upload-sourcemaps',
-      config: {
-        organization: process.env.EXPO_PUBLIC_SENTRY_ORG,
-        project: process.env.EXPO_PUBLIC_SENTRY_PROJECT,
+  config.hooks = {
+    postPublish: [
+      {
+        file: 'sentry-expo/upload-sourcemaps',
+        config: {
+          organization: 'bubblewrap',
+          project: `apperitif${APP_VARIANT ? `-${APP_VARIANT}` : ''}`,
+        },
       },
-    },
-  ]
+    ],
+  }
 }
 
 export default config
