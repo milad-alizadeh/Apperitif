@@ -32,7 +32,6 @@
     "build:local:staging:ios-simulator": "eas build --profile staging-simulator --non-interactive --platform ios --local --output ./artifacts/staging-simulator.tar.gz",
     "upload-sourcemap": "ts-node sentry-sourcemap",
     "update": "eas update --auto",
-    "update-with-sentry:production": "yarn update && ts-node sentry-sourcemap -p production",
     "update-with-sentry:staging": "yarn update && ts-node sentry-sourcemap -p staging",
     "expo:doctor": "npx expo-doctor@latest",
     "expo:fix": "npx expo install --fix",

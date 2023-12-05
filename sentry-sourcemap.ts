@@ -6,26 +6,24 @@ import util from 'util'
 import app from './app.config'
 import eas from './eas.json'
 
-dotenv.config({ path: `.env.local` })
+dotenv.config({ path: '.env.local' })
 
 const APP_VARIANT = process.env.APP_VARIANT
-const SENTRY_ORG = process.env.SENTRY_ORG
-const SENTRY_PROJECT = process.env.SENTRY_PROJECT
 const SENTRY_AUTH_TOKEN = process.env.SENTRY_AUTH_TOKEN
-const BUNDLE_ID = `ai.bubblewrap.apperitif${
-  APP_VARIANT === 'staging' || APP_VARIANT === 'development' ? `.${APP_VARIANT}` : ''
-}`
+const APP_VERSION = app.version
+const SENTRY_ORG = app.hooks.postPublish[0].config.organization
+const SENTRY_PROJECT = app.hooks.postPublish[0].config.project
+const BUNDLE_ID = app.ios.bundleIdentifier
 
 console.log('BUNDLE_ID', BUNDLE_ID)
 console.log('APP_VARIANT', APP_VARIANT)
+console.log('APP_VERSION', APP_VERSION)
 console.log('SENTRY_ORG', SENTRY_ORG)
 console.log('SENTRY_PROJECT', SENTRY_PROJECT)
 console.log('SENTRY_AUTH_TOKEN', SENTRY_AUTH_TOKEN)
 
 const promisifiedExec = util.promisify(exec)
 const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCode: string) => {
-  const appVersion = app.version
-
   console.log('androidUpdateId', androidUpdateId)
   console.log('androidVersionCode', androidVersionCode)
 
@@ -39,7 +37,7 @@ const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCod
         releases \
         --org ${SENTRY_ORG} \
         --project ${SENTRY_PROJECT} \
-        files ${BUNDLE_ID}@${appVersion}+${androidVersionCode} \
+        files ${BUNDLE_ID}@${APP_VERSION}+${androidVersionCode} \
         upload-sourcemaps \
         --dist ${androidUpdateId} \
         --rewrite \
@@ -53,8 +51,6 @@ const uploadAndroidSourceMap = async (androidUpdateId: string, androidVersionCod
 }
 
 const uploadIosSourceMap = async (iosUpdateId: string, iosBuildNumber: string) => {
-  const appVersion = app.version
-
   console.log('iosUpdateId', iosUpdateId)
   console.log('iosBuildNumber', iosBuildNumber)
 
@@ -67,7 +63,7 @@ const uploadIosSourceMap = async (iosUpdateId: string, iosBuildNumber: string) =
         releases \
         --org ${SENTRY_ORG} \
         --project ${SENTRY_PROJECT} \
-        files ${BUNDLE_ID}@${appVersion}+${iosBuildNumber} \
+        files ${BUNDLE_ID}@${APP_VERSION}+${iosBuildNumber} \
         upload-sourcemaps \
         --dist ${iosUpdateId} \
         --rewrite \
