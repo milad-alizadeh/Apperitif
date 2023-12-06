@@ -62,12 +62,14 @@ export interface Database {
           {
             foreignKeyName: "categories_parent_id_categories_id_fk"
             columns: ["parent_id"]
+            isOneToOne: false
             referencedRelation: "categories"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "categories_parent_id_categories_id_fk"
             columns: ["parent_id"]
+            isOneToOne: false
             referencedRelation: "ingredients_by_categories"
             referencedColumns: ["id"]
           }
@@ -147,18 +149,21 @@ export interface Database {
           {
             foreignKeyName: "ingredients_categories_category_id_categories_id_fk"
             columns: ["category_id"]
+            isOneToOne: false
             referencedRelation: "categories"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "ingredients_categories_category_id_categories_id_fk"
             columns: ["category_id"]
+            isOneToOne: false
             referencedRelation: "ingredients_by_categories"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "ingredients_categories_ingredient_id_ingredients_id_fk"
             columns: ["ingredient_id"]
+            isOneToOne: false
             referencedRelation: "ingredients"
             referencedColumns: ["id"]
           }
@@ -168,22 +173,26 @@ export interface Database {
         Row: {
           created_at: string
           id: string
+          role: string
           updated_at: string
         }
         Insert: {
           created_at?: string
           id: string
+          role?: string
           updated_at?: string
         }
         Update: {
           created_at?: string
           id?: string
+          role?: string
           updated_at?: string
         }
         Relationships: [
           {
             foreignKeyName: "fk_auth_users"
             columns: ["id"]
+            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -212,12 +221,21 @@ export interface Database {
           {
             foreignKeyName: "profiles_ingredients_ingredient_id_ingredients_id_fk"
             columns: ["ingredient_id"]
+            isOneToOne: false
             referencedRelation: "ingredients"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "profiles_ingredients_profile_id_profiles_id_fk"
             columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "available_recipes_for_profiles"
+            referencedColumns: ["profile_id"]
+          },
+          {
+            foreignKeyName: "profiles_ingredients_profile_id_profiles_id_fk"
+            columns: ["profile_id"]
+            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           }
@@ -246,12 +264,28 @@ export interface Database {
           {
             foreignKeyName: "profiles_recipes_profile_id_profiles_id_fk"
             columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "available_recipes_for_profiles"
+            referencedColumns: ["profile_id"]
+          },
+          {
+            foreignKeyName: "profiles_recipes_profile_id_profiles_id_fk"
+            columns: ["profile_id"]
+            isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "profiles_recipes_recipe_id_recipes_id_fk"
             columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "available_recipes_for_profiles"
+            referencedColumns: ["recipe_id"]
+          },
+          {
+            foreignKeyName: "profiles_recipes_recipe_id_recipes_id_fk"
+            columns: ["recipe_id"]
+            isOneToOne: false
             referencedRelation: "recipes"
             referencedColumns: ["id"]
           }
@@ -263,6 +297,7 @@ export interface Database {
           description: string | null
           id: string
           image_url: string | null
+          is_draft: boolean | null
           name: string
           updated_at: string
         }
@@ -271,6 +306,7 @@ export interface Database {
           description?: string | null
           id?: string
           image_url?: string | null
+          is_draft?: boolean | null
           name: string
           updated_at?: string
         }
@@ -279,6 +315,7 @@ export interface Database {
           description?: string | null
           id?: string
           image_url?: string | null
+          is_draft?: boolean | null
           name?: string
           updated_at?: string
         }
@@ -307,18 +344,28 @@ export interface Database {
           {
             foreignKeyName: "recipes_categories_category_id_categories_id_fk"
             columns: ["category_id"]
+            isOneToOne: false
             referencedRelation: "categories"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "recipes_categories_category_id_categories_id_fk"
             columns: ["category_id"]
+            isOneToOne: false
             referencedRelation: "ingredients_by_categories"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "recipes_categories_recipe_id_recipes_id_fk"
             columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "available_recipes_for_profiles"
+            referencedColumns: ["recipe_id"]
+          },
+          {
+            foreignKeyName: "recipes_categories_recipe_id_recipes_id_fk"
+            columns: ["recipe_id"]
+            isOneToOne: false
             referencedRelation: "recipes"
             referencedColumns: ["id"]
           }
@@ -347,12 +394,21 @@ export interface Database {
           {
             foreignKeyName: "recipes_equipment_equipment_id_equipment_id_fk"
             columns: ["equipment_id"]
+            isOneToOne: false
             referencedRelation: "equipment"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "recipes_equipment_recipe_id_recipes_id_fk"
             columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "available_recipes_for_profiles"
+            referencedColumns: ["recipe_id"]
+          },
+          {
+            foreignKeyName: "recipes_equipment_recipe_id_recipes_id_fk"
+            columns: ["recipe_id"]
+            isOneToOne: false
             referencedRelation: "recipes"
             referencedColumns: ["id"]
           }
@@ -390,18 +446,28 @@ export interface Database {
           {
             foreignKeyName: "recipes_ingredients_ingredient_id_ingredients_id_fk"
             columns: ["ingredient_id"]
+            isOneToOne: false
             referencedRelation: "ingredients"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "recipes_ingredients_recipe_id_recipes_id_fk"
             columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "available_recipes_for_profiles"
+            referencedColumns: ["recipe_id"]
+          },
+          {
+            foreignKeyName: "recipes_ingredients_recipe_id_recipes_id_fk"
+            columns: ["recipe_id"]
+            isOneToOne: false
             referencedRelation: "recipes"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "recipes_ingredients_unit_id_units_id_fk"
             columns: ["unit_id"]
+            isOneToOne: false
             referencedRelation: "units"
             referencedColumns: ["id"]
           }
@@ -436,6 +502,14 @@ export interface Database {
           {
             foreignKeyName: "steps_recipe_id_recipes_id_fk"
             columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "available_recipes_for_profiles"
+            referencedColumns: ["recipe_id"]
+          },
+          {
+            foreignKeyName: "steps_recipe_id_recipes_id_fk"
+            columns: ["recipe_id"]
+            isOneToOne: false
             referencedRelation: "recipes"
             referencedColumns: ["id"]
           }
@@ -488,6 +562,7 @@ export interface Database {
           {
             foreignKeyName: "units_base_unit_id_units_id_fk"
             columns: ["base_unit_id"]
+            isOneToOne: false
             referencedRelation: "units"
             referencedColumns: ["id"]
           }
@@ -495,6 +570,28 @@ export interface Database {
       }
     }
     Views: {
+      available_recipes_for_profiles: {
+        Row: {
+          can_almost_make: boolean | null
+          is_total_match: boolean | null
+          matched_ingredients_count: number | null
+          missing_ingredients: Json | null
+          profile_id: string | null
+          recipe_id: string | null
+          recipe_image_url: string | null
+          recipe_name: string | null
+          total_required_count: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_auth_users"
+            columns: ["profile_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       ingredients_by_categories: {
         Row: {
           count: number | null
@@ -506,6 +603,36 @@ export interface Database {
       }
     }
     Functions: {
+      create_or_update_app_content: {
+        Args: {
+          payload: Json
+        }
+        Returns: string
+      }
+      create_or_update_category: {
+        Args: {
+          payload: Json
+        }
+        Returns: string
+      }
+      create_or_update_equipment: {
+        Args: {
+          payload: Json
+        }
+        Returns: string
+      }
+      create_or_update_ingredient: {
+        Args: {
+          payload: Json
+        }
+        Returns: string
+      }
+      create_or_update_recipe: {
+        Args: {
+          payload: Json
+        }
+        Returns: string
+      }
       create_trigger_for_table: {
         Args: {
           table_name: string
@@ -599,6 +726,18 @@ export interface Database {
         }
         Returns: unknown
       }
+      unaccent: {
+        Args: {
+          "": string
+        }
+        Returns: string
+      }
+      unaccent_init: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
     }
     Enums: {
       [_ in never]: never
@@ -607,6 +746,7 @@ export interface Database {
       ingredient_result: {
         id: string
         name: string
+        description: string
       }
       recipe_preview: {
         id: string
@@ -631,3 +771,83 @@ export interface Database {
     }
   }
 }
+
+export type Tables<
+  PublicTableNameOrOptions extends
+    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+        Database[PublicTableNameOrOptions["schema"]]["Views"])
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
+      Database["public"]["Views"])
+  ? (Database["public"]["Tables"] &
+      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : never
+
+export type TablesInsert<
+  PublicTableNameOrOptions extends
+    | keyof Database["public"]["Tables"]
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
+  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : never
+
+export type TablesUpdate<
+  PublicTableNameOrOptions extends
+    | keyof Database["public"]["Tables"]
+    | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
+  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : never
+
+export type Enums<
+  PublicEnumNameOrOptions extends
+    | keyof Database["public"]["Enums"]
+    | { schema: keyof Database },
+  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
+    : never = never
+> = PublicEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
+  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
+  : never
