@@ -35,7 +35,7 @@
     "update-with-sentry:staging": "yarn update && ts-node sentry-sourcemap -p staging",
     "expo:doctor": "npx expo-doctor@latest",
     "expo:fix": "npx expo install --fix",
-    "generate:types": " npx supabase gen types typescript --project-id kvtfspymzqsyhmvkzgej --schema public > src/types/supabase.ts",
+    "generate:types": " npx supabase gen types typescript --project-id hgdshmminhuzqfcevzfi --schema public > src/types/supabase.ts",
     "generate:gql": "graphql-codegen",
     "generate:gql:watch": "graphql-codegen -w"
   },

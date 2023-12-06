@@ -1,8 +1,7 @@
-import { useQuery, useReactiveVar } from '@apollo/client'
+import { useReactiveVar } from '@apollo/client'
 import { router } from 'expo-router'
 import * as React from 'react'
 import { View } from 'react-native'
-import { GET_FILTERS } from '~/graphql/queries'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useFetchFilters } from '~/hooks/useFetchFilters'
 import { applyFilters, clearFilters, draftSelectedFiltersVar, selectedFiltersVar } from '~/store'
@@ -17,11 +16,15 @@ export const FilterActions = function FilterActions() {
   const selectedFilterIds = useReactiveVar(selectedFiltersVar)
   const draftSelectedFilterIds = useReactiveVar(draftSelectedFiltersVar)
 
-  const subfilters: { id: string; name: string }[] = []
+  const subfilters: { id: string; name: string; parentId: string }[] = []
 
   for (const filter of allFilters?.categoriesCollection.edges) {
     for (const subFilter of filter.node.categoriesCollection.edges) {
-      subfilters.push({ id: subFilter.node.id, name: subFilter.node.name })
+      subfilters.push({
+        id: subFilter.node.id,
+        name: subFilter.node.name,
+        parentId: filter.node.id,
+      })
     }
   }
 
@@ -82,7 +85,7 @@ export const FilterActions = function FilterActions() {
               })
             }
 
-            applyFilters()
+            applyFilters(draftSelectedFilters)
             router.push({
               pathname: '/browse/recipes',
               params: { categoryIds: [], categgoryName: '' },

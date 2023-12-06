@@ -1,6 +1,8 @@
 import { useReactiveVar } from '@apollo/client'
 import humps from 'lodash-humps'
 import debounce from 'lodash/debounce'
+import groupBy from 'lodash/groupBy'
+import mapValues from 'lodash/mapValues'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { addFilter, clearFilters, searchQueryVar, selectedFiltersVar } from '~/store'
 import { captureError } from '~/utils/captureError'
@@ -32,12 +34,14 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
       setLoading(true)
       const currentSelectedFilters = selectedFiltersVar()
 
+      console.log('currentSelectedFilters', mapValues(groupBy(currentSelectedFilters), 'id'))
+
       const search_term = searchQueryVar()
 
       // Make the API call
       const { data, error } = await api.supabase.rpc('get_recipes_by_category_ids', {
         search_term: searchQueryVar(),
-        category_ids: currentSelectedFilters,
+        category_groups: currentSelectedFilters,
         page_size: pageSize,
         page_number: pageNum,
       })

@@ -41,8 +41,8 @@ export const removeFilter = (id: string, draft: boolean) => {
   }
 }
 
-export const applyFilters = () => {
-  selectedFiltersVar(draftSelectedFiltersVar())
+export const applyFilters = (draftSelectedFilters) => {
+  selectedFiltersVar(draftSelectedFilters)
 }
 
 export const filterIsChecked = (filterId: string, draft: boolean) => {

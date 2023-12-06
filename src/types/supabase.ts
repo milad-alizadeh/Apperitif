@@ -603,6 +603,19 @@ export interface Database {
       }
     }
     Functions: {
+      compute_similarity_scores: {
+        Args: {
+          search_term: string
+          category_ids: string[]
+        }
+        Returns: {
+          id: string
+          name: string
+          image_url: string
+          recipe_sim_score: number
+          ingredient_sim_score: number
+        }[]
+      }
       create_or_update_app_content: {
         Args: {
           payload: Json
@@ -649,30 +662,40 @@ export interface Database {
         }
         Returns: boolean
       }
-      get_available_recipes_for_profile: {
+      generate_category_where_clause: {
         Args: {
-          user_id: string
+          category_ids: string[]
         }
-        Returns: {
-          profile_id: string
-          recipe_id: string
-          recipe_image_url: string
-          recipe_name: string
-          matched_ingredients_count: number
-          total_required_count: number
-          is_total_match: boolean
-          can_almost_make: boolean
-          missing_ingredients: Json[]
-        }[]
+        Returns: unknown
       }
-      get_recipes_by_category_ids: {
+      get_ordered_recipes: {
         Args: {
           search_term: string
           category_ids: string[]
           page_number: number
           page_size: number
         }
+        Returns: {
+          id: string
+          name: string
+          image_url: string
+        }[]
+      }
+      get_recipes_by_category_ids: {
+        Args: {
+          search_term: string
+          category_groups: Json
+          page_number: number
+          page_size: number
+        }
         Returns: Database["public"]["CompositeTypes"]["recipes_page_info"]
+      }
+      get_total_count: {
+        Args: {
+          search_term: string
+          category_ids: string[]
+        }
+        Returns: number
       }
       gtrgm_compress: {
         Args: {
@@ -726,18 +749,25 @@ export interface Database {
         }
         Returns: unknown
       }
-      unaccent: {
-        Args: {
-          "": string
-        }
-        Returns: string
-      }
-      unaccent_init: {
-        Args: {
-          "": unknown
-        }
-        Returns: unknown
-      }
+      test_loop:
+        | {
+            Args: {
+              category_groups: Json[]
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              category_groups: string[]
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              category_groups: Json
+            }
+            Returns: boolean
+          }
     }
     Enums: {
       [_ in never]: never
@@ -752,16 +782,6 @@ export interface Database {
         id: string
         name: string
         image_url: string
-      }
-      recipe_profile_info: {
-        profile_id: string
-        recipe_id: string
-        recipe_name: string
-        matched_ingredients_count: number
-        total_required_count: number
-        is_total_match: boolean
-        can_almost_make: boolean
-        missing_ingredients: unknown
       }
       recipes_page_info: {
         recipes: unknown
