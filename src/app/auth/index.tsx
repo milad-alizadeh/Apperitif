@@ -31,7 +31,6 @@ export default function AuthHomeScreen() {
           icon="close"
           size="large"
           onPress={() => {
-            console.log('back')
             router.back()
           }}
         />

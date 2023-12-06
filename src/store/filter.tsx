@@ -1,8 +1,14 @@
 import { makeVar } from '@apollo/client'
 
-export const selectedFiltersVar = makeVar<string[]>([])
+export interface Filter {
+  id: string
+  name: string
+  parentId?: string
+}
+
+export const selectedFiltersVar = makeVar<Filter[]>([])
 export const searchQueryVar = makeVar<string>('')
-export const draftSelectedFiltersVar = makeVar<string[]>([])
+export const draftSelectedFiltersVar = makeVar<Filter[]>([])
 
 export const clearFilters = (draft: boolean) => {
   searchQueryVar('')
@@ -17,38 +23,40 @@ export const setupDraftFilters = () => {
   draftSelectedFiltersVar(selectedFiltersVar())
 }
 
-export const toggleFilter = (filterId: string, draft: boolean) => {
-  if (filterIsChecked(filterId, draft)) {
-    removeFilter(filterId, draft)
+export const toggleFilter = (filter: Filter, draft: boolean) => {
+  if (filterIsChecked(filter, draft)) {
+    removeFilter(filter, draft)
   } else {
-    addFilter(filterId, draft)
+    addFilter(filter, draft)
   }
 }
 
-export const addFilter = (id: string, draft: boolean) => {
+export const addFilter = (filter: Filter, draft: boolean) => {
   if (draft) {
-    draftSelectedFiltersVar([...draftSelectedFiltersVar(), id])
+    draftSelectedFiltersVar([...draftSelectedFiltersVar(), filter])
   } else {
-    selectedFiltersVar([...selectedFiltersVar(), id])
+    selectedFiltersVar([...selectedFiltersVar(), filter])
   }
 }
 
-export const removeFilter = (id: string, draft: boolean) => {
+export const removeFilter = (currentFilter: Filter, draft: boolean) => {
   if (draft) {
-    draftSelectedFiltersVar(draftSelectedFiltersVar().filter((filterId: string) => filterId !== id))
+    draftSelectedFiltersVar(
+      draftSelectedFiltersVar().filter((filter) => filter.id !== currentFilter.id),
+    )
   } else {
-    selectedFiltersVar(selectedFiltersVar().filter((filterId: string) => filterId !== id))
+    selectedFiltersVar(selectedFiltersVar().filter((filter) => filter.id !== currentFilter.id))
   }
 }
 
-export const applyFilters = (draftSelectedFilters) => {
+export const applyFilters = (draftSelectedFilters: Filter[]) => {
   selectedFiltersVar(draftSelectedFilters)
 }
 
-export const filterIsChecked = (filterId: string, draft: boolean) => {
+export const filterIsChecked = (currentFilter: Filter, draft: boolean) => {
   if (draft) {
-    return draftSelectedFiltersVar().includes(filterId)
+    return draftSelectedFiltersVar().find((filter) => filter.id === currentFilter.id)
   } else {
-    return selectedFiltersVar().includes(filterId)
+    return selectedFiltersVar().find((filter) => (filter.id = currentFilter.id))
   }
 }

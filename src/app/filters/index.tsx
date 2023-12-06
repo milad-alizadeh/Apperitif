@@ -1,29 +1,13 @@
 import { useReactiveVar } from '@apollo/client'
-import { router } from 'expo-router'
-import React, { useCallback, useMemo } from 'react'
-import { FlatList, View, ViewStyle } from 'react-native'
-import { FilterActions, Header, ListItem, Screen } from '~/components'
-import { useAnalytics } from '~/hooks/useAnalytics'
+import React, { useCallback } from 'react'
+import { View, ViewStyle } from 'react-native'
+import { FilterActions, ListItem, Screen, SectionList } from '~/components'
 import { useFetchFilters } from '~/hooks/useFetchFilters'
-import { draftSelectedFiltersVar } from '~/store'
+import { draftSelectedFiltersVar, toggleFilter } from '~/store'
 
 export default function AllFiltersScreen() {
-  const { capture } = useAnalytics()
-  const { data } = useFetchFilters()
-  const filterCategories = data?.categoriesCollection.edges.map((edge) => edge.node)
+  const { sectionsData, sectionsHeaders } = useFetchFilters()
   const draftFilters = useReactiveVar(draftSelectedFiltersVar)
-
-  // Memoize the badge numbers for each filter category
-  const badgeNumbers = useMemo(() => {
-    return filterCategories?.reduce((acc, filterCategory) => {
-      const filters = filterCategory.categoriesCollection.edges.map((edge) => edge.node.id)
-      const selectedFiltersInCategory = filters.filter((filterId) =>
-        draftFilters.includes(filterId),
-      )
-      acc[filterCategory.id] = selectedFiltersInCategory.length
-      return acc
-    }, {})
-  }, [filterCategories, draftFilters])
 
   const renderItem = useCallback(
     ({ item }: { item; index: number }) => {
@@ -34,29 +18,26 @@ export default function AllFiltersScreen() {
             name={item.name}
             styleClassName="mb-4"
             card
+            showCheckbox
             testID="filter-list-item"
-            badgeNumber={badgeNumbers[item.id] || 0}
-            rightIcon="chevronRight"
+            checked={!!draftFilters.find((filter) => filter.id === item.id)}
             onPress={() => {
-              router.push({
-                pathname: '/filters/details',
-                params: { filterId: item.id, filterName: item.name },
-              })
-
-              capture('browse:filter_details_press', {
-                filter_name: item.name,
-              })
+              toggleFilter(item, true)
             }}
           />
         </View>
       )
     },
-    [filterCategories],
+    [sectionsData],
   )
 
   return (
     <Screen preset="fixed" safeAreaEdges={['bottom']} contentContainerStyle={$containerStyle}>
-      <FlatList data={filterCategories} renderItem={renderItem} className="py-3" />
+      <SectionList
+        sectionsData={sectionsData}
+        sectionsHeader={sectionsHeaders}
+        renderItem={renderItem}
+      />
       <FilterActions />
     </Screen>
   )

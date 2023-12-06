@@ -12,6 +12,7 @@ export const GET_FILTERS = gql(`
               node {
                 id
                 name
+                parentId
               }
             }
           }

@@ -48,8 +48,6 @@ export interface ListItemProps {
   enableHaptics?: boolean
   /** Whether to use primary text color */
   primaryTextColor?: boolean
-  /** Whether to display a checkbox */
-  hasCheckbox?: boolean
   /** Whether to disable the checkbox */
   disableCheckbox?: boolean
   /** Whether to display an outline */

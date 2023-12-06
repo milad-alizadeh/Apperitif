@@ -3,7 +3,6 @@ import { router } from 'expo-router'
 import * as React from 'react'
 import { View } from 'react-native'
 import { useAnalytics } from '~/hooks/useAnalytics'
-import { useFetchFilters } from '~/hooks/useFetchFilters'
 import { applyFilters, clearFilters, draftSelectedFiltersVar, selectedFiltersVar } from '~/store'
 import { Button } from './Button'
 
@@ -11,27 +10,9 @@ import { Button } from './Button'
  * Actions for applying or clearing filters
  */
 export const FilterActions = function FilterActions() {
-  const { data: allFilters } = useFetchFilters()
   const { capture } = useAnalytics()
-  const selectedFilterIds = useReactiveVar(selectedFiltersVar)
-  const draftSelectedFilterIds = useReactiveVar(draftSelectedFiltersVar)
-
-  const subfilters: { id: string; name: string; parentId: string }[] = []
-
-  for (const filter of allFilters?.categoriesCollection.edges) {
-    for (const subFilter of filter.node.categoriesCollection.edges) {
-      subfilters.push({
-        id: subFilter.node.id,
-        name: subFilter.node.name,
-        parentId: filter.node.id,
-      })
-    }
-  }
-
-  const selectedFilters = subfilters.filter((filter) => selectedFilterIds.includes(filter.id))
-  const draftSelectedFilters = subfilters.filter((filter) =>
-    draftSelectedFilterIds.includes(filter.id),
-  )
+  const selectedFilters = useReactiveVar(selectedFiltersVar)
+  const draftSelectedFilters = useReactiveVar(draftSelectedFiltersVar)
 
   return (
     <View className="fle flex-row justify-between items-center px-4 mt-auto py-6">

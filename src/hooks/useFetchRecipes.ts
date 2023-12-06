@@ -41,7 +41,7 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
       // Make the API call
       const { data, error } = await api.supabase.rpc('get_recipes_by_category_ids', {
         search_term: searchQueryVar(),
-        category_groups: currentSelectedFilters,
+        category_groups: JSON.stringify(currentSelectedFilters),
         page_size: pageSize,
         page_number: pageNum,
       })

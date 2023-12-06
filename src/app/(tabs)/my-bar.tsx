@@ -29,7 +29,6 @@ export default function MyBarScreen() {
     setPartialMatchInfoBoxDismissed,
     setTotalMatchInfoBoxDismissed,
   } = useStore()
-  const touchable = useRef(null)
   const isFocused = useIsFocused()
   const { user } = useSession()
   const modalRef = useRef<BottomSheetRef>(null)
