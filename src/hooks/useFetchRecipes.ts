@@ -2,7 +2,7 @@ import { useReactiveVar } from '@apollo/client'
 import humps from 'lodash-humps'
 import debounce from 'lodash/debounce'
 import groupBy from 'lodash/groupBy'
-import mapValues from 'lodash/mapValues'
+import map from 'lodash/map'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { addFilter, clearFilters, searchQueryVar, selectedFiltersVar } from '~/store'
 import { captureError } from '~/utils/captureError'
@@ -33,23 +33,23 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
     async (pageNum = pageNumber, mergeResults = false) => {
       setLoading(true)
       const currentSelectedFilters = selectedFiltersVar()
-
-      console.log('currentSelectedFilters', mapValues(groupBy(currentSelectedFilters), 'id'))
+      const groupedCategories = groupBy(currentSelectedFilters, 'parentId')
+      const category_groups = map(groupedCategories, (value, key) => map(value, 'id'))
 
       const search_term = searchQueryVar()
 
       // Make the API call
       const { data, error } = await api.supabase.rpc('get_recipes_by_category_ids', {
         search_term: searchQueryVar(),
-        category_groups: JSON.stringify(currentSelectedFilters),
+        category_groups,
         page_size: pageSize,
         page_number: pageNum,
+        count_only: false,
       })
 
       if (error) {
         captureError(error.message)
       }
-
       // Convert snake_case keys to camelCase
       const { hasNextPage, totalCount, recipes } = humps(data)
 
@@ -84,11 +84,11 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
   // On mount, clear any existing filters and set the initial category filter
   useEffect(() => {
     clearFilters(false)
-    const filter = Array.isArray(initialCategoryId) ? initialCategoryId[0] : initialCategoryId
     setIsInitialSetupComplete(true) // Set isInitialSetupComplete to true after setting the initial filter
-    if (!filter) return
-    addFilter(filter, false)
-  }, []) // Empty dependency array ensures this runs only on mount
+    // const filter = Array.isArray(initialCategoryId) ? initialCategoryId[0] : initialCategoryId
+    // if (!filter) return
+    // addFilter(filter, false)
+  }, [])
 
   // Call fetchRecipes once the initial setup is complete
   useEffect(() => {
@@ -101,6 +101,7 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
 
   // Handle changes in search query and selected filters after the initial load
   useEffect(() => {
+    console.log('useEffect', selectedFilters)
     if (!initialLoadRef.current && isInitialSetupComplete) {
       // If it's not the initial load and initial setup is complete,
       // call fetchRecipes on search query or filter changes

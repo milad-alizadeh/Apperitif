@@ -1,13 +1,13 @@
 import { useReactiveVar } from '@apollo/client'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { View, ViewStyle } from 'react-native'
 import { FilterActions, ListItem, Screen, SectionList } from '~/components'
-import { useFetchFilters } from '~/hooks/useFetchFilters'
+import { useFetchFilters } from '~/hooks'
 import { draftSelectedFiltersVar, toggleFilter } from '~/store'
 
 export default function AllFiltersScreen() {
-  const { sectionsData, sectionsHeaders } = useFetchFilters()
-  const draftFilters = useReactiveVar(draftSelectedFiltersVar)
+  const { sectionsData, sectionsHeaders, resultCount } = useFetchFilters()
+  const draftSelectedFilters = useReactiveVar(draftSelectedFiltersVar)
 
   const renderItem = useCallback(
     ({ item }: { item; index: number }) => {
@@ -20,8 +20,8 @@ export default function AllFiltersScreen() {
             card
             showCheckbox
             testID="filter-list-item"
-            checked={!!draftFilters.find((filter) => filter.id === item.id)}
-            onPress={() => {
+            checked={!!draftSelectedFilters.find((filter) => filter.id === item.id)}
+            onPress={async () => {
               toggleFilter(item, true)
             }}
           />
@@ -33,17 +33,20 @@ export default function AllFiltersScreen() {
 
   return (
     <Screen preset="fixed" safeAreaEdges={['bottom']} contentContainerStyle={$containerStyle}>
-      <SectionList
-        sectionsData={sectionsData}
-        sectionsHeader={sectionsHeaders}
-        renderItem={renderItem}
-      />
-      <FilterActions />
+      <View className="-mt-6 flex-1">
+        <SectionList
+          sectionsData={sectionsData}
+          sectionsHeader={sectionsHeaders}
+          renderItem={renderItem}
+          showHeaderCount={false}
+        />
+      </View>
+
+      <FilterActions resultCount={resultCount} />
     </Screen>
   )
 }
 
 const $containerStyle: ViewStyle = {
   flexGrow: 1,
-  justifyContent: 'space-between',
 }

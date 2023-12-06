@@ -1,10 +1,15 @@
-import { ApolloError, useQuery } from '@apollo/client'
+import { ApolloError, useQuery, useReactiveVar } from '@apollo/client'
+import groupBy from 'lodash/groupBy'
+import map from 'lodash/map'
 import values from 'lodash/values'
+import { useCallback, useEffect, useState } from 'react'
 import { GetFiltersQuery } from '~/__generated__/graphql'
 import { SectionHeaderType } from '~/components/SectionList'
 import { GET_CONTENT } from '~/graphql/queries'
 import { GET_FILTERS } from '~/graphql/queries/getFilters'
-import { Filter } from '~/store'
+import { api } from '~/services'
+import { Filter, draftSelectedFiltersVar } from '~/store'
+import { captureError } from '~/utils/captureError'
 
 export const useFetchFilters = (): {
   data: GetFiltersQuery | null
@@ -12,8 +17,10 @@ export const useFetchFilters = (): {
   error: ApolloError
   sectionsData: Filter[][]
   sectionsHeaders: SectionHeaderType[]
+  resultCount: number
 } => {
   // Fetch available category ids
+  const draftSelectedFilters = useReactiveVar(draftSelectedFiltersVar)
   const { data: filterData, error: filterError } = useQuery(GET_CONTENT, {
     variables: { name: 'filters' },
     fetchPolicy: 'cache-and-network',
@@ -23,7 +30,14 @@ export const useFetchFilters = (): {
     : []
 
   if (filterError)
-    return { data: null, loading: false, error: filterError, sectionsData: [], sectionsHeaders: [] }
+    return {
+      data: null,
+      loading: false,
+      error: filterError,
+      sectionsData: [],
+      sectionsHeaders: [],
+      resultCount: 0,
+    }
 
   // Fetch filters based on ids
   const { data, loading, error } = useQuery(GET_FILTERS, {
@@ -40,10 +54,34 @@ export const useFetchFilters = (): {
       return {
         id,
         title: name,
-        count: categoriesCollection.edges.length,
+        count: 1,
       }
     },
   )
 
-  return { data, loading, error, sectionsData, sectionsHeaders }
+  const [resultCount, setResultCount] = useState(0)
+
+  const getResultCount = useCallback(async () => {
+    const groupedCategories = groupBy(draftSelectedFilters, 'parentId')
+    const category_groups = map(groupedCategories, (value, key) => map(value, 'id'))
+    const { data, error } = await api.supabase.rpc('get_recipes_by_category_ids', {
+      search_term: '',
+      category_groups,
+      page_size: 0,
+      page_number: 0,
+      count_only: true,
+    })
+
+    if (error) {
+      captureError(error.message)
+    } else {
+      setResultCount(data.total_count)
+    }
+  }, [draftSelectedFilters])
+
+  useEffect(() => {
+    getResultCount()
+  }, [draftSelectedFilters])
+
+  return { data, loading, error, sectionsData, sectionsHeaders, resultCount }
 }

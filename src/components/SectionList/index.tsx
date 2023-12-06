@@ -39,6 +39,7 @@ export interface SectionListProps {
   selectedItems?: SelectedItems
   showHeader?: boolean
   onRefresh?: () => void
+  showHeaderCount?: boolean
 }
 
 const FIXED_HEADER_HEIGHT = 40
@@ -64,6 +65,7 @@ export const SectionList: FC<SectionListProps> = ({
   headerHeight,
   contentContainerStyle,
   onRefresh,
+  showHeaderCount = true,
 }) => {
   const { capture } = useAnalytics()
   const inset = useSafeAreaInsets()
@@ -110,10 +112,9 @@ export const SectionList: FC<SectionListProps> = ({
           className="bg-white rounded-t-[50px] overflow-hidden"
           style={{ height: SECTION_HEADER_HEIGHT }}
         >
-          <Text
-            h3
-            styleClassName={`px-6 pb-4 pt-8 h-20 ${!count ? 'opacity-0' : ''}`}
-          >{`${title} (${count})`}</Text>
+          <Text h3 styleClassName={`px-6 pb-4 pt-8 h-20 ${!count ? 'opacity-0' : ''}`}>{`${title}${
+            showHeaderCount ? ` (${count})` : ''
+          }`}</Text>
         </View>
       )
     },

@@ -3,7 +3,6 @@ import { colors } from '~/theme'
 import typography from '~/theme/typography'
 
 export default function FilterStack() {
-  const detailsOptions: any = ({ route }) => ({ title: route.params.filterName })
   return (
     <Stack
       screenOptions={{
@@ -15,7 +14,6 @@ export default function FilterStack() {
       }}
     >
       <Stack.Screen name="index" options={{ title: 'Filters' }} />
-      <Stack.Screen name="details" options={detailsOptions} />
     </Stack>
   )
 }

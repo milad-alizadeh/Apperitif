@@ -687,6 +687,7 @@ export interface Database {
           category_groups: Json
           page_number: number
           page_size: number
+          count_only: boolean
         }
         Returns: Database["public"]["CompositeTypes"]["recipes_page_info"]
       }

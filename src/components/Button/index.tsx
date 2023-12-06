@@ -19,6 +19,8 @@ export interface ButtonProps {
   loading?: boolean
   /** testID for testing */
   testID?: string
+  /** disable button */
+  disabled?: boolean
 }
 
 /**
@@ -34,6 +36,7 @@ export const Button = forwardRef(function Button(
     enableHaptics,
     loading,
     testID = 'button',
+    disabled,
   }: ButtonProps,
   ref: any,
 ) {
@@ -43,14 +46,17 @@ export const Button = forwardRef(function Button(
     <TouchableOpacity
       ref={ref}
       testID={testID}
+      activeOpacity={disabled ? 1 : 0.7}
       onPress={() => {
+        if (disabled) return
         if (enableHaptics) haptics()
         onPress && !loading && onPress()
       }}
       className={`rounded-xl border-2 border-primary justify-center items-center bg-blue-500
-        ${outline ? 'bg-transparent' : 'bg-primary'}
-        ${large ? 'h-12 px-4 py-2' : 'px-3 py-2'} 
-        ${styleClassName}
+      ${outline ? 'bg-transparent' : 'bg-primary'}
+      ${large ? 'h-12 px-4 py-2' : 'px-3 py-2'} 
+      ${styleClassName}
+      ${disabled ? 'bg-neutral-500 border-neutral-500' : ''}
       `}
     >
       <Text
