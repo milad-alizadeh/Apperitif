@@ -1,5 +1,4 @@
 export * from './useAnalytics'
-export * from './useFetchFilters'
 export * from './useFetchIngredients'
 export * from './useFetchRecipes'
 export * from './useHaptics'

@@ -1,12 +1,11 @@
 import { ApolloError, useQuery, useReactiveVar } from '@apollo/client'
 import groupBy from 'lodash/groupBy'
 import map from 'lodash/map'
-import values from 'lodash/values'
 import { useState } from 'react'
 import { GetFiltersQuery } from '~/__generated__/graphql'
 import { SectionHeaderType } from '~/components/SectionList'
-import { GET_CONTENT } from '~/graphql/queries'
 import { GET_FILTERS } from '~/graphql/queries/getFilters'
+import { useStore } from '~/providers/StoreProvider'
 import { api } from '~/services'
 import { Filter, draftSelectedFiltersVar } from '~/store'
 import { captureError } from '~/utils/captureError'
@@ -22,24 +21,9 @@ export const useFetchFilters = (): {
 } => {
   // Fetch available category ids
   const draftSelectedFilters = useReactiveVar(draftSelectedFiltersVar)
-  const { data: filterData, error: filterError } = useQuery(GET_CONTENT, {
-    variables: { name: 'filters' },
-    fetchPolicy: 'cache-and-network',
-  })
-  const categoryIds = filterData
-    ? values(JSON.parse(filterData.appContentCollection.edges[0].node.content).filters)
-    : []
-
-  if (filterError)
-    return {
-      data: null,
-      loading: false,
-      error: filterError,
-      sectionsData: [],
-      sectionsHeaders: [],
-      resultCount: 0,
-      getResultCount: () => Promise.resolve(),
-    }
+  const { appContent } = useStore()
+  console.log('appContent', appContent)
+  const categoryIds = appContent?.filters?.category_ids ?? []
 
   // Fetch filters based on ids
   const { data, loading, error } = useQuery(GET_FILTERS, {

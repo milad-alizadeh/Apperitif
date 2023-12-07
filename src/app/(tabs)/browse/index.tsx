@@ -2,14 +2,13 @@ import { useQuery } from '@apollo/client'
 import { router } from 'expo-router'
 import groupBy from 'lodash/groupBy'
 import orderBy from 'lodash/orderBy'
-import values from 'lodash/values'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { GetCategoriesQuery } from '~/__generated__/graphql'
 import { CardProps, Header, HorizontalList, Icon, Screen, Text, VerticalList } from '~/components'
-import { GET_CATEGORIES, GET_CONTENT } from '~/graphql/queries'
+import { GET_CATEGORIES } from '~/graphql/queries'
 import { useAnalytics } from '~/hooks/useAnalytics'
+import { useStore } from '~/providers'
 import { colors } from '~/theme/colors'
-import { captureError } from '~/utils/captureError'
 
 interface ListType {
   listItems: CardProps[]
@@ -21,28 +20,9 @@ interface ListType {
  */
 export default function BrowseHomeScreen() {
   const { capture } = useAnalytics()
+  const { appContent } = useStore()
 
-  // Fetch browser content
-  const { data: browseData, error: browseError } = useQuery(GET_CONTENT, {
-    variables: { name: 'home' },
-    fetchPolicy: 'cache-and-network',
-  })
-
-  let categoryIds: string[] = []
-
-  try {
-    if (browseData) {
-      const content = browseData.appContentCollection?.edges?.[0]?.node?.content
-      if (content) {
-        const parsedContent = JSON.parse(content)
-        if (parsedContent.categories) {
-          categoryIds = values(parsedContent.categories)
-        }
-      }
-    }
-  } catch (error) {
-    captureError(error)
-  }
+  const categoryIds = appContent?.home.category_ids ?? []
 
   // Fetch categories
   const { data: categoriesData, error } = useQuery(GET_CATEGORIES, {
@@ -111,6 +91,10 @@ export default function BrowseHomeScreen() {
 
   const orderedCategories = getBrowseCategories(categoriesData, categoryIds)
 
+  {
+    !!error && <Text>{error?.message}</Text>
+  }
+
   return (
     <Screen preset="scroll" safeAreaEdges={['top']} KeyboardAvoidingViewProps={{ enabled: false }}>
       <Header
@@ -132,7 +116,6 @@ export default function BrowseHomeScreen() {
         }
       />
 
-      {!!error || (!!browseError && <Text>{error?.message || browseError?.message}</Text>)}
       {orderedCategories.map(({ listItems, title, id }, index) =>
         index !== 3 ? (
           <HorizontalList

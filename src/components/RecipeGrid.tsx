@@ -88,15 +88,17 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
         data={recipes}
         numColumns={2}
         keyboardShouldPersistTaps="handled"
-        windowSize={10}
+        windowSize={5}
         nestedScrollEnabled
+        updateCellsBatchingPeriod={100}
+        removeClippedSubviews={true}
         className={`${styleClassName}`}
         onScroll={onScroll}
         keyExtractor={(item) => item.id}
         refreshing={refreshing}
         onRefresh={onRefresh}
         ListHeaderComponent={ListHeaderComponent}
-        onEndReachedThreshold={0.8}
+        onEndReachedThreshold={0.5}
         onEndReached={({ distanceFromEnd }) => {
           if (distanceFromEnd <= 0 || recipes.length < 20) return
           onEndReached()

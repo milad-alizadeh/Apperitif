@@ -1,23 +1,10 @@
-import { useQuery } from '@apollo/client'
 import { SimplePage } from '~/components'
-import { GET_CONTENT } from '~/graphql/queries'
+import { useStore } from '~/providers'
 
 export default function PrivacyPolicyScreen() {
-  const { data, loading } = useQuery(GET_CONTENT, {
-    variables: { name: 'privacy-policy' },
-    fetchPolicy: 'cache-and-network',
-  })
+  const { appContent } = useStore()
+  console.log('appContent', appContent)
+  const pageContent = appContent?.privacy_policy ?? { title: '', content: '' }
 
-  const pageContent = data?.appContentCollection?.edges?.[0]?.node.content
-  const pageContentParsed = data ? JSON.parse(pageContent) : { title: '', content: '' }
-
-  return (
-    pageContentParsed && (
-      <SimplePage
-        title={pageContentParsed.title}
-        loading={loading}
-        content={pageContentParsed.content}
-      />
-    )
-  )
+  return pageContent && <SimplePage title={pageContent.title} content={pageContent.content} />
 }

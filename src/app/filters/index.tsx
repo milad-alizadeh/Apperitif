@@ -2,7 +2,7 @@ import { useReactiveVar } from '@apollo/client'
 import { useCallback, useEffect } from 'react'
 import { View, ViewStyle } from 'react-native'
 import { FilterActions, ListItem, Screen, SectionList } from '~/components'
-import { useFetchFilters } from '~/hooks'
+import { useFetchFilters } from '~/hooks/useFetchFilters'
 import { draftSelectedFiltersVar, toggleFilter } from '~/store'
 
 export default function AllFiltersScreen() {

@@ -18,9 +18,10 @@ import {
 import { RecipeAttributes } from '~/components/RecipeAttributes'
 import { RecipeShare } from '~/components/RecipeShare'
 import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
-import { GET_CONTENT, GET_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
+import { GET_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useSession } from '~/hooks/useSession'
+import { useStore } from '~/providers'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
 
@@ -35,6 +36,7 @@ export default function RecipeDetailsScreen() {
   const { user, isLoggedIn } = useSession()
   const client = useApolloClient()
   const { recipeId, recipeName } = useLocalSearchParams()
+  const { appContent } = useStore()
 
   const headerHeight = useWindowDimensions().width
   const fixedHeaderOffset = headerHeight - 110
@@ -46,13 +48,6 @@ export default function RecipeDetailsScreen() {
 
   const { data: barIngredients } = useQuery(GET_MY_BAR)
 
-  const { data: attributesData } = useQuery(GET_CONTENT, {
-    variables: {
-      name: 'recipe_attributes',
-    },
-    fetchPolicy: 'cache-and-network',
-  })
-
   const firstTimeLoading = loading && !data && !error
 
   const recipe = data?.recipesCollection?.edges[0]?.node
@@ -62,14 +57,10 @@ export default function RecipeDetailsScreen() {
   const recipeIngredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
   const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
   const categories = recipe?.recipesCategoriesCollection?.edges.map((e) => e.node.category) ?? []
-  const attributeCategories = attributesData?.appContentCollection?.edges?.[0]?.node?.content
-  const attributeCategoriesParsed = attributeCategories
-    ? JSON.parse(attributeCategories)?.categoryIds
-    : []
+  const attributeCategories = appContent?.recipe_attributes?.categoryIds ?? []
   const attributes =
-    attributeCategoriesParsed.map(
-      (id: string) => categories.find((c) => c.parentId === id) ?? { id },
-    ) ?? []
+    attributeCategories.map((id: string) => categories.find((c) => c.parentId === id) ?? { id }) ??
+    []
 
   const myBar =
     barIngredients?.profilesIngredientsCollection.edges.map((e) => e.node.ingredient.id) ?? []
