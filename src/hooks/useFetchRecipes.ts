@@ -86,7 +86,6 @@ export const useFetchRecipes = (categoryIds: string[], categgoryName: string) =>
 
   // On mount, clear any existing filters and set the initial category filter
   useEffect(() => {
-    console.log('on mount')
     clearFilters(false)
     setIsInitialSetupComplete(true) // Set isInitialSetupComplete to true after setting the initial filter
     const id = Array.isArray(categoryIds) ? categoryIds[0] : categoryIds
@@ -96,7 +95,6 @@ export const useFetchRecipes = (categoryIds: string[], categgoryName: string) =>
 
   // Call fetchRecipes once the initial setup is complete
   useEffect(() => {
-    console.log('initial setup complete')
     if (isInitialSetupComplete) {
       fetchRecipes().then(() => {
         initialLoadRef.current = false // Set initialLoadRef to false after the initial load
@@ -106,11 +104,6 @@ export const useFetchRecipes = (categoryIds: string[], categgoryName: string) =>
 
   // Handle changes in search query and selected filters after the initial load
   useEffect(() => {
-    console.log(
-      'search query or selected filters changed',
-      initialLoadRef.current,
-      isInitialSetupComplete,
-    )
     if (!initialLoadRef.current && isInitialSetupComplete) {
       // If it's not the initial load and initial setup is complete,
       // call fetchRecipes on search query or filter changes
@@ -135,7 +128,6 @@ export const useFetchRecipes = (categoryIds: string[], categgoryName: string) =>
   // Function to load more recipes when user reaches the end of the list
   const loadMore = () => {
     if (pageInfo?.hasNextPage) {
-      console.log('loadMore')
       setPageNumber((prevPageNumber) => {
         const newPageNumber = prevPageNumber + 1
         fetchRecipes(newPageNumber, true)
