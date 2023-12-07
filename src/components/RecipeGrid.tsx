@@ -17,7 +17,6 @@ interface RecipeGridProps {
   recipes: CardProps[]
   refreshing?: boolean
   styleClassName?: string
-  loading?: boolean
   ref?: Ref<any>
 }
 
@@ -33,7 +32,6 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
       recipes,
       refreshing,
       styleClassName,
-      loading,
     },
     ref,
   ) => {
@@ -84,11 +82,7 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
       [search_term],
     )
 
-    return loading ? (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator animating={loading} />
-      </View>
-    ) : (
+    return (
       <Animated.FlatList
         ref={listRef}
         data={recipes}
