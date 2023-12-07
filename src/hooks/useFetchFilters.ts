@@ -2,7 +2,7 @@ import { ApolloError, useQuery, useReactiveVar } from '@apollo/client'
 import groupBy from 'lodash/groupBy'
 import map from 'lodash/map'
 import values from 'lodash/values'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { GetFiltersQuery } from '~/__generated__/graphql'
 import { SectionHeaderType } from '~/components/SectionList'
 import { GET_CONTENT } from '~/graphql/queries'
@@ -47,19 +47,19 @@ export const useFetchFilters = (): {
     skip: !categoryIds.length,
   })
 
-  const sectionsData: Filter[][] = data?.categoriesCollection?.edges.map((edge) => {
-    return edge.node.categoriesCollection.edges.map((edge) => edge.node)
-  })
+  const sectionsData: Filter[][] =
+    data?.categoriesCollection?.edges.map((edge) => {
+      return edge.node.categoriesCollection.edges.map((edge) => edge.node)
+    }) ?? []
 
-  const sectionsHeaders: SectionHeaderType[] = data?.categoriesCollection?.edges.map(
-    ({ node: { id, name } }) => {
+  const sectionsHeaders: SectionHeaderType[] =
+    data?.categoriesCollection?.edges.map(({ node: { id, name } }) => {
       return {
         id,
         title: name,
         count: 1,
       }
-    },
-  )
+    }) ?? []
 
   const [resultCount, setResultCount] = useState(0)
 

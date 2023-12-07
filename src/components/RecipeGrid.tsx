@@ -1,7 +1,7 @@
 import { useReactiveVar } from '@apollo/client'
 import { router } from 'expo-router'
 import React, { FC, Ref, forwardRef, useCallback, useImperativeHandle, useRef } from 'react'
-import { ActivityIndicator, NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native'
+import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { searchQueryVar } from '~/store'
