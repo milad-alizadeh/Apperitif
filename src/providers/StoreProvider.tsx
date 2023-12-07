@@ -35,7 +35,6 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
     captureError(error.message)
   }
 
-  clearPersistedState()
   const appContent = mapValues(keyBy(data.appContentCollection.edges, 'node.name'), (e) =>
     JSON.parse(e.node.content),
   )
