@@ -3,8 +3,18 @@ import { router } from 'expo-router'
 import groupBy from 'lodash/groupBy'
 import orderBy from 'lodash/orderBy'
 import React from 'react'
+import { View } from 'react-native'
 import { GetCategoriesQuery } from '~/__generated__/graphql'
-import { CardProps, Header, HorizontalList, Icon, Screen, Text, VerticalList } from '~/components'
+import {
+  CardProps,
+  Header,
+  HorizontalList,
+  Icon,
+  InfoBox,
+  Screen,
+  Text,
+  VerticalList,
+} from '~/components'
 import { GET_CATEGORIES } from '~/graphql/queries'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useStore } from '~/providers'
@@ -25,7 +35,7 @@ export default function BrowseHomeScreen() {
   const categoryIds = appContent?.home?.category_ids ?? []
 
   // Fetch categories
-  const { data: categoriesData, error } = useQuery(GET_CATEGORIES, {
+  const { data: categoriesData } = useQuery(GET_CATEGORIES, {
     variables: { ids: categoryIds },
     skip: !categoryIds.length,
     fetchPolicy: 'cache-and-network',
@@ -90,13 +100,15 @@ export default function BrowseHomeScreen() {
   }
 
   const orderedCategories = getBrowseCategories(categoriesData, categoryIds)
-
-  {
-    !!error && <Text>{error?.message}</Text>
-  }
+  const error = { message: 'Error fetching categories' }
 
   return (
     <Screen preset="scroll" safeAreaEdges={['top']} KeyboardAvoidingViewProps={{ enabled: false }}>
+      {!!error && (
+        <View className="p-6">
+          <InfoBox type="error" description={error?.message} />
+        </View>
+      )}
       <Header
         title="Browse"
         rightElement={

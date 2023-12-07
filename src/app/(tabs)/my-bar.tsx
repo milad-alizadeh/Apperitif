@@ -30,10 +30,10 @@ export default function MyBarScreen() {
     setTotalMatchInfoBoxDismissed,
   } = useStore()
   const isFocused = useIsFocused()
-  const { user } = useSession()
   const modalRef = useRef<BottomSheetRef>(null)
-  const [ingredientId, setIngredientId] = useState<string>('')
+  const { user } = useSession()
   const { capture } = useAnalytics()
+  const [ingredientId, setIngredientId] = useState<string>('')
   const [deleteingItemId, setDeleteingItemId] = useState<string>('')
 
   const handleIngredientPress = useCallback((ingredientId: string) => {
@@ -62,6 +62,9 @@ export default function MyBarScreen() {
     totalMatchData,
     totalMatchLoading,
     totalMatchRefetch,
+    ingredientError,
+    totalMatchError,
+    partialMatchError,
   } = useMatchedRecipes()
 
   const renderIngredientItem = useCallback(
@@ -165,6 +168,11 @@ export default function MyBarScreen() {
               contentContainerStyle={{ marginTop: -16 }}
               ListEmptyComponent={
                 <View className="flex-1 justify-center w-full">
+                  {!!ingredientError && (
+                    <View className="p-6">
+                      <InfoBox type="error" description={ingredientError?.message} />
+                    </View>
+                  )}
                   {ingredientLoading ? (
                     <ActivityIndicator />
                   ) : (
@@ -203,11 +211,19 @@ export default function MyBarScreen() {
               }
               ListEmptyComponent={
                 !totalMatchLoading && (
-                  <View className="w-full flex-1 justify-center items-center mt-8">
-                    <Text h3 styleClassName="text-center max-w-[280px] mb-3">
-                      Add more ingredients to get recipe suggestions.
-                    </Text>
-                  </View>
+                  <>
+                    {!!totalMatchError ? (
+                      <View className="p-6 w-full">
+                        <InfoBox type="error" description={totalMatchError?.message} />
+                      </View>
+                    ) : (
+                      <View className="w-full flex-1 justify-center items-center mt-8">
+                        <Text h3 styleClassName="text-center max-w-[280px] mb-3">
+                          Add more ingredients to get recipe suggestions.
+                        </Text>
+                      </View>
+                    )}
+                  </>
                 )
               }
             />
@@ -231,11 +247,18 @@ export default function MyBarScreen() {
               }
               ListEmptyComponent={
                 !partialMatchLoading && (
-                  <View className="w-full justify-center items-center mt-8">
-                    <Text h3 styleClassName="text-center max-w-[280px] mb-3">
-                      Add more ingredients to get recipe suggestions.
-                    </Text>
-                  </View>
+                  <>
+                    {!!partialMatchError && (
+                      <View className="p-6">
+                        <InfoBox type="error" description={partialMatchError?.message} />
+                      </View>
+                    )}
+                    <View className="w-full justify-center items-center mt-8">
+                      <Text h3 styleClassName="text-center max-w-[280px] mb-3">
+                        Add more ingredients to get recipe suggestions.
+                      </Text>
+                    </View>
+                  </>
                 )
               }
             />

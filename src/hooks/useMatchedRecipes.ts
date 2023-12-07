@@ -13,17 +13,21 @@ export const useMatchedRecipes = () => {
     data: ingredientsData,
     loading: ingredientLoading,
     refetch: ingredientRefetch,
+    error: ingredientError,
   } = useQuery(GET_MY_BAR)
+
   const {
     data: totalMatchData,
     refetch: totalMatchRefetch,
     loading: totalMatchLoading,
+    error: totalMatchError,
   } = useQuery(GET_TOTAL_MATCH_RECIPES)
 
   const {
     data: partialMatchData,
     refetch: partialMatchRefetch,
     loading: partialMatchLoading,
+    error: partialMatchError,
   } = useQuery(GET_PARTIAL_MATCH_RECIPES)
 
   const isFocused = useIsFocused()
@@ -105,5 +109,8 @@ export const useMatchedRecipes = () => {
     totalMatchData,
     totalMatchLoading,
     totalMatchRefetch,
+    ingredientError,
+    totalMatchError,
+    partialMatchError,
   }
 }
