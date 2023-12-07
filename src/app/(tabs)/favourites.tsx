@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@apollo/client'
 import { Link, router } from 'expo-router'
 import React, { useCallback, useState } from 'react'
 import { FlatList, View, ViewStyle } from 'react-native'
-import { Header, ListItem, Screen, Text } from '~/components'
+import { Header, InfoBox, ListItem, Screen, Text } from '~/components'
 import { DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
 import { GET_FAVOURITES } from '~/graphql/queries'
 import { useAnalytics, useSession } from '~/hooks'
@@ -64,13 +64,13 @@ export default function FavouritesScreen() {
     [data, deleteingItemId, setDeleteingItemId],
   )
 
-  if (error) {
-    return <Text>{error.message}</Text>
-  }
-
   return (
     <Screen safeAreaEdges={['top']} contentContainerStyle={$containerStyle}>
-      {/* Empty state if there are no recipes in the bar */}
+      {!!error && (
+        <View className="p-6">
+          <InfoBox type="error" description={error?.message} />
+        </View>
+      )}
       {!data?.profilesRecipesCollection?.edges.length && !loading ? (
         <View
           testID="empty-favourites"

@@ -35,7 +35,7 @@ export default function BrowseHomeScreen() {
   const categoryIds = appContent?.home?.category_ids ?? []
 
   // Fetch categories
-  const { data: categoriesData } = useQuery(GET_CATEGORIES, {
+  const { data: categoriesData, error } = useQuery(GET_CATEGORIES, {
     variables: { ids: categoryIds },
     skip: !categoryIds.length,
     fetchPolicy: 'cache-and-network',
@@ -100,7 +100,6 @@ export default function BrowseHomeScreen() {
   }
 
   const orderedCategories = getBrowseCategories(categoriesData, categoryIds)
-  const error = { message: 'Error fetching categories' }
 
   return (
     <Screen preset="scroll" safeAreaEdges={['top']} KeyboardAvoidingViewProps={{ enabled: false }}>
