@@ -32,9 +32,7 @@ export const useFetchRecipes = (categoryIds: string[], categgoryName: string) =>
   const fetchRecipes = useCallback(
     async (pageNum = pageNumber, mergeResults = false) => {
       setLoading(true)
-      if (!mergeResults) {
-        setRecipes([])
-      }
+
       const currentSelectedFilters = selectedFiltersVar()
       const groupedCategories = groupBy(currentSelectedFilters, 'parentId')
       const category_groups = map(groupedCategories, (value) => map(value, 'id'))
