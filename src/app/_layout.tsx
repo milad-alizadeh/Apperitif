@@ -92,7 +92,7 @@ function RootLayoutNav() {
                 <Stack.Screen name="index" />
                 <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
                 <Stack.Screen name="welcome" />
-                <Stack.Screen name="recipe" getId={({ params }) => params.recipeName} />
+                <Stack.Screen name="recipe" getId={({ params }) => params.recipeId} />
                 <Stack.Screen
                   name="filters"
                   options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
