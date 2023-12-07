@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { Link, router } from 'expo-router'
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { FlatList, View, ViewStyle } from 'react-native'
 import { Header, ListItem, Screen, Text } from '~/components'
 import { DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
@@ -12,17 +12,11 @@ export default function FavouritesScreen() {
   const { capture } = useAnalytics()
   const { user } = useSession()
   const { data, loading, error, refetch } = useQuery(GET_FAVOURITES)
+  const [deleteingItemId, setDeleteingItemId] = useState<string>('')
 
   const flatListData = data?.profilesRecipesCollection.edges.map((e) => e.node.recipe)
 
-  const [deleteFromFavourites] = useMutation(DELETE_FROM_FAVOURITES, {
-    onError: () => {
-      refetch()
-    },
-    onCompleted: () => {
-      refetch()
-    },
-  })
+  const [deleteFromFavourites] = useMutation(DELETE_FROM_FAVOURITES)
 
   const renderItem = useCallback(
     ({ item }) => {
@@ -36,6 +30,7 @@ export default function FavouritesScreen() {
           testID="favourite-recipe"
           testIDIconRight="favourite-recipe-delete"
           card
+          loading={deleteingItemId === item.id}
           onPress={() => {
             capture('favourites:recipe_press', {
               recipe_name: item.name,
@@ -46,18 +41,27 @@ export default function FavouritesScreen() {
             })
           }}
           onRightIconPress={() => {
+            setDeleteingItemId(item.id)
+
             capture('favourites:recipe_remove', {
               recipe_name: item.name,
             })
+
             deleteFromFavourites({
               variables: { recipeId: item.id, profileId: user?.id },
-              onError: () => refetch(),
+              onError: () => {
+                refetch()
+              },
+              onCompleted: () => {
+                refetch()
+                setDeleteingItemId('')
+              },
             })
           }}
         />
       )
     },
-    [data],
+    [data, deleteingItemId, setDeleteingItemId],
   )
 
   if (error) {

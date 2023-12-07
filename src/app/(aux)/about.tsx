@@ -20,7 +20,7 @@ export default function AboutScreen() {
           </Text>
           {!!Updates?.updateId && (
             <Text body styleClassName="mt-2 text-center" weight="bold">
-              {Updates?.createdAt?.toDateString()}
+              {Updates?.createdAt?.toString()}
             </Text>
           )}
           <Text styleClassName="mt-4">
