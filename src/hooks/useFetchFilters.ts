@@ -22,7 +22,6 @@ export const useFetchFilters = (): {
   // Fetch available category ids
   const draftSelectedFilters = useReactiveVar(draftSelectedFiltersVar)
   const { appContent } = useStore()
-  console.log('appContent', appContent)
   const categoryIds = appContent?.filters?.category_ids ?? []
 
   // Fetch filters based on ids
