@@ -1,6 +1,4 @@
-import { useApolloClient } from '@apollo/client'
 import { router } from 'expo-router'
-import { set } from 'lodash'
 import React from 'react'
 import { FlatList, Linking, View } from 'react-native'
 import { Header, IconTypes, ListItem, Screen, Text } from '~/components'

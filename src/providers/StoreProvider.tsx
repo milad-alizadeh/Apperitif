@@ -4,7 +4,7 @@ import mapValues from 'lodash/mapValues'
 import React, { Dispatch, FC, SetStateAction, createContext, useContext } from 'react'
 import { defaultJiggerSize, defaultUnitSystem } from '~/constants'
 import { GET_CONTENT } from '~/graphql/queries'
-import { clearPersistedState, usePersistedState } from '~/hooks'
+import { usePersistedState } from '~/hooks/usePeristedState'
 import { JiggerSize, UnitSystem } from '~/types'
 import { captureError } from '~/utils/captureError'
 

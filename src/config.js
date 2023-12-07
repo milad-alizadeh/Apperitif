@@ -1,10 +1,12 @@
 import * as Updates from 'expo-updates'
 
 let APP_VARIANT = 'development'
+
 // let SUPABASE_URL = 'http://192.168.68.52:54321'
 // let SUPABASE_ANON_KEY =
 //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'
-// let SENTRY_DSN="https://ddd6990a76b5dbf8816a4292e0288dba@o4506057195585536.ingest.sentry.io/4506057201418241"
+let SENTRY_DSN =
+  'https://ddd6990a76b5dbf8816a4292e0288dba@o4506057195585536.ingest.sentry.io/4506057201418241'
 let SUPABASE_URL = 'https://hgdshmminhuzqfcevzfi.supabase.co'
 let SUPABASE_ANON_KEY =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhnZHNobW1pbmh1enFmY2V2emZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDA4NDQyODksImV4cCI6MjAxNjQyMDI4OX0.M4BUPdlgv8d1aXCtPOUSzW29Iz4TV2tSA-PDV-NdC6M'
@@ -13,7 +15,6 @@ let IOS_CLIENT_ID = '387765460024-2s3u3uvbn0aojjk34h1no81dsquv5saa.apps.googleus
 let SENTRY_PROJECT = 'apperitif-staging'
 let SENTRY_ORG = 'bubblewrap'
 let POSTHOG_API_KEY = 'phc_CW2SHN4knN74Zpmzez96ffzp6XauAzzrxOG62mmyflJ'
-let SENTRY_DSN = ''
 
 if (Updates.channel === 'staging') {
   APP_VARIANT = 'staging'

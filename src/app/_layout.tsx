@@ -6,11 +6,15 @@ import { PostHogProvider } from 'posthog-react-native'
 import { useEffect } from 'react'
 import { LogBox } from 'react-native'
 import { POSTHOG_API_KEY } from '~/config'
-import { useAnalytics, useSentry } from '~/hooks'
+import { useAnalytics } from '~/hooks'
 import { StoreProvider } from '~/providers'
 import { SessionProvider } from '~/providers/SessionProvider'
 import { api } from '~/services/api'
+import { initSentry } from '~/services/sentry'
 import { customFontsToLoad } from '~/theme/typography'
+import { captureError } from '~/utils/captureError'
+
+initSentry()
 
 LogBox.ignoreLogs(['Warning: ...']) // Ignore log notification by message
 LogBox.ignoreAllLogs() //Ignore all log notifications
@@ -28,7 +32,6 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
-  useSentry()
   const [loaded, error] = useFonts(customFontsToLoad)
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -75,38 +78,42 @@ const AppWrapper = ({ children }) => {
 }
 
 function RootLayoutNav() {
-  return (
-    <PostHogProvider
-      apiKey={POSTHOG_API_KEY}
-      autocapture={{
-        captureTouches: false,
-        captureScreens: false,
-      }}
-      options={{ host: 'https://eu.posthog.com' }}
-    >
-      <AppWrapper>
-        <SessionProvider>
-          <ApolloProvider client={api?.apolloClient}>
-            <StoreProvider>
-              <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="index" />
-                <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
-                <Stack.Screen name="welcome" />
-                <Stack.Screen name="recipe" getId={({ params }) => params.recipeId} />
-                <Stack.Screen
-                  name="filters"
-                  options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
-                />
-                <Stack.Screen
-                  name="auth"
-                  options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
-                />
-                <Stack.Screen name="add-ingredients" />
-              </Stack>
-            </StoreProvider>
-          </ApolloProvider>
-        </SessionProvider>
-      </AppWrapper>
-    </PostHogProvider>
-  )
+  try {
+    return (
+      <PostHogProvider
+        apiKey={POSTHOG_API_KEY}
+        autocapture={{
+          captureTouches: false,
+          captureScreens: false,
+        }}
+        options={{ host: 'https://eu.posthog.com' }}
+      >
+        <AppWrapper>
+          <SessionProvider>
+            <ApolloProvider client={api?.apolloClient}>
+              <StoreProvider>
+                <Stack screenOptions={{ headerShown: false }}>
+                  <Stack.Screen name="index" />
+                  <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
+                  <Stack.Screen name="welcome" />
+                  <Stack.Screen name="recipe" getId={({ params }) => params.recipeId} />
+                  <Stack.Screen
+                    name="filters"
+                    options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+                  />
+                  <Stack.Screen
+                    name="auth"
+                    options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+                  />
+                  <Stack.Screen name="add-ingredients" />
+                </Stack>
+              </StoreProvider>
+            </ApolloProvider>
+          </SessionProvider>
+        </AppWrapper>
+      </PostHogProvider>
+    )
+  } catch (error) {
+    captureError(error.message)
+  }
 }
