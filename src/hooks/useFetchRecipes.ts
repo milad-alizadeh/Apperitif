@@ -31,7 +31,6 @@ export const useFetchRecipes = (categoryIds: string[], categgoryName: string) =>
   // Function to fetch recipes
   const fetchRecipes = useCallback(
     async (pageNum = pageNumber, mergeResults = false) => {
-      console.log('fetchRecipes', pageNum, mergeResults)
       setLoading(true)
       if (!mergeResults) {
         setRecipes([])
@@ -135,8 +134,8 @@ export const useFetchRecipes = (categoryIds: string[], categgoryName: string) =>
 
   // Function to load more recipes when user reaches the end of the list
   const loadMore = () => {
-    console.log('loadMore', pageInfo?.hasNextPage)
     if (pageInfo?.hasNextPage) {
+      console.log('loadMore')
       setPageNumber((prevPageNumber) => {
         const newPageNumber = prevPageNumber + 1
         fetchRecipes(newPageNumber, true)

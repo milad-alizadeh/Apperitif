@@ -7,7 +7,7 @@ import { RecipeGrid } from '~/components/RecipeGrid'
 import { useFetchRecipes } from '~/hooks/useFetchRecipes'
 
 export default function RecipesScreen() {
-  const { categoryIds, categgoryName } = useLocalSearchParams()
+  const { categoryIds, categoryName } = useLocalSearchParams()
   const scrollY = useSharedValue(0)
   const listRef = useRef(null)
 
@@ -15,7 +15,7 @@ export default function RecipesScreen() {
     scrollY.value = event.contentOffset.y
   })
   const { recipes, pageInfo, loading, error, manualRefresh, refreshing, loadMore } =
-    useFetchRecipes(categoryIds as string[], categgoryName as string)
+    useFetchRecipes(categoryIds as string[], categoryName as string)
 
   return (
     <Screen
@@ -50,7 +50,18 @@ export default function RecipesScreen() {
           </View>
         }
         ListHeaderComponent={<FilterBar autofocus={!categoryIds} styleClassName="mb-3" />}
-        ListEmptyComponent={<View>{!!error && <Text>{error?.message}</Text>}</View>}
+        ListEmptyComponent={
+          <>
+            {!loading && !error && (
+              <View className="items-center py-6">
+                <Text body weight="medium">
+                  No recipes found
+                </Text>
+              </View>
+            )}
+            <View>{!!error && <Text>{error?.message}</Text>}</View>
+          </>
+        }
         onEndReached={loadMore}
       />
     </Screen>

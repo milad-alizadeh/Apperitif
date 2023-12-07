@@ -1,6 +1,6 @@
 import { useReactiveVar } from '@apollo/client'
 import { router } from 'expo-router'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { View } from 'react-native'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { applyFilters, clearFilters, draftSelectedFiltersVar, selectedFiltersVar } from '~/store'
