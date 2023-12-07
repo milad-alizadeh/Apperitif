@@ -9,8 +9,6 @@ export default function AboutScreen() {
   const buildNumber = Application.nativeBuildVersion
   const appName = Application.applicationName
 
-  console.log('Updates', JSON.stringify(Updates, null, 2))
-
   return (
     <Screen preset="fixed" safeAreaEdges={['top']} contentContainerStyle={{ flex: 1 }}>
       <Header title="About" backButton />
