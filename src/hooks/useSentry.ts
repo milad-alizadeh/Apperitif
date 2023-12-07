@@ -7,5 +7,6 @@ export const useSentry = () => {
     dsn: SENTRY_DSN,
     enableInExpoDevelopment: true,
     debug: process.env.NODE_ENV === 'development',
+    integrations: [new Sentry.Native.ReactNativeTracing()],
   })
 }

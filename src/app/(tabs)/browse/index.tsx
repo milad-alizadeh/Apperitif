@@ -22,7 +22,7 @@ export default function BrowseHomeScreen() {
   const { capture } = useAnalytics()
   const { appContent } = useStore()
 
-  const categoryIds = appContent?.home.category_ids ?? []
+  const categoryIds = appContent?.home?.category_ids ?? []
 
   // Fetch categories
   const { data: categoriesData, error } = useQuery(GET_CATEGORIES, {
