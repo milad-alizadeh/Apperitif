@@ -102,7 +102,7 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
         refreshing={refreshing}
         onRefresh={onRefresh}
         ListHeaderComponent={ListHeaderComponent}
-        onEndReachedThreshold={1}
+        onEndReachedThreshold={0.8}
         onEndReached={({ distanceFromEnd }) => {
           if (distanceFromEnd <= 0 || recipes.length < 20) return
           onEndReached()
