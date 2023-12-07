@@ -1,7 +1,7 @@
 import { useReactiveVar } from '@apollo/client'
 import { router } from 'expo-router'
 import React, { FC, Ref, forwardRef, useCallback, useImperativeHandle, useRef } from 'react'
-import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native'
+import { ActivityIndicator, NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { searchQueryVar } from '~/store'
@@ -84,7 +84,11 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
       [search_term],
     )
 
-    return (
+    return loading ? (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator animating={loading} />
+      </View>
+    ) : (
       <Animated.FlatList
         ref={listRef}
         data={recipes}
@@ -98,8 +102,11 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
         refreshing={refreshing}
         onRefresh={onRefresh}
         ListHeaderComponent={ListHeaderComponent}
-        onEndReachedThreshold={0.5}
-        onEndReached={onEndReached}
+        onEndReachedThreshold={1}
+        onEndReached={({ distanceFromEnd }) => {
+          if (distanceFromEnd <= 0) return
+          onEndReached()
+        }}
         renderItem={renderItem}
         ListFooterComponent={ListFooterComponent ?? <View className="h-20"></View>}
         ListEmptyComponent={ListEmptyComponent}

@@ -5,7 +5,7 @@ import { Chip } from './Chip'
 export interface FilterChipsProps {
   styleClassName?: string
   categories: { id: string; name: string }[]
-  onDismiss: (id: string, name: string) => void
+  onDismiss: (category: { id: string; name: string }) => void
   testID?: string
   testIDItem?: string
 }
@@ -34,7 +34,7 @@ export const FilterChips = function FilterChips({
             key={category.id}
             label={`${category.name}`}
             styleClassName="mr-3"
-            onDismiss={() => onDismiss(category.id, category.name)}
+            onDismiss={() => onDismiss(category)}
           />
         )
       })}

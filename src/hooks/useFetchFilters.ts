@@ -2,7 +2,7 @@ import { ApolloError, useQuery, useReactiveVar } from '@apollo/client'
 import groupBy from 'lodash/groupBy'
 import map from 'lodash/map'
 import values from 'lodash/values'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GetFiltersQuery } from '~/__generated__/graphql'
 import { SectionHeaderType } from '~/components/SectionList'
 import { GET_CONTENT } from '~/graphql/queries'
@@ -18,6 +18,7 @@ export const useFetchFilters = (): {
   sectionsData: Filter[][]
   sectionsHeaders: SectionHeaderType[]
   resultCount: number
+  getResultCount: () => Promise<void>
 } => {
   // Fetch available category ids
   const draftSelectedFilters = useReactiveVar(draftSelectedFiltersVar)
@@ -37,6 +38,7 @@ export const useFetchFilters = (): {
       sectionsData: [],
       sectionsHeaders: [],
       resultCount: 0,
+      getResultCount: () => Promise.resolve(),
     }
 
   // Fetch filters based on ids
@@ -50,7 +52,7 @@ export const useFetchFilters = (): {
   })
 
   const sectionsHeaders: SectionHeaderType[] = data?.categoriesCollection?.edges.map(
-    ({ node: { id, name, categoriesCollection } }) => {
+    ({ node: { id, name } }) => {
       return {
         id,
         title: name,
@@ -61,7 +63,7 @@ export const useFetchFilters = (): {
 
   const [resultCount, setResultCount] = useState(0)
 
-  const getResultCount = useCallback(async () => {
+  const getResultCount = async () => {
     const groupedCategories = groupBy(draftSelectedFilters, 'parentId')
     const category_groups = map(groupedCategories, (value, key) => map(value, 'id'))
     const { data, error } = await api.supabase.rpc('get_recipes_by_category_ids', {
@@ -77,11 +79,7 @@ export const useFetchFilters = (): {
     } else {
       setResultCount(data.total_count)
     }
-  }, [draftSelectedFilters])
+  }
 
-  useEffect(() => {
-    getResultCount()
-  }, [draftSelectedFilters])
-
-  return { data, loading, error, sectionsData, sectionsHeaders, resultCount }
+  return { data, loading, error, sectionsData, sectionsHeaders, resultCount, getResultCount }
 }

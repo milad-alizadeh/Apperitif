@@ -7,7 +7,7 @@ import { RecipeGrid } from '~/components/RecipeGrid'
 import { useFetchRecipes } from '~/hooks/useFetchRecipes'
 
 export default function RecipesScreen() {
-  const { categoryIds } = useLocalSearchParams()
+  const { categoryIds, categgoryName } = useLocalSearchParams()
   const scrollY = useSharedValue(0)
   const listRef = useRef(null)
 
@@ -15,7 +15,7 @@ export default function RecipesScreen() {
     scrollY.value = event.contentOffset.y
   })
   const { recipes, pageInfo, loading, error, manualRefresh, refreshing, loadMore } =
-    useFetchRecipes(categoryIds)
+    useFetchRecipes(categoryIds as string[], categgoryName as string)
 
   return (
     <Screen

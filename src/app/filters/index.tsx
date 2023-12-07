@@ -1,13 +1,17 @@
 import { useReactiveVar } from '@apollo/client'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { View, ViewStyle } from 'react-native'
 import { FilterActions, ListItem, Screen, SectionList } from '~/components'
 import { useFetchFilters } from '~/hooks'
 import { draftSelectedFiltersVar, toggleFilter } from '~/store'
 
 export default function AllFiltersScreen() {
-  const { sectionsData, sectionsHeaders, resultCount } = useFetchFilters()
+  const { sectionsData, sectionsHeaders, resultCount, getResultCount } = useFetchFilters()
   const draftSelectedFilters = useReactiveVar(draftSelectedFiltersVar)
+
+  useEffect(() => {
+    getResultCount()
+  }, [draftSelectedFilters])
 
   const renderItem = useCallback(
     ({ item }: { item; index: number }) => {

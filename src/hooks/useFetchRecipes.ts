@@ -14,7 +14,7 @@ import { useAnalytics } from './useAnalytics'
  * @param {string} initialCategoryId - The initial category ID to fetch recipes for.
  * @returns {Object} - Contains recipes, pageInfo, loading state, error, refreshing state, and functions for manual refresh and loading more recipes.
  */
-export const useFetchRecipes = (initialCategoryId: string | string[]) => {
+export const useFetchRecipes = (categoryIds: string[], categgoryName: string) => {
   const { capture } = useAnalytics()
   const [recipes, setRecipes] = useState([])
   const [pageInfo, setPageInfo] = useState(null)
@@ -31,10 +31,14 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
   // Function to fetch recipes
   const fetchRecipes = useCallback(
     async (pageNum = pageNumber, mergeResults = false) => {
+      console.log('fetchRecipes', pageNum, mergeResults)
       setLoading(true)
+      if (!mergeResults) {
+        setRecipes([])
+      }
       const currentSelectedFilters = selectedFiltersVar()
       const groupedCategories = groupBy(currentSelectedFilters, 'parentId')
-      const category_groups = map(groupedCategories, (value, key) => map(value, 'id'))
+      const category_groups = map(groupedCategories, (value) => map(value, 'id'))
 
       const search_term = searchQueryVar()
 
@@ -83,15 +87,17 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
 
   // On mount, clear any existing filters and set the initial category filter
   useEffect(() => {
+    console.log('on mount')
     clearFilters(false)
     setIsInitialSetupComplete(true) // Set isInitialSetupComplete to true after setting the initial filter
-    // const filter = Array.isArray(initialCategoryId) ? initialCategoryId[0] : initialCategoryId
-    // if (!filter) return
-    // addFilter(filter, false)
+    const id = Array.isArray(categoryIds) ? categoryIds[0] : categoryIds
+    if (!id) return
+    addFilter({ id, name: categgoryName, parentId: '1' }, false)
   }, [])
 
   // Call fetchRecipes once the initial setup is complete
   useEffect(() => {
+    console.log('initial setup complete')
     if (isInitialSetupComplete) {
       fetchRecipes().then(() => {
         initialLoadRef.current = false // Set initialLoadRef to false after the initial load
@@ -101,7 +107,11 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
 
   // Handle changes in search query and selected filters after the initial load
   useEffect(() => {
-    console.log('useEffect', selectedFilters)
+    console.log(
+      'search query or selected filters changed',
+      initialLoadRef.current,
+      isInitialSetupComplete,
+    )
     if (!initialLoadRef.current && isInitialSetupComplete) {
       // If it's not the initial load and initial setup is complete,
       // call fetchRecipes on search query or filter changes
@@ -125,6 +135,7 @@ export const useFetchRecipes = (initialCategoryId: string | string[]) => {
 
   // Function to load more recipes when user reaches the end of the list
   const loadMore = () => {
+    console.log('loadMore', pageInfo?.hasNextPage)
     if (pageInfo?.hasNextPage) {
       setPageNumber((prevPageNumber) => {
         const newPageNumber = prevPageNumber + 1
