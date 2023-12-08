@@ -85,21 +85,26 @@ export function useFetchIngredients() {
 
     const categoriesById = keyBy(categories.ingredientsByCategoriesCollection.edges, 'node.id')
 
-    appContent?.ingredient_categories?.category_ids?.forEach((category_id: string) => {
-      if (!categoriesById[category_id]) return
-      const { id, title, data, count } = categoriesById[category_id]?.node
+    appContent?.ingredient_categories?.category_ids?.forEach((categoryId: string) => {
+      const { id, title, data, count } = categoriesById[categoryId]?.node
       sectionsData.push(JSON.parse(data))
       sectionsHeader.push({ id, title, count })
     }) ?? []
 
-    selectedIngredients?.profilesIngredientsCollection.edges.forEach(({ node: { ingredient } }) => {
-      if (!initialSelectedItems[ingredient?.id]) {
-        initialSelectedItems[ingredient?.id] = {
-          name: ingredient?.name,
-          selected: false,
-        }
-      }
-    })
+    selectedIngredients?.profilesIngredientsCollection.edges
+      .filter(({ node }) => node?.ingredient)
+      .forEach(
+        ({
+          node: {
+            ingredient: { id, name },
+          },
+        }) => {
+          initialSelectedItems[id] = {
+            name,
+            selected: false,
+          }
+        },
+      )
 
     return {
       sectionsData,

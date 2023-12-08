@@ -64,15 +64,19 @@ export default function RecipeDetailsScreen() {
     []
 
   const myBar =
-    barIngredients?.profilesIngredientsCollection.edges.map((e) => e.node.ingredient.id) ?? []
+    barIngredients?.profilesIngredientsCollection.edges
+      .filter((e) => e.node.ingredient)
+      .map((e) => e.node.ingredient.id) ?? []
 
-  const mergedRecipeIngredients = recipeIngredients.map((recipeIngredient) => {
-    const inMyBar = myBar.includes(recipeIngredient.ingredient.id)
-    return {
-      ...recipeIngredient,
-      inMyBar,
-    }
-  })
+  const mergedRecipeIngredients = recipeIngredients
+    .filter((recipeIngredient) => recipeIngredient.ingredient)
+    .map((recipeIngredient) => {
+      const inMyBar = myBar.includes(recipeIngredient.ingredient.id)
+      return {
+        ...recipeIngredient,
+        inMyBar,
+      }
+    })
 
   const onIngredientPress = useCallback((id) => {
     setIngredientId(id)
