@@ -3,22 +3,22 @@ appId: ''
 - runFlow: ../prep/launch-app.yml
 - runFlow: ../prep/go-to-category.yml
 - tapOn:
-    id: 'filter-icon'
+    id: filter-icon
 - copyTextFrom:
-    id: 'filter-list-item'
+    id: filter-list-item
     index: 1
 - tapOn:
-    id: 'filter-list-item'
+    id: filter-list-item
     index: 1
 - tapOn:
-    id: 'apply-filters-button'
+    id: apply-filters-button
 - assertVisible:
     id: filter-chip
     text: ${ maestro.copiedText }
 - tapOn:
-    id: 'filter-icon'
+    id: filter-icon
 - tapOn:
-    id: 'clear-all-filters-button'
+    id: clear-all-filters-button
 - assertNotVisible:
     id: filter-chip
     text: ${ maestro.copiedText }

@@ -31,29 +31,29 @@ appId: ''
 
 # Search for ingredients name and add it to the bar
 - tapOn:
-    id: 'search-bar'
+    id: search-bar
 - copyTextFrom:
-    id: 'ingredient-list-item'
+    id: ingredient-list-item
     index: 3
 - inputText: ${ maestro.copiedText }
 - tapOn:
-    id: 'ingredient-list-item'
+    id: ingredient-list-item
     index: 0
 - tapOn:
-    id: 'save-selection-button'
+    id: save-selection-button
 
 # Check that the ingredients are added to the bar
 - assertVisible:
-    id: 'bar-ingredient-list-item'
-    text: '${ maestro.copiedText }'
+    id: bar-ingredient-list-item
+    text: ${ maestro.copiedText }
 - assertVisible:
-    id: 'bar-ingredient-list-item'
+    id: bar-ingredient-list-item
     index: 0
 - assertVisible:
-    id: 'bar-ingredient-list-item'
+    id: bar-ingredient-list-item
     index: 1
 - assertVisible:
-    id: 'bar-ingredient-list-item'
+    id: bar-ingredient-list-item
     index: 2
 
 # Delete the ingredients from the bar
@@ -67,4 +67,4 @@ appId: ''
     id: bar-ingredient-list-item-delete
     index: 0
 - assertVisible:
-    id: 'empty-bar'
+    id: empty-bar

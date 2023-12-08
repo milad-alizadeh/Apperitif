@@ -1,10 +1,10 @@
 appId: ''
 ---
 - tapOn:
-    id: 'browse-tab'
+    id: browse-tab
 - copyTextFrom:
-    id: 'recipe-card'
+    id: recipe-card
     index: 0
 - tapOn:
-    id: 'recipe-card'
+    id: recipe-card
     index: 0

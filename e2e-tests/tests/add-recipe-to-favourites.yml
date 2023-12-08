@@ -4,19 +4,19 @@ appId: ''
 - runFlow: ../prep/login.yml
 - runFlow: ../prep/go-to-recipe.yml
 - tapOn:
-    id: 'favourite-button'
+    id: favourite-button
 - tapOn:
-    id: 'back-button'
+    id: back-button
 - assertVisible:
-    id: 'recipe-card'
+    id: recipe-card
     index: 0
 - tapOn:
-    id: 'favourites-tab'
+    id: favourites-tab
 - assertVisible:
-    id: 'favourite-recipe'
+    id: favourite-recipe
     text: ${ maestro.copiedText }
     index: 0
 - tapOn:
-    id: 'favourite-recipe-delete'
+    id: favourite-recipe-delete
 - assertVisible:
-    id: 'empty-favourites'
+    id: empty-favourites

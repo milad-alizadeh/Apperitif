@@ -38,7 +38,7 @@ export const EquipmentDetails = function EquipmentDetails({ equipmentId }: Equip
               className="w-full h-60 rounded-xl mb-4"
             />
 
-            <Text h2 weight="bold" styleClassName="mb-2">
+            <Text testID="equipment-name" h2 weight="bold" styleClassName="mb-2">
               {equipment?.name}
             </Text>
 

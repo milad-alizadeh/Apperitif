@@ -6,26 +6,26 @@ appId: ''
     id: recipe-name
     text: ${ maestro.copiedText }
 - assertVisible:
-    id: 'recipe-description'
+    id: recipe-description
 - assertVisible:
-    id: 'recipe-attribute-name'
+    id: recipe-attribute-name
     index: 0
 - assertVisible:
-    id: 'recipe-attribute-name'
+    id: recipe-attribute-name
     index: 1
 - assertVisible:
-    id: 'recipe-attribute-name'
+    id: recipe-attribute-name
     index: 2
 - assertVisible:
-    id: 'recipe-ingredient'
+    id: recipe-ingredient
     index: 0
 
 # Check ingredient details
 - copyTextFrom:
-    id: 'recipe-ingredient-name'
+    id: recipe-ingredient-name
     index: 0
 - tapOn:
-    id: 'recipe-ingredient-name'
+    id: recipe-ingredient-name
     index: 0
 - assertVisible:
     id: ingredient-name
@@ -35,19 +35,31 @@ appId: ''
 
 # Check similar recipes link
 - copyTextFrom:
-    id: 'card'
+    id: card
     index: 0
 - tapOn:
-    id: 'card'
+    id: card
 - assertVisible:
     id: recipe-name
     text: ${ maestro.copiedText }
 
-- tapOn: 'Method'
+# Check recipe steps
+- tapOn: Method
 - assertVisible:
-    id: 'recipe-step'
+    id: recipe-step
     index: 0
-- tapOn: 'Equipment'
+
+# Check equipment details
+- tapOn: Equipment
 - assertVisible:
-    id: 'recipe-equipment'
+    id: recipe-equipment
     index: 0
+- copyTextFrom:
+    id: recipe-equipment
+    index: 0
+- tapOn:
+    id: recipe-equipment
+    index: 0
+- assertVisible:
+    id: equipment-name
+    text: ${ maestro.copiedText }
