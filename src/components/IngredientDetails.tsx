@@ -49,19 +49,22 @@ export const IngredientDetails = function IngredientDetails({
   const myBar = barIngredients.profilesIngredientsCollection.edges.map((e) => e.node.ingredient.id)
   const isInMyBar = myBar.includes(ingredientId)
   const ingredient = data?.ingredientsCollection.edges[0]?.node
+
   const availableRecipes =
-    relatedRecipes?.recipesIngredientsCollection.edges.map(({ node: { recipe } }) => ({
-      name: recipe.name,
-      id: recipe.id,
-      imageUrl: recipe.imageUrl,
-      onPress: () => {
-        router.push({
-          pathname: '/recipe',
-          params: { recipeId: recipe.id, recipeName: recipe.name },
-        })
-        onClosed && onClosed()
-      },
-    })) ?? []
+    relatedRecipes?.recipesIngredientsCollection.edges
+      .filter((e) => e.node.recipe)
+      .map(({ node: { recipe } }) => ({
+        name: recipe.name,
+        id: recipe.id,
+        imageUrl: recipe.imageUrl,
+        onPress: () => {
+          router.push({
+            pathname: '/recipe',
+            params: { recipeId: recipe.id, recipeName: recipe.name },
+          })
+          onClosed && onClosed()
+        },
+      })) ?? []
 
   const handleAddToMyBar = (ingredientId: string) => {
     addToMyBar({
