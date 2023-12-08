@@ -1,19 +1,15 @@
 import { router, useLocalSearchParams } from 'expo-router'
 import React, { useRef } from 'react'
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
-import { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated'
+import { useSharedValue } from 'react-native-reanimated'
 import { FilterBar, FixedHeader, Screen, Text } from '~/components'
 import { RecipeGrid } from '~/components/RecipeGrid'
 import { useFetchRecipes } from '~/hooks/useFetchRecipes'
 
 export default function RecipesScreen() {
   const { categoryIds, categoryName } = useLocalSearchParams()
-  const scrollY = useSharedValue(0)
   const listRef = useRef(null)
 
-  const scrollHandler = useAnimatedScrollHandler((event) => {
-    scrollY.value = event.contentOffset.y
-  })
   const { recipes, pageInfo, loading, error, manualRefresh, refreshing, loadMore } =
     useFetchRecipes(categoryIds as string[], categoryName as string)
 
@@ -22,7 +18,7 @@ export default function RecipesScreen() {
       preset="fixed"
       safeAreaEdges={['top']}
       KeyboardAvoidingViewProps={{ enabled: true }}
-      contentContainerStyle={{ flex: 1 }}
+      contentContainerStyle={{ flex: 1, paddingTop: 48 }}
     >
       <TouchableOpacity
         className="h-8 w-40 absolute mx-auto right-[50%] -top-1 translate-x-20 z-20"
@@ -30,7 +26,6 @@ export default function RecipesScreen() {
       />
 
       <FixedHeader
-        scrollY={scrollY}
         offset={10}
         title={pageInfo?.totalCount ? pageInfo?.totalCount + ' Recipes' : ''}
         onGoBack={() => router.back()}
@@ -41,7 +36,6 @@ export default function RecipesScreen() {
         ref={listRef}
         recipes={recipes}
         styleClassName="flex-1 pt-9"
-        onScroll={scrollHandler}
         refreshing={refreshing}
         onRefresh={manualRefresh}
         ListFooterComponent={

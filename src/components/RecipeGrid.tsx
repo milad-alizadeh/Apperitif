@@ -122,27 +122,23 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
       [recipes],
     )
 
-    const AnimatedFlashList = Animated.createAnimatedComponent(FlashList)
-
     return (
-      <AnimatedFlashList
+      <FlashList
         ref={listRef}
         data={recipes}
         numColumns={renderAsList ? 1 : 2}
         keyboardShouldPersistTaps="handled"
         nestedScrollEnabled
         removeClippedSubviews={true}
-        className={`${styleClassName}`}
-        onScroll={onScroll}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item: any) => item.id}
         refreshing={refreshing}
         onRefresh={onRefresh}
         ListHeaderComponent={ListHeaderComponent}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.8}
         onEndReached={onEndReached}
         estimatedItemSize={200}
-        getItemType={(item) => {
-          return !item.name ? 'sectionHeader' : 'row'
+        getItemType={(item: any) => {
+          return !item?.name ? 'sectionHeader' : 'row'
         }}
         renderItem={renderAsList ? renderListItem : renderCardItem}
         ListFooterComponent={ListFooterComponent ?? <View className="h-20"></View>}

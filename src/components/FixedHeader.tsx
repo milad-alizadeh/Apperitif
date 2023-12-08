@@ -72,10 +72,14 @@ export function FixedHeader({
         ${styleClassName}
       `}
     >
-      <Animated.View
-        className="top-0 left-0 right-0 bottom-0 absolute bg-white"
-        style={[animatedStyle, showShadow ? shadowHeader : {}]}
-      ></Animated.View>
+      {scrollY ? (
+        <Animated.View
+          className="top-0 left-0 right-0 bottom-0 absolute bg-white"
+          style={[animatedStyle, showShadow ? shadowHeader : {}]}
+        ></Animated.View>
+      ) : (
+        <View className="top-0 left-0 right-0 bottom-0 absolute bg-white" />
+      )}
 
       <Icon
         icon="arrowLeft"

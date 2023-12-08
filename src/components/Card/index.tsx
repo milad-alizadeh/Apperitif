@@ -50,7 +50,6 @@ export const Card = memo(function Card({
         <Image
           source={{ uri: getImageUrl(imageUrl, imageSizes.THUMBNAIL) }}
           className="w-full h-full"
-          transition={500}
           testID="card-image"
         />
       </View>
