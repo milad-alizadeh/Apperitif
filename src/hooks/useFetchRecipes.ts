@@ -66,10 +66,12 @@ export const useFetchRecipes = (categoryIds: string[], categgoryName: string) =>
       setError(error)
       setPageInfo({ hasNextPage, totalCount })
 
+      // Merge results if required, else set new results
+      const fetchedRecipes = recipes ?? []
       if (mergeResults) {
-        setRecipes((prev) => [...prev, ...(recipes ?? [])])
+        setRecipes((prev) => [...prev, ...fetchedRecipes])
       } else {
-        setRecipes(recipes)
+        setRecipes(fetchedRecipes)
       }
 
       setLoading(false)
