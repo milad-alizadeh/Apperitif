@@ -63,8 +63,12 @@ export function useFetchIngredients() {
     searchIngredients(searchQuery)
   }, [searchQuery])
 
-  const { data: categories } = useQuery(GET_INGREDIENTS_BY_CATEGORIES)
-  const { data: selectedIngredients } = useQuery(GET_MY_BAR)
+  const { data: categories } = useQuery(GET_INGREDIENTS_BY_CATEGORIES, {
+    fetchPolicy: 'cache-and-network',
+  })
+  const { data: selectedIngredients } = useQuery(GET_MY_BAR, {
+    fetchPolicy: 'cache-and-network',
+  })
 
   /**
    * Fetches ingredients data and updates the state with the fetched data.
@@ -82,23 +86,20 @@ export function useFetchIngredients() {
     const categoriesById = keyBy(categories.ingredientsByCategoriesCollection.edges, 'node.id')
 
     appContent?.ingredient_categories?.category_ids?.forEach((category_id: string) => {
-      const { id, title, data, count } = categoriesById[category_id].node
+      if (!categoriesById[category_id]) return
+      const { id, title, data, count } = categoriesById[category_id]?.node
       sectionsData.push(JSON.parse(data))
       sectionsHeader.push({ id, title, count })
     }) ?? []
 
-    selectedIngredients.profilesIngredientsCollection.edges.forEach(
-      ({
-        node: {
-          ingredient: { id, name },
-        },
-      }) => {
-        initialSelectedItems[id] = {
-          name,
-          selected: true,
+    selectedIngredients?.profilesIngredientsCollection.edges.forEach(({ node: { ingredient } }) => {
+      if (!initialSelectedItems[ingredient?.id]) {
+        initialSelectedItems[ingredient?.id] = {
+          name: ingredient?.name,
+          selected: false,
         }
-      },
-    )
+      }
+    })
 
     return {
       sectionsData,
