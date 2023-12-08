@@ -150,37 +150,33 @@ export const IngredientDetails = function IngredientDetails({
           {isLoggedIn && showCta && (
             <View className="mt-auto">
               {/* Stock information */}
-              <TouchableOpacity
-                onPress={() => {
-                  capture('ingredient:ingredient_remove', {
-                    ingredient_name: ingredient?.name,
-                  })
-                  handleDeleteFromMyBar(ingredientId)
-                }}
-                className="flex-row items-center mr-2 rounded-xl mt-6"
-              >
+              <View className="flex-row items-center mr-2 rounded-xl mt-6">
                 <Checkbox checked={isInMyBar} disabled styleClassName="mr-3" />
                 <Text body weight="bold">
                   {isInMyBar ? 'In My Bar' : 'You don’t have this ingredient in your bar'}
                 </Text>
-              </TouchableOpacity>
+              </View>
 
-              {/* Add to my bar */}
-              {!isInMyBar && (
-                <Button
-                  styleClassName="mt-6"
-                  loading={addLoading}
-                  large
-                  label="Add To My Bar"
-                  enableHaptics
-                  onPress={() => {
+              <Button
+                styleClassName="mt-6"
+                loading={addLoading}
+                large
+                label={isInMyBar ? 'Remove From My Bar' : 'Add To My Bar'}
+                enableHaptics
+                onPress={() => {
+                  if (isInMyBar) {
+                    capture('ingredient:ingredient_remove', {
+                      ingredient_name: ingredient?.name,
+                    })
+                    handleDeleteFromMyBar(ingredientId)
+                  } else {
                     capture('ingredient:ingredient_add', {
                       ingredient_name: ingredient?.name,
                     })
                     handleAddToMyBar(ingredientId)
-                  }}
-                />
-              )}
+                  }
+                }}
+              />
             </View>
           )}
         </View>

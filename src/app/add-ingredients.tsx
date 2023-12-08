@@ -59,6 +59,7 @@ export default function AddIngredientsScreen() {
     ({ item }) => {
       if (!item.name) return <View className="w-full h-64 bg-white" />
       const isChecked = !!selectedItems[item.id]?.selected
+      console.log(isChecked, 'isChecked', selectedItems[item.id])
       return (
         <View className="px-6 py-2 bg-white">
           <IngredientListItem

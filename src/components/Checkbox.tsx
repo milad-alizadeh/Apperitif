@@ -20,7 +20,11 @@ export const Checkbox = function Checkbox({
   disabled,
 }: CheckboxProps) {
   return (
-    <TouchableOpacity className={styleClassName} activeOpacity={1} onPress={() => onPress(checked)}>
+    <TouchableOpacity
+      className={styleClassName}
+      activeOpacity={1}
+      onPress={() => !disabled && onPress(checked)}
+    >
       {checked ? (
         <Icon
           icon="check"

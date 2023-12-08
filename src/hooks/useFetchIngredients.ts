@@ -101,7 +101,7 @@ export function useFetchIngredients() {
         }) => {
           initialSelectedItems[id] = {
             name,
-            selected: false,
+            selected: true,
           }
         },
       )
