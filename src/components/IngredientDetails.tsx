@@ -8,6 +8,7 @@ import { GET_MY_BAR, GET_RECIPES_BY_INGREDIENT } from '~/graphql/queries'
 import { GET_INGREDIENT_DETAILS } from '~/graphql/queries/getIngredientDetails'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useSession } from '~/hooks/useSession'
+import { useStore } from '~/providers'
 import { captureError } from '~/utils/captureError'
 import { Button } from './Button'
 import { Checkbox } from './Checkbox'
@@ -43,6 +44,8 @@ export const IngredientDetails = function IngredientDetails({
     variables: { ingredientId },
   })
 
+  const { setCurrentIngredientId } = useStore()
+
   const [addToMyBar, { loading: addLoading }] = useMutation(ADD_TO_MY_BAR)
   const [deleteFromMyBar] = useMutation(DELETE_FROM_MY_BAR)
 
@@ -62,6 +65,7 @@ export const IngredientDetails = function IngredientDetails({
             pathname: '/recipe',
             params: { recipeId: recipe.id, recipeName: recipe.name },
           })
+          setCurrentIngredientId(null)
           onClosed && onClosed()
         },
       })) ?? []

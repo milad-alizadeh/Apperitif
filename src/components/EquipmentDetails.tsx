@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { Image } from 'expo-image'
 import React from 'react'
-import { ActivityIndicator, ScrollView, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { GET_EQUIPMENT_DETAILS } from '~/graphql/queries/'
 import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 import { Text } from './Text'

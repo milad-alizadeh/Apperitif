@@ -18,15 +18,7 @@ import { useAnalytics, useMatchedRecipes, useSession } from '~/hooks'
 import { useStore } from '~/providers'
 
 export default function MyBarScreen() {
-  const {
-    myBarPopoverDismissed,
-    totalMatchInfoBoxDismissed,
-    partialMatchInfoBoxDismissed,
-    setMyBarPopoverDismissed,
-    setPartialMatchInfoBoxDismissed,
-    setTotalMatchInfoBoxDismissed,
-    setCurrentIngredientId,
-  } = useStore()
+  const { myBarPopoverDismissed, setMyBarPopoverDismissed, setCurrentIngredientId } = useStore()
   const isFocused = useIsFocused()
   const { user } = useSession()
   const { capture } = useAnalytics()
@@ -50,7 +42,6 @@ export default function MyBarScreen() {
     ingredientRefetch,
     ingredientLoading,
     partialMatchData,
-    partialMatchLoading,
     partialMatchRefetch,
     sectionsData,
     sectionsHeader,
@@ -59,7 +50,6 @@ export default function MyBarScreen() {
     totalMatchRefetch,
     ingredientError,
     totalMatchError,
-    partialMatchError,
   } = useMatchedRecipes()
 
   const renderIngredientItem = useCallback(
@@ -103,12 +93,12 @@ export default function MyBarScreen() {
   const totalRecipes = getRecipeMatch(totalMatchData)
   const allRecipes = [
     {
-      title: `Cocktails you can make now (${totalRecipes?.length})`,
+      title: `Recipes I can make (${totalRecipes?.length})`,
       id: 'total-match',
     },
     ...totalRecipes,
     {
-      title: `Cocktails short of 1 or 2  (${partialRecipes?.length})`,
+      title: `Missing one or two ingredients (${partialRecipes?.length})`,
       id: 'partial-match',
     },
     ...partialRecipes,
@@ -154,7 +144,7 @@ export default function MyBarScreen() {
             setMyBarPopoverDismissed(true)
             capture('my_bar:popover_dismiss')
           }}
-          from={<View className="absolute h-6 w-6 left-1/2 -translate-x-3 top-6"></View>}
+          from={<View className="absolute h-6 w-6 right-20 -translate-x-3 top-6"></View>}
         >
           <Text body styleClassName="flex-wrap w-72">
             Check what cocktail recipes you can make with these ingredients
@@ -201,7 +191,7 @@ export default function MyBarScreen() {
             />
           </Tabs.TabPage>
 
-          <Tabs.TabPage title="My Recipes" styleClassName="p-0">
+          <Tabs.TabPage title="Recipes" styleClassName="p-0">
             <RecipeGrid
               recipes={allRecipes as any}
               onRefresh={() => totalMatchRefetch()}

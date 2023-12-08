@@ -13,6 +13,8 @@ export const DetailsModal = () => {
     console.log('currentIngredientId', currentIngredientId)
     if (currentIngredientId || currentEquipmentId) {
       modalRef.current.show()
+    } else {
+      modalRef.current.hide()
     }
   }, [currentIngredientId, currentEquipmentId])
 
