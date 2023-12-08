@@ -1,5 +1,6 @@
 import * as Sentry from 'sentry-expo'
 import { SENTRY_DSN } from '~/config'
+import { APP_VARIANT } from '~/config'
 
 export const initSentry = () => {
   Sentry.init({
@@ -9,7 +10,7 @@ export const initSentry = () => {
     integrations: [
       new Sentry.Native.ReactNativeTracing({
         shouldCreateSpanForRequest: (url) => {
-          return !__DEV__ || !url.startsWith(`http://127.0.0.1:8081/logs`)
+          return APP_VARIANT !== 'development'
         },
       }),
     ],

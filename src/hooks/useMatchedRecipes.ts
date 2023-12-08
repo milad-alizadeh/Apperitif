@@ -42,9 +42,9 @@ export const useMatchedRecipes = () => {
   }, [isFocused, ingredientRefetch, totalMatchRefetch, partialMatchRefetch])
 
   const ingredientsInBar = ingredientsData?.profilesIngredientsCollection.edges.map((e) => ({
-    name: e.node.ingredient.name,
-    id: e.node.ingredient.id,
-    category: e.node.ingredient.ingredientsCategoriesCollection.edges[0].node.category?.name,
+    name: e.node.ingredient?.name,
+    id: e.node.ingredient?.id,
+    category: e.node.ingredient?.ingredientsCategoriesCollection.edges[0].node.category?.name,
   }))
 
   const getRecipeMatch = (
