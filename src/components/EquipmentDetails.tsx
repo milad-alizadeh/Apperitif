@@ -25,29 +25,29 @@ export const EquipmentDetails = function EquipmentDetails({ equipmentId }: Equip
   const equipment = data?.equipmentCollection.edges[0]?.node
 
   return (
-    <ScrollView className="min-h-[500px] p-6 pt-6 flex-">
-      <View className="justify-end flex-1">
-        {loading ? (
-          <ActivityIndicator />
-        ) : (
-          <View className="flex-1">
-            <Image
-              source={{ uri: getImageUrl(equipment?.imageUrl, imageSizes.THUMBNAIL) }}
-              contentFit="contain"
-              transition={300}
-              className="w-full h-60 rounded-xl mb-4"
-            />
+    <>
+      {!loading && (
+        <ScrollView className="p-6 pt-6 flex-">
+          <View className="justify-end flex-1">
+            <View className="flex-1">
+              <Image
+                source={{ uri: getImageUrl(equipment?.imageUrl, imageSizes.THUMBNAIL) }}
+                contentFit="contain"
+                transition={300}
+                className="w-full h-60 rounded-xl mb-4"
+              />
 
-            <Text testID="equipment-name" h2 weight="bold" styleClassName="mb-2">
-              {equipment?.name}
-            </Text>
+              <Text testID="equipment-name" h2 weight="bold" styleClassName="mb-2">
+                {equipment?.name}
+              </Text>
 
-            <Text body styleClassName="mb-1">
-              {equipment?.description}
-            </Text>
+              <Text body styleClassName="mb-1">
+                {equipment?.description}
+              </Text>
+            </View>
           </View>
-        )}
-      </View>
-    </ScrollView>
+        </ScrollView>
+      )}
+    </>
   )
 }

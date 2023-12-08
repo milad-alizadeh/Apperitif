@@ -107,17 +107,8 @@ export const IngredientDetails = function IngredientDetails({
 
   return (
     <>
-      {loading || recipesLoading ? (
-        <View className="flex-1 justify-center items-center min-h-[300px]">
-          <ActivityIndicator size="small" />
-        </View>
-      ) : (
-        <View
-          className={`
-          ${loading ? 'flex-1 justify-center' : 'justify-start flex-1 p-6'}
-          ${availableRecipes.length ? 'min-h-[440px]' : 'min-h-[300px]'}
-        `}
-        >
+      {loading || recipesLoading ? null : (
+        <View className="justify-start flex-1 p-6">
           {/* Name */}
           <View className="mb-3">
             {ingredient?.name && (

@@ -1,6 +1,13 @@
 import { BlurView } from 'expo-blur'
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react'
-import { Modal, Pressable, ScrollView, View, useWindowDimensions } from 'react-native'
+import {
+  ActivityIndicator,
+  Modal,
+  Pressable,
+  ScrollView,
+  View,
+  useWindowDimensions,
+} from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, {
   Easing,
@@ -11,6 +18,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { colors } from '~/theme'
 import { shadowLarge } from '~/theme/shadows'
 import { Icon } from './Icon'
 
@@ -40,6 +48,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
   const bottomInset = useSafeAreaInsets().bottom
   const contentHeight = useSharedValue(0)
   const blurIntensity = useSharedValue(0)
+  const [isReady, setIsReady] = useState(false)
   const animationConfig = {
     duration,
     easing: Easing.inOut(Easing.ease),
@@ -58,6 +67,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
       setVisible(false)
     }, duration)
 
+    setIsReady(false)
     onHide && onHide()
   }
 
@@ -106,6 +116,8 @@ export const BottomSheet = forwardRef(function BottomSheet(
       paddingTop.value = isLargerThanWindow ? topInset : 0
       offset.value = -newContentHeight
     }
+
+    setIsReady(true)
   }
 
   const swipeGesture = Gesture.Pan().onEnd((event) => {
@@ -126,12 +138,18 @@ export const BottomSheet = forwardRef(function BottomSheet(
           <View className="left-0 top-0 h-screen w-screen" />
         </Pressable>
 
+        {isReady && (
+          <ActivityIndicator
+            color={colors.white}
+            className="absolute top-1/2 left-1/2 -translate-x-2 -translate-y-2"
+          />
+        )}
         <Animated.View
           style={[containerStyle, shadowLarge]}
           className="absolute bg-white w-screen top-full rounded-t-[50px] overflow-hidden"
         >
           <ScrollView>
-            <View onLayout={onContentLayout} className="min-h-[240px]">
+            <View onLayout={onContentLayout}>
               <Animated.View
                 style={closeStyle}
                 className="z-10 justify-center items-center rounded-full absolute right-6 top-5"
@@ -139,7 +157,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
                 <Icon icon="close" size="large" onPress={hide} />
               </Animated.View>
               {children}
-              <View style={{ height: bottomInset }}></View>
+              <View style={{ height: bottomInset }} />
             </View>
           </ScrollView>
 
