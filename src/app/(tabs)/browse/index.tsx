@@ -45,25 +45,27 @@ export default function BrowseHomeScreen() {
     edge: GetCategoriesQuery['categoriesCollection']['edges'][number],
   ): ListType => {
     const recipes = orderBy(
-      edge.node.recipesCategoriesCollection.edges.map(
-        ({
-          node: {
-            recipe: { name, id, imageUrl },
-          },
-        }) => ({
-          name,
-          id,
-          imageUrl,
-          onPress: () => {
-            router.push({
-              pathname: '/recipe',
-              params: { recipeId: id, recipeName: name },
-            })
+      edge.node.recipesCategoriesCollection.edges
+        .filter((e) => e.node.recipe)
+        .map(
+          ({
+            node: {
+              recipe: { name, id, imageUrl },
+            },
+          }) => ({
+            name,
+            id,
+            imageUrl,
+            onPress: () => {
+              router.push({
+                pathname: '/recipe',
+                params: { recipeId: id, recipeName: name },
+              })
 
-            capture('browse:home_recipe_press', { recipe_name: name })
-          },
-        }),
-      ),
+              capture('browse:home_recipe_press', { recipe_name: name })
+            },
+          }),
+        ),
       ['name', 'asc'],
     )
 
