@@ -17,7 +17,7 @@ import {
 } from '~/components'
 import { GET_CATEGORIES } from '~/graphql/queries'
 import { useAnalytics } from '~/hooks/useAnalytics'
-import { useStore } from '~/providers'
+import { useAppContent } from '~/providers/AppContentProvider'
 import { colors } from '~/theme/colors'
 
 interface ListType {
@@ -30,9 +30,9 @@ interface ListType {
  */
 export default function BrowseHomeScreen() {
   const { capture } = useAnalytics()
-  const { appContent } = useStore()
+  const { home } = useAppContent()
 
-  const categoryIds = appContent?.home?.category_ids ?? []
+  const categoryIds = home?.category_ids ?? []
 
   // Fetch categories
   const { data: categoriesData, error } = useQuery(GET_CATEGORIES, {

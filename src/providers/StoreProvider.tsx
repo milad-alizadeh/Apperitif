@@ -1,15 +1,9 @@
-import { useQuery } from '@apollo/client'
-import keyBy from 'lodash/keyBy'
-import mapValues from 'lodash/mapValues'
 import React, { Dispatch, FC, SetStateAction, createContext, useContext } from 'react'
 import { defaultJiggerSize, defaultUnitSystem } from '~/constants'
-import { GET_CONTENT } from '~/graphql/queries'
 import { usePersistedState } from '~/hooks/usePeristedState'
 import { JiggerSize, UnitSystem } from '~/types'
-import { captureError } from '~/utils/captureError'
 
 interface StoreContextType {
-  appContent: Record<string, any>
   doubleRecipe: boolean
   myBarPopoverDismissed: boolean
   partialMatchInfoBoxDismissed: boolean
@@ -27,18 +21,6 @@ interface StoreContextType {
 const StoreContext = createContext<StoreContextType | undefined>(undefined)
 
 export const StoreProvider: FC<{ children: any }> = ({ children }) => {
-  const { data, error } = useQuery(GET_CONTENT, {
-    fetchPolicy: 'cache-and-network',
-  })
-
-  if (error) {
-    captureError(error.message)
-  }
-
-  const appContent = mapValues(keyBy(data?.appContentCollection?.edges ?? [], 'node.name'), (e) =>
-    JSON.parse(e.node.content),
-  )
-
   const [selectedUnitSystem, setSelectedUnitSystem] = usePersistedState(
     'selectedUnitSystem',
     defaultUnitSystem,
@@ -66,7 +48,6 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
   return (
     <StoreContext.Provider
       value={{
-        appContent,
         doubleRecipe,
         myBarPopoverDismissed,
         partialMatchInfoBoxDismissed,

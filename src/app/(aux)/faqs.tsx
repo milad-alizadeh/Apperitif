@@ -1,13 +1,13 @@
 import { View } from 'react-native'
 import { Accordion, Header, Screen } from '~/components'
 import { useAnalytics } from '~/hooks'
-import { useStore } from '~/providers'
+import { useAppContent } from '~/providers'
 
 export default function FAQsScreen() {
   const { capture } = useAnalytics()
-  const { appContent } = useStore()
+  const { faqs } = useAppContent()
 
-  const pageContent = appContent.faqs ?? { title: '', content: '', faqs: [] }
+  const pageContent = faqs ?? { title: '', content: '', faqs: [] }
 
   return (
     pageContent && (

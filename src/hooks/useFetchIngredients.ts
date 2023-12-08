@@ -5,7 +5,7 @@ import { GetIngredientsByCategoriesQuery, GetMyBarQuery } from '~/__generated__/
 import { SectionDataType, SectionHeaderType } from '~/components'
 import { GET_MY_BAR } from '~/graphql/queries'
 import { GET_INGREDIENTS_BY_CATEGORIES } from '~/graphql/queries/getIngtedientsByCategories'
-import { useStore } from '~/providers'
+import { useAppContent } from '~/providers'
 import { api } from '../services/api'
 import { useAnalytics } from './useAnalytics'
 
@@ -13,7 +13,7 @@ export type SelectedItems = Record<string, { name: string; selected: boolean }>
 
 export function useFetchIngredients() {
   const { capture } = useAnalytics()
-  const { appContent } = useStore()
+  const { ingredient_categories } = useAppContent()
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<{
     sectionsData: SectionDataType[][]
@@ -85,7 +85,7 @@ export function useFetchIngredients() {
 
     const categoriesById = keyBy(categories.ingredientsByCategoriesCollection.edges, 'node.id')
 
-    appContent?.ingredient_categories?.category_ids?.forEach((categoryId: string) => {
+    ingredient_categories?.category_ids?.forEach((categoryId: string) => {
       const { id, title, data, count } = categoriesById[categoryId]?.node
       sectionsData.push(JSON.parse(data))
       sectionsHeader.push({ id, title, count })

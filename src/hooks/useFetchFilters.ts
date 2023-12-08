@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { GetFiltersQuery } from '~/__generated__/graphql'
 import { SectionHeaderType } from '~/components/SectionList'
 import { GET_FILTERS } from '~/graphql/queries/getFilters'
-import { useStore } from '~/providers/StoreProvider'
+import { useAppContent } from '~/providers'
 import { api } from '~/services'
 import { Filter, draftSelectedFiltersVar } from '~/store'
 import { captureError } from '~/utils/captureError'
@@ -21,8 +21,8 @@ export const useFetchFilters = (): {
 } => {
   // Fetch available category ids
   const draftSelectedFilters = useReactiveVar(draftSelectedFiltersVar)
-  const { appContent } = useStore()
-  const categoryIds = appContent?.filters?.category_ids ?? []
+  const { filters } = useAppContent()
+  const categoryIds = filters?.category_ids ?? []
 
   // Fetch filters based on ids
   const { data, loading, error } = useQuery(GET_FILTERS, {

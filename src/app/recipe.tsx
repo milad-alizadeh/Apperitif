@@ -1,6 +1,6 @@
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { router, useLocalSearchParams } from 'expo-router'
-import React, { useCallback, useRef, useState } from 'react'
+import React, { memo, useCallback, useRef, useState } from 'react'
 import { View, useWindowDimensions } from 'react-native'
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated'
 import {
@@ -22,7 +22,7 @@ import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
 import { GET_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useSession } from '~/hooks/useSession'
-import { useStore } from '~/providers'
+import { useAppContent } from '~/providers'
 import { shadowLarge } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
 
@@ -37,7 +37,7 @@ export default function RecipeDetailsScreen() {
   const { user, isLoggedIn } = useSession()
   const client = useApolloClient()
   const { recipeId, recipeName } = useLocalSearchParams()
-  const { appContent } = useStore()
+  const { recipe_attributes } = useAppContent()
 
   const headerHeight = useWindowDimensions().width
   const fixedHeaderOffset = headerHeight - 110
@@ -58,7 +58,7 @@ export default function RecipeDetailsScreen() {
   const recipeIngredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
   const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
   const categories = recipe?.recipesCategoriesCollection?.edges.map((e) => e.node.category) ?? []
-  const attributeCategories = appContent?.recipe_attributes?.category_ids ?? []
+  const attributeCategories = recipe_attributes?.category_ids ?? []
   const attributes =
     attributeCategories.map((id: string) => categories.find((c) => c.parentId === id) ?? { id }) ??
     []

@@ -36,9 +36,9 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
           segments={unitSystemOptions}
           testID="unit-system"
           onValueChange={(value) => {
-            capture('recipe:unit_press', { unit_type: value })
             setSelectedUnitSystem(value)
             setSelectedJiggerSize(currentJiggerSizeOptions(value)[0].value)
+            capture('recipe:unit_press', { unit_type: value })
           }}
         />
       </View>
@@ -51,8 +51,8 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
           selectedValue={selectedJiggerSize}
           segments={currentJiggerSizeOptions(selectedUnitSystem)}
           onValueChange={(value) => {
-            capture('recipe:jigger_size_press', { jigger_size: value })
             setSelectedJiggerSize(value)
+            capture('recipe:jigger_size_press', { jigger_size: value })
           }}
         />
       </View>

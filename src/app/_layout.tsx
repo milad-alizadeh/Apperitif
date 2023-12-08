@@ -8,6 +8,7 @@ import { LogBox } from 'react-native'
 import { POSTHOG_API_KEY } from '~/config'
 import { useAnalytics } from '~/hooks'
 import { StoreProvider } from '~/providers'
+import { AppContentProvider } from '~/providers/AppContentProvider'
 import { SessionProvider } from '~/providers/SessionProvider'
 import { api } from '~/services/api'
 import { initSentry } from '~/services/sentry'
@@ -91,23 +92,25 @@ function RootLayoutNav() {
         <AppWrapper>
           <SessionProvider>
             <ApolloProvider client={api?.apolloClient}>
-              <StoreProvider>
-                <Stack screenOptions={{ headerShown: false }}>
-                  <Stack.Screen name="index" />
-                  <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
-                  <Stack.Screen name="welcome" />
-                  <Stack.Screen name="recipe" getId={({ params }) => params.recipeId} />
-                  <Stack.Screen
-                    name="filters"
-                    options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
-                  />
-                  <Stack.Screen
-                    name="auth"
-                    options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
-                  />
-                  <Stack.Screen name="add-ingredients" />
-                </Stack>
-              </StoreProvider>
+              <AppContentProvider>
+                <StoreProvider>
+                  <Stack screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="index" />
+                    <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
+                    <Stack.Screen name="welcome" />
+                    <Stack.Screen name="recipe" getId={({ params }) => params.recipeId} />
+                    <Stack.Screen
+                      name="filters"
+                      options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+                    />
+                    <Stack.Screen
+                      name="auth"
+                      options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+                    />
+                    <Stack.Screen name="add-ingredients" />
+                  </Stack>
+                </StoreProvider>
+              </AppContentProvider>
             </ApolloProvider>
           </SessionProvider>
         </AppWrapper>
