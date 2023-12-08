@@ -171,7 +171,7 @@ export const ListItem = memo(function ListItem({
 
       {rightIcon && (
         <>
-          {loading && <ActivityIndicator className="absolute left-[10px] top-[10px]" />}
+          {loading && <ActivityIndicator className="absolute right-[10px] top-[10px]" />}
           <Icon
             testID={testIDIconRight}
             icon={rightIcon}
