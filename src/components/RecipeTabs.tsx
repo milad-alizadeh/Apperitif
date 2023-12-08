@@ -55,8 +55,16 @@ export const RecipeTabs = function RecipeTabs({
   const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
   const multiplier = (selectedJiggerSize / defaultJiggerSize) * (doubleRecipe ? 2 : 1)
 
-  const missingIngredients = ingredients.filter((ingredient) => !ingredient.inMyBar)
-  const inStockIngredients = ingredients.filter((ingredient) => ingredient.inMyBar)
+  const missingIngredients = []
+  const inStockIngredients = []
+
+  for (const ingredient of ingredients) {
+    if (ingredient.inMyBar) {
+      inStockIngredients.push(ingredient)
+    } else {
+      missingIngredients.push(ingredient)
+    }
+  }
 
   const renderIngredientItem = useCallback(
     ({ ingredient, quantity, unit, isOptional, inMyBar }: Ingredient & { inMyBar: boolean }) => {
