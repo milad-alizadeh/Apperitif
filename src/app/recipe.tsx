@@ -9,6 +9,7 @@ import {
   BouncyImage,
   EquipmentDetails,
   FixedHeader,
+  InfoBox,
   IngredientDetails,
   Markdown,
   RecipeFavourite,
@@ -142,6 +143,8 @@ export default function RecipeDetailsScreen() {
         <BouncyImage height={headerHeight} scrollY={scrollY} imageUrl={recipe?.imageUrl} />
 
         <View className="flex-1 -mt-16 py-8 bg-white rounded-t-[50px] px-6">
+          {error && <InfoBox type="error" description={error?.message} />}
+
           <View>
             <View className="justify-between flex-row">
               <Text
