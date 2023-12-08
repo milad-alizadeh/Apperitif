@@ -174,7 +174,6 @@ export default function MyBarScreen() {
               sectionsHeader={sectionsHeader}
               renderItem={renderIngredientItem}
               ListFooterComponent={<View />}
-              contentContainerStyle={{ marginTop: -16 }}
               ListEmptyComponent={
                 <View className="flex-1 justify-center w-full">
                   {!!ingredientError && (

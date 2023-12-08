@@ -1,6 +1,7 @@
 import React, { RefObject, createRef, useEffect, useMemo, useRef, useState } from 'react'
 import { FlatList, View, useWindowDimensions } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import { colors } from '~/theme'
 import { SectionHeaderItem } from '../SectionHeaderItem'
 
 export interface SectionHeaderProps {
@@ -106,9 +107,9 @@ export const SectionHeader = function SectionHeader({
       testID="section-header"
     >
       {!scrollEnabled ? (
-        <View className="flex-row border-b-2 border-neutral-100">
+        <View className="flex-row border-b-[3px] border-neutral-100 ">
           <Animated.View
-            className="bg-primary h-[3px] absolute left-0 -bottom-[2px]"
+            className="bg-primary h-[3px] absolute left-0 -bottom-[3px]"
             style={style}
           />
 

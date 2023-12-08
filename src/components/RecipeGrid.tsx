@@ -3,6 +3,7 @@ import { FlashList } from '@shopify/flash-list'
 import { router } from 'expo-router'
 import React, { FC, Ref, forwardRef, useCallback, useImperativeHandle, useRef } from 'react'
 import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native'
+import Animated from 'react-native-reanimated'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { searchQueryVar } from '~/store'
 import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
@@ -65,7 +66,6 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
         return (
           <ListItem
             leftImage={getImageUrl(item.imageUrl, imageSizes.THUMBNAIL)}
-            rightIcon="trash"
             name={item.name}
             styleClassName="mx-6 mb-3"
             testID="favourite-recipe"
@@ -89,7 +89,7 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
     const renderCardItem = useCallback(
       ({ item, index }: { item; index: number }) => {
         return (
-          <View className={`w-1/2 mb-3 ${index % 2 === 1 ? 'pr-6 pl-3' : 'pl-6 pr-3'}`}>
+          <View className={`w-full mb-3 ${index % 2 === 1 ? 'pr-6 pl-3' : 'pl-6 pr-3'}`}>
             <Card
               {...item}
               key={item.id}
@@ -122,8 +122,10 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
       [recipes],
     )
 
+    const AnimatedFlashList = Animated.createAnimatedComponent(FlashList)
+
     return (
-      <FlashList
+      <AnimatedFlashList
         ref={listRef}
         data={recipes}
         numColumns={renderAsList ? 1 : 2}
