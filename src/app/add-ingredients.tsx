@@ -3,20 +3,13 @@ import { router } from 'expo-router'
 import debounce from 'lodash/debounce'
 import React, { useCallback, useRef, useState } from 'react'
 import { View, ViewStyle } from 'react-native'
-import {
-  BottomSheet,
-  BottomSheetRef,
-  FixedHeader,
-  IngredientDetails,
-  IngredientListItem,
-  Screen,
-  SectionList,
-} from '~/components'
+import { FixedHeader, IngredientListItem, Screen, SectionList } from '~/components'
 import { ADD_TO_MY_BAR } from '~/graphql/mutations/addToMyBar'
 import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useFetchIngredients } from '~/hooks/useFetchIngredients'
 import { useSession } from '~/hooks/useSession'
+import { useStore } from '~/providers'
 import { captureError } from '~/utils/captureError'
 
 export default function AddIngredientsScreen() {
@@ -32,13 +25,12 @@ export default function AddIngredientsScreen() {
     setSelectedItems,
     setInitialSelectedItems,
   } = useFetchIngredients()
-
+  const { setCurrentIngredientId } = useStore()
   const [loading, setLoading] = useState(false)
   const { user } = useSession()
   const [addToMyBar, { error: addError }] = useMutation(ADD_TO_MY_BAR)
   const [deleteFromMyBar, { error: deleteError }] = useMutation(DELETE_FROM_MY_BAR)
   const sections = searchQuery ? searchResults : { sectionsData, sectionsHeader }
-  const modalRef = useRef<BottomSheetRef>(null)
   const [ingredientId, setIngredientId] = useState<string>('')
 
   const handleSelect = useCallback(
@@ -71,8 +63,7 @@ export default function AddIngredientsScreen() {
             }}
             onInfoPress={() => {
               capture('add_ingredients:ingredient_details_press', { ingredient_name: item.name })
-              setIngredientId(item.id)
-              modalRef.current.show()
+              setCurrentIngredientId(item.id)
             }}
           />
         </View>
@@ -142,15 +133,6 @@ export default function AddIngredientsScreen() {
         showShadow={false}
         offset={0}
       />
-
-      {/* Ingredient details Modal */}
-      <BottomSheet ref={modalRef}>
-        <IngredientDetails
-          ingredientId={ingredientId}
-          showCta={false}
-          onClosed={() => modalRef.current.hide()}
-        />
-      </BottomSheet>
 
       {!!sections?.sectionsData.length && (
         <SectionList

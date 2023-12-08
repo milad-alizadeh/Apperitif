@@ -65,10 +65,10 @@ export const BottomSheet = forwardRef(function BottomSheet(
 
     setTimeout(() => {
       setVisible(false)
+      onHide && onHide()
     }, duration)
 
     setIsReady(false)
-    onHide && onHide()
   }
 
   useImperativeHandle(

@@ -26,8 +26,6 @@ export interface RecipeTabsProps {
   ingredients: (Ingredient & { inMyBar: boolean })[]
   equipment: Equipment[]
   steps: Step[]
-  onIngredientPress: (id: string) => void
-  onEquipmentPress?: (id: string) => void
   loading?: boolean
 }
 
@@ -43,11 +41,15 @@ export const RecipeTabs = function RecipeTabs({
   steps,
   ingredients,
   equipment,
-  onIngredientPress,
-  onEquipmentPress,
   loading,
 }: RecipeTabsProps) {
-  const { selectedJiggerSize, doubleRecipe, selectedUnitSystem } = useStore()
+  const {
+    selectedJiggerSize,
+    doubleRecipe,
+    selectedUnitSystem,
+    setCurrentEquipmentId,
+    setCurrentIngredientId,
+  } = useStore()
   const { capture } = useAnalytics()
   const { isLoggedIn } = useSession()
   const { data } = useQuery(GET_UNITS)
@@ -89,7 +91,7 @@ export const RecipeTabs = function RecipeTabs({
           loading={loading}
           rightIcon="text"
           onPress={() => {
-            onIngredientPress && onIngredientPress(ingredient.id)
+            setCurrentIngredientId(ingredient.id)
             capture('recipe:ingredient_details_press', { ingredient_name: ingredient.name })
           }}
         />
@@ -108,8 +110,8 @@ export const RecipeTabs = function RecipeTabs({
           rightIcon="text"
           testID="recipe-equipment"
           onPress={() => {
+            setCurrentEquipmentId(id)
             capture('recipe:equipment_details_press', { equipment_name: name })
-            onEquipmentPress && onEquipmentPress(id)
           }}
           styleClassName="mb-2"
         />

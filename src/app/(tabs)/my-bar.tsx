@@ -4,12 +4,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ActivityIndicator, View, ViewStyle } from 'react-native'
 import Popover from 'react-native-popover-view'
 import {
-  BottomSheet,
-  BottomSheetRef,
   Button,
   Header,
   InfoBox,
-  IngredientDetails,
   ListItem,
   RecipeGrid,
   Screen,
@@ -28,17 +25,15 @@ export default function MyBarScreen() {
     setMyBarPopoverDismissed,
     setPartialMatchInfoBoxDismissed,
     setTotalMatchInfoBoxDismissed,
+    setCurrentIngredientId,
   } = useStore()
   const isFocused = useIsFocused()
-  const modalRef = useRef<BottomSheetRef>(null)
   const { user } = useSession()
   const { capture } = useAnalytics()
-  const [ingredientId, setIngredientId] = useState<string>('')
   const [deleteingItemId, setDeleteingItemId] = useState<string>('')
 
   const handleIngredientPress = useCallback((ingredientId: string) => {
-    setIngredientId(ingredientId)
-    modalRef.current.show()
+    setCurrentIngredientId(ingredientId)
   }, [])
 
   const [showPopover, setShowPopover] = useState<number | null>(null)
@@ -265,15 +260,6 @@ export default function MyBarScreen() {
           </Tabs.TabPage>
         </Tabs>
       </View>
-
-      {/* Ingredient details Modal */}
-      <BottomSheet ref={modalRef}>
-        <IngredientDetails
-          ingredientId={ingredientId}
-          showCta={false}
-          onClosed={() => modalRef.current.hide()}
-        />
-      </BottomSheet>
     </Screen>
   )
 }

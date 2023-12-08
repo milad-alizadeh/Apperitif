@@ -1,9 +1,13 @@
-import React, { Dispatch, FC, SetStateAction, createContext, useContext } from 'react'
+import React, { Dispatch, FC, SetStateAction, createContext, useContext, useState } from 'react'
 import { defaultJiggerSize, defaultUnitSystem } from '~/constants'
 import { usePersistedState } from '~/hooks/usePeristedState'
 import { JiggerSize, UnitSystem } from '~/types'
 
 interface StoreContextType {
+  currentIngredientId: string
+  setCurrentIngredientId: Dispatch<SetStateAction<string>>
+  currentEquipmentId: string
+  setCurrentEquipmentId: Dispatch<SetStateAction<string>>
   doubleRecipe: boolean
   myBarPopoverDismissed: boolean
   partialMatchInfoBoxDismissed: boolean
@@ -21,6 +25,9 @@ interface StoreContextType {
 const StoreContext = createContext<StoreContextType | undefined>(undefined)
 
 export const StoreProvider: FC<{ children: any }> = ({ children }) => {
+  const [currentIngredientId, setCurrentIngredientId] = useState<string | null>(null)
+  const [currentEquipmentId, setCurrentEquipmentId] = useState<string | null>(null)
+
   const [selectedUnitSystem, setSelectedUnitSystem] = usePersistedState(
     'selectedUnitSystem',
     defaultUnitSystem,
@@ -48,9 +55,13 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
   return (
     <StoreContext.Provider
       value={{
+        currentEquipmentId,
+        currentIngredientId,
         doubleRecipe,
         myBarPopoverDismissed,
         partialMatchInfoBoxDismissed,
+        setCurrentEquipmentId,
+        setCurrentIngredientId,
         selectedJiggerSize,
         selectedUnitSystem,
         totalMatchInfoBoxDismissed,

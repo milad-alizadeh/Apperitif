@@ -1,16 +1,12 @@
 import { useApolloClient, useMutation, useQuery } from '@apollo/client'
 import { router, useLocalSearchParams } from 'expo-router'
-import React, { memo, useCallback, useRef, useState } from 'react'
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { View, useWindowDimensions } from 'react-native'
 import Animated, { useAnimatedRef, useScrollViewOffset } from 'react-native-reanimated'
 import {
-  BottomSheet,
-  BottomSheetRef,
   BouncyImage,
-  EquipmentDetails,
   FixedHeader,
   InfoBox,
-  IngredientDetails,
   Markdown,
   RecipeFavourite,
   RecipeTabs,
@@ -29,9 +25,7 @@ import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
 export default function RecipeDetailsScreen() {
   const { capture } = useAnalytics()
   const bottomOffset = useSafeAreaInsetsStyle(['bottom'])
-  const [ingredientId, setIngredientId] = useState<string>('')
-  const [equipmentId, setEquipmentId] = useState<string>('')
-  const modalRef = useRef<BottomSheetRef>(null)
+
   const aref = useAnimatedRef<Animated.ScrollView>()
   const scrollY = useScrollViewOffset(aref)
   const { user, isLoggedIn } = useSession()
@@ -78,18 +72,6 @@ export default function RecipeDetailsScreen() {
       }
     })
 
-  const onIngredientPress = useCallback((id) => {
-    setIngredientId(id)
-    setEquipmentId(null)
-    modalRef.current.show()
-  }, [])
-
-  const onEquipmentPress = useCallback((id) => {
-    setEquipmentId(id)
-    setIngredientId(null)
-    modalRef.current.show()
-  }, [])
-
   const [addToFavourites] = useMutation(ADD_TO_FAVOURITES, {
     variables: { recipeId: recipe?.id, profileId: user?.id },
     onError: () => {
@@ -135,14 +117,6 @@ export default function RecipeDetailsScreen() {
         }
       />
 
-      {/* Ingredient Modal */}
-      <BottomSheet ref={modalRef}>
-        {ingredientId && (
-          <IngredientDetails onClosed={modalRef.current.hide} ingredientId={ingredientId} />
-        )}
-        {equipmentId && <EquipmentDetails equipmentId={equipmentId} />}
-      </BottomSheet>
-
       <Animated.ScrollView style={bottomOffset} ref={aref} scrollEventThrottle={16}>
         <BouncyImage height={headerHeight} scrollY={scrollY} imageUrl={recipe?.imageUrl} />
 
@@ -181,8 +155,6 @@ export default function RecipeDetailsScreen() {
               steps={steps}
               ingredients={mergedRecipeIngredients}
               equipment={equipment}
-              onIngredientPress={onIngredientPress}
-              onEquipmentPress={onEquipmentPress}
             />
           </View>
         </View>
