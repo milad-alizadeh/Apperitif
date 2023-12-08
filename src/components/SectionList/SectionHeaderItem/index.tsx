@@ -25,6 +25,7 @@ export const SectionHeaderItem = forwardRef<View, SectionHeaderItemProps>(
             body
             weight="medium"
             styleClassName={`
+            text-center
             ${active ? 'text-primary' : 'text-neutral-[500]'}`}
           >
             {label}

@@ -1,11 +1,14 @@
 import { useReactiveVar } from '@apollo/client'
+import { FlashList } from '@shopify/flash-list'
 import { router } from 'expo-router'
 import React, { FC, Ref, forwardRef, useCallback, useImperativeHandle, useRef } from 'react'
 import { NativeScrollEvent, NativeSyntheticEvent, View } from 'react-native'
-import Animated from 'react-native-reanimated'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { searchQueryVar } from '~/store'
+import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 import { Card, CardProps } from './Card'
+import { ListItem } from './ListItem'
+import { Text } from './Text'
 
 interface RecipeGridProps {
   ListEmptyComponent?: JSX.Element
@@ -18,6 +21,7 @@ interface RecipeGridProps {
   refreshing?: boolean
   styleClassName?: string
   ref?: Ref<any>
+  renderAsList?: boolean
 }
 
 export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
@@ -32,6 +36,7 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
       recipes,
       refreshing,
       styleClassName,
+      renderAsList = false,
     },
     ref,
   ) => {
@@ -46,7 +51,42 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
 
     const listRef = useRef(null)
 
-    const renderItem = useCallback(
+    const renderListItem = useCallback(
+      ({ item }) => {
+        if (!item.name)
+          return (
+            <View className="w-full">
+              <Text h3 styleClassName="px-6 pb-4 pt-8 h-20">
+                {item.title}
+              </Text>
+            </View>
+          )
+        if (!item?.imageUrl) return null
+        return (
+          <ListItem
+            leftImage={getImageUrl(item.imageUrl, imageSizes.THUMBNAIL)}
+            rightIcon="trash"
+            name={item.name}
+            styleClassName="mx-6 mb-3"
+            testID="favourite-recipe"
+            testIDIconRight="favourite-recipe-delete"
+            card
+            onPress={() => {
+              capture('my-bar:recipe_press', {
+                recipe_name: item.name,
+              })
+              router.push({
+                pathname: '/recipe',
+                params: { recipeId: item.id, recipeName: item.name },
+              })
+            }}
+          />
+        )
+      },
+      [recipes],
+    )
+
+    const renderCardItem = useCallback(
       ({ item, index }: { item; index: number }) => {
         return (
           <View className={`w-1/2 mb-3 ${index % 2 === 1 ? 'pr-6 pl-3' : 'pl-6 pr-3'}`}>
@@ -79,18 +119,16 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
           </View>
         )
       },
-      [search_term],
+      [recipes],
     )
 
     return (
-      <Animated.FlatList
+      <FlashList
         ref={listRef}
         data={recipes}
-        numColumns={2}
+        numColumns={renderAsList ? 1 : 2}
         keyboardShouldPersistTaps="handled"
-        windowSize={5}
         nestedScrollEnabled
-        updateCellsBatchingPeriod={100}
         removeClippedSubviews={true}
         className={`${styleClassName}`}
         onScroll={onScroll}
@@ -99,11 +137,12 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
         onRefresh={onRefresh}
         ListHeaderComponent={ListHeaderComponent}
         onEndReachedThreshold={0.5}
-        onEndReached={({ distanceFromEnd }) => {
-          if (distanceFromEnd <= 0 || recipes.length < 20) return
-          onEndReached()
+        onEndReached={onEndReached}
+        estimatedItemSize={200}
+        getItemType={(item) => {
+          return !item.name ? 'sectionHeader' : 'row'
         }}
-        renderItem={renderItem}
+        renderItem={renderAsList ? renderListItem : renderCardItem}
         ListFooterComponent={ListFooterComponent ?? <View className="h-20"></View>}
         ListEmptyComponent={ListEmptyComponent}
       />

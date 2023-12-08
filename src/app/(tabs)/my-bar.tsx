@@ -99,6 +99,21 @@ export default function MyBarScreen() {
     [sectionsData, deleteingItemId],
   )
 
+  const partialRecipes = getRecipeMatch(partialMatchData)
+  const totalRecipes = getRecipeMatch(totalMatchData)
+  const allRecipes = [
+    {
+      title: `Cocktails you can make now (${totalRecipes?.length})`,
+      id: 'total-match',
+    },
+    ...totalRecipes,
+    {
+      title: `Cocktails short of 1 or 2  (${partialRecipes?.length})`,
+      id: 'partial-match',
+    },
+    ...partialRecipes,
+  ]
+
   return (
     <Screen preset="fixed" contentContainerStyle={$container} safeAreaEdges={['top']}>
       <Header
@@ -158,7 +173,6 @@ export default function MyBarScreen() {
               sectionsData={sectionsData}
               sectionsHeader={sectionsHeader}
               renderItem={renderIngredientItem}
-              headerHeight={200}
               ListFooterComponent={<View />}
               contentContainerStyle={{ marginTop: -16 }}
               ListEmptyComponent={
@@ -190,20 +204,10 @@ export default function MyBarScreen() {
 
           <Tabs.TabPage title="My Recipes" styleClassName="p-0">
             <RecipeGrid
-              recipes={getRecipeMatch(totalMatchData)}
+              recipes={allRecipes as any}
               onRefresh={() => totalMatchRefetch()}
               refreshing={totalMatchLoading}
-              ListHeaderComponent={
-                !totalMatchInfoBoxDismissed ? (
-                  <InfoBox
-                    styleClassName="my-3 mx-6"
-                    description="Explore cocktail recipes you can make with your current ingredients."
-                    onClose={() => setTotalMatchInfoBoxDismissed(true)}
-                  />
-                ) : (
-                  <View className="h-6"></View>
-                )
-              }
+              renderAsList
               ListEmptyComponent={
                 !totalMatchLoading && (
                   <>
@@ -218,41 +222,6 @@ export default function MyBarScreen() {
                         </Text>
                       </View>
                     )}
-                  </>
-                )
-              }
-            />
-          </Tabs.TabPage>
-
-          <Tabs.TabPage title="Almost can make" styleClassName="p-0">
-            <RecipeGrid
-              recipes={getRecipeMatch(partialMatchData)}
-              onRefresh={() => partialMatchRefetch()}
-              refreshing={partialMatchLoading}
-              ListHeaderComponent={
-                !partialMatchInfoBoxDismissed ? (
-                  <InfoBox
-                    styleClassName="my-3 mx-6"
-                    description="See which cocktails you're close to making with just 1-2 more ingredients."
-                    onClose={() => setPartialMatchInfoBoxDismissed(true)}
-                  />
-                ) : (
-                  <View className="h-6"></View>
-                )
-              }
-              ListEmptyComponent={
-                !partialMatchLoading && (
-                  <>
-                    {!!partialMatchError && (
-                      <View className="p-6">
-                        <InfoBox type="error" description={partialMatchError?.message} />
-                      </View>
-                    )}
-                    <View className="w-full justify-center items-center mt-8">
-                      <Text h3 styleClassName="text-center max-w-[280px] mb-3">
-                        Add more ingredients to get recipe suggestions.
-                      </Text>
-                    </View>
                   </>
                 )
               }

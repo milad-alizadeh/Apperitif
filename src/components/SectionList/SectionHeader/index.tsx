@@ -105,41 +105,21 @@ export const SectionHeader = function SectionHeader({
       className={styleClassName}
       testID="section-header"
     >
-      <FlatList
-        horizontal
-        data={sectionTitles}
-        showsHorizontalScrollIndicator={false}
-        removeClippedSubviews={false}
-        ref={listRef}
-        scrollEnabled={scrollEnabled}
-        className="w-full"
-        ListFooterComponent={
-          scrollEnabled && <View className="h-5" style={{ width: useWindowDimensions().width }} />
-        }
-        contentContainerStyle={
-          !scrollEnabled
-            ? {
-                justifyContent: 'space-between',
-                width: '100%',
-                paddingRight: 24,
-              }
-            : {}
-        }
-        renderItem={({ item, index }) => {
-          return (
-            <>
-              {index === 0 && (
-                <Animated.View
-                  className="bg-primary h-[3px] absolute left-0 bottom-0"
-                  style={style}
-                />
-              )}
+      {!scrollEnabled ? (
+        <View className="flex-row border-b-2 border-neutral-100">
+          <Animated.View
+            className="bg-primary h-[3px] absolute left-0 -bottom-[2px]"
+            style={style}
+          />
 
+          {sectionTitles.map((title, index) => (
+            <View className="py-1 flex-1" key={title}>
               <SectionHeaderItem
-                label={item}
+                label={title}
                 active={activeIndex === index}
                 ref={refs[index]}
                 onLayout={() => onHeaderItemLayout(index)}
+                style={{ marginLeft: 0 }}
                 onPress={() => {
                   if (sectionListRef) {
                     setIsNavScroll && setIsNavScroll(true)
@@ -156,10 +136,57 @@ export const SectionHeader = function SectionHeader({
                   setActiveIndex(index)
                 }}
               />
-            </>
-          )
-        }}
-      />
+            </View>
+          ))}
+        </View>
+      ) : (
+        <FlatList
+          horizontal
+          data={sectionTitles}
+          showsHorizontalScrollIndicator={false}
+          removeClippedSubviews={false}
+          ref={listRef}
+          scrollEnabled={scrollEnabled}
+          className="w-full"
+          ListFooterComponent={
+            <View className="h-5" style={{ width: useWindowDimensions().width }} />
+          }
+          renderItem={({ item, index }) => {
+            return (
+              <>
+                {index === 0 && (
+                  <Animated.View
+                    className="bg-primary h-[3px] absolute left-0 bottom-0"
+                    style={style}
+                  />
+                )}
+
+                <SectionHeaderItem
+                  label={item}
+                  active={activeIndex === index}
+                  ref={refs[index]}
+                  onLayout={() => onHeaderItemLayout(index)}
+                  onPress={() => {
+                    if (sectionListRef) {
+                      setIsNavScroll && setIsNavScroll(true)
+                      const sectionOffset =
+                        sectionListRef?.current?.getItemOffset({
+                          index: 0,
+                          section: index,
+                        }) - scrollOffset
+                      sectionListRef?.current?.scrollToOffset({
+                        offset: sectionOffset,
+                        animated: true,
+                      })
+                    }
+                    setActiveIndex(index)
+                  }}
+                />
+              </>
+            )
+          }}
+        />
+      )}
     </View>
   )
 }

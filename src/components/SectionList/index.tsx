@@ -107,6 +107,7 @@ export const SectionList: FC<SectionListProps> = ({
           />
         )
       const { title, count } = sectionsHeader[sectionIndex]
+
       return (
         <View
           className="bg-white rounded-t-[50px] overflow-hidden"
