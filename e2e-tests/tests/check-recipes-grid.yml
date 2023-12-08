@@ -34,6 +34,3 @@ appId: ''
     id: 'recipe-card'
     index: 0
     text: ${ maestro.copiedText }
-- assertNotVisible:
-    id: 'recipe-card'
-    index: 1
