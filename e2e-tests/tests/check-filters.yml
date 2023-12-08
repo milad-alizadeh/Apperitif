@@ -4,14 +4,11 @@ appId: ''
 - runFlow: ../prep/go-to-category.yml
 - tapOn:
     id: 'filter-icon'
-- tapOn:
-    id: 'filter-list-item'
-    index: 0
 - copyTextFrom:
-    id: 'sub-filter-list-item'
+    id: 'filter-list-item'
     index: 1
 - tapOn:
-    id: 'sub-filter-list-item'
+    id: 'filter-list-item'
     index: 1
 - tapOn:
     id: 'apply-filters-button'

@@ -6,6 +6,12 @@ appId: ''
 - tapOn:
     id: 'my-bar-tab'
 
+# Dismiss the tooltip
+- tapOn:
+    id: 'Home Grabber'
+- tapOn:
+    id: 'Home Grabber'
+
 # Check that the bar is empty
 - assertVisible:
     id: 'empty-bar'

@@ -58,7 +58,7 @@ export default function RecipeDetailsScreen() {
   const recipeIngredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
   const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
   const categories = recipe?.recipesCategoriesCollection?.edges.map((e) => e.node.category) ?? []
-  const attributeCategories = appContent?.recipe_attributes?.categoryIds ?? []
+  const attributeCategories = appContent?.recipe_attributes?.category_ids ?? []
   const attributes =
     attributeCategories.map((id: string) => categories.find((c) => c.parentId === id) ?? { id }) ??
     []

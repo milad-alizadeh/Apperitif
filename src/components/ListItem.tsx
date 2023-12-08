@@ -170,8 +170,8 @@ export const ListItem = memo(function ListItem({
       </Text>
 
       {rightIcon && (
-        <View>
-          <ActivityIndicator className="absolute left-[10px] top-[10px]" animating={loading} />
+        <>
+          {loading && <ActivityIndicator className="absolute left-[10px] top-[10px]" />}
           <Icon
             testID={testIDIconRight}
             icon={rightIcon}
@@ -187,7 +187,7 @@ export const ListItem = memo(function ListItem({
                 : undefined
             }
           />
-        </View>
+        </>
       )}
 
       {!!badgeNumber && (

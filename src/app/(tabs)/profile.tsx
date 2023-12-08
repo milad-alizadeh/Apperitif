@@ -101,6 +101,7 @@ export default function ProfileHomeScreen() {
         leftIcon={icon}
         rightIcon="chevronRight"
         card
+        testID={`profile-list-${item.slug}`}
         onPress={onPress}
       />
     )

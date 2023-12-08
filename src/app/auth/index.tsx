@@ -85,6 +85,7 @@ export default function AuthHomeScreen() {
               onPress={() => {
                 router.push({ pathname: '/auth/email-and-password', params: { attemptedRoute } })
               }}
+              testID="auth-email-password"
             >
               <Text body styleClassName="text-neutral-800 font-bold underline underline-offset-3">
                 Continue with Email & Password

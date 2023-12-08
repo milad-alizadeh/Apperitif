@@ -2,12 +2,14 @@ appId: ''
 ---
 - tapOn:
     id: profile-tab
-- tapOn: Log in or create an account
-- tapOn: Continue with Email & Password
 - tapOn:
-    id: 'email'
-- inputText: 'milaadd+test@gmail.com'
+    id: profile-list-log_in
 - tapOn:
-    id: 'password'
-- inputText: 'FJEtYkKfrOJSQEnT0mMZ'
+    id: auth-email-password
+- tapOn:
+    id: email
+- inputText: milaadd+test@gmail.com
+- tapOn:
+    id: password
+- inputText: FJEtYkKfrOJSQEnT0mMZ
 - tapOn: Sign in
