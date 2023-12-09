@@ -45,7 +45,7 @@ export const FilterActions: FC<FilterActionsProps> = ({ resultCount }) => {
       </View>
       <View className="px-2 flex-1">
         <Button
-          label={`Apply Filters (${resultCount ?? ''})`}
+          label={`Show (${resultCount ?? ''}) recipe${resultCount === 1 ? '' : 's'}`}
           enableHaptics
           testID="apply-filters-button"
           disabled={!resultCount}
