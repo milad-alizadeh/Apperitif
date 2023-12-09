@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { router } from 'expo-router'
+import { router, useGlobalSearchParams } from 'expo-router'
+import { usePathname } from 'expo-router'
 import React, { useEffect } from 'react'
-import { ActivityIndicator, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { View } from 'react-native'
 import { ADD_TO_MY_BAR, DELETE_FROM_MY_BAR } from '~/graphql/mutations'
 import { GET_MY_BAR, GET_RECIPES_BY_INGREDIENT } from '~/graphql/queries'
 import { GET_INGREDIENT_DETAILS } from '~/graphql/queries/getIngredientDetails'
@@ -34,6 +34,8 @@ export const IngredientDetails = function IngredientDetails({
   showCta = true,
   onClosed,
 }: IngredientDetailsProps) {
+  const pathname = usePathname()
+  const { recipeId } = useGlobalSearchParams()
   const { screen, capture } = useAnalytics()
   const { user, isLoggedIn } = useSession()
   const { data, loading } = useQuery(GET_INGREDIENT_DETAILS, {
@@ -55,7 +57,7 @@ export const IngredientDetails = function IngredientDetails({
 
   const availableRecipes =
     relatedRecipes?.recipesIngredientsCollection.edges
-      .filter((e) => e.node.recipe)
+      .filter((e) => e.node.recipe && e.node.recipe.id !== recipeId)
       .map(({ node: { recipe } }) => ({
         name: recipe.name,
         id: recipe.id,
@@ -68,7 +70,8 @@ export const IngredientDetails = function IngredientDetails({
           setCurrentIngredientId(null)
           onClosed && onClosed()
         },
-      })) ?? []
+      }))
+      .slice(0, 10) ?? []
 
   const handleAddToMyBar = (ingredientId: string) => {
     addToMyBar({
@@ -156,7 +159,7 @@ export const IngredientDetails = function IngredientDetails({
                 styleClassName="mt-6"
                 loading={addLoading}
                 large
-                label={isInMyBar ? 'Remove From My Bar' : 'Add To My Bar'}
+                label={isInMyBar ? 'Remove from my bar' : 'Add to my bar'}
                 enableHaptics
                 onPress={() => {
                   if (isInMyBar) {
