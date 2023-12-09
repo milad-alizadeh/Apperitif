@@ -139,7 +139,7 @@ export const IngredientDetails = function IngredientDetails({
             <View className="-mx-6 min-h-[200px]">
               <HorizontalList
                 listItems={availableRecipes as any}
-                title="Recipes"
+                title="Used in"
                 showCount={false}
               />
             </View>
