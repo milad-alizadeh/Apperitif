@@ -10,7 +10,6 @@ export const DetailsModal = () => {
     useStore()
 
   useEffect(() => {
-    console.log('currentIngredientId', currentIngredientId)
     if (currentIngredientId || currentEquipmentId) {
       modalRef.current.show()
     } else {

@@ -5,6 +5,7 @@ import snakeCase from 'lodash/snakeCase'
 import { PostHogProvider } from 'posthog-react-native'
 import { useEffect } from 'react'
 import { LogBox } from 'react-native'
+import { Feedback } from '~/components'
 import { DetailsModal } from '~/components/DetailsModal'
 import { POSTHOG_API_KEY } from '~/config'
 import { useAnalytics } from '~/hooks'
@@ -96,6 +97,7 @@ function RootLayoutNav() {
               <AppContentProvider>
                 <StoreProvider>
                   <DetailsModal />
+                  <Feedback />
                   <Stack screenOptions={{ headerShown: false }}>
                     <Stack.Screen name="index" />
                     <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />

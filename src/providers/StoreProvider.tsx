@@ -4,21 +4,26 @@ import { usePersistedState } from '~/hooks/usePeristedState'
 import { JiggerSize, UnitSystem } from '~/types'
 
 interface StoreContextType {
-  currentIngredientId: string
-  setCurrentIngredientId: Dispatch<SetStateAction<string>>
   currentEquipmentId: string
-  setCurrentEquipmentId: Dispatch<SetStateAction<string>>
+  currentIngredientId: string
   doubleRecipe: boolean
+  feedbackShown: boolean
   myBarPopoverDismissed: boolean
   partialMatchInfoBoxDismissed: boolean
   selectedJiggerSize: JiggerSize
   selectedUnitSystem: UnitSystem
+  setCurrentEquipmentId: Dispatch<SetStateAction<string>>
+  shouldShowFeedback: boolean
   totalMatchInfoBoxDismissed: boolean
+
+  setCurrentIngredientId: Dispatch<SetStateAction<string>>
   setDoubleRecipe: Dispatch<SetStateAction<boolean>>
+  setFeedbackShown: Dispatch<SetStateAction<boolean>>
   setMyBarPopoverDismissed: Dispatch<SetStateAction<boolean>>
   setPartialMatchInfoBoxDismissed: Dispatch<SetStateAction<boolean>>
   setSelectedJiggerSize: Dispatch<SetStateAction<JiggerSize>>
   setSelectedUnitSystem: Dispatch<SetStateAction<UnitSystem>>
+  setShouldShowFeedback: Dispatch<SetStateAction<boolean>>
   setTotalMatchInfoBoxDismissed: Dispatch<SetStateAction<boolean>>
 }
 
@@ -27,6 +32,8 @@ const StoreContext = createContext<StoreContextType | undefined>(undefined)
 export const StoreProvider: FC<{ children: any }> = ({ children }) => {
   const [currentIngredientId, setCurrentIngredientId] = useState<string | null>(null)
   const [currentEquipmentId, setCurrentEquipmentId] = useState<string | null>(null)
+  const [shouldShowFeedback, setShouldShowFeedback] = useState<boolean>(false)
+  const [feedbackShown, setFeedbackShown] = usePersistedState('feedbackShown', false)
 
   const [selectedUnitSystem, setSelectedUnitSystem] = usePersistedState(
     'selectedUnitSystem',
@@ -58,18 +65,22 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
         currentEquipmentId,
         currentIngredientId,
         doubleRecipe,
+        feedbackShown,
         myBarPopoverDismissed,
         partialMatchInfoBoxDismissed,
-        setCurrentEquipmentId,
-        setCurrentIngredientId,
         selectedJiggerSize,
         selectedUnitSystem,
+        setCurrentEquipmentId,
+        setCurrentIngredientId,
+        shouldShowFeedback,
         totalMatchInfoBoxDismissed,
         setDoubleRecipe,
+        setFeedbackShown,
         setMyBarPopoverDismissed,
         setPartialMatchInfoBoxDismissed,
         setSelectedJiggerSize,
         setSelectedUnitSystem,
+        setShouldShowFeedback,
         setTotalMatchInfoBoxDismissed,
       }}
     >

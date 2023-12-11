@@ -537,6 +537,7 @@ export type Ingredients = Node & {
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
   ingredientsCategoriesCollection?: Maybe<IngredientsCategoriesConnection>;
+  isDraft?: Maybe<Scalars['Boolean']['output']>;
   name: Scalars['String']['output'];
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID']['output'];
@@ -767,6 +768,7 @@ export type IngredientsFilter = {
   createdAt?: InputMaybe<DatetimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<UuidFilter>;
+  isDraft?: InputMaybe<BooleanFilter>;
   name?: InputMaybe<StringFilter>;
   nodeId?: InputMaybe<IdFilter>;
   /** Negates a filter */
@@ -780,6 +782,7 @@ export type IngredientsInsertInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
+  isDraft?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
@@ -796,6 +799,7 @@ export type IngredientsOrderBy = {
   createdAt?: InputMaybe<OrderByDirection>;
   description?: InputMaybe<OrderByDirection>;
   id?: InputMaybe<OrderByDirection>;
+  isDraft?: InputMaybe<OrderByDirection>;
   name?: InputMaybe<OrderByDirection>;
   updatedAt?: InputMaybe<OrderByDirection>;
 };
@@ -804,6 +808,7 @@ export type IngredientsUpdateInput = {
   createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
+  isDraft?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
