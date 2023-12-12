@@ -1,7 +1,7 @@
 import { useReactiveVar } from '@apollo/client'
 import { isDevice } from 'expo-device'
 import { Image } from 'expo-image'
-import { router, useLocalSearchParams } from 'expo-router'
+import { Link, router, useLocalSearchParams } from 'expo-router'
 import React from 'react'
 import { ActivityIndicator, Platform, TouchableOpacity, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -71,7 +71,7 @@ export default function AuthHomeScreen() {
               router.push({ pathname: '/auth/otp-email', params: { attemptedRoute } })
             }}
           >
-            <Text body styleClassName="text-neutral-800 font-bold underline underline-offset-3">
+            <Text body styleClassName="text-neutral-800 font-medium underline underline-offset-3">
               Continue with Email
             </Text>
           </TouchableOpacity>
@@ -87,7 +87,7 @@ export default function AuthHomeScreen() {
               }}
               testID="auth-email-password"
             >
-              <Text body styleClassName="text-neutral-800 font-bold underline underline-offset-3">
+              <Text body styleClassName="text-neutral-800 font-medium underline underline-offset-3">
                 Continue with Email & Password
               </Text>
             </TouchableOpacity>
@@ -99,6 +99,34 @@ export default function AuthHomeScreen() {
           <ActivityIndicator color={colors.white} />
         </View>
       )}
+
+      <View className="mt-auto">
+        <Text small styleClassName="text-center text-neutral-500">
+          By continuing, you agree to our{' '}
+          <TouchableOpacity
+            onPress={() => {
+              router.back()
+              router.push('/(aux)/terms-and-conditions')
+            }}
+          >
+            <Text small styleClassName="text-neutral-800 underline">
+              T&C's
+            </Text>
+          </TouchableOpacity>{' '}
+          Please also check out our{' '}
+          <TouchableOpacity
+            onPress={() => {
+              router.back()
+              router.push('/(aux)/privacy-policy')
+            }}
+          >
+            <Text small styleClassName="text-neutral-800 underline">
+              Privacy Policy
+            </Text>
+          </TouchableOpacity>
+          .
+        </Text>
+      </View>
     </Screen>
   )
 }

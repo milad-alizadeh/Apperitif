@@ -11,6 +11,7 @@ interface TextProps {
   h3?: boolean
   h4?: boolean
   body?: boolean
+  small?: boolean
   largeHeading?: boolean
   loading?: boolean
   skeletonLinesNumber?: number
@@ -33,6 +34,7 @@ export function Text({
   styleClassName,
   weight,
   testID,
+  small,
 }: TextProps) {
   const sizes = {
     h1: { fontSize: isAndroid ? 24 : 26, fontFamily: typography?.primary?.bold, lineHeight: 32 },
@@ -44,26 +46,27 @@ export function Text({
       lineHeight: isAndroid ? 18 : 20,
       letterSpacing: isAndroid ? -0.3 : 0,
     },
+    small: {
+      fontSize: isAndroid ? 12 : 14,
+      lineHeight: isAndroid ? 16 : 18,
+      letterSpacing: isAndroid ? -0.3 : 0,
+    },
   }
 
   let height
-  let style
 
   if (h1) {
     height = sizes.h1.lineHeight
-    style = sizes.h1
   } else if (h2) {
     height = sizes.h2.lineHeight
-    style = sizes.h2
   } else if (h3) {
     height = sizes.h3.lineHeight
-    style = sizes.h3
   } else if (h4) {
     height = sizes.h4.lineHeight
-    style = sizes.h4
   } else if (body) {
     height = sizes.body.lineHeight
-    style = sizes.body
+  } else if (small) {
+    height = sizes.small.lineHeight
   }
 
   const combinedStyle: TextStyle[] = [
@@ -72,6 +75,7 @@ export function Text({
     h3 && sizes.h3,
     h4 && sizes.h4,
     body && sizes.body,
+    small && sizes.small,
   ]
 
   const defaultClassName = 'text-navy'

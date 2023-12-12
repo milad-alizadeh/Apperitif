@@ -1,7 +1,6 @@
 import { router, useLocalSearchParams } from 'expo-router'
 import React, { useRef } from 'react'
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
-import { useSharedValue } from 'react-native-reanimated'
 import { FilterBar, FixedHeader, Screen, Text } from '~/components'
 import { RecipeGrid } from '~/components/RecipeGrid'
 import { useFetchRecipes } from '~/hooks/useFetchRecipes'

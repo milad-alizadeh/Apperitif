@@ -19,38 +19,30 @@ export default function ProfileHomeScreen() {
   const { capture, reset } = useAnalytics()
 
   const profileItems: ProfileItem[] | null[] = [
-    isLoggedIn
-      ? {
-          name: 'Account',
-          icon: 'user',
-          route: `/account`,
-          slug: 'account',
-        }
-      : undefined,
     {
       name: 'FAQs',
       icon: 'chat',
-      route: '/faqs',
+      route: '(tabs)/profile/faqs',
       slug: 'faqs',
     },
     {
       name: 'About',
       icon: 'infoCircle',
-      route: '/about',
+      route: '(tabs)/profile/about',
       slug: 'about',
     },
     null,
     {
-      name: 'Privacy Policy',
+      name: 'Terms',
       icon: 'file',
-      route: '/privacy-policy',
+      route: '(tabs)/profile/privacy-policy',
       slug: 'privacy_policy',
     },
     {
-      name: 'Terms & Conditions',
+      name: 'Privacy Policy',
       icon: 'file',
-      route: '/terms-and-conditions',
-      slug: 'terms_and_conditions',
+      route: '(tabs)/profile/privacy-policy',
+      slug: 'privacy_policy',
     },
     null,
     {
@@ -69,6 +61,15 @@ export default function ProfileHomeScreen() {
       },
     },
   ]
+
+  if (isLoggedIn) {
+    profileItems.unshift({
+      name: 'Account',
+      icon: 'user',
+      route: '(tabs)/profile/account',
+      slug: 'account',
+    })
+  }
 
   const singOut = async () => {
     await api.supabase.auth.signOut()
