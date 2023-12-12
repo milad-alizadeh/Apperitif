@@ -1,7 +1,9 @@
 import { ApolloProvider } from '@apollo/client'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack, useGlobalSearchParams, usePathname } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
 import snakeCase from 'lodash/snakeCase'
+import { useColorScheme } from 'nativewind'
 import { PostHogProvider } from 'posthog-react-native'
 import { useEffect } from 'react'
 import { LogBox } from 'react-native'
@@ -59,6 +61,15 @@ const AppWrapper = ({ children }) => {
   const { screen } = useAnalytics()
   const pathname = usePathname()
   const params = useGlobalSearchParams()
+  const { colorScheme } = useColorScheme()
+
+  useEffect(() => {
+    if (colorScheme === 'dark') {
+      console.log('dark')
+    } else {
+      console.log('light')
+    }
+  }, [colorScheme])
 
   // Track the location in your analytics provider here.
   useEffect(() => {
@@ -98,6 +109,7 @@ function RootLayoutNav() {
                 <StoreProvider>
                   <DetailsModal />
                   <Feedback />
+                  <StatusBar style="auto" />
                   <Stack screenOptions={{ headerShown: false }}>
                     <Stack.Screen name="index" />
                     <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />

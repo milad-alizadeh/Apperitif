@@ -2,7 +2,6 @@ import { useQuery } from '@apollo/client'
 import { router } from 'expo-router'
 import groupBy from 'lodash/groupBy'
 import orderBy from 'lodash/orderBy'
-import { useColorScheme } from 'nativewind'
 import React from 'react'
 import { View } from 'react-native'
 import { GetCategoriesQuery } from '~/__generated__/graphql'
@@ -31,10 +30,6 @@ interface ListType {
 export default function BrowseHomeScreen() {
   const { capture } = useAnalytics()
   const { home } = useAppContent()
-
-  const { colorScheme } = useColorScheme()
-
-  const backgroundColor = colorScheme === 'dark' ? colors.neutral[800] : colors.white
 
   const categoryIds = home?.category_ids ?? []
 
@@ -109,12 +104,7 @@ export default function BrowseHomeScreen() {
   const orderedCategories = getBrowseCategories(categoriesData, categoryIds)
 
   return (
-    <Screen
-      preset="scroll"
-      backgroundColor={backgroundColor}
-      safeAreaEdges={['top']}
-      KeyboardAvoidingViewProps={{ enabled: false }}
-    >
+    <Screen preset="scroll" safeAreaEdges={['top']} KeyboardAvoidingViewProps={{ enabled: false }}>
       {!!error && (
         <View className="p-6">
           <InfoBox type="error" description={error?.message} />
