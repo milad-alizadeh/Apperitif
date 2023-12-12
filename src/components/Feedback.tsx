@@ -1,4 +1,4 @@
-import { useGlobalSearchParams, usePathname } from 'expo-router'
+import { usePathname } from 'expo-router'
 import * as StoreReview from 'expo-store-review'
 import { FC, useEffect, useRef, useState } from 'react'
 import { APP_VARIANT } from '~/config'
@@ -16,7 +16,6 @@ export const Feedback: FC = () => {
   const [comment, setComment] = useState('')
   const [currentStep, setCurrentStep] = useState('feedbackRequest')
   const pathname = usePathname()
-  const params = useGlobalSearchParams()
 
   const checkUserCritera = async (userId: string) => {
     const { data, error } = await api.supabase.functions.invoke('check-user-criteria', {
@@ -25,7 +24,6 @@ export const Feedback: FC = () => {
         environment: APP_VARIANT ? 'staging' : 'production',
       },
     })
-    console.log(data, error, 'data')
 
     if (error) {
       captureError(error)
@@ -64,7 +62,6 @@ export const Feedback: FC = () => {
         }
       },
       onCancel() {
-        console.log('cancel')
         capture('user_feedback:feedback_submit', { is_positive: false })
 
         // If the feedback is negative, ask for a comment

@@ -58,7 +58,7 @@ export const GoogleAuthentication = function GoogleAuthentication({ attemptedRou
     if (response?.type === 'success') {
       singInWithOAuth(response)
     } else {
-      console.log('response error', response)
+      captureError(response.type)
     }
   }, [response])
 

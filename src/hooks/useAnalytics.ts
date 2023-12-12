@@ -2,15 +2,15 @@ import { isDevice } from 'expo-device'
 import { usePostHog } from 'posthog-react-native'
 
 export const useAnalytics = () => {
-  // if (!isDevice) {
-  //   return {
-  //     capture: () => {},
-  //     screen: () => {},
-  //     identify: () => {},
-  //     reset: () => {},
-  //     loaded: true,
-  //   }
-  // }
+  if (!isDevice) {
+    return {
+      capture: () => {},
+      screen: () => {},
+      identify: () => {},
+      reset: () => {},
+      loaded: true,
+    }
+  }
 
   const posthog = usePostHog()
 

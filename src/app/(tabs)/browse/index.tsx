@@ -44,6 +44,7 @@ export default function BrowseHomeScreen() {
   const getListProps = (
     edge: GetCategoriesQuery['categoriesCollection']['edges'][number],
   ): ListType => {
+    if (!edge) return { listItems: [], title: '', id: '' }
     const recipes = orderBy(
       edge.node.recipesCategoriesCollection.edges
         .filter((e) => e.node.recipe)
@@ -96,9 +97,9 @@ export default function BrowseHomeScreen() {
     categoryIds: string[],
   ): ListType[] => {
     if (!queryData) return []
-    const categories = queryData.categoriesCollection?.edges
+    const categories = queryData.categoriesCollection?.edges ?? []
     const categoriesById = groupBy(categories, 'node.id')
-    return categoryIds.map((id) => getListProps(categoriesById[id][0]))
+    return categoryIds.map((id) => getListProps(categoriesById?.[id]?.[0])) ?? []
   }
 
   const orderedCategories = getBrowseCategories(categoriesData, categoryIds)

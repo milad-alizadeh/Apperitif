@@ -107,6 +107,7 @@ export interface Database {
           created_at: string
           description: string | null
           id: string
+          is_draft: boolean | null
           name: string
           updated_at: string
         }
@@ -114,6 +115,7 @@ export interface Database {
           created_at?: string
           description?: string | null
           id?: string
+          is_draft?: boolean | null
           name: string
           updated_at?: string
         }
@@ -121,6 +123,7 @@ export interface Database {
           created_at?: string
           description?: string | null
           id?: string
+          is_draft?: boolean | null
           name?: string
           updated_at?: string
         }

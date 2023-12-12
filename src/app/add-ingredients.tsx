@@ -31,7 +31,6 @@ export default function AddIngredientsScreen() {
   const [addToMyBar, { error: addError }] = useMutation(ADD_TO_MY_BAR)
   const [deleteFromMyBar, { error: deleteError }] = useMutation(DELETE_FROM_MY_BAR)
   const sections = searchQuery ? searchResults : { sectionsData, sectionsHeader }
-  const [ingredientId, setIngredientId] = useState<string>('')
 
   const handleSelect = useCallback(
     (id: string, name: string) => {
@@ -51,7 +50,6 @@ export default function AddIngredientsScreen() {
     ({ item }) => {
       if (!item.name) return <View className="w-full h-64 bg-white" />
       const isChecked = !!selectedItems[item.id]?.selected
-      console.log(isChecked, 'isChecked', selectedItems[item.id])
       return (
         <View className="px-6 py-2 bg-white">
           <IngredientListItem
