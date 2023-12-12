@@ -8,7 +8,7 @@ import { CardProps, SectionDataType, SectionHeaderType } from '~/components'
 import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
 import { GET_MY_BAR, GET_PARTIAL_MATCH_RECIPES, GET_TOTAL_MATCH_RECIPES } from '~/graphql/queries'
 
-export const useMatchedRecipes = () => {
+export const useFetchMatchedRecipes = () => {
   const {
     data: ingredientsData,
     loading: ingredientLoading,

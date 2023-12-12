@@ -70,11 +70,6 @@ export function useFetchIngredients() {
     fetchPolicy: 'cache-and-network',
   })
 
-  /**
-   * Fetches ingredients data and updates the state with the fetched data.
-   * @param categories - The categories of ingredients to fetch.
-   * @param selectedIngredients - The selected ingredients to fetch.
-   */
   const fetchIngredients = (
     categories: GetIngredientsByCategoriesQuery,
     selectedIngredients: GetMyBarQuery,
