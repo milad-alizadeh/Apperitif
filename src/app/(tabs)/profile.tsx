@@ -22,26 +22,26 @@ export default function ProfileHomeScreen() {
     {
       name: 'FAQs',
       icon: 'chat',
-      route: '(tabs)/profile/faqs',
+      route: '/faqs',
       slug: 'faqs',
     },
     {
       name: 'About',
       icon: 'infoCircle',
-      route: '(tabs)/profile/about',
+      route: '/about',
       slug: 'about',
     },
     null,
     {
       name: 'Terms and Conditions',
       icon: 'file',
-      route: '(aux)/terms-and-conditions',
+      route: '/terms-and-conditions',
       slug: 'terms_and_conditions',
     },
     {
       name: 'Privacy Policy',
       icon: 'file',
-      route: '(aux)/privacy-policy',
+      route: '/privacy-policy',
       slug: 'privacy_policy',
     },
     null,
@@ -66,7 +66,7 @@ export default function ProfileHomeScreen() {
     profileItems.unshift({
       name: 'Account',
       icon: 'user',
-      route: '(tabs)/profile/account',
+      route: '/account',
       slug: 'account',
     })
   }
