@@ -100,7 +100,7 @@ export default function AuthHomeScreen() {
         </View>
       )}
 
-      <View className="mt-auto">
+      <View className="mt-auto mb-3">
         <Text small styleClassName="text-center text-neutral-500">
           By continuing, you agree to our{' '}
           <TouchableOpacity
@@ -109,7 +109,7 @@ export default function AuthHomeScreen() {
               router.push('/(aux)/terms-and-conditions')
             }}
           >
-            <Text small styleClassName="text-neutral-800 underline">
+            <Text small styleClassName="text-neutral-800 underline top-[2px]">
               T&C's
             </Text>
           </TouchableOpacity>{' '}
@@ -120,7 +120,7 @@ export default function AuthHomeScreen() {
               router.push('/(aux)/privacy-policy')
             }}
           >
-            <Text small styleClassName="text-neutral-800 underline">
+            <Text small styleClassName="text-neutral-800 underline top-[2px]">
               Privacy Policy
             </Text>
           </TouchableOpacity>
