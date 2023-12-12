@@ -1,5 +1,6 @@
 import { useReactiveVar } from '@apollo/client'
 import { router } from 'expo-router'
+import { useColorScheme } from 'nativewind'
 import React from 'react'
 import { View } from 'react-native'
 import { Badge } from '~/components/Badge'
@@ -21,10 +22,15 @@ export interface FIlterBarProps {
 export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
   const { capture } = useAnalytics()
   const selectedFilters = useReactiveVar(selectedFiltersVar)
+  const { colorScheme } = useColorScheme()
+  const borderColor = colorScheme === 'dark' ? colors.neutral[600] : ''
 
   return (
     <View className={styleClassName}>
-      <View className="flex-row bg-white rounded-lg mx-6 my-3" style={{ ...shadowCard }}>
+      <View
+        className="flex-row bg-white dark:bg-neutral-800 rounded-lg mx-6 my-3"
+        style={[{ ...shadowCard }, { borderColor, borderWidth: 1 }]}
+      >
         <SearchBar
           testId="search-bar"
           onChange={(value) => searchQueryVar(value)}
@@ -35,7 +41,7 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
           icon="settings"
           size="large"
           testID="filter-icon"
-          containerClassName="bg-neutral-100 rounded-r-lg"
+          containerClassName="bg-neutral-100 dark:bg-neutral-800 dark:border-neutral-600 dark:border-l-[1px] rounded-r-lg"
           color={colors.neutral[500]}
           onPress={() => {
             router.push('/filters')

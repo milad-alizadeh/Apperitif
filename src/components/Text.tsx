@@ -78,7 +78,7 @@ export function Text({
     small && sizes.small,
   ]
 
-  const defaultClassName = 'text-navy'
+  const defaultClassName = 'text-navy dark:text-neutral-100'
 
   if (weight) {
     combinedStyle.push({ fontFamily: typography.primary[weight] })

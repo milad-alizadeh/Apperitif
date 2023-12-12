@@ -1,13 +1,17 @@
 import { router, useLocalSearchParams } from 'expo-router'
+import { useColorScheme } from 'nativewind'
 import React, { useRef } from 'react'
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
 import { FilterBar, FixedHeader, Screen, Text } from '~/components'
 import { RecipeGrid } from '~/components/RecipeGrid'
 import { useFetchRecipes } from '~/hooks/useFetchRecipes'
+import { colors } from '~/theme'
 
 export default function RecipesScreen() {
   const { categoryIds, categoryName } = useLocalSearchParams()
   const listRef = useRef(null)
+  const { colorScheme } = useColorScheme()
+  const backgroundColor = colorScheme === 'dark' ? colors.neutral[800] : colors.white
 
   const { recipes, pageInfo, loading, error, manualRefresh, refreshing, loadMore } =
     useFetchRecipes(categoryIds as string[], categoryName as string)
@@ -16,6 +20,7 @@ export default function RecipesScreen() {
     <Screen
       preset="fixed"
       safeAreaEdges={['top']}
+      backgroundColor={backgroundColor}
       KeyboardAvoidingViewProps={{ enabled: true }}
       contentContainerStyle={{ flex: 1, paddingTop: 40 }}
     >

@@ -22,6 +22,7 @@ const config = {
   updates: {
     url: 'https://u.expo.dev/0fe189be-8677-4ba8-b1e9-c3b3e63b388f',
   },
+  userInterfaceStyle: 'automatic',
   runtimeVersion: {
     policy: 'appVersion',
   },

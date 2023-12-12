@@ -42,7 +42,7 @@ export default function RecipeDetailsScreen() {
   } = useFetchRecipeDetails()
 
   return (
-    <View className="flex bg-white flex-1">
+    <View className="flex bg-white dark:bg-black flex-1">
       {/* Fixed Header */}
       <FixedHeader
         scrollY={scrollY}
@@ -65,7 +65,7 @@ export default function RecipeDetailsScreen() {
       <Animated.ScrollView style={bottomOffset} ref={aref} scrollEventThrottle={16}>
         <BouncyImage height={headerHeight} scrollY={scrollY} imageUrl={recipe?.imageUrl} />
 
-        <View className="flex-1 -mt-12 py-8 bg-white rounded-t-[50px] px-6">
+        <View className="flex-1 -mt-12 py-8 bg-white dark:bg-neutral-800 rounded-t-[50px] px-6">
           {error && <InfoBox type="error" description={error?.message} />}
 
           <View>
@@ -75,7 +75,7 @@ export default function RecipeDetailsScreen() {
                 loading={firstTimeLoading}
                 skeletonWidth={200}
                 h1
-                styleClassName="mb-3"
+                styleClassName="mb-3 "
               >
                 {recipe?.name}
               </Text>
@@ -94,7 +94,7 @@ export default function RecipeDetailsScreen() {
             </View>
           </View>
 
-          <View className="bg-white rounded-2xl" style={shadowLarge}>
+          <View className="bg-white dark:bg-neutral-800 rounded-2xl" style={shadowLarge}>
             <RecipeTabs
               loading={firstTimeLoading}
               steps={steps}

@@ -1,3 +1,4 @@
+import { useColorScheme } from 'nativewind'
 import React, { ReactNode } from 'react'
 import { View, ViewStyle } from 'react-native'
 import Animated, {
@@ -7,6 +8,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated'
+import { colors } from '~/theme'
 import { shadowHeader } from '~/theme/shadows'
 import { useSafeAreaInsetsStyle } from '../utils/useSafeAreaInsetsStyle'
 import { Icon } from './Icon'
@@ -36,8 +38,9 @@ export function FixedHeader({
   showShadow = true,
   rightElement,
 }: FixedHeaderProps) {
+  const { colorScheme } = useColorScheme()
+  const backgroundColor = colorScheme === 'dark' ? colors.neutral[800] : colors.white
   const topInset = useSafeAreaInsetsStyle(['top'])
-
   const opacity = useSharedValue<number>(0)
 
   // Animated header background when scroll reaches certain offset
@@ -74,17 +77,18 @@ export function FixedHeader({
     >
       {scrollY ? (
         <Animated.View
-          className="top-0 left-0 right-0 bottom-0 absolute bg-white"
+          className="top-0 left-0 right-0 bottom-0 absolute bg-white dark:bg-neutral-800"
           style={[animatedStyle, showShadow ? shadowHeader : {}]}
         ></Animated.View>
       ) : (
-        <View className="top-0 left-0 right-0 bottom-0 absolute bg-white" />
+        <View className="top-0 left-0 right-0 bottom-0 absolute bg-white dark:bg-neutral-800" />
       )}
 
       <Icon
         icon="arrowLeft"
         size="large"
-        containerClassName="rounded-full justify-center items-center bg-white "
+        color={backgroundColor}
+        containerClassName="rounded-full justify-center items-center bg-white dark:bg-neutral-800"
         styleClassName="w-full h-full"
         onPress={() => onGoBack()}
         testID="back-button"

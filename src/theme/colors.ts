@@ -7,6 +7,7 @@ export const colors = {
   primary: '#DB2031',
   white: '#FFFFFF',
   black: '#000000',
+  navy: '#0F1D2F',
   neutral: {
     100: '#f5f5f5',
     200: '#e5e5e5',

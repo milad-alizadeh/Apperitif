@@ -1,7 +1,9 @@
 import { Image } from 'expo-image'
+import { styled, useColorScheme } from 'nativewind'
 import React, { FC } from 'react'
 import { ComponentType } from 'react'
 import { ImageStyle, StyleProp, TouchableOpacity, TouchableOpacityProps, View } from 'react-native'
+import { colors } from '~/theme'
 import { useHaptics } from '../../hooks/useHaptics'
 
 export type IconTypes = keyof typeof iconRegistry
@@ -43,8 +45,10 @@ export const Icon: FC<IconProps> = (props) => {
     styleClassName,
     ...WrapperProps
   } = props
-
+  const { colorScheme } = useColorScheme()
   const haptic = useHaptics('medium')
+
+  const currentColor = color ?? colorScheme === 'dark' ? colors.white : colors.black
 
   const styleClassNameBySize = {
     xsmall: 'w-5 h-5',
@@ -71,7 +75,7 @@ export const Icon: FC<IconProps> = (props) => {
     >
       <Image
         className={`w-full h-full items-center justify-center ${styleClassName}`}
-        style={[$imageStyle, color && { tintColor: color }, $imageStyleOverride]}
+        style={[$imageStyle, color && { tintColor: currentColor }, $imageStyleOverride]}
         source={iconRegistry[icon]}
         contentFit="contain"
         testID="icon-image"

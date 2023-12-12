@@ -1,7 +1,8 @@
 import { router } from 'expo-router'
 import * as WebBrowser from 'expo-web-browser'
+import { useColorScheme } from 'nativewind'
 import React, { ComponentType, FC, PropsWithChildren } from 'react'
-import { LayoutChangeEvent, Platform, View } from 'react-native'
+import { LayoutChangeEvent, View } from 'react-native'
 import _MarkdownRenderer, { MarkdownProps } from 'react-native-markdown-display'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { colors } from '~/theme'
@@ -28,7 +29,10 @@ export const Markdown: FC<Props> = ({
   testID,
 }) => {
   const { capture } = useAnalytics()
+  const { colorScheme } = useColorScheme()
   const [skeletonWidth, setSkeletonWidth] = React.useState(200)
+
+  const color = colorScheme === 'dark' ? colors.white : colors.navy
 
   const handleLink = (url: string) => {
     if (url.startsWith('http')) {
@@ -38,6 +42,49 @@ export const Markdown: FC<Props> = ({
       router.push(url as any)
     }
     return false
+  }
+
+  const $styles: MarkdownProps['style'] = {
+    heading1: {
+      fontWeight: 'bold',
+      marginTop: 16,
+      fontSize: 24,
+      lineHeight: 30,
+      color,
+    },
+    heading2: {
+      fontWeight: 'bold',
+      marginTop: 16,
+      fontSize: 20,
+      lineHeight: 24,
+      color,
+    },
+    heading3: {
+      fontWeight: 'bold',
+      marginTop: 16,
+      fontSize: 18,
+      lineHeight: 24,
+      color,
+    },
+    body: {
+      fontSize: isAndroid ? 14 : 16,
+      fontFamily: isAndroid ? typography?.primary?.medium : typography?.primary?.normal,
+      lineHeight: isAndroid ? 18 : 20,
+      color,
+    },
+    hr: {
+      backgroundColor: colors.neutral[300],
+      height: 1,
+      marginHorizontal: 24,
+      marginVertical: 16,
+      marginTop: 8,
+    },
+    link: {
+      color: colors.primary,
+    },
+    list_item: {
+      marginBottom: 8,
+    },
   }
 
   return (
@@ -68,43 +115,4 @@ export const Markdown: FC<Props> = ({
           )}
     </View>
   )
-}
-
-const $styles: MarkdownProps['style'] = {
-  heading1: {
-    fontWeight: 'bold',
-    marginTop: 16,
-    fontSize: 24,
-    lineHeight: 30,
-  },
-  heading2: {
-    fontWeight: 'bold',
-    marginTop: 16,
-    fontSize: 20,
-    lineHeight: 24,
-  },
-  heading3: {
-    fontWeight: 'bold',
-    marginTop: 16,
-    fontSize: 18,
-    lineHeight: 24,
-  },
-  body: {
-    fontSize: isAndroid ? 14 : 16,
-    fontFamily: isAndroid ? typography?.primary?.medium : typography?.primary?.normal,
-    lineHeight: isAndroid ? 18 : 20,
-  },
-  hr: {
-    backgroundColor: colors.neutral[300],
-    height: 1,
-    marginHorizontal: 24,
-    marginVertical: 16,
-    marginTop: 8,
-  },
-  link: {
-    color: colors.primary,
-  },
-  list_item: {
-    marginBottom: 8,
-  },
 }

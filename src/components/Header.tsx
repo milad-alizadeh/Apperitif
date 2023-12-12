@@ -1,4 +1,5 @@
 import { router } from 'expo-router'
+import { useColorScheme } from 'nativewind'
 import * as React from 'react'
 import { View } from 'react-native'
 import { colors } from '~/theme'
@@ -25,6 +26,9 @@ export const Header = function Header({
   rightElement,
   styleClassName,
 }: HeaderProps) {
+  const { colorScheme } = useColorScheme()
+  const backgroundColor = colorScheme === 'dark' ? colors.neutral[800] : colors.white
+
   return (
     <View
       className={`max-w-full flex-row items-center justify-between px-6 
@@ -35,7 +39,7 @@ export const Header = function Header({
       {backButton && (
         <Icon
           icon="arrowLeft"
-          color={colors.neutral[800]}
+          color={backgroundColor}
           onPress={() => (router.canGoBack ? router.back() : router.push('/'))}
           containerClassName="mr-4"
         />

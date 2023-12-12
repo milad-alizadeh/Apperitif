@@ -52,7 +52,7 @@ export const SearchBar = function SearchBar({
         ref={inputRef}
         placeholder="Search"
         placeholderTextColor={colors.neutral[500]}
-        className="text-base h-10 leading-5 items-center bg-white pl-10 rounded-lg flex-1"
+        className="text-base h-10 leading-5 items-center bg-white text-neutral-800 dark:text-white dark:bg-neutral-800 pl-10 rounded-lg flex-1"
         value={searchQuery}
         onChangeText={(value) => {
           setSearchQuery(value)
