@@ -14,7 +14,7 @@ import {
   Tabs,
   Text,
 } from '~/components'
-import { useAnalytics, useMatchedRecipes, useSession } from '~/hooks'
+import { useAnalytics, useFetchMatchedRecipes, useSession } from '~/hooks'
 import { useStore } from '~/providers'
 
 export default function MyBarScreen() {
@@ -50,7 +50,7 @@ export default function MyBarScreen() {
     totalMatchRefetch,
     ingredientError,
     totalMatchError,
-  } = useMatchedRecipes()
+  } = useFetchMatchedRecipes()
 
   const renderIngredientItem = useCallback(
     ({ item }) => {
