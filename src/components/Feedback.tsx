@@ -1,19 +1,51 @@
+import { useGlobalSearchParams, usePathname } from 'expo-router'
 import * as StoreReview from 'expo-store-review'
 import { FC, useEffect, useRef, useState } from 'react'
+import { APP_VARIANT } from '~/config'
 import { useAnalytics } from '~/hooks'
+import { useStore } from '~/providers'
+import { api } from '~/services'
+import { captureError } from '~/utils/captureError'
 import { Prompt, PromptProps, PromptRef } from './Prompt'
 import { TextField } from './TextField'
 
 export const Feedback: FC = () => {
-  const { capture } = useAnalytics()
+  const { capture, getDistinctId } = useAnalytics()
+  const { setFeedbackShown, feedbackShown } = useStore()
   const prompt = useRef<PromptRef>(null)
   const [comment, setComment] = useState('')
   const [currentStep, setCurrentStep] = useState('feedbackRequest')
+  const pathname = usePathname()
+  const params = useGlobalSearchParams()
 
+  const checkUserCritera = async (userId: string) => {
+    const { data, error } = await api.supabase.functions.invoke('check-user-criteria', {
+      body: {
+        userId,
+        environment: APP_VARIANT ? 'staging' : 'production',
+      },
+    })
+    console.log(data, error, 'data')
+
+    if (error) {
+      captureError(error)
+    } else {
+      if (data.showFeedbackWidget) {
+        prompt.current?.show()
+        capture('user_feedback:feedback_request')
+        setFeedbackShown(true)
+      }
+    }
+
+    return data
+  }
+
+  // Track the location in your analytics provider here.
   useEffect(() => {
-    prompt.current?.show()
-    capture('user_feedback:feedback_request')
-  }, [])
+    if ((pathname === '/recipe' || pathname === '/add-ingredients') && !feedbackShown) {
+      checkUserCritera(getDistinctId())
+    }
+  }, [pathname])
 
   const steps: Record<string, PromptProps> = {
     feedbackRequest: {

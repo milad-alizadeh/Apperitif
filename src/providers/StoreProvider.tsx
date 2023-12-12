@@ -1,6 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { Dispatch, FC, SetStateAction, createContext, useContext, useState } from 'react'
 import { defaultJiggerSize, defaultUnitSystem } from '~/constants'
-import { usePersistedState } from '~/hooks/usePeristedState'
+import { clearPersistedState, usePersistedState } from '~/hooks/usePeristedState'
 import { JiggerSize, UnitSystem } from '~/types'
 
 interface StoreContextType {
@@ -13,7 +14,6 @@ interface StoreContextType {
   selectedJiggerSize: JiggerSize
   selectedUnitSystem: UnitSystem
   setCurrentEquipmentId: Dispatch<SetStateAction<string>>
-  shouldShowFeedback: boolean
   totalMatchInfoBoxDismissed: boolean
 
   setCurrentIngredientId: Dispatch<SetStateAction<string>>
@@ -23,16 +23,17 @@ interface StoreContextType {
   setPartialMatchInfoBoxDismissed: Dispatch<SetStateAction<boolean>>
   setSelectedJiggerSize: Dispatch<SetStateAction<JiggerSize>>
   setSelectedUnitSystem: Dispatch<SetStateAction<UnitSystem>>
-  setShouldShowFeedback: Dispatch<SetStateAction<boolean>>
   setTotalMatchInfoBoxDismissed: Dispatch<SetStateAction<boolean>>
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined)
 
 export const StoreProvider: FC<{ children: any }> = ({ children }) => {
+  // AsyncStorage.clear()
+  // clearPersistedState()
+
   const [currentIngredientId, setCurrentIngredientId] = useState<string | null>(null)
   const [currentEquipmentId, setCurrentEquipmentId] = useState<string | null>(null)
-  const [shouldShowFeedback, setShouldShowFeedback] = useState<boolean>(false)
   const [feedbackShown, setFeedbackShown] = usePersistedState('feedbackShown', false)
 
   const [selectedUnitSystem, setSelectedUnitSystem] = usePersistedState(
@@ -72,7 +73,6 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
         selectedUnitSystem,
         setCurrentEquipmentId,
         setCurrentIngredientId,
-        shouldShowFeedback,
         totalMatchInfoBoxDismissed,
         setDoubleRecipe,
         setFeedbackShown,
@@ -80,7 +80,6 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
         setPartialMatchInfoBoxDismissed,
         setSelectedJiggerSize,
         setSelectedUnitSystem,
-        setShouldShowFeedback,
         setTotalMatchInfoBoxDismissed,
       }}
     >

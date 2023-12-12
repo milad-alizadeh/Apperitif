@@ -2,17 +2,22 @@ import { isDevice } from 'expo-device'
 import { usePostHog } from 'posthog-react-native'
 
 export const useAnalytics = () => {
-  if (!isDevice) {
-    return {
-      capture: () => {},
-      screen: () => {},
-      identify: () => {},
-      reset: () => {},
-      loaded: true,
-    }
-  }
+  // if (!isDevice) {
+  //   return {
+  //     capture: () => {},
+  //     screen: () => {},
+  //     identify: () => {},
+  //     reset: () => {},
+  //     loaded: true,
+  //   }
+  // }
 
   const posthog = usePostHog()
+
+  const getDistinctId = (): string => {
+    console.log('distinctId', posthog?.getDistinctId())
+    return posthog?.getDistinctId()
+  }
 
   const capture = (event: string, properties?: Record<string, any>) => {
     console.log('capture', event, properties)
@@ -39,6 +44,7 @@ export const useAnalytics = () => {
     screen,
     identify,
     reset,
+    getDistinctId,
     loaded: typeof posthog !== 'undefined',
   }
 }
