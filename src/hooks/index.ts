@@ -1,6 +1,7 @@
 export * from './useAnalytics'
 export * from './useFetchIngredients'
 export * from './useFetchRecipes'
+export * from './useFetchRecipeDetails'
 export * from './useHaptics'
 export * from './useMatchedRecipes'
 export * from './useProtectedRouteListener'
