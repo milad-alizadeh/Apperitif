@@ -39,7 +39,7 @@ export const BouncyImage = function BouncyImage({ height, scrollY, imageUrl }: B
         />
       )}
       <Image
-        className="w-full h-full"
+        className="w-full h-full object-contain"
         transition={300}
         onLoad={() => {
           setLoaded(true)
@@ -62,7 +62,7 @@ export const BouncyImage = function BouncyImage({ height, scrollY, imageUrl }: B
  */
 const getBouncyTransform = (scrollY: SharedValue<number>, headerHeight: number) =>
   useAnimatedStyle(() => {
-    const scale = interpolate(scrollY.value, [-headerHeight, 0], [2.2, 1], {
+    const scale = interpolate(scrollY.value, [-headerHeight, 0], [2.7, 1], {
       extrapolateRight: Extrapolation.CLAMP,
     })
 

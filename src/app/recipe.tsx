@@ -120,7 +120,7 @@ export default function RecipeDetailsScreen() {
       <Animated.ScrollView style={bottomOffset} ref={aref} scrollEventThrottle={16}>
         <BouncyImage height={headerHeight} scrollY={scrollY} imageUrl={recipe?.imageUrl} />
 
-        <View className="flex-1 -mt-16 py-8 bg-white rounded-t-[50px] px-6">
+        <View className="flex-1 -mt-12 py-8 bg-white rounded-t-[50px] px-6">
           {error && <InfoBox type="error" description={error?.message} />}
 
           <View>
