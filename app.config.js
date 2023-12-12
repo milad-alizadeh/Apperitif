@@ -7,7 +7,7 @@ export const BUNDLE_ID = `ai.bubblewrap.apperitif${APP_VARIANT ? `.${APP_VARIANT
 const config = {
   name: APP_NAME,
   slug: 'apperitif',
-  version: '1.4.0',
+  version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/images/app-icon-all.png',
   scheme: BUNDLE_ID,
