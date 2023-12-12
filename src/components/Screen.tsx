@@ -1,5 +1,6 @@
 import { useScrollToTop } from '@react-navigation/native'
 import { StatusBar, StatusBarProps } from 'expo-status-bar'
+import { useColorScheme } from 'nativewind'
 import React, { useRef, useState } from 'react'
 import {
   KeyboardAvoidingView,
@@ -188,8 +189,11 @@ function ScreenWithScrolling(props: ScreenProps) {
 }
 
 export function Screen(props: ScreenProps) {
+  const { colorScheme } = useColorScheme()
+  const backgroundColorDefault = colorScheme === 'dark' ? colors.neutral[800] : colors.white
+
   const {
-    backgroundColor = colors.white,
+    backgroundColor = backgroundColorDefault,
     KeyboardAvoidingViewProps,
     keyboardOffset = 0,
     safeAreaEdges,

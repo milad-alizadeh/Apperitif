@@ -48,10 +48,10 @@ export default function AddIngredientsScreen() {
 
   const renderItem = useCallback(
     ({ item }) => {
-      if (!item.name) return <View className="w-full h-64 bg-white" />
+      if (!item.name) return <View className="w-full h-64 bg-white dark:bg-neutral-800" />
       const isChecked = !!selectedItems[item.id]?.selected
       return (
-        <View className="px-6 py-2 bg-white">
+        <View className="px-6 py-2 bg-white dark:bg-neutral-800">
           <IngredientListItem
             name={item.name}
             testID="ingredient-list-item"

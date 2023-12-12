@@ -1,4 +1,5 @@
 import { Tabs } from 'expo-router'
+import { useColorScheme } from 'nativewind'
 import React from 'react'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Icon } from '~/components/Icon'
@@ -8,6 +9,8 @@ import { shadowLarge } from '~/theme/shadows'
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets()
+  const { colorScheme } = useColorScheme()
+  const backgroundColor = colorScheme === 'dark' ? colors.neutral[800] : colors.white
 
   const { protectedRoute } = useProtectedListener()
 
@@ -18,7 +21,7 @@ export default function TabLayout() {
         headerTintColor: colors.neutral[800],
         headerShown: false,
         headerStyle: {
-          backgroundColor: colors.white,
+          backgroundColor,
         },
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.neutral[500],
@@ -27,7 +30,7 @@ export default function TabLayout() {
         },
         tabBarStyle: {
           borderTopWidth: 0,
-          backgroundColor: colors.white,
+          backgroundColor,
           height: 72 + insets.bottom,
           ...shadowLarge,
         },

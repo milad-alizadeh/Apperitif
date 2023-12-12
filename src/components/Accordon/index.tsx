@@ -70,7 +70,7 @@ export const AccordionItem: FC<AccordionItemProps> = ({
         styleClassName="py-3 z-10"
         testID={`accordion-content-${title}`}
       />
-      <View style={{ ...shadowCard }} className="bg-white rounded-b-xl -top-3">
+      <View style={{ ...shadowCard }} className="bg-white dark:bg-neutral-700 rounded-b-xl -top-3">
         <Animated.View testID="accordion-content" style={[heightStyle, { overflow: 'hidden' }]}>
           <View className="px-3 pt-12 -mt-6">
             <Text body>{description}</Text>

@@ -107,7 +107,7 @@ export const ListItem = memo(function ListItem({
         onPress && onPress()
       }}
       className={`flex-row items-center justify-between flex
-        ${card ? 'px-3 bg-neutral-100 rounded-xl' : ''}
+        ${card ? 'px-3 bg-neutral-100 dark:bg-neutral-900 rounded-xl' : ''}
         ${small ? 'h-10' : 'min-h-[48px]'}
         ${leftImage ? 'min-h-[64px]' : ''}
         ${styleClassName}

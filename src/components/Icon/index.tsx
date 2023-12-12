@@ -45,9 +45,9 @@ export const Icon: FC<IconProps> = (props) => {
     styleClassName,
     ...WrapperProps
   } = props
-  const { colorScheme } = useColorScheme()
   const haptic = useHaptics('medium')
 
+  const { colorScheme } = useColorScheme()
   const currentColor = color ?? colorScheme === 'dark' ? colors.white : colors.black
 
   const styleClassNameBySize = {
@@ -75,7 +75,7 @@ export const Icon: FC<IconProps> = (props) => {
     >
       <Image
         className={`w-full h-full items-center justify-center ${styleClassName}`}
-        style={[$imageStyle, color && { tintColor: currentColor }, $imageStyleOverride]}
+        style={[$imageStyle, { tintColor: currentColor }, $imageStyleOverride]}
         source={iconRegistry[icon]}
         contentFit="contain"
         testID="icon-image"

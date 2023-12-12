@@ -94,7 +94,10 @@ export default function RecipeDetailsScreen() {
             </View>
           </View>
 
-          <View className="bg-white dark:bg-neutral-800 rounded-2xl" style={shadowLarge}>
+          <View
+            className="bg-white dark:bg-neutral-800 rounded-2xl dark:border-neutral-700 dark:border-[1px]"
+            style={shadowLarge}
+          >
             <RecipeTabs
               loading={firstTimeLoading}
               steps={steps}

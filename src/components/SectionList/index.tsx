@@ -102,7 +102,7 @@ export const SectionList: FC<SectionListProps> = ({
       if (!sectionsHeader[sectionIndex])
         return (
           <View
-            className="bg-white rounded-t-[50px] overflow-hidden"
+            className="bg-white dark:bg-neutral-800 rounded-t-[50px] overflow-hidden"
             style={{ height: SECTION_HEADER_HEIGHT }}
           />
         )
@@ -110,7 +110,7 @@ export const SectionList: FC<SectionListProps> = ({
 
       return (
         <View
-          className="bg-white rounded-t-[50px] overflow-hidden"
+          className="bg-white dark:bg-neutral-800 rounded-t-[50px] overflow-hidden"
           style={{ height: SECTION_HEADER_HEIGHT }}
         >
           <Text h3 styleClassName={`px-6 pb-4 pt-8 h-20 ${!count ? 'opacity-0' : ''}`}>{`${title}${
@@ -133,7 +133,7 @@ export const SectionList: FC<SectionListProps> = ({
         </View>
 
         <View
-          className="flex-row bg-white rounded-lg mx-6 absolute bottom-6"
+          className="flex-row bg-white dark:bg-neutral-800 rounded-lg mx-6 absolute bottom-6"
           style={{ ...shadowCard }}
         >
           <SearchBar
@@ -161,7 +161,7 @@ export const SectionList: FC<SectionListProps> = ({
       {showHeader && (
         <Animated.View
           style={[navAnimatedStyle, { ...shadowHeader, top: FIXED_HEADER_HEIGHT }]}
-          className="bg-white z-10 border-t-[1px] border-neutral-100 opacity-1"
+          className="bg-white dark:bg-neutral-800 z-10 border-t-[1px] border-neutral-100 dark:border-neutral-900 opacity-1"
         >
           <SectionHeader
             sectionTitles={sectionsHeader.map(({ title }) => title)}
@@ -233,7 +233,9 @@ export const SectionList: FC<SectionListProps> = ({
         footerHeight={footerHeight}
         sectionHeaderHeight={SECTION_HEADER_HEIGHT}
         ListHeaderComponent={ListHeaderComponent ?? defaultListHeaderComponent()}
-        ListFooterComponent={ListFooterComponent ?? <View className="h-96 bg-white" />}
+        ListFooterComponent={
+          ListFooterComponent ?? <View className="h-96 bg-white dark:bg-neutral-800" />
+        }
       />
     </View>
   )

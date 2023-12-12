@@ -35,7 +35,7 @@ export const IngredientListItem = memo(function IngredientListItem({
         haptic()
         onPress()
       }}
-      className={`flex-row items-center justify-between h-12 px-3 bg-neutral-100 rounded-xl`}
+      className={`flex-row items-center justify-between h-12 px-3 bg-neutral-100 dark:bg-neutral-900 rounded-xl`}
       style={{ ...shadowCard }}
     >
       {checked ? (

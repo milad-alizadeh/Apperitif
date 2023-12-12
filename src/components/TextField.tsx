@@ -49,11 +49,11 @@ export const TextField = function TextField({
 
   return (
     <View>
-      {label && <Text styleClassName="mb-2 text-base font-medium">{label}</Text>}
+      {label && <Text styleClassName="mb-2 text-base font-medium dark:text-white">{label}</Text>}
       <TextInput
         testID={testID}
         placeholder={placeholder}
-        className={`${styleClassName} text-base border-[1px] border-neutral-300 rounded-lg p-3 leading-5`}
+        className={`${styleClassName} text-base border-[1px] border-neutral-300 dark:border-neutral-600 dark:text-white rounded-lg p-3 leading-5`}
         secureTextEntry={password}
         placeholderTextColor={colors.neutral[500]}
         onChangeText={onChange}

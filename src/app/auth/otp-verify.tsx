@@ -1,4 +1,4 @@
-import { EmailOtpType, MobileOtpType } from '@supabase/supabase-js'
+import { EmailOtpType } from '@supabase/supabase-js'
 import { useLocalSearchParams } from 'expo-router'
 import React, { useState } from 'react'
 import { ActivityIndicator, Alert, TouchableOpacity, View } from 'react-native'
@@ -16,6 +16,7 @@ import { captureError } from '~/utils/captureError'
  */
 export default function AuthOtpVerifyScreen({ route }) {
   const { capture } = useAnalytics()
+
   const { attemptedRoute, email, verificationType } = useLocalSearchParams() as {
     attemptedRoute: string
     email: string

@@ -49,7 +49,7 @@ export const VerticalList = function VerticalList({
       ) : (
         <View className={`flex ${numColumns === 2 ? 'flex-row flex-wrap -mx-2' : ''}`}>
           {listItems.map((item) => (
-            <View key={item.id} className={`mb-4  ${numColumns === 2 ? 'w-[50%] px-2' : ''}`}>
+            <View key={item.id} className={`mb-4 ${numColumns === 2 ? 'w-[50%] px-2' : ''}`}>
               <ListItem {...item} card small enableHaptics={false} />
             </View>
           ))}

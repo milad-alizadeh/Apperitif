@@ -2,6 +2,7 @@ import { useReactiveVar } from '@apollo/client'
 import { isDevice } from 'expo-device'
 import { Image } from 'expo-image'
 import { Link, router, useLocalSearchParams } from 'expo-router'
+import { useColorScheme } from 'nativewind'
 import React from 'react'
 import { ActivityIndicator, Platform, TouchableOpacity, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -17,11 +18,12 @@ export default function AuthHomeScreen() {
   const topOffset = useSafeAreaInsets().top
   const isAnroid = Platform.OS === 'android'
   const iconTop = isAnroid ? topOffset + 24 : 24
-
+  const { colorScheme } = useColorScheme()
+  const backgroundColor = colorScheme === 'dark' ? colors.neutral[900] : colors.neutral[100]
   return (
     <Screen
       contentContainerStyle={{
-        backgroundColor: colors.neutral[100],
+        backgroundColor,
         padding: 24,
         flex: 1,
       }}
@@ -56,10 +58,13 @@ export default function AuthHomeScreen() {
         </View>
 
         <View className="items-center my-8">
-          <Text body styleClassName="bg-neutral-100 -mb-[10] z-10 px-3 font-medium">
+          <Text
+            body
+            styleClassName="bg-neutral-100 dark:bg-neutral-900 -mb-[10] z-10 px-3 font-medium"
+          >
             or
           </Text>
-          <View className="w-full h-[1px] bg-neutral-300" />
+          <View className="w-full h-[1px] bg-neutral-300 dark:bg-neutral-600" />
         </View>
 
         {/* One time password with email */}
@@ -71,7 +76,10 @@ export default function AuthHomeScreen() {
               router.push({ pathname: '/auth/otp-email', params: { attemptedRoute } })
             }}
           >
-            <Text body styleClassName="text-neutral-800 font-medium underline underline-offset-3">
+            <Text
+              body
+              styleClassName="text-neutral-800 dark:text-white font-medium underline underline-offset-3"
+            >
               Continue with Email
             </Text>
           </TouchableOpacity>
@@ -87,7 +95,10 @@ export default function AuthHomeScreen() {
               }}
               testID="auth-email-password"
             >
-              <Text body styleClassName="text-neutral-800 font-medium underline underline-offset-3">
+              <Text
+                body
+                styleClassName="text-neutral-800 dark:text-white font-medium underline underline-offset-3"
+              >
                 Continue with Email & Password
               </Text>
             </TouchableOpacity>
@@ -109,7 +120,7 @@ export default function AuthHomeScreen() {
               router.push('/(aux)/terms-and-conditions')
             }}
           >
-            <Text small styleClassName="text-neutral-800 underline top-[2px]">
+            <Text small styleClassName="text-neutral-800 dark:text-white underline top-[2px]">
               T&C's
             </Text>
           </TouchableOpacity>{' '}
@@ -120,7 +131,7 @@ export default function AuthHomeScreen() {
               router.push('/(aux)/privacy-policy')
             }}
           >
-            <Text small styleClassName="text-neutral-800 underline top-[2px]">
+            <Text small styleClassName="text-neutral-800 dark:text-white underline top-[2px]">
               Privacy Policy
             </Text>
           </TouchableOpacity>

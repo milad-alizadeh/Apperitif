@@ -1,7 +1,8 @@
 import { Image } from 'expo-image'
+import { useColorScheme } from 'nativewind'
 import React, { FC } from 'react'
 import { View } from 'react-native'
-import { SkeletonView } from './SkeletonView'
+import { colors } from '~/theme'
 import { Text } from './Text'
 
 export interface RecipeAttributesProps {
@@ -27,6 +28,9 @@ export const RecipeAttributes: FC<RecipeAttributesProps> = ({
   attributes,
   loading,
 }: RecipeAttributesProps) => {
+  const { colorScheme } = useColorScheme()
+  const tintColor = colorScheme === 'dark' ? colors.white : colors.black
+
   return (
     <View className="flex-row justify-between">
       {attributes.map((attribute) => {
@@ -38,6 +42,7 @@ export const RecipeAttributes: FC<RecipeAttributesProps> = ({
                   className="w-9 h-9 mr-1"
                   contentFit="contain"
                   source={{ uri: attribute?.imageUrl }}
+                  tintColor={tintColor}
                 />
               )}
 
