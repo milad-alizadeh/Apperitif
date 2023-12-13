@@ -11,9 +11,9 @@ export const DetailsModal = () => {
 
   useEffect(() => {
     if (currentIngredientId || currentEquipmentId) {
-      modalRef.current.show()
+      modalRef?.current?.show()
     } else {
-      modalRef.current.hide()
+      modalRef?.current?.hide()
     }
   }, [currentIngredientId, currentEquipmentId])
 

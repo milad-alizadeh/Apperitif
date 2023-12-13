@@ -1,4 +1,5 @@
 export * from './useAnalytics'
+export * from './useFetchIngredientDetails'
 export * from './useFetchIngredients'
 export * from './useFetchMatchedRecipes'
 export * from './useFetchRecipeDetails'
