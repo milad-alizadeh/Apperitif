@@ -9,12 +9,12 @@ const config = {
   slug: 'apperitif',
   version: '1.0.0',
   orientation: 'portrait',
-  icon: './assets/images/app-icon-all.png',
+  icon: './assets/images/icon.png',
   scheme: BUNDLE_ID,
   owner: 'bubblewrap',
   userInterfaceStyle: 'automatic',
   splash: {
-    image: './assets/images/splash-logo-all.png',
+    image: './assets/images/splash.png',
     resizeMode: 'contain',
     backgroundColor: '#FFFFFF',
   },
@@ -36,8 +36,8 @@ const config = {
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: './assets/images/app-icon-android-adaptive-foreground.png',
-      backgroundImage: './assets/images/app-icon-android-adaptive-background.png',
+      foregroundImage: './assets/images/adaptive-icon.png',
+      backgroundImage: '#FFFFFF',
     },
     package: BUNDLE_ID,
     intentFilters: [
