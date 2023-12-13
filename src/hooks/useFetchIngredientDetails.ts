@@ -23,26 +23,25 @@ export const useFetchIngredientDetails = (ingredientId: string, onClosed: () => 
 
     const [addToMyBar, { loading: addLoading }] = useMutation(ADD_TO_MY_BAR)
     const [deleteFromMyBar] = useMutation(DELETE_FROM_MY_BAR)
-    const myBar = barIngredients?.profilesIngredientsCollection.edges.map(
-      (e) => e.node.ingredient.id,
-    )
+    const myBar =
+      barIngredients?.profilesIngredientsCollection.edges.map((e) => e.node?.ingredient?.id) ?? []
     const isInMyBar = myBar.includes(ingredientId)
-    const ingredient = data?.ingredientsCollection.edges[0]?.node
+    const ingredient = data?.ingredientsCollection?.edges[0]?.node
 
     const getAvailableRecipes = (relatedRecipes: GetRecipesByIngredientQuery) => {
       if (!relatedRecipes) return []
 
       try {
-        return relatedRecipes?.recipesIngredientsCollection.edges
-          .filter((e) => e.node.recipe && e.node.recipe.id !== recipeId)
+        return relatedRecipes?.recipesIngredientsCollection?.edges
+          .filter((e) => e?.node?.recipe && e?.node?.recipe?.id !== recipeId)
           .map(({ node: { recipe } }) => ({
-            name: recipe.name,
-            id: recipe.id,
-            imageUrl: recipe.imageUrl,
+            name: recipe?.name,
+            id: recipe?.id,
+            imageUrl: recipe?.imageUrl,
             onPress: () => {
               router.push({
                 pathname: '/recipe',
-                params: { recipeId: recipe.id, recipeName: recipe.name },
+                params: { recipeId: recipe?.id, recipeName: recipe?.name },
               })
               setCurrentIngredientId(null)
               onClosed && onClosed()
