@@ -27,10 +27,11 @@ export const useFetchRecipeDetails = () => {
     const recipe = data?.recipesCollection?.edges[0]?.node
     const isFavourite = recipe?.profilesRecipesCollection.edges.length > 0
 
-    const equipment = recipe?.recipesEquipmentCollection?.edges.map((e) => e.node.equipment) ?? []
-    const recipeIngredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e.node) ?? []
+    const equipment = recipe?.recipesEquipmentCollection?.edges.map((e) => e?.node?.equipment) ?? []
+    const recipeIngredients = recipe?.recipesIngredientsCollection?.edges?.map((e) => e?.node) ?? []
     const steps = recipe?.stepsCollection?.edges.map((e) => e.node) ?? []
-    const categories = recipe?.recipesCategoriesCollection?.edges.map((e) => e.node.category) ?? []
+    const categories =
+      recipe?.recipesCategoriesCollection?.edges.map((e) => e?.node?.category) ?? []
     const attributeCategories = recipe_attributes?.category_ids ?? []
     const attributes =
       attributeCategories.map(
@@ -39,13 +40,13 @@ export const useFetchRecipeDetails = () => {
 
     const myBar =
       barIngredients?.profilesIngredientsCollection.edges
-        .filter((e) => e.node.ingredient)
-        .map((e) => e.node.ingredient.id) ?? []
+        .filter((e) => e?.node?.ingredient)
+        .map((e) => e?.node?.ingredient?.id) ?? []
 
     const mergedRecipeIngredients = recipeIngredients
-      .filter((recipeIngredient) => recipeIngredient.ingredient)
+      .filter((recipeIngredient) => recipeIngredient?.ingredient)
       .map((recipeIngredient) => {
-        const inMyBar = myBar.includes(recipeIngredient.ingredient.id)
+        const inMyBar = myBar.includes(recipeIngredient?.ingredient?.id)
         return {
           ...recipeIngredient,
           inMyBar,
