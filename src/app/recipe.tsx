@@ -75,7 +75,7 @@ export default function RecipeDetailsScreen() {
                 loading={firstTimeLoading}
                 skeletonWidth={200}
                 h1
-                styleClassName="mb-3"
+                styleClassName="mb-3 flex-1"
               >
                 {recipe?.name}
               </Text>
