@@ -98,7 +98,7 @@ export default function MyBarScreen() {
     },
     ...totalRecipes,
     {
-      title: `Missing one or two ingredients (${partialRecipes?.length})`,
+      title: `Missing 1 or 2 ingredients (${partialRecipes?.length})`,
       id: 'partial-match',
     },
     ...partialRecipes,
