@@ -37,7 +37,7 @@ const config = {
   android: {
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
-      backgroundImage: '#FFFFFF',
+      backgroundColor: '#FFFFFF',
     },
     package: BUNDLE_ID,
     intentFilters: [
