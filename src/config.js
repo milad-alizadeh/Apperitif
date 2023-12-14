@@ -15,6 +15,8 @@ let IOS_CLIENT_ID = '387765460024-2s3u3uvbn0aojjk34h1no81dsquv5saa.apps.googleus
 let SENTRY_PROJECT = 'apperitif-staging'
 let SENTRY_ORG = 'bubblewrap'
 let POSTHOG_API_KEY = 'phc_CW2SHN4knN74Zpmzez96ffzp6XauAzzrxOG62mmyflJ'
+let MIXPANEL_API_KEY = '346afa9c1e93ad4c9d4adbbb895a9e0b'
+let MIXPANEL_SERVER_URL = 'https://api-eu.mixpanel.com'
 
 if (Updates.channel === 'staging') {
   APP_VARIANT = 'staging'
@@ -28,6 +30,7 @@ if (Updates.channel === 'staging') {
   SUPABASE_ANON_KEY =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhnZHNobW1pbmh1enFmY2V2emZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDA4NDQyODksImV4cCI6MjAxNjQyMDI4OX0.M4BUPdlgv8d1aXCtPOUSzW29Iz4TV2tSA-PDV-NdC6M'
   SUPABASE_URL = 'https://hgdshmminhuzqfcevzfi.supabase.co'
+  MIXPANEL_API_KEY = '346afa9c1e93ad4c9d4adbbb895a9e0b'
 }
 
 if (Updates.channel === 'production') {
@@ -41,6 +44,7 @@ if (Updates.channel === 'production') {
   SUPABASE_ANON_KEY =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2dGZzcHltenFzeWhtdmt6Z2VqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTUwNjQ2MzksImV4cCI6MjAxMDY0MDYzOX0.2L62sBDhHRNDbNWGcWsT91EFoqyM6oXIbh_L8JupACk'
   SUPABASE_URL = 'https://kvtfspymzqsyhmvkzgej.supabase.co'
+  MIXPANEL_API_KEY = '54ab0b5ebd1d63df14421059d145e622'
 }
 
 export {
@@ -53,4 +57,6 @@ export {
   SENTRY_PROJECT,
   SUPABASE_ANON_KEY,
   SUPABASE_URL,
+  MIXPANEL_API_KEY,
+  MIXPANEL_SERVER_URL,
 }

@@ -76,6 +76,7 @@
     "expo-web-browser": "~12.3.2",
     "lodash": "^4.17.21",
     "lodash-humps": "^3.1.6",
+    "mixpanel-react-native": "^2.4.0",
     "nativewind": "^2.0.11",
     "posthog-react-native": "^2.8.1",
     "react": "18.2.0",
