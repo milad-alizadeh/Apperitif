@@ -40,10 +40,11 @@ export const Feedback: FC = () => {
 
   // Track the location in your analytics provider here.
   useEffect(() => {
+    if (!getDistinctId) return
     if ((pathname === '/recipe' || pathname === '/add-ingredients') && !feedbackShown) {
       checkUserCritera(getDistinctId())
     }
-  }, [pathname])
+  }, [pathname, getDistinctId])
 
   const steps: Record<string, PromptProps> = {
     feedbackRequest: {
