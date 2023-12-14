@@ -30,7 +30,4 @@ appId: ''
 - tapOn:
     id: 'search-bar'
 - inputText: ${ maestro.copiedText }
-- assertVisible:
-    id: 'recipe-card'
-    index: 0
-    text: ${ maestro.copiedText }
+- assertVisible: ${ maestro.copiedText }

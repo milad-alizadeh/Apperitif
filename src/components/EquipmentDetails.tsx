@@ -41,7 +41,7 @@ export const EquipmentDetails = function EquipmentDetails({ equipmentId }: Equip
                 {equipment?.name}
               </Text>
 
-              <Text body styleClassName="mb-1">
+              <Text body testID="equipment-description" styleClassName="mb-1">
                 {equipment?.description}
               </Text>
             </View>

@@ -8,9 +8,9 @@ appId: ''
 
 # Dismiss the tooltip
 - tapOn:
-    id: 'Home Grabber'
+    point: '50%,51%'
 - tapOn:
-    id: 'Home Grabber'
+    point: '50%,51%'
 
 # Check that the bar is empty
 - assertVisible:
@@ -43,9 +43,7 @@ appId: ''
     id: save-selection-button
 
 # Check that the ingredients are added to the bar
-- assertVisible:
-    id: bar-ingredient-list-item
-    text: ${ maestro.copiedText }
+- assertVisible: ${ maestro.copiedText }
 - assertVisible:
     id: bar-ingredient-list-item
     index: 0

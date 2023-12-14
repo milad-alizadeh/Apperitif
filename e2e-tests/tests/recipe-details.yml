@@ -63,3 +63,5 @@ appId: ''
 - assertVisible:
     id: equipment-name
     text: ${ maestro.copiedText }
+- assertVisible:
+    id: equipment-description

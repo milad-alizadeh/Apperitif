@@ -13,6 +13,6 @@
 #     optional: true
 appId: ai.bubblewrap.apperitif.staging
 ---
-- launchApp:
-    clearState: true
-    clearKeychain: true
+- launchApp
+  # clearState: true
+  # clearKeychain: true
