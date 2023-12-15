@@ -19,9 +19,6 @@ export const Feedback: FC = () => {
     const uniqueRecipeViews = Object.keys(eventCount.recipeView).length
     const uniqueIngredientsAdded = eventCount.ingredientAdd
 
-    console.log('uniqueRecipeViews', uniqueRecipeViews)
-    console.log('uniqueIngredientsAdded', uniqueIngredientsAdded)
-
     if (uniqueRecipeViews >= 10 || uniqueIngredientsAdded >= 6) {
       prompt.current?.show()
       capture('user_feedback:feedback_request')
