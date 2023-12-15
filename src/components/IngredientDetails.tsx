@@ -29,7 +29,6 @@ export const IngredientDetails = function IngredientDetails({
 }: IngredientDetailsProps) {
   const { screen, capture } = useAnalytics()
   const { isLoggedIn } = useSession()
-  const { setEventCount } = useStore()
   const {
     ingredient,
     loading,
@@ -106,11 +105,6 @@ export const IngredientDetails = function IngredientDetails({
                       ingredient_name: ingredient?.name,
                     })
                     handleAddToMyBar(ingredientId)
-
-                    setEventCount((prev) => ({
-                      ...prev,
-                      ingredientAdd: prev.ingredientAdd + 1,
-                    }))
                   }
                 }}
               />
