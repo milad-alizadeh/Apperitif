@@ -126,12 +126,31 @@ export const convertUnitToOtherSystem = ({
     return getConversionResult(quantity, unit)
   }
 
+  // Additional logic for converting ounces to cups if the quantity is more than 8oz
+  const cupsUnit = units.find((u) => u.abbreviation === 'cup')
+  if (!cupsUnit) {
+    throw new Error(`Could not find cup unit`)
+  }
+
   // If the unit is already in the desired system, return the original quantity and unit name
   if (unit.system === toSystem) {
-    const multipliedQuantity = parseFloat(quantity) * multiplier
-    // Round to the nearest 2.5 if the unit is imperial
-    const roundedToNearestTwoPointFive = Math.round(multipliedQuantity / 2.5) * 2.5
-    return getConversionResult(roundedToNearestTwoPointFive.toString(), unit)
+    let outputUnit = unit
+    let outputQuantityInt = parseFloat(quantity)
+
+    if (toSystem === UnitSystem.IMPERIAL && outputQuantityInt >= cupsUnit.baseConversionFactor) {
+      outputQuantityInt = outputQuantityInt / cupsUnit.baseConversionFactor
+      outputUnit = cupsUnit
+    }
+
+    const multipliedQuantity = outputQuantityInt * multiplier
+    let outputQuantity
+    if (toSystem === UnitSystem.METRIC) {
+      // Round to the nearest 2.5 if the unit is imperial
+      outputQuantity = (Math.round(multipliedQuantity / 2.5) * 2.5).toString()
+    } else {
+      outputQuantity = toFractions(multipliedQuantity)
+    }
+    return getConversionResult(outputQuantity, outputUnit)
   }
 
   const quantityFloat = parseFloat(quantity) * multiplier
@@ -145,15 +164,20 @@ export const convertUnitToOtherSystem = ({
     : quantityFloat
 
   // Convert base quantity to the other system using the system to system conversion factor
-  const convertedQuantity = baseQuantity * (unit.systemToSystemConversionFactor || 1)
+  let convertedQuantity = baseQuantity * (unit.systemToSystemConversionFactor || 1)
 
   // Find the base unit of the other system of the same type
-  const convertedBaseUnit = units.find(
+  let convertedBaseUnit = units.find(
     (u) => u.type === unit.type && u.system === toSystem && !u.baseUnitId,
   )
 
   if (!convertedBaseUnit)
     throw new Error(`Could not find base unit for ${unit.name} in ${toSystem} system`)
+
+  if (toSystem === UnitSystem.IMPERIAL && convertedQuantity > cupsUnit.baseConversionFactor) {
+    convertedQuantity = convertedQuantity / cupsUnit.baseConversionFactor
+    convertedBaseUnit = cupsUnit
+  }
 
   // Convert to nearest fraction if the unit system is imperial
   const outputQuantity =
