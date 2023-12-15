@@ -1,50 +1,50 @@
-import { usePathname } from 'expo-router'
+import { useGlobalSearchParams, usePathname } from 'expo-router'
 import * as StoreReview from 'expo-store-review'
 import { FC, useEffect, useRef, useState } from 'react'
-import { APP_VARIANT } from '~/config'
 import { useAnalytics } from '~/hooks'
 import { useStore } from '~/providers'
-import { api } from '~/services'
-import { captureError } from '~/utils/captureError'
 import { Prompt, PromptProps, PromptRef } from './Prompt'
 import { TextField } from './TextField'
 
 export const Feedback: FC = () => {
-  const { capture, getDistinctId } = useAnalytics()
-  const { setFeedbackShown, feedbackShown } = useStore()
+  const { capture } = useAnalytics()
+  const { setFeedbackShown, setEventCount, eventCount, feedbackShown } = useStore()
   const prompt = useRef<PromptRef>(null)
   const [comment, setComment] = useState('')
   const [currentStep, setCurrentStep] = useState('feedbackRequest')
   const pathname = usePathname()
+  const params = useGlobalSearchParams()
 
-  const checkUserCritera = async (userId: string) => {
-    const { data, error } = await api.supabase.functions.invoke('check-user-criteria', {
-      body: {
-        userId,
-        environment: APP_VARIANT ? 'staging' : 'production',
-      },
-    })
+  const checkUserCritera = async () => {
+    const uniqueRecipeViews = Object.keys(eventCount.recipeView).length
+    const uniqueIngredientsAdded = eventCount.ingredientAdd
 
-    if (error) {
-      captureError(error)
-    } else {
-      if (data.showFeedbackWidget) {
-        prompt.current?.show()
-        capture('user_feedback:feedback_request')
-        setFeedbackShown(true)
-      }
+    if (uniqueRecipeViews >= 10 || uniqueIngredientsAdded >= 6) {
+      prompt.current?.show()
+      capture('user_feedback:feedback_request')
+      setFeedbackShown(true)
     }
-
-    return data
   }
 
-  // Track the location in your analytics provider here.
   useEffect(() => {
-    if (!getDistinctId) return
-    if ((pathname === '/recipe' || pathname === '/add-ingredients') && !feedbackShown) {
-      checkUserCritera(getDistinctId())
+    // Increment the number of recipe views everytime a recipe is viewed
+    if (pathname === '/recipe') {
+      const { recipeId } = params as { recipeId: string }
+      setEventCount((prev) => ({
+        ...prev,
+        recipeView: {
+          ...prev.recipeView,
+          [recipeId]: (prev.recipeView[recipeId] || 0) + 1,
+        },
+      }))
     }
-  }, [pathname, getDistinctId])
+
+    if (pathname === '/recipe' || pathname === '/add-ingredients') {
+      if (!feedbackShown) {
+        checkUserCritera()
+      }
+    }
+  }, [pathname, params])
 
   const steps: Record<string, PromptProps> = {
     feedbackRequest: {

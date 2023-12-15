@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { useFetchIngredientDetails, useSession } from '~/hooks'
 import { useAnalytics } from '~/hooks/useAnalytics'
+import { useStore } from '~/providers'
 import { Button } from './Button'
 import { Checkbox } from './Checkbox'
 import { HorizontalList } from './HorizontalList'
@@ -28,6 +29,7 @@ export const IngredientDetails = function IngredientDetails({
 }: IngredientDetailsProps) {
   const { screen, capture } = useAnalytics()
   const { isLoggedIn } = useSession()
+  const { setEventCount } = useStore()
   const {
     ingredient,
     loading,
@@ -104,6 +106,11 @@ export const IngredientDetails = function IngredientDetails({
                       ingredient_name: ingredient?.name,
                     })
                     handleAddToMyBar(ingredientId)
+
+                    setEventCount((prev) => ({
+                      ...prev,
+                      ingredientAdd: prev.ingredientAdd + 1,
+                    }))
                   }
                 }}
               />
