@@ -3,6 +3,8 @@ import { UnitSystem } from '~/types'
 
 type Fraction = '¼' | '⅓' | '½' | '⅔' | '¾' | ''
 
+const OUNCE_TO_CUP_CONVERSION_THRESHOLD = 3
+
 /**
  * Returns the nearest fraction to a given decimal number.
  * @param decimal - The decimal number to find the nearest fraction for.
@@ -70,7 +72,6 @@ export const getUnitName = (unit: Units, quantity: number) => {
  */
 export const formatQuantity = (quantity: string | null): string | null => {
   if (quantity === null) return quantity // if quantity is null, return it as is.
-
   const parsedQuantity = parseFloat(quantity)
   if (isNaN(parsedQuantity)) {
     throw new Error(`Quantity is not a valid number`)
@@ -137,23 +138,32 @@ export const convertUnitToOtherSystem = ({
     let outputUnit = unit
     let outputQuantityInt = parseFloat(quantity)
 
-    if (toSystem === UnitSystem.IMPERIAL && outputQuantityInt >= cupsUnit.baseConversionFactor) {
+    if (
+      toSystem === UnitSystem.IMPERIAL &&
+      outputQuantityInt >= cupsUnit.baseConversionFactor / OUNCE_TO_CUP_CONVERSION_THRESHOLD
+    ) {
       outputQuantityInt = outputQuantityInt / cupsUnit.baseConversionFactor
       outputUnit = cupsUnit
     }
 
     const multipliedQuantity = outputQuantityInt * multiplier
-    let outputQuantity
+    let outputQuantity: string = ''
+
     if (toSystem === UnitSystem.METRIC) {
       // Round to the nearest 2.5 if the unit is imperial
       outputQuantity = (Math.round(multipliedQuantity / 2.5) * 2.5).toString()
     } else {
       outputQuantity = toFractions(multipliedQuantity)
     }
-    return getConversionResult(outputQuantity, outputUnit)
+
+    return {
+      quantity: outputQuantity,
+      unit: getUnitName(outputUnit, parseFloat(outputQuantity || '0')),
+    }
   }
 
   const quantityFloat = parseFloat(quantity) * multiplier
+
   if (isNaN(quantityFloat)) {
     throw new Error(`Quantity is not a valid number`)
   }
@@ -174,7 +184,10 @@ export const convertUnitToOtherSystem = ({
   if (!convertedBaseUnit)
     throw new Error(`Could not find base unit for ${unit.name} in ${toSystem} system`)
 
-  if (toSystem === UnitSystem.IMPERIAL && convertedQuantity > cupsUnit.baseConversionFactor) {
+  if (
+    toSystem === UnitSystem.IMPERIAL &&
+    convertedQuantity > cupsUnit.baseConversionFactor / OUNCE_TO_CUP_CONVERSION_THRESHOLD
+  ) {
     convertedQuantity = convertedQuantity / cupsUnit.baseConversionFactor
     convertedBaseUnit = cupsUnit
   }

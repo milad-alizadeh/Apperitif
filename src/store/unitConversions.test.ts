@@ -157,8 +157,8 @@ describe('convertUnitToOtherSystem', () => {
       units: mockUnits,
     })
     expect(result).toEqual({
-      quantity: '5',
-      unit: 'oz',
+      quantity: '⅔',
+      unit: 'cup',
     })
   })
 
@@ -226,6 +226,19 @@ describe('convertUnitToOtherSystem', () => {
     })
     expect(result).toEqual({
       quantity: '1', // 8 oz is exactly 1 cup
+      unit: 'cup',
+    })
+  })
+
+  test('should handle less than  a cup and bigger than 4 ounces', () => {
+    const result = convertUnitToOtherSystem({
+      unit: mockUnits.find((u) => u.abbreviation === 'oz'),
+      toSystem: UnitSystem.IMPERIAL,
+      quantity: '4',
+      units: mockUnits,
+    })
+    expect(result).toEqual({
+      quantity: '½', // 8 oz is exactly 1 cup
       unit: 'cup',
     })
   })
