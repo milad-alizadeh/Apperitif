@@ -28,7 +28,7 @@ const StoreContext = createContext<StoreContextType | undefined>(undefined)
 
 export const StoreProvider: FC<{ children: any }> = ({ children }) => {
   // AsyncStorage.clear()
-  clearPersistedState()
+  // clearPersistedState()
 
   const [currentIngredientId, setCurrentIngredientId] = useState<string | null>(null)
   const [currentEquipmentId, setCurrentEquipmentId] = useState<string | null>(null)
