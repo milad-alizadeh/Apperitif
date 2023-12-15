@@ -82,7 +82,7 @@ export const RecipeTabs = function RecipeTabs({
         <ListItem
           key={ingredient.id}
           name={`${ingredient.name}${isOptional ? ' (optional)' : ''}`}
-          leftText={`${outputQuantity ? `${outputQuantity} ` : ''} ${outputUnit}`}
+          leftText={`${outputQuantity ? `${outputQuantity} ` : ''}${outputUnit}`}
           showCheckbox={isLoggedIn}
           checked={inMyBar}
           testID="recipe-ingredient"
