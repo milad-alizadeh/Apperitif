@@ -9,6 +9,7 @@ export const GET_RECIPE_DETAILS = gql(`
           name
           description
           imageUrl
+          isPitcher
           profilesRecipesCollection {
             edges {
               node {

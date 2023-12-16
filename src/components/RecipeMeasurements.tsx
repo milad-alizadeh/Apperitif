@@ -8,10 +8,14 @@ import { SegmentedControl } from './SegmentedControls'
 import { Switch } from './Switch'
 import { Text } from './Text'
 
+interface RecipeMeasurementsProps {
+  styleClassName?: string
+  isPitcher?: boolean
+}
 /**
  * A component that displays the recipe measurements and conversions.
  */
-export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClassName }) => {
+export const RecipeMeasurements: FC<RecipeMeasurementsProps> = ({ styleClassName, isPitcher }) => {
   const {
     selectedUnitSystem,
     setSelectedUnitSystem,
@@ -26,7 +30,9 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
     unitSystem === UnitSystem.METRIC ? jiggerSizeMetricOptions : jiggerSizeImperialOptions
 
   return (
-    <View className={`flex-row justify-between ${styleClassName}`}>
+    <View
+      className={`flex-row ${!isPitcher ? 'justify-between' : 'justify-around'} ${styleClassName}`}
+    >
       <View className="items-center">
         <Text body weight="medium" styleClassName="text-primary mb-2">
           Unit
@@ -42,20 +48,22 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
           }}
         />
       </View>
-      <View className="items-center">
-        <Text body weight="medium" styleClassName="text-primary mb-2">
-          Jigger Size
-        </Text>
-        <SegmentedControl
-          testID="jigger-size"
-          selectedValue={selectedJiggerSize}
-          segments={currentJiggerSizeOptions(selectedUnitSystem)}
-          onValueChange={(value) => {
-            setSelectedJiggerSize(value)
-            capture('recipe:jigger_size_press', { jigger_size: value })
-          }}
-        />
-      </View>
+      {!isPitcher && (
+        <View className="items-center">
+          <Text body weight="medium" styleClassName="text-primary mb-2">
+            Jigger Size
+          </Text>
+          <SegmentedControl
+            testID="jigger-size"
+            selectedValue={selectedJiggerSize}
+            segments={currentJiggerSizeOptions(selectedUnitSystem)}
+            onValueChange={(value) => {
+              setSelectedJiggerSize(value)
+              capture('recipe:jigger_size_press', { jigger_size: value })
+            }}
+          />
+        </View>
+      )}
       <View className="items-center">
         <Text body weight="medium" styleClassName="text-primary mb-2">
           2x

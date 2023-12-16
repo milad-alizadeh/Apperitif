@@ -100,6 +100,7 @@ export default function RecipeDetailsScreen() {
               steps={steps}
               ingredients={mergedRecipeIngredients}
               equipment={equipment}
+              isPitcher={recipe?.isPitcher}
             />
           </View>
         </View>

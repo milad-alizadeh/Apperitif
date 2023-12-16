@@ -27,6 +27,7 @@ export interface RecipeTabsProps {
   equipment: Equipment[]
   steps: Step[]
   loading?: boolean
+  isPitcher?: boolean
 }
 
 /**
@@ -42,6 +43,7 @@ export const RecipeTabs = function RecipeTabs({
   ingredients,
   equipment,
   loading,
+  isPitcher,
 }: RecipeTabsProps) {
   const {
     selectedJiggerSize,
@@ -55,7 +57,9 @@ export const RecipeTabs = function RecipeTabs({
   const { data } = useQuery(GET_UNITS)
 
   const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
-  const multiplier = (selectedJiggerSize / defaultJiggerSize) * (doubleRecipe ? 2 : 1)
+  const jiggerMultiplier = isPitcher ? 1 : selectedJiggerSize / defaultJiggerSize
+  const doubleRecipeMultiplier = doubleRecipe ? 2 : 1
+  const multiplier = jiggerMultiplier * doubleRecipeMultiplier
 
   const missingIngredients = []
   const inStockIngredients = []
@@ -142,7 +146,10 @@ export const RecipeTabs = function RecipeTabs({
       }}
     >
       <Tabs.TabPage title="Ingredients">
-        <RecipeMeasurements styleClassName="pb-6 mb-3 border-b-[1px] border-neutral-200" />
+        <RecipeMeasurements
+          isPitcher={isPitcher}
+          styleClassName="pb-6 mb-3 border-b-[1px] border-neutral-200"
+        />
 
         {!!inStockIngredients?.length && (
           <View>
