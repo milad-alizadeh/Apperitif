@@ -21,12 +21,14 @@ type Props<T> = {
   selectedValue?: Segment<T>['value']
   onValueChange: (value: Segment<T>['value']) => void
   testID: string
+  disabled?: boolean
 }
 
 export const SegmentedControl = <T,>({
   segments,
   onValueChange,
   selectedValue,
+  disabled,
   testID,
 }: Props<T>) => {
   const [containerWidth, setContainerWidth] = useState(0)
@@ -69,16 +71,21 @@ export const SegmentedControl = <T,>({
   })
 
   return (
-    <View testID={testID} onLayout={handleLayout} className="rounded-lg bg-neutral-200">
+    <View
+      testID={testID}
+      onLayout={handleLayout}
+      className={`rounded-lg bg-neutral-200 ${disabled ? 'opacity-50' : ''}`}
+    >
       <Animated.View
-        className="h-full bg-primary absolute rounded-lg"
+        className={`h-full ${disabled ? 'bg-neutral-500' : 'bg-primary'} absolute rounded-lg`}
         style={[{ width: `${100 / segments.length}%` }, animatedStyle, { ...shadowCard }]}
       />
       <View className="flex-row">
         {segments.map((segment, index) => (
           <TouchableOpacity
+            activeOpacity={disabled ? 1 : 0.5}
             key={segment.value.toString()}
-            onPress={() => handlePress(index, segment.value)}
+            onPress={() => !disabled && handlePress(index, segment.value)}
             className="min-w-[38px] tems-center justify-center px-2 py-[5px]"
           >
             <Text
