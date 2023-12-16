@@ -14,9 +14,9 @@ export const useAnalytics = () => {
       screen: () => {},
       identify: () => {},
       reset: () => {},
-      loaded: true,
     }
   }
+  
   const capture = (event: string, properties?: Record<string, any>) => {
     console.log('capture', event, properties)
     mixpanel.track(event, properties)
