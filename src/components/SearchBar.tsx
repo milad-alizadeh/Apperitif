@@ -51,6 +51,7 @@ export const SearchBar = function SearchBar({
         testID={testId}
         ref={inputRef}
         placeholder="Search"
+        accessibilityRole="search"
         placeholderTextColor={colors.neutral[500]}
         className="text-base h-10 leading-5 items-center bg-white pl-10 rounded-lg flex-1"
         value={searchQuery}

@@ -14,6 +14,7 @@ import { Text } from './Text'
 type Segment<T> = {
   label: string
   value: T
+  accessibilityLabel?: string
 }
 
 type Props<T> = {
@@ -87,6 +88,8 @@ export const SegmentedControl = <T,>({
             key={segment.value.toString()}
             onPress={() => !disabled && handlePress(index, segment.value)}
             className="min-w-[38px] tems-center justify-center px-2 py-[5px]"
+            accessibilityRole="radio"
+            accessibilityLabel={segment.accessibilityLabel}
           >
             <Text
               styleClassName={`text-sm font-medium text-center w-full ${

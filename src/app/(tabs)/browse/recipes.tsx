@@ -20,7 +20,8 @@ export default function RecipesScreen() {
       contentContainerStyle={{ flex: 1, paddingTop: 40 }}
     >
       <TouchableOpacity
-        className="h-8 w-40 absolute mx-auto right-[50%] -top-1 translate-x-20 z-20"
+        className="h-8 w-40 absolute mx-auto right-[50%] top-0 translate-x-20 z-20"
+        accessibilityLabel="Scroll to Top"
         onPress={() => listRef?.current?.scrollToTop()}
       />
 

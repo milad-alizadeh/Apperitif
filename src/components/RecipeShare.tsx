@@ -76,7 +76,12 @@ ${recipe?.recipesEquipmentCollection?.edges
 
   return (
     <SkeletonView visible={!loading} width={30} height={30}>
-      <Icon icon="share" onPress={handleShare} />
+      <Icon
+        icon="share"
+        accessibilityLabel="Share Recipe"
+        accessibilityRole="button"
+        onPress={handleShare}
+      />
     </SkeletonView>
   )
 }

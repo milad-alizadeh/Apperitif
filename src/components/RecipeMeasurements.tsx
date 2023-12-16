@@ -31,7 +31,7 @@ export const RecipeMeasurements: FC<RecipeMeasurementsProps> = ({ styleClassName
 
   return (
     <View className={`flex-row justify-between ${styleClassName}`}>
-      <View className="items-center">
+      <View accessible accessibilityRole="radiogroup" className="items-center">
         <Text body weight="medium" styleClassName="text-primary mb-2">
           Unit
         </Text>
@@ -46,7 +46,7 @@ export const RecipeMeasurements: FC<RecipeMeasurementsProps> = ({ styleClassName
           }}
         />
       </View>
-      <View className="items-center">
+      <View accessible accessibilityRole="radiogroup" className="items-center">
         <Text
           body
           weight="medium"
@@ -65,7 +65,12 @@ export const RecipeMeasurements: FC<RecipeMeasurementsProps> = ({ styleClassName
           }}
         />
       </View>
-      <View className="items-center">
+      <View
+        accessible
+        accessibilityRole="switch"
+        accessibilityLabel="Double Recipe"
+        className="items-center"
+      >
         <Text body weight="medium" styleClassName="text-primary mb-2">
           2x
         </Text>

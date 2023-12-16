@@ -116,6 +116,7 @@ export default function BrowseHomeScreen() {
         rightElement={
           <Icon
             icon="search"
+            accessibilityLabel='Search for Recipes'
             onPress={() => {
               router.push({
                 pathname: '/browse/recipes',
