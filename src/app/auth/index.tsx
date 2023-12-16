@@ -114,7 +114,7 @@ export default function AuthHomeScreen() {
               EULA
             </Text>
           </TouchableOpacity>{' '}
-          Please also check out our{' '}
+          and our{' '}
           <TouchableOpacity
             onPress={() => {
               WebBrowser.openBrowserAsync(PRIVACY_POLICY_URL)
