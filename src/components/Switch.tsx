@@ -3,7 +3,6 @@ import { Switch as RNSwitch } from 'react-native'
 import { colors } from '~/theme'
 import { isAndroid } from '~/utils'
 
-
 interface SwitchProps {
   value: boolean
   onValueChange: (value: boolean) => void
@@ -19,10 +18,10 @@ export const Switch: FC<SwitchProps> = ({ value, onValueChange, testID }) => {
 
   return (
     <RNSwitch
-      className={`${isAndroid ? 'scale-125' : ''}`}
+      className={`${isAndroid ? 'scale-110' : ''}`}
       testID={testID}
       trackColor={{ false: colors.neutral[200], true: colors.primary }}
-      thumbColor={isAndroid ? colors.neutral[200]: colors.white}
+      thumbColor={isAndroid ? colors.neutral[100] : colors.white}
       onValueChange={onValueChange}
       value={localValue}
     />
