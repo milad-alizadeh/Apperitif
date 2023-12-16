@@ -2,12 +2,10 @@ import { ApolloProvider } from '@apollo/client'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack, useGlobalSearchParams, usePathname } from 'expo-router'
 import snakeCase from 'lodash/snakeCase'
-import { PostHogProvider } from 'posthog-react-native'
 import { useEffect } from 'react'
 import { LogBox } from 'react-native'
 import { Feedback } from '~/components'
 import { DetailsModal } from '~/components/DetailsModal'
-import { POSTHOG_API_KEY } from '~/config'
 import { useAnalytics } from '~/hooks'
 import { StoreProvider } from '~/providers'
 import { AppContentProvider } from '~/providers/AppContentProvider'
@@ -83,14 +81,6 @@ const AppWrapper = ({ children }) => {
 function RootLayoutNav() {
   try {
     return (
-      <PostHogProvider
-        apiKey={POSTHOG_API_KEY}
-        autocapture={{
-          captureTouches: false,
-          captureScreens: false,
-        }}
-        options={{ host: 'https://eu.posthog.com' }}
-      >
         <AppWrapper>
           <SessionProvider>
             <ApolloProvider client={api?.apolloClient}>
@@ -117,7 +107,6 @@ function RootLayoutNav() {
             </ApolloProvider>
           </SessionProvider>
         </AppWrapper>
-      </PostHogProvider>
     )
   } catch (error) {
     captureError(error.message)

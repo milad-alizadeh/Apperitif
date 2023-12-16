@@ -1,6 +1,5 @@
 import { isDevice } from 'expo-device'
 import { Mixpanel } from 'mixpanel-react-native'
-import { usePostHog } from 'posthog-react-native'
 import { MIXPANEL_API_KEY, MIXPANEL_SERVER_URL } from '~/config'
 
 const trackAutomaticEvents = true
@@ -18,18 +17,9 @@ export const useAnalytics = () => {
       loaded: true,
     }
   }
-
-  const posthog = usePostHog()
-
-  const getDistinctId = (): string => {
-    console.log('distinctId', posthog?.getDistinctId())
-    return posthog?.getDistinctId()
-  }
-
   const capture = (event: string, properties?: Record<string, any>) => {
     console.log('capture', event, properties)
     mixpanel.track(event, properties)
-    posthog?.capture(event, properties)
   }
 
   const screen = (screenName: string, properties?: Record<string, any>) => {
@@ -39,20 +29,17 @@ export const useAnalytics = () => {
       screen_name: screenName,
       ...properties,
     })
-    posthog?.screen(screenName, properties)
   }
 
   const identify = (distinctId: string, properties?: Record<string, any>) => {
     console.log('identify', distinctId, properties)
     mixpanel.identify(distinctId)
     mixpanel.getPeople().set(properties)
-    posthog?.identify(distinctId, properties)
   }
 
   const reset = () => {
     console.log('reset')
     mixpanel.reset()
-    posthog?.reset()
   }
 
   return {
@@ -60,7 +47,5 @@ export const useAnalytics = () => {
     screen,
     identify,
     reset,
-    getDistinctId,
-    loaded: typeof posthog !== 'undefined',
   }
 }
