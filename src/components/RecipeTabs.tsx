@@ -147,7 +147,7 @@ export const RecipeTabs = function RecipeTabs({
         />
 
         {!!inStockIngredients?.length && (
-          <View>
+          <View accessible>
             <View>{inStockIngredients.map((ingredient) => renderIngredientItem(ingredient))}</View>
           </View>
         )}
@@ -158,11 +158,11 @@ export const RecipeTabs = function RecipeTabs({
       </Tabs.TabPage>
 
       <Tabs.TabPage title="Method">
-        <View>{steps.map((step) => renderStepItem(step))}</View>
+        <View accessible>{steps.map((step) => renderStepItem(step))}</View>
       </Tabs.TabPage>
 
       <Tabs.TabPage title="Equipment">
-        <View>{equipment.map((equipment) => renderEquipmentItem(equipment))}</View>
+        <View accessible>{equipment.map((equipment) => renderEquipmentItem(equipment))}</View>
       </Tabs.TabPage>
     </Tabs>
   )

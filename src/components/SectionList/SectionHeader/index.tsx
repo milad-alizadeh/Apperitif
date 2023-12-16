@@ -107,7 +107,7 @@ export const SectionHeader = function SectionHeader({
       testID="section-header"
     >
       {!scrollEnabled ? (
-        <View className="flex-row border-b-[3px] border-neutral-100 ">
+        <View className="flex-row border-b-[3px] border-neutral-100" accessibilityRole="menu">
           <Animated.View
             className="bg-primary h-[3px] absolute left-0 -bottom-[3px]"
             style={style}

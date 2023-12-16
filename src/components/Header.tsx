@@ -38,6 +38,8 @@ export const Header = function Header({
           color={colors.neutral[800]}
           onPress={() => (router.canGoBack ? router.back() : router.push('/'))}
           containerClassName="mr-4"
+          accessibilityHint='Navigates to the previous screen'
+          accessibilityLabel='Go Back'
         />
       )}
       {title && (
