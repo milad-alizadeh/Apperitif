@@ -5,6 +5,8 @@ import { Header, IconTypes, ListItem, Screen, Text } from '~/components'
 import { useAnalytics } from '~/hooks'
 import { useSession } from '~/hooks/useSession'
 import { api } from '~/services/api'
+import * as WebBrowser from 'expo-web-browser'
+import { END_USER_LICENCE_AGREEMENT_URL, PRIVACY_POLICY_URL } from '~/config'
 
 interface ProfileItem {
   name: string
@@ -33,15 +35,15 @@ export default function ProfileHomeScreen() {
     },
     null,
     {
-      name: 'Terms and Conditions',
+      name: 'End User Licence Agreement',
       icon: 'file',
-      route: '/terms-and-conditions',
+      route: END_USER_LICENCE_AGREEMENT_URL,
       slug: 'terms_and_conditions',
     },
     {
       name: 'Privacy Policy',
       icon: 'file',
-      route: '/privacy-policy',
+      route: PRIVACY_POLICY_URL,
       slug: 'privacy_policy',
     },
     null,
@@ -80,7 +82,8 @@ export default function ProfileHomeScreen() {
   const renderItem = ({ item }: { item: ProfileItem }) => {
     if (!item) return <View className="h-8" />
     const { name, icon, route } = item
-    const mailLink = route?.indexOf('mailto') > -1
+    const mailLink = route?.includes('mailto')
+    const externalLink = route?.includes('http')
 
     let onPress =
       item.onPress ||
@@ -92,6 +95,13 @@ export default function ProfileHomeScreen() {
       onPress = () => {
         capture(`profile:${item.slug}_press`)
         Linking.openURL(route as any)
+      }
+    }
+
+    if(externalLink) {
+      onPress = () => {
+        capture(`profile:${item.slug}_press`)
+        WebBrowser.openBrowserAsync(route)
       }
     }
 

@@ -17,6 +17,8 @@ let SENTRY_ORG = 'bubblewrap'
 let POSTHOG_API_KEY = 'phc_CW2SHN4knN74Zpmzez96ffzp6XauAzzrxOG62mmyflJ'
 let MIXPANEL_API_KEY = '346afa9c1e93ad4c9d4adbbb895a9e0b'
 let MIXPANEL_SERVER_URL = 'https://api-eu.mixpanel.com'
+let PRIVACY_POLICY_URL = 'https://bubblewrap.ai/privacy-policy.html'
+let END_USER_LICENCE_AGREEMENT_URL = 'https://bubblewrap.ai/end-user-licence-agreement.html'
 
 if (Updates.channel === 'staging') {
   APP_VARIANT = 'staging'
@@ -59,4 +61,6 @@ export {
   SUPABASE_URL,
   MIXPANEL_API_KEY,
   MIXPANEL_SERVER_URL,
+  PRIVACY_POLICY_URL,
+  END_USER_LICENCE_AGREEMENT_URL
 }

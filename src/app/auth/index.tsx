@@ -9,6 +9,8 @@ import { AppleAuthentication, GoogleAuthentication, Icon, Screen, Text } from '~
 import { useAnalytics } from '~/hooks'
 import { loadingVar } from '~/store/auth'
 import { colors } from '~/theme'
+import * as WebBrowser from 'expo-web-browser'
+import { END_USER_LICENCE_AGREEMENT_URL, PRIVACY_POLICY_URL } from '~/config'
 
 export default function AuthHomeScreen() {
   const { capture } = useAnalytics()
@@ -105,19 +107,17 @@ export default function AuthHomeScreen() {
           By continuing, you agree to our{' '}
           <TouchableOpacity
             onPress={() => {
-              router.back()
-              router.push('/(aux)/terms-and-conditions')
+              WebBrowser.openBrowserAsync(END_USER_LICENCE_AGREEMENT_URL)
             }}
           >
             <Text small styleClassName="text-neutral-800 underline top-[2px]">
-              T&C's
+              EULA
             </Text>
           </TouchableOpacity>{' '}
           Please also check out our{' '}
           <TouchableOpacity
             onPress={() => {
-              router.back()
-              router.push('/(aux)/privacy-policy')
+              WebBrowser.openBrowserAsync(PRIVACY_POLICY_URL)
             }}
           >
             <Text small styleClassName="text-neutral-800 underline top-[2px]">
