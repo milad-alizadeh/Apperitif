@@ -139,12 +139,7 @@ export const RecipeTabs = function RecipeTabs({
   )
 
   return (
-    <Tabs
-      initialIndex={0}
-      onTabChange={(title) => {
-        capture('recipe:tab_change', { tab_name: title })
-      }}
-    >
+    <Tabs initialIndex={0}>
       <Tabs.TabPage title="Ingredients">
         <RecipeMeasurements
           isPitcher={isPitcher}

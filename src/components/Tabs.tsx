@@ -13,7 +13,6 @@ interface TabProps {
   children: ReactNode
   initialIndex?: number
   styleClassName?: string
-  onTabChange?: (title: string) => void
 }
 
 interface TabPageProps {
@@ -39,7 +38,6 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
   children,
   initialIndex = 0,
   styleClassName,
-  onTabChange,
 }) => {
   const [containerWidth, setContainerWidth] = useState(0)
   const [activeIndex, setActiveIndex] = useState(-1)
@@ -83,13 +81,6 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
     },
   )
 
-  // fire onTabChange when the animation is finished
-  const onScrollEnd = useAnimatedScrollHandler({
-    onMomentumEnd: (event) => {
-      runOnJS(onTabChange && onTabChange)(sectionTitles[activeIndex])
-    },
-  })
-
   return (
     <View className={styleClassName} onLayout={onContainerLayout} style={{ overflow: 'hidden' }}>
       <SectionHeader
@@ -107,7 +98,6 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
         showsHorizontalScrollIndicator={false}
         onScroll={scrollHandler}
         scrollEventThrottle={16}
-        onMomentumScrollEnd={onScrollEnd}
       >
         {React.Children.map(children, (child) => {
           if (React.isValidElement<TabPageProps>(child) && child.type === TabPage) {
