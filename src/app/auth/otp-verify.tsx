@@ -6,6 +6,7 @@ import { Button, Header, Screen, Text, TextField } from '~/components'
 import { useAnalytics } from '~/hooks'
 import { useSuccessfullAuthHandler } from '~/hooks/useSuccessfullAuthHandler'
 import { api } from '~/services/api'
+import { isAndroid } from '~/utils'
 import { captureError } from '~/utils/captureError'
 
 /**
@@ -98,7 +99,7 @@ export default function AuthOtpVerifyScreen({ route }) {
   }
 
   return (
-    <Screen preset="scroll">
+    <Screen preset="scroll" safeAreaEdges={isAndroid ? ['top'] : []}>
       <Header verticalPadding title="Enter code" backButton />
       <View className="p-6">
         <View>
