@@ -63,6 +63,8 @@ export const RecipeFavourite = function RecipeFavourite({
         icon={localIsFavourite ? 'bookmarkFilled' : 'bookmark'}
         containerClassName="rounded-full bg-white"
         size="large"
+        accessibilityRole="button"
+        accessibilityLabel={localIsFavourite ? 'Remove from Favourite' : 'Add to Favourite'}
         color={localIsFavourite ? colors.primary : colors.neutral[800]}
         activeOpacity={1}
         enableHaptics

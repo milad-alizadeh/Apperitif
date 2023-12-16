@@ -35,6 +35,8 @@ export default function AuthHomeScreen() {
         <Icon
           icon="close"
           size="large"
+          accessibilityLabel="Close Modal"
+          accessibilityRole="button"
           onPress={() => {
             router.back()
           }}
