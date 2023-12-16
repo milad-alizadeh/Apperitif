@@ -21,7 +21,7 @@ export const Switch: FC<SwitchProps> = ({ value, onValueChange, testID }) => {
       className={`${isAndroid ? 'scale-110' : ''}`}
       testID={testID}
       trackColor={{ false: colors.neutral[200], true: colors.primary }}
-      thumbColor={isAndroid ? colors.neutral[200] : colors.white}
+      thumbColor={isAndroid ? colors.neutral[100] : colors.white}
       onValueChange={onValueChange}
       value={localValue}
     />
