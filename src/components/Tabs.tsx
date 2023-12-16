@@ -117,7 +117,7 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
         setActiveIndex={onSectionClick}
         onLayoutCalculated={() => onSectionClick(initialIndex)}
         scrollEnabled={false}
-        accessibilityRole="tabbar"
+        accessibilityRole="menu"
       />
       <Animated.ScrollView
         horizontal
