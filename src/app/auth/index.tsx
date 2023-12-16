@@ -2,15 +2,15 @@ import { useReactiveVar } from '@apollo/client'
 import { isDevice } from 'expo-device'
 import { Image } from 'expo-image'
 import { Link, router, useLocalSearchParams } from 'expo-router'
+import * as WebBrowser from 'expo-web-browser'
 import React from 'react'
 import { ActivityIndicator, Platform, TouchableOpacity, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { AppleAuthentication, GoogleAuthentication, Icon, Screen, Text } from '~/components'
+import { END_USER_LICENCE_AGREEMENT_URL, PRIVACY_POLICY_URL } from '~/config'
 import { useAnalytics } from '~/hooks'
 import { loadingVar } from '~/store/auth'
 import { colors } from '~/theme'
-import * as WebBrowser from 'expo-web-browser'
-import { END_USER_LICENCE_AGREEMENT_URL, PRIVACY_POLICY_URL } from '~/config'
 
 export default function AuthHomeScreen() {
   const { capture } = useAnalytics()
@@ -32,6 +32,8 @@ export default function AuthHomeScreen() {
         <Icon
           icon="close"
           size="large"
+          accessibilityLabel="Close Modal"
+          accessibilityRole="button"
           onPress={() => {
             router.back()
           }}

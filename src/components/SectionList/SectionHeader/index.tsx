@@ -1,5 +1,5 @@
 import React, { RefObject, createRef, useEffect, useMemo, useRef, useState } from 'react'
-import { FlatList, View, useWindowDimensions } from 'react-native'
+import { AccessibilityRole, FlatList, View, useWindowDimensions } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { colors } from '~/theme'
 import { SectionHeaderItem } from '../SectionHeaderItem'
@@ -15,6 +15,7 @@ export interface SectionHeaderProps {
   className?: string
   styleClassName?: string
   onLayoutCalculated?: () => void
+  accessibilityRole?: AccessibilityRole
 }
 
 /**
@@ -30,6 +31,7 @@ export const SectionHeader = function SectionHeader({
   styleClassName,
   scrollEnabled = true,
   onLayoutCalculated,
+  accessibilityRole = 'menu',
 }: SectionHeaderProps) {
   const [measures, setMeasures] = useState<{ x: number; width: number }[]>(
     new Array(sectionTitles.length).fill(null),
@@ -107,7 +109,10 @@ export const SectionHeader = function SectionHeader({
       testID="section-header"
     >
       {!scrollEnabled ? (
-        <View className="flex-row border-b-[3px] border-neutral-100" accessibilityRole="menu">
+        <View
+          className="flex-row border-b-[3px] border-neutral-100"
+          accessibilityRole={accessibilityRole}
+        >
           <Animated.View
             className="bg-primary h-[3px] absolute left-0 -bottom-[3px]"
             style={style}

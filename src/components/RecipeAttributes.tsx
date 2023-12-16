@@ -1,7 +1,6 @@
 import { Image } from 'expo-image'
 import React, { FC } from 'react'
 import { View } from 'react-native'
-import { SkeletonView } from './SkeletonView'
 import { Text } from './Text'
 
 export interface RecipeAttributesProps {
@@ -32,7 +31,7 @@ export const RecipeAttributes: FC<RecipeAttributesProps> = ({
       {attributes.map((attribute) => {
         return (
           <View key={attribute?.id}>
-            <View className="flex-row items-center justify-center">
+            <View className="flex-row items-center justify-center" ac>
               {!loading && (
                 <Image
                   className="w-9 h-9 mr-1"
