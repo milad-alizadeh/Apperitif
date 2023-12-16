@@ -27,6 +27,7 @@ export interface RecipeTabsProps {
   equipment: Equipment[]
   steps: Step[]
   loading?: boolean
+  isPitcher?: boolean
 }
 
 /**
@@ -42,6 +43,7 @@ export const RecipeTabs = function RecipeTabs({
   ingredients,
   equipment,
   loading,
+  isPitcher,
 }: RecipeTabsProps) {
   const {
     selectedJiggerSize,
@@ -55,7 +57,9 @@ export const RecipeTabs = function RecipeTabs({
   const { data } = useQuery(GET_UNITS)
 
   const units = data?.unitsCollection?.edges.map((e) => e.node) as Units[]
-  const multiplier = (selectedJiggerSize / defaultJiggerSize) * (doubleRecipe ? 2 : 1)
+  const jiggerMultiplier = isPitcher ? 1 : selectedJiggerSize / defaultJiggerSize
+  const doubleRecipeMultiplier = doubleRecipe ? 2 : 1
+  const multiplier = jiggerMultiplier * doubleRecipeMultiplier
 
   const missingIngredients = []
   const inStockIngredients = []
@@ -82,7 +86,7 @@ export const RecipeTabs = function RecipeTabs({
         <ListItem
           key={ingredient.id}
           name={`${ingredient.name}${isOptional ? ' (optional)' : ''}`}
-          leftText={`${outputQuantity} ${outputUnit}`}
+          leftText={`${outputQuantity ? `${outputQuantity} ` : ''}${outputUnit}`}
           showCheckbox={isLoggedIn}
           checked={inMyBar}
           testID="recipe-ingredient"
@@ -135,17 +139,15 @@ export const RecipeTabs = function RecipeTabs({
   )
 
   return (
-    <Tabs
-      initialIndex={0}
-      onTabChange={(title) => {
-        capture('recipe:tab_change', { tab_name: title })
-      }}
-    >
+    <Tabs initialIndex={0}>
       <Tabs.TabPage title="Ingredients">
-        <RecipeMeasurements styleClassName="pb-6 mb-3 border-b-[1px] border-neutral-200" />
+        <RecipeMeasurements
+          isPitcher={isPitcher}
+          styleClassName="pb-6 mb-3 border-b-[1px] border-neutral-200"
+        />
 
         {!!inStockIngredients?.length && (
-          <View>
+          <View accessible>
             <View>{inStockIngredients.map((ingredient) => renderIngredientItem(ingredient))}</View>
           </View>
         )}
@@ -156,11 +158,11 @@ export const RecipeTabs = function RecipeTabs({
       </Tabs.TabPage>
 
       <Tabs.TabPage title="Method">
-        <View>{steps.map((step) => renderStepItem(step))}</View>
+        <View accessible>{steps.map((step) => renderStepItem(step))}</View>
       </Tabs.TabPage>
 
       <Tabs.TabPage title="Equipment">
-        <View>{equipment.map((equipment) => renderEquipmentItem(equipment))}</View>
+        <View accessible>{equipment.map((equipment) => renderEquipmentItem(equipment))}</View>
       </Tabs.TabPage>
     </Tabs>
   )

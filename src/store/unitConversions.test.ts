@@ -76,6 +76,22 @@ const mockUnits: Units[] = [
     recipesIngredientsCollection: null,
     unitsCollection: null,
   },
+  {
+    id: '3',
+    system: UnitSystem.IMPERIAL,
+    type: 'volume',
+    abbreviation: 'cup',
+    plural: 'cups',
+    isConvertable: true,
+    baseConversionFactor: 8,
+    systemToSystemConversionFactor: null,
+    baseUnitId: '3f14df53-61ff-4ece-bba8-9cf477e0110b',
+    createdAt: '2023-10-03T00:00:00Z',
+    updatedAt: '2023-10-03T00:00:00Z',
+    name: 'cup',
+    nodeId: 'node3',
+    unitsCollection: null,
+  },
 ]
 
 describe('convertUnitToOtherSystem', () => {
@@ -128,8 +144,8 @@ describe('convertUnitToOtherSystem', () => {
       units: mockUnits,
     })
     expect(result).toEqual({
-      quantity: '33 ¾',
-      unit: 'oz',
+      quantity: '4 ¼',
+      unit: 'cups',
     })
   })
 
@@ -137,12 +153,12 @@ describe('convertUnitToOtherSystem', () => {
     const result = convertUnitToOtherSystem({
       unit: mockUnits[1],
       toSystem: UnitSystem.IMPERIAL,
-      quantity: '1000',
+      quantity: '5',
       units: mockUnits,
     })
     expect(result).toEqual({
-      quantity: '1000',
-      unit: 'oz',
+      quantity: '⅔',
+      unit: 'cup',
     })
   })
 
@@ -183,8 +199,60 @@ describe('convertUnitToOtherSystem', () => {
       multiplier: 2,
     })
     expect(result).toEqual({
-      quantity: '67 ⅔', // 1000 ml * 2 to oz
-      unit: 'oz',
+      quantity: '8 ½', // 1000 ml * 2 to oz
+      unit: 'cups',
+    })
+  })
+
+  test('should convert ounces to cups when quantity exceeds 8 ounces', () => {
+    const result = convertUnitToOtherSystem({
+      unit: mockUnits[1],
+      toSystem: UnitSystem.IMPERIAL,
+      quantity: '9',
+      units: mockUnits,
+    })
+    expect(result).toEqual({
+      quantity: '1', // 9 oz converted to cups
+      unit: 'cup',
+    })
+  })
+
+  test('should handle conversion exactly at 8 ounces', () => {
+    const result = convertUnitToOtherSystem({
+      unit: mockUnits.find((u) => u.abbreviation === 'oz'),
+      toSystem: UnitSystem.IMPERIAL,
+      quantity: '8',
+      units: mockUnits,
+    })
+    expect(result).toEqual({
+      quantity: '1', // 8 oz is exactly 1 cup
+      unit: 'cup',
+    })
+  })
+
+  test('should handle less than  a cup and bigger than 4 ounces', () => {
+    const result = convertUnitToOtherSystem({
+      unit: mockUnits.find((u) => u.abbreviation === 'oz'),
+      toSystem: UnitSystem.IMPERIAL,
+      quantity: '4',
+      units: mockUnits,
+    })
+    expect(result).toEqual({
+      quantity: '½', // 8 oz is exactly 1 cup
+      unit: 'cup',
+    })
+  })
+
+  test('should handle large quantities converting from ounces to cups', () => {
+    const result = convertUnitToOtherSystem({
+      unit: mockUnits.find((u) => u.abbreviation === 'oz'),
+      toSystem: UnitSystem.IMPERIAL,
+      quantity: '24',
+      units: mockUnits,
+    })
+    expect(result).toEqual({
+      quantity: '3', // 24 oz converted to cups
+      unit: 'cups',
     })
   })
 })

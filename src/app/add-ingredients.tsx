@@ -25,7 +25,7 @@ export default function AddIngredientsScreen() {
     setSelectedItems,
     setInitialSelectedItems,
   } = useFetchIngredients()
-  const { setCurrentIngredientId } = useStore()
+  const { setCurrentIngredientId, setEventCount } = useStore()
   const [loading, setLoading] = useState(false)
   const { user } = useSession()
   const [addToMyBar, { error: addError }] = useMutation(ADD_TO_MY_BAR)
@@ -92,6 +92,11 @@ export default function AddIngredientsScreen() {
           records: addedItems.map(({ id }) => ({ ingredientId: id, profileId: user?.id })),
         },
       })
+
+      setEventCount((prev) => ({
+        ...prev,
+        ingredientAdd: prev.ingredientAdd + addedItems.length,
+      }))
 
       for (const item of addedItems) {
         capture('add_ingredients:ingredient_add', { ingredient_name: item.name })

@@ -1,4 +1,3 @@
-import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ActivityIndicator, View, ViewStyle } from 'react-native'
@@ -19,7 +18,6 @@ import { useStore } from '~/providers'
 
 export default function MyBarScreen() {
   const { myBarPopoverDismissed, setMyBarPopoverDismissed, setCurrentIngredientId } = useStore()
-  const isFocused = useIsFocused()
   const { user } = useSession()
   const { capture } = useAnalytics()
   const [deleteingItemId, setDeleteingItemId] = useState<string>('')
@@ -151,13 +149,7 @@ export default function MyBarScreen() {
           </Text>
         </Popover>
 
-        <Tabs
-          styleClassName="flex-1"
-          onTabChange={(title) => {
-            if (!isFocused) return
-            capture('my_bar:tab_change', { tab_name: title })
-          }}
-        >
+        <Tabs styleClassName="flex-1">
           <Tabs.TabPage title="Ingredients" styleClassName="p-0">
             <SectionList
               sectionsData={sectionsData}

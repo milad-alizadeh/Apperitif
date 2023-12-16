@@ -20,7 +20,11 @@ export const SectionHeaderItem = forwardRef<View, SectionHeaderItemProps>(
   ) {
     return (
       <View ref={ref} className="ml-6" onLayout={onLayout} style={style}>
-        <TouchableOpacity className="py-2" onPress={onPress}>
+        <TouchableOpacity
+          className="py-2"
+          onPress={onPress}
+          accessibilityState={{ selected: active }}
+        >
           <Text
             body
             weight="medium"

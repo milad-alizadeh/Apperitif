@@ -1,7 +1,6 @@
 import React from 'react'
 import { Text as RNText, TextStyle, View } from 'react-native'
 import typography from '~/theme/typography'
-import { isAndroid } from '~/utils'
 import { SkeletonView } from './SkeletonView'
 
 interface TextProps {
@@ -37,19 +36,17 @@ export function Text({
   small,
 }: TextProps) {
   const sizes = {
-    h1: { fontSize: isAndroid ? 24 : 26, fontFamily: typography?.primary?.bold, lineHeight: 32 },
-    h2: { fontSize: isAndroid ? 22 : 24, fontFamily: typography?.primary?.bold, lineHeight: 30 },
-    h3: { fontSize: isAndroid ? 18 : 20, fontFamily: typography?.primary?.bold, lineHeight: 24 },
-    h4: { fontSize: isAndroid ? 14 : 16, fontFamily: typography?.primary?.bold, lineHeight: 20 },
+    h1: { fontSize: 26, fontFamily: typography?.primary?.bold, lineHeight: 32 },
+    h2: { fontSize: 24, fontFamily: typography?.primary?.bold, lineHeight: 30 },
+    h3: { fontSize: 20, fontFamily: typography?.primary?.bold, lineHeight: 24 },
+    h4: { fontSize: 16, fontFamily: typography?.primary?.bold, lineHeight: 20 },
     body: {
-      fontSize: isAndroid ? 14 : 16,
-      lineHeight: isAndroid ? 18 : 20,
-      letterSpacing: isAndroid ? -0.3 : 0,
+      fontSize: 16,
+      lineHeight: 20,
     },
     small: {
-      fontSize: isAndroid ? 12 : 14,
-      lineHeight: isAndroid ? 16 : 18,
-      letterSpacing: isAndroid ? -0.3 : 0,
+      fontSize: 14,
+      lineHeight: 18,
     },
   }
 
@@ -103,6 +100,7 @@ export function Text({
         <RNText
           testID={testID}
           style={combinedStyle}
+          maxFontSizeMultiplier={1.3}
           className={`${defaultClassName} ${styleClassName}`}
         >
           {children}

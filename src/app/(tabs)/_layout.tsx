@@ -38,6 +38,7 @@ export default function TabLayout() {
         },
       }}
     >
+      <Tabs.Screen name="index" redirect />
       <Tabs.Screen
         name="browse"
         options={{

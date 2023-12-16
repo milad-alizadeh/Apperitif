@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Alert, View } from 'react-native'
 import { Button, Header, Screen, TextField } from '~/components'
 import { api } from '~/services/api'
+import { isAndroid } from '~/utils'
 
 export default function AuthOtpEmailScreen({ route }) {
   const { attemptedRoute } = useLocalSearchParams()
@@ -98,7 +99,7 @@ export default function AuthOtpEmailScreen({ route }) {
     setLoading(false)
   }
   return (
-    <Screen preset="scroll">
+    <Screen preset="scroll" safeAreaEdges={isAndroid ? ['top'] : []}>
       <Header verticalPadding title="Sign up or login" backButton />
       <View className="p-6">
         <View>

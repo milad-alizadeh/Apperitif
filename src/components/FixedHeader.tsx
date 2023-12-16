@@ -88,6 +88,8 @@ export function FixedHeader({
         styleClassName="w-full h-full"
         onPress={() => onGoBack()}
         testID="back-button"
+        accessibilityHint='Navigates to the previous screen'
+        accessibilityLabel='Go Back'
       />
 
       <Animated.View className="mx-auto" style={alwaysShow ? {} : animatedStyle}>

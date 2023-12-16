@@ -8,10 +8,14 @@ import { SegmentedControl } from './SegmentedControls'
 import { Switch } from './Switch'
 import { Text } from './Text'
 
+interface RecipeMeasurementsProps {
+  styleClassName?: string
+  isPitcher?: boolean
+}
 /**
  * A component that displays the recipe measurements and conversions.
  */
-export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClassName }) => {
+export const RecipeMeasurements: FC<RecipeMeasurementsProps> = ({ styleClassName, isPitcher }) => {
   const {
     selectedUnitSystem,
     setSelectedUnitSystem,
@@ -27,7 +31,7 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
 
   return (
     <View className={`flex-row justify-between ${styleClassName}`}>
-      <View className="items-center">
+      <View accessible accessibilityRole="radiogroup" className="items-center">
         <Text body weight="medium" styleClassName="text-primary mb-2">
           Unit
         </Text>
@@ -42,11 +46,16 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
           }}
         />
       </View>
-      <View className="items-center">
-        <Text body weight="medium" styleClassName="text-primary mb-2">
+      <View accessible accessibilityRole="radiogroup" className="items-center">
+        <Text
+          body
+          weight="medium"
+          styleClassName={`${isPitcher ? 'text-neutral-500' : 'text-primary'} mb-2`}
+        >
           Jigger Size
         </Text>
         <SegmentedControl
+          disabled={isPitcher}
           testID="jigger-size"
           selectedValue={selectedJiggerSize}
           segments={currentJiggerSizeOptions(selectedUnitSystem)}
@@ -56,7 +65,12 @@ export const RecipeMeasurements: FC<{ styleClassName?: string }> = ({ styleClass
           }}
         />
       </View>
-      <View className="items-center">
+      <View
+        accessible
+        accessibilityRole="switch"
+        accessibilityLabel="Double Recipe"
+        className="items-center"
+      >
         <Text body weight="medium" styleClassName="text-primary mb-2">
           2x
         </Text>

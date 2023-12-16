@@ -14,10 +14,12 @@ export const unitSystemOptions = [
   {
     label: 'ml',
     value: UnitSystem.METRIC,
+    accessibilityLabel: 'milliliters',
   },
   {
     label: 'oz',
     value: UnitSystem.IMPERIAL,
+    accessibilityLabel: 'ounces',
   },
 ]
 

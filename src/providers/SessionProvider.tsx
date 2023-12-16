@@ -12,7 +12,7 @@ interface SessionProviderProps {
 
 export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null)
-  const { capture, identify, loaded } = useAnalytics()
+  const { capture, identify } = useAnalytics()
 
   useEffect(() => {
     const { data: subscription } = api.supabase.auth.onAuthStateChange(async (event) => {
@@ -32,7 +32,6 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
   }, [api.supabase.auth, api.apolloClient])
 
   useEffect(() => {
-    if (!loaded) return
     api.supabase.auth.getSession().then(async ({ data: { session } }) => {
       try {
         setSession(session)
@@ -59,7 +58,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
         captureError(e)
       }
     })
-  }, [loaded])
+  }, [api.supabase.auth])
 
   return <SessionContext.Provider value={session}>{children}</SessionContext.Provider>
 }

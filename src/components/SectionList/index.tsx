@@ -178,7 +178,7 @@ export const SectionList: FC<SectionListProps> = ({
       {!!hasSelection && showHeader && (
         <View
           style={{ paddingBottom: inset.bottom }}
-          className="absolute bottom-0 w-full z-20 px-6"
+          className="absolute bottom-3 w-full z-20 px-6"
         >
           <Button
             testID="save-selection-button"

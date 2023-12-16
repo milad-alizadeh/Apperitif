@@ -9,21 +9,19 @@ interface StoreContextType {
   currentIngredientId: string
   doubleRecipe: boolean
   feedbackShown: boolean
+  eventCount: Record<string, any>
   myBarPopoverDismissed: boolean
-  partialMatchInfoBoxDismissed: boolean
   selectedJiggerSize: JiggerSize
   selectedUnitSystem: UnitSystem
   setCurrentEquipmentId: Dispatch<SetStateAction<string>>
-  totalMatchInfoBoxDismissed: boolean
 
   setCurrentIngredientId: Dispatch<SetStateAction<string>>
   setDoubleRecipe: Dispatch<SetStateAction<boolean>>
   setFeedbackShown: Dispatch<SetStateAction<boolean>>
   setMyBarPopoverDismissed: Dispatch<SetStateAction<boolean>>
-  setPartialMatchInfoBoxDismissed: Dispatch<SetStateAction<boolean>>
   setSelectedJiggerSize: Dispatch<SetStateAction<JiggerSize>>
   setSelectedUnitSystem: Dispatch<SetStateAction<UnitSystem>>
-  setTotalMatchInfoBoxDismissed: Dispatch<SetStateAction<boolean>>
+  setEventCount: Dispatch<SetStateAction<Record<string, any>>>
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined)
@@ -35,6 +33,10 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
   const [currentIngredientId, setCurrentIngredientId] = useState<string | null>(null)
   const [currentEquipmentId, setCurrentEquipmentId] = useState<string | null>(null)
   const [feedbackShown, setFeedbackShown] = usePersistedState('feedbackShown', false)
+  const [eventCount, setEventCount] = usePersistedState('eventCount', {
+    recipeView: {},
+    ingredientAdd: 0,
+  })
 
   const [selectedUnitSystem, setSelectedUnitSystem] = usePersistedState(
     'selectedUnitSystem',
@@ -46,14 +48,6 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
   )
 
   const [doubleRecipe, setDoubleRecipe] = usePersistedState('doubleRecipe', false)
-  const [totalMatchInfoBoxDismissed, setTotalMatchInfoBoxDismissed] = usePersistedState(
-    'totalMatchInfoBoxDismissed',
-    false,
-  )
-  const [partialMatchInfoBoxDismissed, setPartialMatchInfoBoxDismissed] = usePersistedState(
-    'partialMatchInfoBoxDismissed',
-    false,
-  )
 
   const [myBarPopoverDismissed, setMyBarPopoverDismissed] = usePersistedState(
     'myBarPopoverDismissed',
@@ -66,21 +60,19 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
         currentEquipmentId,
         currentIngredientId,
         doubleRecipe,
+        eventCount,
         feedbackShown,
         myBarPopoverDismissed,
-        partialMatchInfoBoxDismissed,
         selectedJiggerSize,
         selectedUnitSystem,
         setCurrentEquipmentId,
         setCurrentIngredientId,
-        totalMatchInfoBoxDismissed,
         setDoubleRecipe,
+        setEventCount,
         setFeedbackShown,
         setMyBarPopoverDismissed,
-        setPartialMatchInfoBoxDismissed,
         setSelectedJiggerSize,
         setSelectedUnitSystem,
-        setTotalMatchInfoBoxDismissed,
       }}
     >
       {children}

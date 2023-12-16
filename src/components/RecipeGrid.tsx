@@ -72,7 +72,7 @@ export const RecipeGrid: FC<RecipeGridProps> = forwardRef(
             testIDIconRight="favourite-recipe-delete"
             card
             onPress={() => {
-              capture('my-bar:recipe_press', {
+              capture('my_bar:recipe_press', {
                 recipe_name: item.name,
               })
               router.push({

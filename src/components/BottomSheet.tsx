@@ -154,7 +154,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
                 style={closeStyle}
                 className="z-10 justify-center items-center rounded-full absolute right-6 top-5"
               >
-                <Icon icon="close" size="large" onPress={hide} />
+                <Icon icon="close" size="large" accessibilityLabel='Close Modal' accessibilityRole="button" onPress={hide} />
               </Animated.View>
               {children}
               <View style={{ height: bottomInset }} />

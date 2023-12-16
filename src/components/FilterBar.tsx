@@ -36,6 +36,8 @@ export function FilterBar({ styleClassName, autofocus }: FIlterBarProps) {
           size="large"
           testID="filter-icon"
           containerClassName="bg-neutral-100 rounded-r-lg"
+          accessibilityLabel="Filters"
+          accessibilityRole="button"
           color={colors.neutral[500]}
           onPress={() => {
             router.push('/filters')

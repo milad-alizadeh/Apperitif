@@ -14,15 +14,15 @@ let ANDROID_CLIENT_ID = '387765460024-17r8negv0lecu3vbubce39l7jkd3lepu.apps.goog
 let IOS_CLIENT_ID = '387765460024-2s3u3uvbn0aojjk34h1no81dsquv5saa.apps.googleusercontent.com'
 let SENTRY_PROJECT = 'apperitif-staging'
 let SENTRY_ORG = 'bubblewrap'
-let POSTHOG_API_KEY = 'phc_CW2SHN4knN74Zpmzez96ffzp6XauAzzrxOG62mmyflJ'
 let MIXPANEL_API_KEY = '346afa9c1e93ad4c9d4adbbb895a9e0b'
 let MIXPANEL_SERVER_URL = 'https://api-eu.mixpanel.com'
+let PRIVACY_POLICY_URL = 'https://bubblewrap.ai/privacy-policy.html'
+let END_USER_LICENCE_AGREEMENT_URL = 'https://bubblewrap.ai/end-user-licence-agreement.html'
 
 if (Updates.channel === 'staging') {
   APP_VARIANT = 'staging'
   ANDROID_CLIENT_ID = '387765460024-s1t0op27cenve9qerh7dqbj7837o12gk.apps.googleusercontent.com'
   IOS_CLIENT_ID = '387765460024-n1rej4c8npbr7jcijr3b7tq25a8m93ci.apps.googleusercontent.com'
-  POSTHOG_API_KEY = 'phc_CW2SHN4knN74Zpmzez96ffzp6XauAzzrxOG62mmyflJ'
   SENTRY_DSN =
     'https://ddd6990a76b5dbf8816a4292e0288dba@o4506057195585536.ingest.sentry.io/4506057201418241'
   SENTRY_ORG = 'bubblewrap'
@@ -36,7 +36,6 @@ if (Updates.channel === 'staging') {
 if (Updates.channel === 'production') {
   ANDROID_CLIENT_ID = '387765460024-cffpkqkda7vh56hbd72k8j2ce8bjna7v.apps.googleusercontent.com'
   IOS_CLIENT_ID = '387765460024-u00ludqbbapijlebphm3a36c4kpsq2a8.apps.googleusercontent.com'
-  POSTHOG_API_KEY = 'phc_NoH4C00YmvhUxsXsb2GsnmMtapQroMlK103tWYSdLYU'
   SENTRY_DSN =
     'https://7e6f18a1c3b107d00d654b86112f657e@o4506057195585536.ingest.sentry.io/4506057225601024'
   SENTRY_ORG = 'bubblewrap'
@@ -51,7 +50,6 @@ export {
   APP_VARIANT,
   ANDROID_CLIENT_ID,
   IOS_CLIENT_ID,
-  POSTHOG_API_KEY,
   SENTRY_DSN,
   SENTRY_ORG,
   SENTRY_PROJECT,
@@ -59,4 +57,6 @@ export {
   SUPABASE_URL,
   MIXPANEL_API_KEY,
   MIXPANEL_SERVER_URL,
+  PRIVACY_POLICY_URL,
+  END_USER_LICENCE_AGREEMENT_URL
 }

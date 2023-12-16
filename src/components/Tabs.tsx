@@ -1,5 +1,5 @@
-import React, { FC, ReactNode, useRef, useState } from 'react'
-import { LayoutChangeEvent, View } from 'react-native'
+import React, { FC, ReactNode, useEffect, useRef, useState } from 'react'
+import { AccessibilityInfo, LayoutChangeEvent, View } from 'react-native'
 import Animated, {
   runOnJS,
   useAnimatedReaction,
@@ -13,7 +13,6 @@ interface TabProps {
   children: ReactNode
   initialIndex?: number
   styleClassName?: string
-  onTabChange?: (title: string) => void
 }
 
 interface TabPageProps {
@@ -29,7 +28,11 @@ interface TabPageProps {
 
 const TabPage: FC<TabPageProps> = ({ children, containerWidth, styleClassName }) => {
   return (
-    <View className={`p-6 w-full ${styleClassName}`} style={{ width: containerWidth }}>
+    <View
+      accessibilityRole="tab"
+      className={`p-6 w-full ${styleClassName}`}
+      style={{ width: containerWidth }}
+    >
       {children}
     </View>
   )
@@ -39,12 +42,12 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
   children,
   initialIndex = 0,
   styleClassName,
-  onTabChange,
 }) => {
   const [containerWidth, setContainerWidth] = useState(0)
   const [activeIndex, setActiveIndex] = useState(-1)
   const scrollX = useSharedValue(0)
   const scrollViewRef = useRef<Animated.ScrollView>(null)
+  const [screenReaderEnabled, setScreenReaderEnabled] = useState(false)
 
   const onContainerLayout = (event: LayoutChangeEvent) => {
     setContainerWidth(event.nativeEvent.layout.width)
@@ -77,18 +80,33 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
   useAnimatedReaction(
     () => activeIndexDerived.value,
     (newActiveIndex) => {
-      if (newActiveIndex !== activeIndex && !Number.isNaN(newActiveIndex) && activeIndex >= 0) {
+      if (
+        newActiveIndex !== activeIndex &&
+        !Number.isNaN(newActiveIndex) &&
+        activeIndex >= 0 &&
+        !screenReaderEnabled
+      ) {
         runOnJS(setActiveIndex)(newActiveIndex)
       }
     },
   )
 
-  // fire onTabChange when the animation is finished
-  const onScrollEnd = useAnimatedScrollHandler({
-    onMomentumEnd: (event) => {
-      runOnJS(onTabChange && onTabChange)(sectionTitles[activeIndex])
-    },
-  })
+  useEffect(() => {
+    const screenReaderChangedSubscription = AccessibilityInfo.addEventListener(
+      'screenReaderChanged',
+      (isScreenReaderEnabled) => {
+        setScreenReaderEnabled(isScreenReaderEnabled)
+      },
+    )
+
+    AccessibilityInfo.isScreenReaderEnabled().then((isScreenReaderEnabled) => {
+      setScreenReaderEnabled(isScreenReaderEnabled)
+    })
+
+    return () => {
+      screenReaderChangedSubscription.remove()
+    }
+  }, [])
 
   return (
     <View className={styleClassName} onLayout={onContainerLayout} style={{ overflow: 'hidden' }}>
@@ -99,6 +117,7 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
         setActiveIndex={onSectionClick}
         onLayoutCalculated={() => onSectionClick(initialIndex)}
         scrollEnabled={false}
+        accessibilityRole="menu"
       />
       <Animated.ScrollView
         horizontal
@@ -107,7 +126,7 @@ export const Tabs: FC<TabProps> & { TabPage: FC<TabPageProps> } = ({
         showsHorizontalScrollIndicator={false}
         onScroll={scrollHandler}
         scrollEventThrottle={16}
-        onMomentumScrollEnd={onScrollEnd}
+        accessibilityRole="tablist"
       >
         {React.Children.map(children, (child) => {
           if (React.isValidElement<TabPageProps>(child) && child.type === TabPage) {
