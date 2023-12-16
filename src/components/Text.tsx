@@ -100,6 +100,7 @@ export function Text({
         <RNText
           testID={testID}
           style={combinedStyle}
+          maxFontSizeMultiplier={1.3}
           className={`${defaultClassName} ${styleClassName}`}
         >
           {children}
