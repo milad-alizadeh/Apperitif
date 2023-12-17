@@ -17,6 +17,7 @@ export const useFetchIngredientDetails = (ingredientId: string, onClosed: () => 
     const { data: barIngredients, refetch: myBarRefetch } = useQuery(GET_MY_BAR)
     const { data: relatedRecipes, loading: recipesLoading } = useQuery(GET_RECIPES_BY_INGREDIENT, {
       variables: { ingredientId },
+      fetchPolicy: 'cache-and-network',
     })
 
     const { setCurrentIngredientId } = useStore()
