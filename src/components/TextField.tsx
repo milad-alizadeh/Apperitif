@@ -53,7 +53,9 @@ export const TextField = function TextField({
       <TextInput
         testID={testID}
         placeholder={placeholder}
-        className={`${styleClassName} text-base border-[1px] border-neutral-300 rounded-lg px-3 leading-5 h-12`}
+        className={`${styleClassName} text-base border-[1px] border-neutral-300 rounded-lg px-3 leading-5 ${
+          multiline ? '' : 'h-12'
+        } `}
         secureTextEntry={password}
         placeholderTextColor={colors.neutral[500]}
         onChangeText={onChange}
