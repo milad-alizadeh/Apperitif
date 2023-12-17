@@ -1,8 +1,8 @@
+import { usePathname } from 'expo-router'
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { useFetchIngredientDetails, useSession } from '~/hooks'
 import { useAnalytics } from '~/hooks/useAnalytics'
-import { useStore } from '~/providers'
 import { Button } from './Button'
 import { Checkbox } from './Checkbox'
 import { HorizontalList } from './HorizontalList'
@@ -16,7 +16,6 @@ export interface IngredientDetailsProps {
   /** The ID of the ingredient to display details for */
   ingredientId: string
   onClosed?: () => void
-  showCta?: boolean
 }
 
 /**
@@ -24,9 +23,11 @@ export interface IngredientDetailsProps {
  */
 export const IngredientDetails = function IngredientDetails({
   ingredientId,
-  showCta = true,
   onClosed,
 }: IngredientDetailsProps) {
+  const path = usePathname()
+  const showCta = path !== '/add-ingredients'
+
   const { screen, capture } = useAnalytics()
   const { isLoggedIn } = useSession()
   const {
