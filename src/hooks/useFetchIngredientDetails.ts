@@ -1,13 +1,17 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { router, useGlobalSearchParams } from 'expo-router'
+import { MutableRefObject } from 'react'
 import { GetRecipesByIngredientQuery } from '~/__generated__/graphql'
+import { BottomSheetRef } from '~/components'
 import { ADD_TO_MY_BAR, DELETE_FROM_MY_BAR } from '~/graphql/mutations'
 import { GET_INGREDIENT_DETAILS, GET_MY_BAR, GET_RECIPES_BY_INGREDIENT } from '~/graphql/queries'
-import { useStore } from '~/providers'
 import { captureError } from '~/utils/captureError'
 import { useSession } from './useSession'
 
-export const useFetchIngredientDetails = (ingredientId: string, onClosed: () => void) => {
+export const useFetchIngredientDetails = (
+  ingredientId: string,
+  modalRef: MutableRefObject<BottomSheetRef>,
+) => {
   try {
     const { recipeId } = useGlobalSearchParams()
     const { user } = useSession()
@@ -19,8 +23,6 @@ export const useFetchIngredientDetails = (ingredientId: string, onClosed: () => 
       variables: { ingredientId },
       fetchPolicy: 'cache-and-network',
     })
-
-    const { setCurrentIngredientId } = useStore()
 
     const [addToMyBar, { loading: addLoading }] = useMutation(ADD_TO_MY_BAR)
     const [deleteFromMyBar] = useMutation(DELETE_FROM_MY_BAR)
@@ -44,8 +46,7 @@ export const useFetchIngredientDetails = (ingredientId: string, onClosed: () => 
                 pathname: '/recipe',
                 params: { recipeId: recipe?.id, recipeName: recipe?.name },
               })
-              setCurrentIngredientId(null)
-              onClosed && onClosed()
+              modalRef?.current?.hide()
             },
           }))
           .slice(0, 10)

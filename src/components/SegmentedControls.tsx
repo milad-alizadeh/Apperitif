@@ -83,7 +83,9 @@ export const SegmentedControl = <T,>({
     <View
       testID={testID}
       onLayout={handleLayout}
-      className={`rounded-lg bg-neutral-200 ${disabled ? 'opacity-50' : ''}`}
+      className={`rounded-lg bg-neutral-200 ${disabled ? 'opacity-50' : ''} ${
+        firstRender ? 'opacity-0' : ''
+      }`}
     >
       <Animated.View
         className={`h-full ${disabled ? 'bg-neutral-500' : 'bg-primary'} absolute rounded-lg`}

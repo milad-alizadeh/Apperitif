@@ -18,13 +18,6 @@ export const DetailsModal = () => {
     }
   }, [currentIngredientId, currentEquipmentId])
 
-  useEffect(() => {
-    if (pathname === '/recipe') {
-      console.log('close modal')
-      modalRef?.current?.hide()
-    }
-  }, [params, pathname])
-
   return (
     <BottomSheet
       ref={modalRef}
@@ -33,7 +26,9 @@ export const DetailsModal = () => {
         setCurrentEquipmentId(null)
       }}
     >
-      {currentIngredientId && <IngredientDetails ingredientId={currentIngredientId} />}
+      {currentIngredientId && (
+        <IngredientDetails ingredientId={currentIngredientId} modalRef={modalRef} />
+      )}
       {currentEquipmentId && <EquipmentDetails equipmentId={currentEquipmentId} />}
     </BottomSheet>
   )
