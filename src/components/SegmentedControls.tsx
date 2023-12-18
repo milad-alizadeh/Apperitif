@@ -36,16 +36,24 @@ export const SegmentedControl = <T,>({
   const [activeIndex, setActiveIndex] = useState(-1) // React state to keep track of active index
   const translateX = useSharedValue(0)
   const haptics = useHaptics('light')
+  const [firstRender, setFirstRender] = useState(true)
 
   useEffect(() => {
     const newIndex = segments.findIndex((segment) => segment.value === selectedValue)
     if (containerWidth === 0 || newIndex === -1) return
 
     const segmentWidth = containerWidth / segments.length
-    translateX.value = withTiming(newIndex * segmentWidth, {
-      easing: Easing.inOut(Easing.ease),
-      duration: 200,
-    })
+
+    if (firstRender) {
+      translateX.value = newIndex * segmentWidth
+      setFirstRender(false)
+    } else {
+      translateX.value = withTiming(newIndex * segmentWidth, {
+        easing: Easing.inOut(Easing.ease),
+        duration: 200,
+      })
+    }
+
     setActiveIndex(newIndex)
   }, [selectedValue, segments, containerWidth])
 
