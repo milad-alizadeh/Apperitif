@@ -16,13 +16,17 @@ export const DetailsModal = () => {
   }, [currentIngredientId, currentEquipmentId])
 
   const onClosed = () => {
-    setCurrentIngredientId(null)
-    setCurrentEquipmentId(null)
     modalRef?.current?.hide()
   }
 
   return (
-    <BottomSheet ref={modalRef}>
+    <BottomSheet
+      ref={modalRef}
+      onHide={() => {
+        setCurrentIngredientId(null)
+        setCurrentEquipmentId(null)
+      }}
+    >
       {currentIngredientId && (
         <IngredientDetails ingredientId={currentIngredientId} onClosed={onClosed} />
       )}
