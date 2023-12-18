@@ -50,11 +50,11 @@ export const IngredientDetails = function IngredientDetails({
   return (
     <>
       {loading || recipesLoading ? null : (
-        <View className="justify-start flex-1 px-6 pt-6 pb-6" style={inset}>
+        <View className="justify-start flex-1 px-6 pt-6 pb-3" style={inset}>
           {/* Name */}
           <View className="mb-3">
             {ingredient?.name && (
-              <Text h2 weight="bold" testID="ingredient-name">
+              <Text h2 weight="bold" styleClassName="pr-10 flex-1" testID="ingredient-name">
                 {ingredient?.name}
               </Text>
             )}
