@@ -1,6 +1,6 @@
 import { useGlobalSearchParams, usePathname } from 'expo-router'
 import * as StoreReview from 'expo-store-review'
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useAnalytics } from '~/hooks'
 import { useStore } from '~/providers'
 import { Prompt, PromptProps, PromptRef } from './Prompt'
@@ -15,7 +15,7 @@ export const Feedback: FC = () => {
   const pathname = usePathname()
   const params = useGlobalSearchParams()
 
-  const checkUserCritera = async () => {
+  const checkUserCritera = useCallback(async () => {
     const uniqueRecipeViews = Object.keys(eventCount.recipeView).length
     const uniqueIngredientsAdded = eventCount.ingredientAdd
 
@@ -24,7 +24,7 @@ export const Feedback: FC = () => {
       capture('user_feedback:feedback_request')
       setFeedbackShown(true)
     }
-  }
+  }, [eventCount])
 
   useEffect(() => {
     // Increment the number of recipe views everytime a recipe is viewed

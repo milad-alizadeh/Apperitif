@@ -12,7 +12,6 @@ import {
   Icon,
   InfoBox,
   Screen,
-  Text,
   VerticalList,
 } from '~/components'
 import { GET_CATEGORIES } from '~/graphql/queries'
@@ -116,7 +115,7 @@ export default function BrowseHomeScreen() {
         rightElement={
           <Icon
             icon="search"
-            accessibilityLabel='Search for Recipes'
+            accessibilityLabel="Search for Recipes"
             onPress={() => {
               router.push({
                 pathname: '/browse/recipes',

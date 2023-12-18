@@ -35,8 +35,8 @@ export const SegmentedControl = <T,>({
   const [containerWidth, setContainerWidth] = useState(0)
   const [activeIndex, setActiveIndex] = useState(-1) // React state to keep track of active index
   const translateX = useSharedValue(0)
+  const opacity = useSharedValue(0)
   const haptics = useHaptics('light')
-  const [firstRender, setFirstRender] = useState(true)
 
   useEffect(() => {
     const newIndex = segments.findIndex((segment) => segment.value === selectedValue)
@@ -44,9 +44,9 @@ export const SegmentedControl = <T,>({
 
     const segmentWidth = containerWidth / segments.length
 
-    if (firstRender) {
+    if (opacity.value === 0) {
       translateX.value = newIndex * segmentWidth
-      setFirstRender(false)
+      opacity.value = 1
     } else {
       translateX.value = withTiming(newIndex * segmentWidth, {
         easing: Easing.inOut(Easing.ease),
@@ -79,13 +79,21 @@ export const SegmentedControl = <T,>({
     }
   })
 
+  const opacityStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(opacity.value, {
+        easing: Easing.inOut(Easing.ease),
+        duration: 200,
+      }),
+    }
+  })
+
   return (
-    <View
+    <Animated.View
       testID={testID}
+      style={opacityStyle}
       onLayout={handleLayout}
-      className={`rounded-lg bg-neutral-200 ${disabled ? 'opacity-50' : ''} ${
-        firstRender ? 'opacity-0' : ''
-      }`}
+      className={`rounded-lg bg-neutral-200 ${disabled ? 'opacity-50' : ''}`}
     >
       <Animated.View
         className={`h-full ${disabled ? 'bg-neutral-500' : 'bg-primary'} absolute rounded-lg`}
@@ -111,6 +119,6 @@ export const SegmentedControl = <T,>({
           </TouchableOpacity>
         ))}
       </View>
-    </View>
+    </Animated.View>
   )
 }

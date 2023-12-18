@@ -1,10 +1,9 @@
 import { usePathname } from 'expo-router'
-import React, { MutableRefObject, Ref, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { useFetchIngredientDetails, useSession } from '~/hooks'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
-import { BottomSheetRef } from './BottomSheet'
 import { Button } from './Button'
 import { Checkbox } from './Checkbox'
 import { HorizontalList } from './HorizontalList'
@@ -17,7 +16,7 @@ import { Text } from './Text'
 export interface IngredientDetailsProps {
   /** The ID of the ingredient to display details for */
   ingredientId: string
-  modalRef?: MutableRefObject<BottomSheetRef>
+  onClosed?: () => void
 }
 
 /**
@@ -25,7 +24,7 @@ export interface IngredientDetailsProps {
  */
 export const IngredientDetails = function IngredientDetails({
   ingredientId,
-  modalRef,
+  onClosed,
 }: IngredientDetailsProps) {
   const path = usePathname()
   const showCta = path !== '/add-ingredients'
@@ -41,7 +40,7 @@ export const IngredientDetails = function IngredientDetails({
     isInMyBar,
     handleAddToMyBar,
     handleDeleteFromMyBar,
-  } = useFetchIngredientDetails(ingredientId, modalRef)
+  } = useFetchIngredientDetails(ingredientId, onClosed)
 
   useEffect(() => {
     if (!ingredient) return

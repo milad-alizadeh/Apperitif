@@ -1,4 +1,3 @@
-import { useGlobalSearchParams, usePathname } from 'expo-router'
 import { useEffect, useRef } from 'react'
 import { BottomSheet, BottomSheetRef } from '~/components/BottomSheet'
 import { useStore } from '~/providers'
@@ -7,8 +6,6 @@ import { IngredientDetails } from './IngredientDetails'
 
 export const DetailsModal = () => {
   const modalRef = useRef<BottomSheetRef>(null)
-  const params = useGlobalSearchParams()
-  const pathname = usePathname()
   const { currentEquipmentId, currentIngredientId, setCurrentEquipmentId, setCurrentIngredientId } =
     useStore()
 
@@ -18,16 +15,16 @@ export const DetailsModal = () => {
     }
   }, [currentIngredientId, currentEquipmentId])
 
+  const onClosed = () => {
+    setCurrentIngredientId(null)
+    setCurrentEquipmentId(null)
+    modalRef?.current?.hide()
+  }
+
   return (
-    <BottomSheet
-      ref={modalRef}
-      onHide={() => {
-        setCurrentIngredientId(null)
-        setCurrentEquipmentId(null)
-      }}
-    >
+    <BottomSheet ref={modalRef}>
       {currentIngredientId && (
-        <IngredientDetails ingredientId={currentIngredientId} modalRef={modalRef} />
+        <IngredientDetails ingredientId={currentIngredientId} onClosed={onClosed} />
       )}
       {currentEquipmentId && <EquipmentDetails equipmentId={currentEquipmentId} />}
     </BottomSheet>
