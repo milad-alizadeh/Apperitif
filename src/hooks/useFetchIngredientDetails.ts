@@ -3,7 +3,7 @@ import { router, useGlobalSearchParams } from 'expo-router'
 import { GetRecipesByIngredientQuery } from '~/__generated__/graphql'
 import { ADD_TO_MY_BAR, DELETE_FROM_MY_BAR } from '~/graphql/mutations'
 import { GET_INGREDIENT_DETAILS, GET_MY_BAR, GET_RECIPES_BY_INGREDIENT } from '~/graphql/queries'
-import { useStore } from '~/providers'
+import { useDetailsModal } from '~/providers'
 import { captureError } from '~/utils/captureError'
 import { useSession } from './useSession'
 
@@ -20,7 +20,7 @@ export const useFetchIngredientDetails = (ingredientId: string, onClosed: () => 
       fetchPolicy: 'cache-and-network',
     })
 
-    const { setCurrentIngredientId } = useStore()
+    const { setCurrentIngredientId } = useDetailsModal()
 
     const [addToMyBar, { loading: addLoading }] = useMutation(ADD_TO_MY_BAR)
     const [deleteFromMyBar] = useMutation(DELETE_FROM_MY_BAR)

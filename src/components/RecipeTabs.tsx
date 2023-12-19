@@ -5,7 +5,7 @@ import { GetRecipeDetailsQuery, Units } from '~/__generated__/graphql'
 import { defaultJiggerSize } from '~/constants'
 import { GET_UNITS } from '~/graphql/queries'
 import { useAnalytics, useSession } from '~/hooks'
-import { useStore } from '~/providers'
+import { useDetailsModal, useStore } from '~/providers'
 import { convertUnitToOtherSystem } from '~/store'
 import { ListItem } from './ListItem'
 import { RecipeMeasurements } from './RecipeMeasurements'
@@ -45,13 +45,7 @@ export const RecipeTabs = function RecipeTabs({
   loading,
   isPitcher,
 }: RecipeTabsProps) {
-  const {
-    selectedJiggerSize,
-    doubleRecipe,
-    selectedUnitSystem,
-    setCurrentEquipmentId,
-    setCurrentIngredientId,
-  } = useStore()
+  const { selectedJiggerSize, doubleRecipe, selectedUnitSystem } = useStore()
   const { capture } = useAnalytics()
   const { isLoggedIn } = useSession()
   const { data } = useQuery(GET_UNITS)
@@ -74,6 +68,7 @@ export const RecipeTabs = function RecipeTabs({
 
   const renderIngredientItem = useCallback(
     ({ ingredient, quantity, unit, isOptional, inMyBar }: Ingredient & { inMyBar: boolean }) => {
+      const { setCurrentIngredientId } = useDetailsModal()
       if (!units) return null
       const { quantity: outputQuantity, unit: outputUnit } = convertUnitToOtherSystem({
         unit: unit as Units,
@@ -106,6 +101,7 @@ export const RecipeTabs = function RecipeTabs({
 
   const renderEquipmentItem = useCallback(
     ({ name, imageUrl, id }: Equipment) => {
+      const { setCurrentEquipmentId } = useDetailsModal()
       return (
         <ListItem
           key={id}

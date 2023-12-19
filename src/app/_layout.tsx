@@ -8,8 +8,7 @@ import { Feedback } from '~/components'
 import { DetailsModal } from '~/components/DetailsModal'
 import { useAnalytics } from '~/hooks'
 import { StoreProvider } from '~/providers'
-import { AppContentProvider } from '~/providers/AppContentProvider'
-import { SessionProvider } from '~/providers/SessionProvider'
+import { AppContentProvider, DetailsModalProvider, SessionProvider } from '~/providers'
 import { api } from '~/services/api'
 import { initSentry } from '~/services/sentry'
 import { customFontsToLoad } from '~/theme/typography'
@@ -81,10 +80,11 @@ const AppWrapper = ({ children }) => {
 function RootLayoutNav() {
   try {
     return (
-        <AppWrapper>
-          <SessionProvider>
-            <ApolloProvider client={api?.apolloClient}>
-              <AppContentProvider>
+      <AppWrapper>
+        <SessionProvider>
+          <ApolloProvider client={api?.apolloClient}>
+            <AppContentProvider>
+              <DetailsModalProvider>
                 <StoreProvider>
                   <DetailsModal />
                   <Feedback />
@@ -103,10 +103,11 @@ function RootLayoutNav() {
                     <Stack.Screen name="add-ingredients" />
                   </Stack>
                 </StoreProvider>
-              </AppContentProvider>
-            </ApolloProvider>
-          </SessionProvider>
-        </AppWrapper>
+              </DetailsModalProvider>
+            </AppContentProvider>
+          </ApolloProvider>
+        </SessionProvider>
+      </AppWrapper>
     )
   } catch (error) {
     captureError(error.message)
