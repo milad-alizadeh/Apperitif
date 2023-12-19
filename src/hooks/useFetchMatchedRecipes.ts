@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
-import orderBy from 'lodash/orderBy'
 import { useEffect } from 'react'
 import { GetPartialMatchRecipesQuery, GetTotalmatchRecipesQuery } from '~/__generated__/graphql'
 import { CardProps, SectionDataType, SectionHeaderType } from '~/components'
@@ -12,7 +11,7 @@ import { captureError } from '~/utils/captureError'
 export const useFetchMatchedRecipes = () => {
   try {
     const {
-      data: ingredientsData,
+      data: myBarData,
       loading: ingredientLoading,
       refetch: ingredientRefetch,
       error: ingredientError,
@@ -43,14 +42,6 @@ export const useFetchMatchedRecipes = () => {
       }
     }, [isFocused, ingredientRefetch, totalMatchRefetch, partialMatchRefetch])
 
-    const ingredientsInBar = ingredientsData?.profilesIngredientsCollection?.edges
-      .filter(({ node }) => node?.ingredient)
-      .map(({ node }) => ({
-        name: node?.ingredient?.name,
-        id: node?.ingredient?.id,
-        category: node?.ingredient?.ingredientsCategoriesCollection?.edges[0]?.node?.category?.name,
-      }))
-
     const getRecipeMatch = (
       matchedData: GetTotalmatchRecipesQuery | GetPartialMatchRecipesQuery,
     ): CardProps[] => {
@@ -71,26 +62,9 @@ export const useFetchMatchedRecipes = () => {
     let sectionsData: SectionDataType[][] = []
     let sectionsHeader: SectionHeaderType[] = []
 
-    // Reduces an array of ingredients into an array of categories with their respective ingredients.
-    let categoriesdIngredients =
-      ingredientsInBar?.reduce((acc, item) => {
-        const existingSection = acc.find((section) => section.title === item.category)
-        if (existingSection) {
-          existingSection.data.push(item)
-          existingSection.count += 1
-        } else {
-          acc.push({
-            title: item.category,
-            data: [item],
-            count: 1,
-          })
-        }
-        return acc
-      }, []) ?? []
+    const categoriesdIngredients = myBarData?.myBarCollection?.edges?.map((e) => e.node) ?? []
 
-    categoriesdIngredients = orderBy(categoriesdIngredients, ['title'], ['asc'])
-
-    sectionsData = categoriesdIngredients.map((section) => section?.data)
+    sectionsData = categoriesdIngredients.map((section) => JSON.parse(section?.data))
     sectionsHeader = categoriesdIngredients.map((section) => ({
       title: section.title,
       count: section.count,
@@ -104,7 +78,6 @@ export const useFetchMatchedRecipes = () => {
       getRecipeMatch,
       ingredientLoading,
       ingredientRefetch,
-      ingredientsInBar,
       partialMatchData,
       partialMatchLoading,
       partialMatchRefetch,

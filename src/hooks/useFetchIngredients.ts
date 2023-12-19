@@ -1,9 +1,13 @@
 import { useQuery } from '@apollo/client'
 import keyBy from 'lodash/keyBy'
 import { useEffect, useState } from 'react'
-import { GetIngredientsByCategoriesQuery, GetMyBarQuery } from '~/__generated__/graphql'
+import {
+  GetIngredientsByCategoriesQuery,
+  GetIngredientsInMyBarQuery,
+  GetMyBarQuery,
+} from '~/__generated__/graphql'
 import { SectionDataType, SectionHeaderType } from '~/components'
-import { GET_MY_BAR } from '~/graphql/queries'
+import { GET_INGREDIENTS_IN_MY_BAR } from '~/graphql/queries'
 import { GET_INGREDIENTS_BY_CATEGORIES } from '~/graphql/queries/getIngtedientsByCategories'
 import { useAppContent } from '~/providers'
 import { captureError } from '~/utils/captureError'
@@ -68,13 +72,13 @@ export const useFetchIngredients = () => {
     const { data: categories } = useQuery(GET_INGREDIENTS_BY_CATEGORIES, {
       fetchPolicy: 'cache-and-network',
     })
-    const { data: selectedIngredients } = useQuery(GET_MY_BAR, {
+    const { data: selectedIngredients } = useQuery(GET_INGREDIENTS_IN_MY_BAR, {
       fetchPolicy: 'cache-and-network',
     })
 
     const fetchIngredients = (
       categories: GetIngredientsByCategoriesQuery,
-      selectedIngredients: GetMyBarQuery,
+      selectedIngredients: GetIngredientsInMyBarQuery,
     ) => {
       const sectionsData: SectionDataType[][] = []
       const sectionsHeader: SectionHeaderType[] = []

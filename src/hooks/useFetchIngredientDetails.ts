@@ -2,7 +2,11 @@ import { useMutation, useQuery } from '@apollo/client'
 import { router, useGlobalSearchParams } from 'expo-router'
 import { GetRecipesByIngredientQuery } from '~/__generated__/graphql'
 import { ADD_TO_MY_BAR, DELETE_FROM_MY_BAR } from '~/graphql/mutations'
-import { GET_INGREDIENT_DETAILS, GET_MY_BAR, GET_RECIPES_BY_INGREDIENT } from '~/graphql/queries'
+import {
+  GET_INGREDIENTS_IN_MY_BAR,
+  GET_INGREDIENT_DETAILS,
+  GET_RECIPES_BY_INGREDIENT,
+} from '~/graphql/queries'
 import { useDetailsModal } from '~/providers'
 import { captureError } from '~/utils/captureError'
 import { useSession } from './useSession'
@@ -14,7 +18,7 @@ export const useFetchIngredientDetails = (ingredientId: string, onClosed: () => 
     const { data, loading } = useQuery(GET_INGREDIENT_DETAILS, {
       variables: { ingredientId },
     })
-    const { data: barIngredients, refetch: myBarRefetch } = useQuery(GET_MY_BAR)
+    const { data: barIngredients, refetch: myBarRefetch } = useQuery(GET_INGREDIENTS_IN_MY_BAR)
     const { data: relatedRecipes, loading: recipesLoading } = useQuery(GET_RECIPES_BY_INGREDIENT, {
       variables: { ingredientId },
       fetchPolicy: 'cache-and-network',
@@ -25,7 +29,7 @@ export const useFetchIngredientDetails = (ingredientId: string, onClosed: () => 
     const [addToMyBar, { loading: addLoading }] = useMutation(ADD_TO_MY_BAR)
     const [deleteFromMyBar] = useMutation(DELETE_FROM_MY_BAR)
     const myBar =
-      barIngredients?.profilesIngredientsCollection.edges.map((e) => e.node?.ingredient?.id) ?? []
+      barIngredients?.profilesIngredientsCollection?.edges.map((e) => e.node?.ingredient?.id) ?? []
     const isInMyBar = myBar.includes(ingredientId)
     const ingredient = data?.ingredientsCollection?.edges[0]?.node
 
