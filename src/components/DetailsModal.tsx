@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { BottomSheet, BottomSheetRef } from '~/components/BottomSheet'
 import { useDetailsModal } from '~/providers'
+import { captureError } from '~/utils/captureError'
 import { EquipmentDetails } from './EquipmentDetails'
 import { IngredientDetails } from './IngredientDetails'
 
@@ -16,7 +17,11 @@ export const DetailsModal = () => {
   }, [currentIngredientId, currentEquipmentId])
 
   const onClosed = () => {
-    modalRef?.current?.hide()
+    try {
+      modalRef?.current?.hide()
+    } catch (error) {
+      captureError(error)
+    }
   }
 
   return (
