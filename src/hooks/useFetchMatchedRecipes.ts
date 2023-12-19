@@ -53,7 +53,7 @@ export const useFetchMatchedRecipes = () => {
         }) => ({
           name,
           id,
-          category: ingredientsCategoriesCollection.edges[0].node.category?.name,
+          category: ingredientsCategoriesCollection?.edges[0]?.node?.category?.name,
         }),
       )
 
