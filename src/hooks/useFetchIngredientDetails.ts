@@ -93,8 +93,8 @@ export const useFetchIngredientDetails = (ingredientId: string, onClosed: () => 
 
     return {
       ingredient,
-      loading,
-      recipesLoading,
+      loading: loading && !data,
+      recipesLoading: recipesLoading && !relatedRecipes,
       availableRecipes,
       addLoading,
       isInMyBar,

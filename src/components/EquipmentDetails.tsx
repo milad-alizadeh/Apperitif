@@ -4,6 +4,7 @@ import React from 'react'
 import { ScrollView, View } from 'react-native'
 import { GET_EQUIPMENT_DETAILS } from '~/graphql/queries/'
 import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
+import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
 import { Text } from './Text'
 
 /**
@@ -21,13 +22,13 @@ export const EquipmentDetails = function EquipmentDetails({ equipmentId }: Equip
   const { data, loading } = useQuery(GET_EQUIPMENT_DETAILS, {
     variables: { equipmentId },
   })
-
+  const inset = useSafeAreaInsetsStyle(['bottom'], 'margin')
   const equipment = data?.equipmentCollection.edges[0]?.node
 
   return (
     <>
-      {!loading && (
-        <ScrollView className="p-6 pt-6 flex-">
+      {!loading && data && (
+        <ScrollView className="px-6 pt-6 pb-3" style={inset}>
           <View className="justify-end flex-1">
             <View className="flex-1">
               <Image
