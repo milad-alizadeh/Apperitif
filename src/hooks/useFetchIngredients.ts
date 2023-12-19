@@ -1,11 +1,6 @@
 import { useQuery } from '@apollo/client'
 import keyBy from 'lodash/keyBy'
 import { useEffect, useState } from 'react'
-import {
-  GetIngredientsByCategoriesQuery,
-  GetIngredientsInMyBarQuery,
-  GetMyBarQuery,
-} from '~/__generated__/graphql'
 import { SectionDataType, SectionHeaderType } from '~/components'
 import { GET_INGREDIENTS_IN_MY_BAR } from '~/graphql/queries'
 import { GET_INGREDIENTS_BY_CATEGORIES } from '~/graphql/queries/getIngtedientsByCategories'
@@ -72,19 +67,16 @@ export const useFetchIngredients = () => {
     const { data: categories } = useQuery(GET_INGREDIENTS_BY_CATEGORIES, {
       fetchPolicy: 'cache-and-network',
     })
+
     const { data: selectedIngredients } = useQuery(GET_INGREDIENTS_IN_MY_BAR, {
       fetchPolicy: 'cache-and-network',
     })
 
-    const fetchIngredients = (
-      categories: GetIngredientsByCategoriesQuery,
-      selectedIngredients: GetIngredientsInMyBarQuery,
-    ) => {
+    useEffect(() => {
+      if (!categories) return
       const sectionsData: SectionDataType[][] = []
       const sectionsHeader: SectionHeaderType[] = []
-      const initialSelectedItems: SelectedItems = {}
-
-      const categoriesById = keyBy(categories.ingredientsByCategoriesCollection.edges, 'node.id')
+      const categoriesById = keyBy(categories?.ingredientsByCategoriesCollection?.edges, 'node.id')
 
       ingredient_categories?.category_ids?.forEach((categoryId: string) => {
         const { id, title, data, count } = categoriesById[categoryId]?.node
@@ -92,7 +84,14 @@ export const useFetchIngredients = () => {
         sectionsHeader.push({ id, title, count })
       }) ?? []
 
-      selectedIngredients?.profilesIngredientsCollection.edges
+      setSectionsData(sectionsData)
+      setSectionsHeader(sectionsHeader)
+    }, [categories])
+
+    useEffect(() => {
+      if (!selectedIngredients) return
+      const initialSelectedItems: SelectedItems = {}
+      selectedIngredients?.profilesIngredientsCollection?.edges
         .filter(({ node }) => node?.ingredient)
         .forEach(
           ({
@@ -107,26 +106,9 @@ export const useFetchIngredients = () => {
           },
         )
 
-      return {
-        sectionsData,
-        sectionsHeader,
-        initialSelectedItems,
-      }
-    }
-
-    useEffect(() => {
-      if (!categories) return
-
-      const { sectionsData, sectionsHeader, initialSelectedItems } = fetchIngredients(
-        categories,
-        selectedIngredients,
-      )
-
-      setSectionsData(sectionsData)
-      setSectionsHeader(sectionsHeader)
       setInitialSelectedItems(initialSelectedItems)
       setSelectedItems(initialSelectedItems)
-    }, [categories])
+    }, [selectedIngredients])
 
     return {
       searchQuery,
