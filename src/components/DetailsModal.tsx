@@ -1,19 +1,23 @@
 import { useEffect, useRef } from 'react'
 import { BottomSheet, BottomSheetRef } from '~/components/BottomSheet'
-import { useStore } from '~/providers'
+import { useDetailsModal } from '~/providers'
 import { EquipmentDetails } from './EquipmentDetails'
 import { IngredientDetails } from './IngredientDetails'
 
 export const DetailsModal = () => {
   const modalRef = useRef<BottomSheetRef>(null)
   const { currentEquipmentId, currentIngredientId, setCurrentEquipmentId, setCurrentIngredientId } =
-    useStore()
+    useDetailsModal()
 
   useEffect(() => {
     if (currentIngredientId || currentEquipmentId) {
       modalRef?.current?.show()
     }
   }, [currentIngredientId, currentEquipmentId])
+
+  const onClosed = () => {
+    modalRef?.current?.hide()
+  }
 
   return (
     <BottomSheet
@@ -23,7 +27,9 @@ export const DetailsModal = () => {
         setCurrentEquipmentId(null)
       }}
     >
-      {currentIngredientId && <IngredientDetails ingredientId={currentIngredientId} />}
+      {currentIngredientId && (
+        <IngredientDetails ingredientId={currentIngredientId} onClosed={onClosed} />
+      )}
       {currentEquipmentId && <EquipmentDetails equipmentId={currentEquipmentId} />}
     </BottomSheet>
   )

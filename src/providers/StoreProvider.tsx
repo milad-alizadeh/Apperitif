@@ -1,21 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import React, { Dispatch, FC, SetStateAction, createContext, useContext, useState } from 'react'
+import React, { Dispatch, FC, SetStateAction, createContext, useContext } from 'react'
 import { defaultJiggerSize, defaultUnitSystem } from '~/constants'
 import { clearPersistedState, usePersistedState } from '~/hooks/usePeristedState'
 import { JiggerSize, UnitSystem } from '~/types'
 
 interface StoreContextType {
-  currentEquipmentId: string
-  currentIngredientId: string
   doubleRecipe: boolean
   feedbackShown: boolean
   eventCount: Record<string, any>
   myBarPopoverDismissed: boolean
   selectedJiggerSize: JiggerSize
   selectedUnitSystem: UnitSystem
-  setCurrentEquipmentId: Dispatch<SetStateAction<string>>
 
-  setCurrentIngredientId: Dispatch<SetStateAction<string>>
   setDoubleRecipe: Dispatch<SetStateAction<boolean>>
   setFeedbackShown: Dispatch<SetStateAction<boolean>>
   setMyBarPopoverDismissed: Dispatch<SetStateAction<boolean>>
@@ -30,8 +26,6 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
   // AsyncStorage.clear()
   // clearPersistedState()
 
-  const [currentIngredientId, setCurrentIngredientId] = useState<string | null>(null)
-  const [currentEquipmentId, setCurrentEquipmentId] = useState<string | null>(null)
   const [feedbackShown, setFeedbackShown] = usePersistedState('feedbackShown', false)
   const [eventCount, setEventCount] = usePersistedState('eventCount', {
     recipeView: {},
@@ -57,16 +51,12 @@ export const StoreProvider: FC<{ children: any }> = ({ children }) => {
   return (
     <StoreContext.Provider
       value={{
-        currentEquipmentId,
-        currentIngredientId,
         doubleRecipe,
         eventCount,
         feedbackShown,
         myBarPopoverDismissed,
         selectedJiggerSize,
         selectedUnitSystem,
-        setCurrentEquipmentId,
-        setCurrentIngredientId,
         setDoubleRecipe,
         setEventCount,
         setFeedbackShown,

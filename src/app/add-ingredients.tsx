@@ -9,7 +9,7 @@ import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
 import { useAnalytics } from '~/hooks/useAnalytics'
 import { useFetchIngredients } from '~/hooks/useFetchIngredients'
 import { useSession } from '~/hooks/useSession'
-import { useStore } from '~/providers'
+import { useDetailsModal, useStore } from '~/providers'
 import { captureError } from '~/utils/captureError'
 
 export default function AddIngredientsScreen() {
@@ -25,7 +25,8 @@ export default function AddIngredientsScreen() {
     setSelectedItems,
     setInitialSelectedItems,
   } = useFetchIngredients()
-  const { setCurrentIngredientId, setEventCount } = useStore()
+  const { setEventCount } = useStore()
+  const { setCurrentIngredientId } = useDetailsModal()
   const [loading, setLoading] = useState(false)
   const { user } = useSession()
   const [addToMyBar, { error: addError }] = useMutation(ADD_TO_MY_BAR)

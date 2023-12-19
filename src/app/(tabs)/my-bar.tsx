@@ -14,10 +14,11 @@ import {
   Text,
 } from '~/components'
 import { useAnalytics, useFetchMatchedRecipes, useSession } from '~/hooks'
-import { useStore } from '~/providers'
+import { useDetailsModal, useStore } from '~/providers'
 
 export default function MyBarScreen() {
-  const { myBarPopoverDismissed, setMyBarPopoverDismissed, setCurrentIngredientId } = useStore()
+  const { myBarPopoverDismissed, setMyBarPopoverDismissed } = useStore()
+  const { setCurrentIngredientId } = useDetailsModal()
   const { user } = useSession()
   const { capture } = useAnalytics()
   const [deleteingItemId, setDeleteingItemId] = useState<string>('')
