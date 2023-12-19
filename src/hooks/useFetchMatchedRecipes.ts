@@ -43,19 +43,13 @@ export const useFetchMatchedRecipes = () => {
       }
     }, [isFocused, ingredientRefetch, totalMatchRefetch, partialMatchRefetch])
 
-    const ingredientsInBar = ingredientsData?.profilesIngredientsCollection.edges
-      .filter((e) => e.node.ingredient)
-      .map(
-        ({
-          node: {
-            ingredient: { name, id, ingredientsCategoriesCollection },
-          },
-        }) => ({
-          name,
-          id,
-          category: ingredientsCategoriesCollection?.edges[0]?.node?.category?.name,
-        }),
-      )
+    const ingredientsInBar = ingredientsData?.profilesIngredientsCollection?.edges
+      .filter(({ node }) => node?.ingredient)
+      .map(({ node }) => ({
+        name: node?.ingredient?.name,
+        id: node?.ingredient?.id,
+        category: node?.ingredient?.ingredientsCategoriesCollection?.edges[0]?.node?.category?.name,
+      }))
 
     const getRecipeMatch = (
       matchedData: GetTotalmatchRecipesQuery | GetPartialMatchRecipesQuery,
@@ -96,7 +90,7 @@ export const useFetchMatchedRecipes = () => {
 
     categoriesdIngredients = orderBy(categoriesdIngredients, ['title'], ['asc'])
 
-    sectionsData = categoriesdIngredients.map((section) => section.data)
+    sectionsData = categoriesdIngredients.map((section) => section?.data)
     sectionsHeader = categoriesdIngredients.map((section) => ({
       title: section.title,
       count: section.count,
