@@ -1,22 +1,30 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
-import orderBy from 'lodash/orderBy'
 import { useEffect } from 'react'
 import { GetPartialMatchRecipesQuery, GetTotalmatchRecipesQuery } from '~/__generated__/graphql'
 import { CardProps, SectionDataType, SectionHeaderType } from '~/components'
 import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
-import { GET_MY_BAR, GET_PARTIAL_MATCH_RECIPES, GET_TOTAL_MATCH_RECIPES } from '~/graphql/queries'
+import {
+  GET_INGREDIENTS_IN_MY_BAR,
+  GET_MY_BAR,
+  GET_PARTIAL_MATCH_RECIPES,
+  GET_TOTAL_MATCH_RECIPES,
+} from '~/graphql/queries'
+import { useAppContent } from '~/providers'
 import { captureError } from '~/utils/captureError'
 
 export const useFetchMatchedRecipes = () => {
   try {
+    const { my_bar } = useAppContent()
     const {
-      data: ingredientsData,
-      loading: ingredientLoading,
-      refetch: ingredientRefetch,
-      error: ingredientError,
+      data: myBarData,
+      loading: myBarLoading,
+      refetch: myBarRefetch,
+      error: myBarError,
     } = useQuery(GET_MY_BAR)
+
+    const { refetch: ingredientRefetch } = useQuery(GET_INGREDIENTS_IN_MY_BAR)
 
     const {
       data: totalMatchData,
@@ -37,25 +45,11 @@ export const useFetchMatchedRecipes = () => {
     useEffect(() => {
       if (isFocused) {
         // Refetch the data when the tab gains focus
-        ingredientRefetch()
+        myBarRefetch()
         totalMatchRefetch()
         partialMatchRefetch()
       }
-    }, [isFocused, ingredientRefetch, totalMatchRefetch, partialMatchRefetch])
-
-    const ingredientsInBar = ingredientsData?.profilesIngredientsCollection.edges
-      .filter((e) => e.node.ingredient)
-      .map(
-        ({
-          node: {
-            ingredient: { name, id, ingredientsCategoriesCollection },
-          },
-        }) => ({
-          name,
-          id,
-          category: ingredientsCategoriesCollection.edges[0].node.category?.name,
-        }),
-      )
+    }, [isFocused, myBarRefetch, totalMatchRefetch, partialMatchRefetch])
 
     const getRecipeMatch = (
       matchedData: GetTotalmatchRecipesQuery | GetPartialMatchRecipesQuery,
@@ -77,30 +71,16 @@ export const useFetchMatchedRecipes = () => {
     let sectionsData: SectionDataType[][] = []
     let sectionsHeader: SectionHeaderType[] = []
 
-    // Reduces an array of ingredients into an array of categories with their respective ingredients.
-    let categoriesdIngredients =
-      ingredientsInBar?.reduce((acc, item) => {
-        const existingSection = acc.find((section) => section.title === item.category)
-        if (existingSection) {
-          existingSection.data.push(item)
-          existingSection.count += 1
-        } else {
-          acc.push({
-            title: item.category,
-            data: [item],
-            count: 1,
-          })
-        }
-        return acc
-      }, []) ?? []
+    const categoriesdIngredients =
+      myBarData?.myBarCollection?.edges
+        ?.filter(({ node }) => !my_bar?.hidden_category_ids?.includes(node?.id))
+        ?.map(({ node }) => node) ?? []
 
-    categoriesdIngredients = orderBy(categoriesdIngredients, ['title'], ['asc'])
-
-    sectionsData = categoriesdIngredients.map((section) => section.data)
+    sectionsData = categoriesdIngredients.map((section) => JSON.parse(section?.data))
     sectionsHeader = categoriesdIngredients.map((section) => ({
-      title: section.title,
-      count: section.count,
-      id: section.title,
+      title: section?.title,
+      count: section?.count,
+      id: section?.title,
     }))
 
     const [deleteFromMyBar] = useMutation(DELETE_FROM_MY_BAR)
@@ -108,20 +88,20 @@ export const useFetchMatchedRecipes = () => {
     return {
       deleteFromMyBar,
       getRecipeMatch,
-      ingredientLoading,
       ingredientRefetch,
-      ingredientsInBar,
+      myBarError,
+      myBarLoading,
+      myBarRefetch,
       partialMatchData,
+      partialMatchError,
       partialMatchLoading,
       partialMatchRefetch,
       sectionsData,
       sectionsHeader,
       totalMatchData,
+      totalMatchError,
       totalMatchLoading,
       totalMatchRefetch,
-      ingredientError,
-      totalMatchError,
-      partialMatchError,
     }
   } catch (error) {
     captureError(error)

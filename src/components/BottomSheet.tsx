@@ -45,7 +45,6 @@ export const BottomSheet = forwardRef(function BottomSheet(
   const topInset = useSafeAreaInsets().top
   const windowHeight = useWindowDimensions().height
   const windowWidth = useWindowDimensions().width
-  const bottomInset = useSafeAreaInsets().bottom
   const contentHeight = useSharedValue(0)
   const blurIntensity = useSharedValue(0)
   const [isReady, setIsReady] = useState(false)
@@ -65,10 +64,9 @@ export const BottomSheet = forwardRef(function BottomSheet(
 
     setTimeout(() => {
       setVisible(false)
-      onHide && onHide()
+      onHide?.()
+      setIsReady(false)
     }, duration)
-
-    setIsReady(false)
   }
 
   useImperativeHandle(
@@ -93,13 +91,6 @@ export const BottomSheet = forwardRef(function BottomSheet(
       ],
     }
   })
-
-  const closeStyle = useAnimatedStyle(() => {
-    return {
-      opacity: withTiming(paddingTop.value > 0 ? 1 : 0, animationConfig),
-    }
-  })
-
   const intensityProp = useAnimatedProps(() => {
     return {
       intensity: withTiming(blurIntensity.value, animationConfig),
@@ -115,9 +106,8 @@ export const BottomSheet = forwardRef(function BottomSheet(
       contentHeight.value = newContentHeight
       paddingTop.value = isLargerThanWindow ? topInset : 0
       offset.value = -newContentHeight
+      setIsReady(true)
     }
-
-    setIsReady(true)
   }
 
   const swipeGesture = Gesture.Pan().onEnd((event) => {
@@ -138,7 +128,7 @@ export const BottomSheet = forwardRef(function BottomSheet(
           <View className="left-0 top-0 h-screen w-screen" />
         </Pressable>
 
-        {isReady && (
+        {!isReady && (
           <ActivityIndicator
             color={colors.white}
             className="absolute top-1/2 left-1/2 -translate-x-2 -translate-y-2"
@@ -151,13 +141,17 @@ export const BottomSheet = forwardRef(function BottomSheet(
           <ScrollView>
             <View onLayout={onContentLayout}>
               <Animated.View
-                style={closeStyle}
-                className="z-10 justify-center items-center rounded-full absolute right-6 top-5"
+                className={`z-10 justify-center items-center rounded-full absolute right-6 top-5`}
               >
-                <Icon icon="close" size="large" accessibilityLabel='Close Modal' accessibilityRole="button" onPress={hide} />
+                <Icon
+                  icon="close"
+                  size="large"
+                  accessibilityLabel="Close Modal"
+                  accessibilityRole="button"
+                  onPress={hide}
+                />
               </Animated.View>
               {children}
-              <View style={{ height: bottomInset }} />
             </View>
           </ScrollView>
 

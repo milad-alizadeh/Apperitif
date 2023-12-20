@@ -158,7 +158,7 @@ export const ListItem = memo(function ListItem({
       )}
       <Text
         testID={testIDTextMiddle}
-        body
+        body={!small}
         weight="medium"
         styleClassName={`flex-1 flex-wrap mr-auto
            ${small ? 'text-sm' : 'text-base'}

@@ -14,10 +14,11 @@ import {
   Text,
 } from '~/components'
 import { useAnalytics, useFetchMatchedRecipes, useSession } from '~/hooks'
-import { useStore } from '~/providers'
+import { useDetailsModal, useStore } from '~/providers'
 
 export default function MyBarScreen() {
-  const { myBarPopoverDismissed, setMyBarPopoverDismissed, setCurrentIngredientId } = useStore()
+  const { myBarPopoverDismissed, setMyBarPopoverDismissed } = useStore()
+  const { setCurrentIngredientId } = useDetailsModal()
   const { user } = useSession()
   const { capture } = useAnalytics()
   const [deleteingItemId, setDeleteingItemId] = useState<string>('')
@@ -38,7 +39,8 @@ export default function MyBarScreen() {
     deleteFromMyBar,
     getRecipeMatch,
     ingredientRefetch,
-    ingredientLoading,
+    myBarRefetch,
+    myBarLoading,
     partialMatchData,
     partialMatchRefetch,
     sectionsData,
@@ -46,7 +48,7 @@ export default function MyBarScreen() {
     totalMatchData,
     totalMatchLoading,
     totalMatchRefetch,
-    ingredientError,
+    myBarError,
     totalMatchError,
   } = useFetchMatchedRecipes()
 
@@ -75,6 +77,7 @@ export default function MyBarScreen() {
               onCompleted: () => {
                 capture('my_bar:ingredient_remove', { ingredient_name: item.name })
                 ingredientRefetch()
+                myBarRefetch()
                 totalMatchRefetch()
                 partialMatchRefetch()
                 setDeleteingItemId('')
@@ -158,12 +161,12 @@ export default function MyBarScreen() {
               ListFooterComponent={<View />}
               ListEmptyComponent={
                 <View className="flex-1 justify-center w-full">
-                  {!!ingredientError && (
+                  {!!myBarError && (
                     <View className="p-6">
-                      <InfoBox type="error" description={ingredientError?.message} />
+                      <InfoBox type="error" description={myBarError?.message} />
                     </View>
                   )}
-                  {ingredientLoading ? (
+                  {myBarLoading ? (
                     <ActivityIndicator />
                   ) : (
                     <View

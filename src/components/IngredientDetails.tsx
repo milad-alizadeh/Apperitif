@@ -1,8 +1,9 @@
+import { usePathname } from 'expo-router'
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { useFetchIngredientDetails, useSession } from '~/hooks'
 import { useAnalytics } from '~/hooks/useAnalytics'
-import { useStore } from '~/providers'
+import { useSafeAreaInsetsStyle } from '~/utils/useSafeAreaInsetsStyle'
 import { Button } from './Button'
 import { Checkbox } from './Checkbox'
 import { HorizontalList } from './HorizontalList'
@@ -16,7 +17,6 @@ export interface IngredientDetailsProps {
   /** The ID of the ingredient to display details for */
   ingredientId: string
   onClosed?: () => void
-  showCta?: boolean
 }
 
 /**
@@ -24,9 +24,11 @@ export interface IngredientDetailsProps {
  */
 export const IngredientDetails = function IngredientDetails({
   ingredientId,
-  showCta = true,
   onClosed,
 }: IngredientDetailsProps) {
+  const path = usePathname()
+  const showCta = path !== '/add-ingredients'
+  const inset = useSafeAreaInsetsStyle(['bottom'], 'margin')
   const { screen, capture } = useAnalytics()
   const { isLoggedIn } = useSession()
   const {
@@ -48,11 +50,11 @@ export const IngredientDetails = function IngredientDetails({
   return (
     <>
       {loading || recipesLoading ? null : (
-        <View className="justify-start flex-1 p-6">
+        <View className="justify-start flex-1 px-6 pt-6 pb-3" style={inset}>
           {/* Name */}
           <View className="mb-3">
             {ingredient?.name && (
-              <Text h2 weight="bold" testID="ingredient-name">
+              <Text h2 weight="bold" styleClassName="pr-10 flex-1" testID="ingredient-name">
                 {ingredient?.name}
               </Text>
             )}

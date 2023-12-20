@@ -1,7 +1,7 @@
-import { useApolloClient, useMutation, useQuery, useReactiveVar } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { useLocalSearchParams } from 'expo-router'
 import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
-import { GET_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
+import { GET_INGREDIENTS_IN_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useAppContent } from '~/providers'
 import { captureError } from '~/utils/captureError'
 import { useAnalytics } from './useAnalytics'
@@ -10,7 +10,6 @@ import { useSession } from './useSession'
 export const useFetchRecipeDetails = () => {
   try {
     const { capture } = useAnalytics()
-    const client = useApolloClient()
     const { recipeId, recipeName } = useLocalSearchParams()
     const { recipe_attributes } = useAppContent()
     const { user } = useSession()
@@ -20,7 +19,7 @@ export const useFetchRecipeDetails = () => {
       fetchPolicy: 'cache-and-network',
     })
 
-    const { data: barIngredients } = useQuery(GET_MY_BAR)
+    const { data: barIngredients } = useQuery(GET_INGREDIENTS_IN_MY_BAR)
 
     const firstTimeLoading = loading && !data && !error
 
@@ -61,7 +60,6 @@ export const useFetchRecipeDetails = () => {
       onCompleted: () => {
         capture('recipe:favourite_add', { recipe_name: recipeName })
         refetch()
-        client.refetchQueries({ include: ['getFavourites'] })
       },
     })
 
@@ -73,7 +71,6 @@ export const useFetchRecipeDetails = () => {
       onCompleted: () => {
         capture('recipe:favourite_remove', { recipe_name: recipeName })
         refetch()
-        client.refetchQueries({ include: ['getFavourites'] })
       },
     })
 

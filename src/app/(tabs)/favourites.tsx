@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
+import { useIsFocused } from '@react-navigation/native'
 import { Link, router } from 'expo-router'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { FlatList, View, ViewStyle } from 'react-native'
 import { Header, InfoBox, ListItem, Screen, Text } from '~/components'
 import { DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
@@ -11,7 +12,20 @@ import { getImageUrl, imageSizes } from '~/utils/getImageUrl'
 export default function FavouritesScreen() {
   const { capture } = useAnalytics()
   const { user } = useSession()
-  const { data, loading, error, refetch } = useQuery(GET_FAVOURITES)
+  const isFocused = useIsFocused()
+
+  const { data, loading, error, refetch } = useQuery(GET_FAVOURITES, {
+    fetchPolicy: 'cache-and-network',
+  })
+
+  useEffect(() => {
+    if (isFocused) {
+      console.log('focused')
+      // Refetch the data when the tab gains focus
+      refetch()
+    }
+  }, [isFocused])
+
   const [deleteingItemId, setDeleteingItemId] = useState<string>('')
 
   const flatListData = data?.profilesRecipesCollection.edges.map((e) => e.node.recipe)
@@ -93,7 +107,7 @@ export default function FavouritesScreen() {
         <FlatList
           className="flex-1"
           data={flatListData}
-          refreshing={loading && flatListData?.length > 0}
+          refreshing={false}
           ListHeaderComponent={<Header title="Favourites" />}
           onRefresh={() => refetch()}
           renderItem={renderItem}

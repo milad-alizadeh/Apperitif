@@ -2,23 +2,13 @@ import { gql } from '~/__generated__/gql'
 
 export const GET_MY_BAR = gql(`
   query getMyBar {
-    profilesIngredientsCollection(first: 1000) {
+    myBarCollection(orderBy: { title: AscNullsLast }) {
       edges {
         node {
-          ingredient {
-            id
-            name
-            ingredientsCategoriesCollection(first: 1000) {
-              edges {
-                node {
-                  category {
-                    id
-                    name
-                  }
-                }
-              }
-            }
-          }
+          id
+          title
+          data
+          count
         }
       }
     }
