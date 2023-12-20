@@ -38,7 +38,6 @@ export default function MyBarScreen() {
   const {
     deleteFromMyBar,
     getRecipeMatch,
-    ingredientRefetch,
     myBarRefetch,
     myBarLoading,
     partialMatchData,
@@ -76,7 +75,6 @@ export default function MyBarScreen() {
               variables: { ingredientIds: [item.id], profileIds: [user?.id] },
               onCompleted: () => {
                 capture('my_bar:ingredient_remove', { ingredient_name: item.name })
-                ingredientRefetch()
                 myBarRefetch()
                 totalMatchRefetch()
                 partialMatchRefetch()
