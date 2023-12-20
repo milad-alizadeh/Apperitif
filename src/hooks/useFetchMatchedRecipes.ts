@@ -73,7 +73,7 @@ export const useFetchMatchedRecipes = () => {
 
     const categoriesdIngredients =
       myBarData?.myBarCollection?.edges
-        ?.filter(({ node }) => !my_bar?.hidden_category_ids.includes(node?.id))
+        ?.filter(({ node }) => !my_bar?.hidden_category_ids?.includes(node?.id))
         ?.map(({ node }) => node) ?? []
 
     sectionsData = categoriesdIngredients.map((section) => JSON.parse(section?.data))
