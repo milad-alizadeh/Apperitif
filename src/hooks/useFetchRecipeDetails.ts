@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useLocalSearchParams } from 'expo-router'
 import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
-import { GET_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
+import { GET_INGREDIENTS_IN_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useAppContent } from '~/providers'
 import { captureError } from '~/utils/captureError'
 import { useAnalytics } from './useAnalytics'
@@ -19,7 +19,7 @@ export const useFetchRecipeDetails = () => {
       fetchPolicy: 'cache-and-network',
     })
 
-    const { data: barIngredients } = useQuery(GET_MY_BAR)
+    const { data: barIngredients } = useQuery(GET_INGREDIENTS_IN_MY_BAR)
 
     const firstTimeLoading = loading && !data && !error
 

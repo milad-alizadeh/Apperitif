@@ -31,7 +31,7 @@ export const RecipeAttributes: FC<RecipeAttributesProps> = ({
       {attributes.map((attribute) => {
         return (
           <View key={attribute?.id}>
-            <View className="flex-row items-center justify-center" ac>
+            <View className="flex-row items-center justify-center">
               {!loading && (
                 <Image
                   className="w-9 h-9 mr-1"
