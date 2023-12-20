@@ -5,7 +5,12 @@ import { useEffect } from 'react'
 import { GetPartialMatchRecipesQuery, GetTotalmatchRecipesQuery } from '~/__generated__/graphql'
 import { CardProps, SectionDataType, SectionHeaderType } from '~/components'
 import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
-import { GET_MY_BAR, GET_PARTIAL_MATCH_RECIPES, GET_TOTAL_MATCH_RECIPES } from '~/graphql/queries'
+import {
+  GET_INGREDIENTS_IN_MY_BAR,
+  GET_MY_BAR,
+  GET_PARTIAL_MATCH_RECIPES,
+  GET_TOTAL_MATCH_RECIPES,
+} from '~/graphql/queries'
 import { useAppContent } from '~/providers'
 import { captureError } from '~/utils/captureError'
 
@@ -14,10 +19,12 @@ export const useFetchMatchedRecipes = () => {
     const { my_bar } = useAppContent()
     const {
       data: myBarData,
-      loading: ingredientLoading,
-      refetch: ingredientRefetch,
-      error: ingredientError,
+      loading: myBarLoading,
+      refetch: myBarRefetch,
+      error: myBarError,
     } = useQuery(GET_MY_BAR)
+
+    const { refetch: ingredientRefetch } = useQuery(GET_INGREDIENTS_IN_MY_BAR)
 
     const {
       data: totalMatchData,
@@ -38,11 +45,11 @@ export const useFetchMatchedRecipes = () => {
     useEffect(() => {
       if (isFocused) {
         // Refetch the data when the tab gains focus
-        ingredientRefetch()
+        myBarRefetch()
         totalMatchRefetch()
         partialMatchRefetch()
       }
-    }, [isFocused, ingredientRefetch, totalMatchRefetch, partialMatchRefetch])
+    }, [isFocused, myBarRefetch, totalMatchRefetch, partialMatchRefetch])
 
     const getRecipeMatch = (
       matchedData: GetTotalmatchRecipesQuery | GetPartialMatchRecipesQuery,
@@ -81,19 +88,20 @@ export const useFetchMatchedRecipes = () => {
     return {
       deleteFromMyBar,
       getRecipeMatch,
-      ingredientLoading,
       ingredientRefetch,
+      myBarError,
+      myBarLoading,
+      myBarRefetch,
       partialMatchData,
+      partialMatchError,
       partialMatchLoading,
       partialMatchRefetch,
       sectionsData,
       sectionsHeader,
       totalMatchData,
+      totalMatchError,
       totalMatchLoading,
       totalMatchRefetch,
-      ingredientError,
-      totalMatchError,
-      partialMatchError,
     }
   } catch (error) {
     captureError(error)

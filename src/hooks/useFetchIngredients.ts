@@ -68,9 +68,7 @@ export const useFetchIngredients = () => {
       fetchPolicy: 'cache-and-network',
     })
 
-    const { data: selectedIngredients } = useQuery(GET_INGREDIENTS_IN_MY_BAR, {
-      fetchPolicy: 'cache-and-network',
-    })
+    const { data: selectedIngredients } = useQuery(GET_INGREDIENTS_IN_MY_BAR)
 
     useEffect(() => {
       if (!categories) return
