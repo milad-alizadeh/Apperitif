@@ -78,9 +78,9 @@ export const useFetchMatchedRecipes = () => {
 
     sectionsData = categoriesdIngredients.map((section) => JSON.parse(section?.data))
     sectionsHeader = categoriesdIngredients.map((section) => ({
-      title: section.title,
-      count: section.count,
-      id: section.title,
+      title: section?.title,
+      count: section?.count,
+      id: section?.title,
     }))
 
     const [deleteFromMyBar] = useMutation(DELETE_FROM_MY_BAR)
