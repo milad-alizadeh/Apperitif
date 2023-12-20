@@ -24,8 +24,6 @@ export const useFetchMatchedRecipes = () => {
       error: myBarError,
     } = useQuery(GET_MY_BAR)
 
-    const { refetch: ingredientRefetch } = useQuery(GET_INGREDIENTS_IN_MY_BAR)
-
     const {
       data: totalMatchData,
       refetch: totalMatchRefetch,
@@ -88,7 +86,6 @@ export const useFetchMatchedRecipes = () => {
     return {
       deleteFromMyBar,
       getRecipeMatch,
-      ingredientRefetch,
       myBarError,
       myBarLoading,
       myBarRefetch,
