@@ -1,5 +1,5 @@
 import { router } from 'expo-router'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ActivityIndicator, View, ViewStyle } from 'react-native'
 import Popover from 'react-native-popover-view'
 import {
@@ -13,7 +13,7 @@ import {
   Tabs,
   Text,
 } from '~/components'
-import { useAnalytics, useFetchMatchedRecipes, useSession } from '~/hooks'
+import { useAnalytics, useFetchMatchedRecipes, useFetchMyBar, useSession } from '~/hooks'
 import { useDetailsModal, useStore } from '~/providers'
 
 export default function MyBarScreen() {
@@ -35,19 +35,16 @@ export default function MyBarScreen() {
     }
   }, [myBarPopoverDismissed])
 
+  const { deleteFromMyBar, myBarRefetch, myBarLoading, sectionsData, sectionsHeader, myBarError } =
+    useFetchMyBar()
+
   const {
-    deleteFromMyBar,
     getRecipeMatch,
-    myBarRefetch,
-    myBarLoading,
     partialMatchData,
     partialMatchRefetch,
-    sectionsData,
-    sectionsHeader,
     totalMatchData,
     totalMatchLoading,
     totalMatchRefetch,
-    myBarError,
     totalMatchError,
   } = useFetchMatchedRecipes()
 

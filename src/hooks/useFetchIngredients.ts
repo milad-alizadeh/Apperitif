@@ -2,17 +2,18 @@ import { useQuery } from '@apollo/client'
 import keyBy from 'lodash/keyBy'
 import { useEffect, useState } from 'react'
 import { SectionDataType, SectionHeaderType } from '~/components'
-import { GET_INGREDIENTS_IN_MY_BAR } from '~/graphql/queries'
 import { GET_INGREDIENTS_BY_CATEGORIES } from '~/graphql/queries/getIngtedientsByCategories'
 import { useAppContent } from '~/providers'
 import { captureError } from '~/utils/captureError'
 import { api } from '../services/api'
 import { useAnalytics } from './useAnalytics'
+import { useFetchMyBar } from './useFetchMybar'
 
 export type SelectedItems = Record<string, { name: string; selected: boolean }>
 
 export const useFetchIngredients = () => {
   try {
+    const { ingredientsInMyBar } = useFetchMyBar()
     const { capture } = useAnalytics()
     const { ingredient_categories } = useAppContent()
     const [searchQuery, setSearchQuery] = useState('')
@@ -91,20 +92,12 @@ export const useFetchIngredients = () => {
     useEffect(() => {
       if (!selectedIngredients) return
       const initialSelectedItems: SelectedItems = {}
-      selectedIngredients?.profilesIngredientsCollection?.edges
-        .filter(({ node }) => node?.ingredient)
-        .forEach(
-          ({
-            node: {
-              ingredient: { id, name },
-            },
-          }) => {
-            initialSelectedItems[id] = {
-              name,
-              selected: true,
-            }
-          },
-        )
+      ingredientsInMyBar.forEach(({ name, id }) => {
+        initialSelectedItems[id] = {
+          name,
+          selected: true,
+        }
+      })
 
       setInitialSelectedItems(initialSelectedItems)
       setSelectedItems(initialSelectedItems)
