@@ -1,7 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
-import { useEffect } from 'react'
 import { GetPartialMatchRecipesQuery, GetTotalmatchRecipesQuery } from '~/__generated__/graphql'
 import { CardProps } from '~/components'
 import { GET_PARTIAL_MATCH_RECIPES, GET_TOTAL_MATCH_RECIPES } from '~/graphql/queries'
@@ -22,15 +20,6 @@ export const useFetchMatchedRecipes = () => {
       loading: partialMatchLoading,
       error: partialMatchError,
     } = useQuery(GET_PARTIAL_MATCH_RECIPES)
-
-    const isFocused = useIsFocused()
-
-    useEffect(() => {
-      if (isFocused) {
-        totalMatchRefetch()
-        partialMatchRefetch()
-      }
-    }, [isFocused, totalMatchRefetch, partialMatchRefetch])
 
     const getRecipeMatch = (
       matchedData: GetTotalmatchRecipesQuery | GetPartialMatchRecipesQuery,

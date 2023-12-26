@@ -41,13 +41,6 @@ export default function MyBarScreen() {
   const { deleteFromMyBar, myBarRefetch, myBarLoading, sectionsData, sectionsHeader, myBarError } =
     useFetchMyBar()
 
-  useEffect(() => {
-    if (isFocused) {
-      // Refetch the data when the tab gains focus
-      myBarRefetch()
-    }
-  }, [isFocused, myBarRefetch])
-
   const {
     getRecipeMatch,
     partialMatchData,
@@ -57,6 +50,15 @@ export default function MyBarScreen() {
     totalMatchRefetch,
     totalMatchError,
   } = useFetchMatchedRecipes()
+
+  useEffect(() => {
+    if (isFocused) {
+      // Refetch the data when the tab gains focus
+      myBarRefetch()
+      totalMatchRefetch()
+      partialMatchRefetch()
+    }
+  }, [isFocused, myBarRefetch])
 
   const renderIngredientItem = useCallback(
     ({ item }) => {
