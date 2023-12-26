@@ -1,14 +1,16 @@
 import { useMutation, useQuery } from '@apollo/client'
 import { useLocalSearchParams } from 'expo-router'
 import { ADD_TO_FAVOURITES, DELETE_FROM_FAVOURITES } from '~/graphql/mutations'
-import { GET_INGREDIENTS_IN_MY_BAR, GET_RECIPE_DETAILS } from '~/graphql/queries'
+import { GET_RECIPE_DETAILS } from '~/graphql/queries'
 import { useAppContent } from '~/providers'
 import { captureError } from '~/utils/captureError'
 import { useAnalytics } from './useAnalytics'
+import { useFetchMyBar } from './useFetchMybar'
 import { useSession } from './useSession'
 
 export const useFetchRecipeDetails = () => {
   try {
+    const { ingredientsInMyBar } = useFetchMyBar()
     const { capture } = useAnalytics()
     const { recipeId, recipeName } = useLocalSearchParams()
     const { recipe_attributes } = useAppContent()
@@ -18,8 +20,6 @@ export const useFetchRecipeDetails = () => {
       variables: { recipeId },
       fetchPolicy: 'cache-and-network',
     })
-
-    const { data: barIngredients } = useQuery(GET_INGREDIENTS_IN_MY_BAR)
 
     const firstTimeLoading = loading && !data && !error
 
@@ -37,15 +37,10 @@ export const useFetchRecipeDetails = () => {
         (id: string) => categories.find((c) => c.parentId === id) ?? { id },
       ) ?? []
 
-    const myBar =
-      barIngredients?.profilesIngredientsCollection.edges
-        .filter((e) => e?.node?.ingredient)
-        .map((e) => e?.node?.ingredient?.id) ?? []
-
     const mergedRecipeIngredients = recipeIngredients
       .filter((recipeIngredient) => recipeIngredient?.ingredient)
       .map((recipeIngredient) => {
-        const inMyBar = myBar.includes(recipeIngredient?.ingredient?.id)
+        const inMyBar = !!ingredientsInMyBar.find((i) => i.id === recipeIngredient?.ingredient?.id)
         return {
           ...recipeIngredient,
           inMyBar,

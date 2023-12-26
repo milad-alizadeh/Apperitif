@@ -2,17 +2,18 @@ import { useQuery } from '@apollo/client'
 import keyBy from 'lodash/keyBy'
 import { useEffect, useState } from 'react'
 import { SectionDataType, SectionHeaderType } from '~/components'
-import { GET_INGREDIENTS_IN_MY_BAR } from '~/graphql/queries'
 import { GET_INGREDIENTS_BY_CATEGORIES } from '~/graphql/queries/getIngtedientsByCategories'
 import { useAppContent } from '~/providers'
 import { captureError } from '~/utils/captureError'
 import { api } from '../services/api'
 import { useAnalytics } from './useAnalytics'
+import { useFetchMyBar } from './useFetchMybar'
 
 export type SelectedItems = Record<string, { name: string; selected: boolean }>
 
 export const useFetchIngredients = () => {
   try {
+    const { ingredientsInMyBar } = useFetchMyBar()
     const { capture } = useAnalytics()
     const { ingredient_categories } = useAppContent()
     const [searchQuery, setSearchQuery] = useState('')
@@ -24,6 +25,10 @@ export const useFetchIngredients = () => {
     const [sectionsData, setSectionsData] = useState<SectionDataType[][]>([])
     const [sectionsHeader, setSectionsHeader] = useState<SectionHeaderType[]>([])
     const [initialSelectedItems, setInitialSelectedItems] = useState<SelectedItems>({})
+
+    const { data: categories } = useQuery(GET_INGREDIENTS_BY_CATEGORIES, {
+      fetchPolicy: 'cache-and-network',
+    })
 
     /**
      * Search for ingredients that match the given search query.
@@ -64,14 +69,6 @@ export const useFetchIngredients = () => {
       searchIngredients(searchQuery)
     }, [searchQuery])
 
-    const { data: categories } = useQuery(GET_INGREDIENTS_BY_CATEGORIES, {
-      fetchPolicy: 'cache-and-network',
-    })
-
-    const { data: selectedIngredients } = useQuery(GET_INGREDIENTS_IN_MY_BAR, {
-      fetchPolicy: 'cache-and-network',
-    })
-
     useEffect(() => {
       if (!categories) return
       const sectionsData: SectionDataType[][] = []
@@ -89,26 +86,17 @@ export const useFetchIngredients = () => {
     }, [categories])
 
     useEffect(() => {
-      if (!selectedIngredients) return
-      const initialSelectedItems: SelectedItems = {}
-      selectedIngredients?.profilesIngredientsCollection?.edges
-        .filter(({ node }) => node?.ingredient)
-        .forEach(
-          ({
-            node: {
-              ingredient: { id, name },
-            },
-          }) => {
-            initialSelectedItems[id] = {
-              name,
-              selected: true,
-            }
-          },
-        )
+      if (!ingredientsInMyBar) return
+      ingredientsInMyBar.forEach(({ name, id }) => {
+        initialSelectedItems[id] = {
+          name,
+          selected: true,
+        }
+      })
 
       setInitialSelectedItems(initialSelectedItems)
       setSelectedItems(initialSelectedItems)
-    }, [selectedIngredients])
+    }, [ingredientsInMyBar])
 
     return {
       searchQuery,
