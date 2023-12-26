@@ -21,8 +21,8 @@ export const useFetchMyBar = () => {
       error: myBarError,
     } = useQuery(GET_MY_BAR)
 
-    const [sectionsData, setSectionsData] = useState([])
-    const [sectionsHeader, setSectionsHeader] = useState([])
+    const [sectionsData, setSectionsData] = useState<SectionDataType[]>([])
+    const [sectionsHeader, setSectionsHeader] = useState<SectionHeaderType[]>([])
     const [ingredientsInMyBar, setIngredientsInMyBar] = useState<Ingredient[]>([])
 
     useEffect(() => {
