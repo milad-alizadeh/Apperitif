@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native'
 import { router } from 'expo-router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ActivityIndicator, View, ViewStyle } from 'react-native'
@@ -23,6 +24,8 @@ export default function MyBarScreen() {
   const { capture } = useAnalytics()
   const [deleteingItemId, setDeleteingItemId] = useState<string>('')
 
+  const isFocused = useIsFocused()
+
   const handleIngredientPress = useCallback((ingredientId: string) => {
     setCurrentIngredientId(ingredientId)
   }, [])
@@ -37,6 +40,13 @@ export default function MyBarScreen() {
 
   const { deleteFromMyBar, myBarRefetch, myBarLoading, sectionsData, sectionsHeader, myBarError } =
     useFetchMyBar()
+
+  useEffect(() => {
+    if (isFocused) {
+      // Refetch the data when the tab gains focus
+      myBarRefetch()
+    }
+  }, [isFocused, myBarRefetch])
 
   const {
     getRecipeMatch,

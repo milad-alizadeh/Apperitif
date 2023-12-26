@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from '@apollo/client'
-import { useIsFocused } from '@react-navigation/native'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { SectionDataType, SectionHeaderType } from '~/components'
 import { DELETE_FROM_MY_BAR } from '~/graphql/mutations/deleteFromMyBar'
 import { GET_MY_BAR } from '~/graphql/queries'
@@ -22,35 +21,37 @@ export const useFetchMyBar = () => {
       error: myBarError,
     } = useQuery(GET_MY_BAR)
 
-    const isFocused = useIsFocused()
+    const [sectionsData, setSectionsData] = useState([])
+    const [sectionsHeader, setSectionsHeader] = useState([])
+    const [ingredientsInMyBar, setIngredientsInMyBar] = useState([])
 
     useEffect(() => {
-      if (isFocused) {
-        // Refetch the data when the tab gains focus
-        myBarRefetch()
+      if (!myBarData) return
+
+      let newSectionsData = []
+      let newSectionsHeader = []
+      let newIngredientsInMyBar = []
+
+      for (let category of myBarData?.myBarCollection?.edges) {
+        const { node } = category
+
+        if (!my_bar?.hidden_category_ids?.includes(node?.id)) {
+          const data = JSON.parse(node?.data)
+
+          newIngredientsInMyBar = newIngredientsInMyBar.concat(data)
+          newSectionsData.push(data)
+          newSectionsHeader.push({
+            title: node?.title,
+            count: node?.count,
+            id: node?.title,
+          })
+        }
       }
-    }, [isFocused, myBarRefetch])
 
-    let sectionsData: SectionDataType[][] = []
-    let sectionsHeader: SectionHeaderType[] = []
-    let ingredientsInMyBar: Ingredient[] = []
-
-    for (let category of myBarData?.myBarCollection?.edges) {
-      const { node } = category
-
-      if (!my_bar?.hidden_category_ids?.includes(node?.id)) {
-        const data: Ingredient[] = JSON.parse(node?.data)
-
-        ingredientsInMyBar = ingredientsInMyBar.concat(data)
-
-        sectionsData.push(data)
-        sectionsHeader.push({
-          title: node?.title,
-          count: node?.count,
-          id: node?.title,
-        })
-      }
-    }
+      setIngredientsInMyBar(newIngredientsInMyBar)
+      setSectionsData(newSectionsData)
+      setSectionsHeader(newSectionsHeader)
+    }, [myBarData, my_bar?.hidden_category_ids])
 
     const [deleteFromMyBar] = useMutation(DELETE_FROM_MY_BAR)
 

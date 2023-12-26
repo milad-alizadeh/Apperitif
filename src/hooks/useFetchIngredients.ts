@@ -26,6 +26,10 @@ export const useFetchIngredients = () => {
     const [sectionsHeader, setSectionsHeader] = useState<SectionHeaderType[]>([])
     const [initialSelectedItems, setInitialSelectedItems] = useState<SelectedItems>({})
 
+    const { data: categories } = useQuery(GET_INGREDIENTS_BY_CATEGORIES, {
+      fetchPolicy: 'cache-and-network',
+    })
+
     /**
      * Search for ingredients that match the given search query.
      * @param searchQuery - The search query to match against ingredient names.
@@ -65,14 +69,6 @@ export const useFetchIngredients = () => {
       searchIngredients(searchQuery)
     }, [searchQuery])
 
-    const { data: categories } = useQuery(GET_INGREDIENTS_BY_CATEGORIES, {
-      fetchPolicy: 'cache-and-network',
-    })
-
-    const { data: selectedIngredients } = useQuery(GET_INGREDIENTS_IN_MY_BAR, {
-      fetchPolicy: 'cache-and-network',
-    })
-
     useEffect(() => {
       if (!categories) return
       const sectionsData: SectionDataType[][] = []
@@ -90,8 +86,8 @@ export const useFetchIngredients = () => {
     }, [categories])
 
     useEffect(() => {
-      if (!selectedIngredients) return
-      const initialSelectedItems: SelectedItems = {}
+      if (!ingredientsInMyBar) return
+      console.log('ingredientsInMyBar', ingredientsInMyBar)
       ingredientsInMyBar.forEach(({ name, id }) => {
         initialSelectedItems[id] = {
           name,
@@ -101,7 +97,7 @@ export const useFetchIngredients = () => {
 
       setInitialSelectedItems(initialSelectedItems)
       setSelectedItems(initialSelectedItems)
-    }, [selectedIngredients])
+    }, [ingredientsInMyBar])
 
     return {
       searchQuery,
