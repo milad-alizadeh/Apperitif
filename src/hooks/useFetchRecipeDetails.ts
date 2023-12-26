@@ -40,7 +40,7 @@ export const useFetchRecipeDetails = () => {
     const mergedRecipeIngredients = recipeIngredients
       .filter((recipeIngredient) => recipeIngredient?.ingredient)
       .map((recipeIngredient) => {
-        const inMyBar = ingredientsInMyBar.find((i) => i.id === recipeIngredient?.ingredient?.id)
+        const inMyBar = !!ingredientsInMyBar.find((i) => i.id === recipeIngredient?.ingredient?.id)
         return {
           ...recipeIngredient,
           inMyBar,
