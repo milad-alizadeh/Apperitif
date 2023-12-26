@@ -23,7 +23,7 @@ export const useFetchMyBar = () => {
 
     const [sectionsData, setSectionsData] = useState([])
     const [sectionsHeader, setSectionsHeader] = useState([])
-    const [ingredientsInMyBar, setIngredientsInMyBar] = useState([])
+    const [ingredientsInMyBar, setIngredientsInMyBar] = useState<Ingredient[]>([])
 
     useEffect(() => {
       if (!myBarData) return

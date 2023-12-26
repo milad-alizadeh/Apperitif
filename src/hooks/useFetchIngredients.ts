@@ -87,7 +87,6 @@ export const useFetchIngredients = () => {
 
     useEffect(() => {
       if (!ingredientsInMyBar) return
-      console.log('ingredientsInMyBar', ingredientsInMyBar)
       ingredientsInMyBar.forEach(({ name, id }) => {
         initialSelectedItems[id] = {
           name,
